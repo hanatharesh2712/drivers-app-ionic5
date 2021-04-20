@@ -1,0 +1,7 @@
+{
+  "name": "drvn-drivers-app",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
