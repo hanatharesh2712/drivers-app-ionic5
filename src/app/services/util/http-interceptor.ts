@@ -13,9 +13,10 @@ import {
 } from '@angular/common/http';
 import {
     Observable,
-    BehaviorSubject
+    BehaviorSubject,
+    from
 } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import {_throw as observableThrowError} from 'rxjs/observable/throw';
 
 @Injectable()
@@ -42,28 +43,33 @@ export class AuthHttpInterceptor implements HttpInterceptor {
         | HttpResponse<any>
         | HttpUserEvent<any>
     > {
-        const authService = this.injector.get(DrvnAuthenticationService);
 
-        return next.handle(this.addToken(req, authService.getAuthToken())).pipe(
-            catchError(error => {
-                if (error instanceof HttpErrorResponse) {
-                    switch ((<HttpErrorResponse>error).status) {
-                        case 400:
-                            return this.handle400Error(error);
-                        case 401:
-                            return this.handle401Error(req, next, error);
-                        case 500:
-                            return observableThrowError(error);
-                        case 404:
-                            return this.handle404Error(error);
-                        case 422:
-                            return this.handle422Error(error);
-                    }
-                } else {
-                    return observableThrowError(error);
-                }
-            })
-        );
+        const authService = this.injector.get(DrvnAuthenticationService);
+        return from(authService.getAuthToken()).pipe(
+          switchMap(token => {
+            return next.handle(this.addToken(req, token ? JSON.parse(token).access_token : '')).pipe(
+              catchError(error => {
+                  if (error instanceof HttpErrorResponse) {
+                      switch ((<HttpErrorResponse>error).status) {
+                          case 400:
+                              return this.handle400Error(error);
+                          case 401:
+                              return this.handle401Error(req, next, error);
+                          case 500:
+                              return observableThrowError(error);
+                          case 404:
+                              return this.handle404Error(error);
+                          case 422:
+                              return this.handle422Error(error);
+                      }
+                  } else {
+                      return observableThrowError(error);
+                  }
+              })
+          );
+          })
+        )
+
     }
 
     /*intercept(
@@ -106,7 +112,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     }*/
 
     handle401Error(req: HttpRequest<any>, next: HttpHandler, error) {
-        this.logoutUser();
+      this.logoutUser();
         return observableThrowError(error);
     }
 

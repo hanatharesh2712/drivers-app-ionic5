@@ -8,7 +8,7 @@
  */
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -39,6 +39,7 @@ import { DrvnAuthenticationService } from './services/auth/auth.service';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationService } from './services/geolocation.service';
+import { AuthHttpInterceptor } from './services/util/http-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +47,12 @@ import { GeolocationService } from './services/geolocation.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot(
+      {
+        name:'drvn_app',
+        driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
+      }
+    ),
     AgmCoreModule.forRoot({
       apiKey: environment.GOOGLE_MAPS_API_KEY,
       libraries: ['places']
@@ -77,13 +83,18 @@ import { GeolocationService } from './services/geolocation.service';
     FirestoreService,
     StorageService,
     APIService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
+      multi: true
+  },
     InitUserProvider,
-    { provide: APP_INITIALIZER, useFactory: initUserProviderFactory, deps: [InitUserProvider], multi: true }
+    { provide: APP_INITIALIZER, useFactory: initUserProviderFactory, deps: [DrvnAuthenticationService], multi: true }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-export function initUserProviderFactory(provider: InitUserProvider) {
-  return () => provider.load();
+export function initUserProviderFactory(provider: DrvnAuthenticationService) {
+  return () => provider.getCurrentDriverInfo();
 }

@@ -3,12 +3,27 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title *ngIf="!driverAvailable">
-      Offline
+    <ion-title  text-uppercase>
+      <span class="title" *ngIf="ride">
+        <!-- <ion-icon class="material-icons">fiber_manual_record</ion-icon>-->
+
+        <div>
+            <div class="d-flex j-center">
+
+                {{viewType == 'offer' ? 'RIDE OFFER' : viewType == 'info' ? 'RIDE INFO' : 'CURRENT RIDE'}}
+                #{{ride.ride_id}}
+
+            </div>
+            <div class="date-info d-flex j-center">
+                {{ride.service_type | uppercase}}
+                <span class="separator">|</span>
+                {{ride.pu_date}} at {{ride.pu_time}}
+            </div>
+        </div>
+
+    </span>
     </ion-title>
-    <ion-title *ngIf="driverAvailable">
-      Online
-    </ion-title>
+
 
   </ion-toolbar>
 </ion-header>

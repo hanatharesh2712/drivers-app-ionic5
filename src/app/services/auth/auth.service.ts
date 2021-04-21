@@ -6,7 +6,6 @@ import { User } from '@app/models/user';
 import { environment } from '@env/environment';
 import { Storage } from '@ionic/storage';
 @Injectable()
-
 export class DrvnAuthenticationService implements OnInit {
   public authTokenStale = 'stale_auth_token';
   public authTokenNew = 'new_auth_token';
@@ -15,6 +14,7 @@ export class DrvnAuthenticationService implements OnInit {
   onLogout: Subject<any> = new Subject();
   onCurrentUser: Subject<any> = new Subject();
   currentUser: User;
+  mobilePhone: any;
 
   constructor(
     private http: HttpClient,
@@ -36,12 +36,11 @@ export class DrvnAuthenticationService implements OnInit {
   getCurrentDriverInfo() {
     return this.http.get(environment.appUrl + 'getCurrentDriverInfo').toPromise()
       .then((response_user: any) => {
-          this.storage.set('currentUser', JSON.stringify(response_user));
-          this.currentUser = response_user;
-          this.onLogin.next(this.currentUser);
-          return response_user;
-      }, error =>
-      {
+        this.storage.set('currentUser', JSON.stringify(response_user));
+        this.currentUser = response_user;
+        this.onLogin.next(this.currentUser);
+        return response_user;
+      }, error => {
         return null
       });
   }
@@ -87,21 +86,14 @@ export class DrvnAuthenticationService implements OnInit {
   }
 
   getAuthToken() {
-    if (this.currentToken === 'stale_auth_token') {
-        if (this.storage.get('accessInfo') !== null) {
-          this.storage.get('accessInfo').then((val) => {
-            if(val){
-              this.currentToken = JSON.parse(val).access_token;
-            }
-          });
-        }
-    }
-    return this.currentToken;
+    return this.storage.get('accessInfo');
   }
 
+
   sendCode(mobile_phone) {
-    return this.http.get(environment.noLoginUrl + 'da/sendLoginPassword?phone='+mobile_phone)
-    .toPromise();
+    this.mobilePhone = mobile_phone;
+    return this.http.get(environment.noLoginUrl + 'da/sendLoginPassword?phone=' + mobile_phone)
+      .toPromise();
   }
 
 

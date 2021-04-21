@@ -66,7 +66,7 @@ export class UtilService {
   }
 
   goForward(route, data = null) {
-    this.navCtrl.navigateForward([route, data]);
+    this.navCtrl.navigateForward(route);
   }
 
   async createAlert(header, backdropDismiss, message, buttonOptions1, buttonOptions2?): Promise<HTMLIonAlertElement> {

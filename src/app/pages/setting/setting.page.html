@@ -10,10 +10,10 @@
 <ion-content class="contentBgColor" *ngIf="loggedInUser.id">
   <ion-item lines="none" class="ion-padding-vertical" (click)="goToProfile()">
     <ion-avatar slot="start" class="profile">
-      <img [src]="loggedInUser.profile_img ? loggedInUser.profile_img : 'assets/userDefault.png'">
+      <img [src]="storageUrl + loggedInUser.avatar_url">
     </ion-avatar>
     <div class="ion-margin-start">
-      <h4 class="textBold ion-no-margin" >{{loggedInUser.name}}</h4>
+      <h4 class="textBold ion-no-margin" >{{loggedInUser.first_name}}  {{loggedInUser.last_name}}</h4>
 
     </div>
     <img src="assets/arrow-point-to-right.png" slot="end" class="rightArrow">

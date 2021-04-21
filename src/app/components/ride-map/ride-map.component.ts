@@ -28,7 +28,7 @@ export class RideMapComponent implements OnInit, OnChanges {
   constructor(private geolocationService: GeolocationService) { }
 
   ngOnInit() {
-    //this.initMap();
+    this.initMap();
   }
 
   initMap() {

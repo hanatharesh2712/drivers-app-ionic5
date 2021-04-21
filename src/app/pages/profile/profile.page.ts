@@ -1,3 +1,5 @@
+import { User } from '@app/models/user';
+import { DrvnAuthenticationService } from './../../services/auth/auth.service';
 
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
@@ -13,6 +15,7 @@ import { MenuController } from '@ionic/angular';
 import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { Driver } from '@app/models/driver';
 import { UtilService } from '@app/services/util/util.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-profile',
@@ -20,13 +23,14 @@ import { UtilService } from '@app/services/util/util.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  public loggedInUser: Driver;
+  public loggedInUser: User;
+  storageUrl: string = environment.storageUrl;
   constructor(
-    private userProvider: InitUserProvider,
+    private authService: DrvnAuthenticationService,
     private util: UtilService,
     private menu: MenuController
   ) {
-    this.loggedInUser = this.userProvider.getUserData();
+    this.loggedInUser = this.authService.currentUser;
     this.menu.close();
   }
 

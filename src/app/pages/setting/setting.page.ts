@@ -1,3 +1,5 @@
+import { User } from '@app/models/user';
+import { AuthenticationService } from '@app/services/api/firebase-authentication.service';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -11,8 +13,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@env/environment';
 import { UtilService } from '@app/services/util/util.service';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { Driver } from '@app/models/driver';
+import { DrvnAuthenticationService } from '@app/services/auth/auth.service';
 
 @Component({
   selector: 'app-setting',
@@ -20,16 +22,16 @@ import { Driver } from '@app/models/driver';
   styleUrls: ['./setting.page.scss'],
 })
 export class SettingPage implements OnInit {
-  public loggedInUser: Driver;
+  public loggedInUser: User;
   public driverDocuments: Array<any> = [];
   public otherDetails: Array<any> = [];
-
+  storageUrl: string = environment.storageUrl;
   constructor(
     private util: UtilService,
-    private userProvider: InitUserProvider) { }
+    private authService: DrvnAuthenticationService) { }
 
   ngOnInit() {
-    this.loggedInUser = this.userProvider.getUserData();
+    this.loggedInUser = this.authService.currentUser;
     this.driverDocuments = environment.DRIVER_DOCUMENT_SETTINGS;
     this.otherDetails = environment.OTHER_SETTINGS;
   }

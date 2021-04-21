@@ -54,6 +54,8 @@ export class AppComponent {
     }
   ];
   public loggedInUser: User;
+  storageUrl: string = environment.storageUrl;
+
   constructor(
     public platform: Platform,
     public splashScreen: SplashScreen,
@@ -73,11 +75,13 @@ export class AppComponent {
 
     this.authService.getCurrentDriverInfo().then(response => {
       if (response) {
-        this.util.goToNew('/home');
+       // this.util.goToNew('/home');
+      }
+      else
+      {
+        this.util.goToNew('/login');
       }
 
-    }, error => {
-      this.util.goToNew('/login');
     });
 
   }

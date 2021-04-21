@@ -45,6 +45,10 @@ const routes: Routes = [
   { path: 'terms-condictions', loadChildren: () => import('@app/pages/terms-conditions/terms-conditions.module').then(m => m.TermsCondictionsPageModule) },
   { path: 'contact-us', loadChildren: () => import('@app/pages/contact-us/contact-us.module').then(m => m.ContactUSPageModule) },
   { path: 'approved', loadChildren: () => import('@app/pages/approved/approved.module').then(m => m.ApprovedPageModule) },
+  {
+    path: '**',
+    redirectTo: 'home'
+  }
 
 
 ];

@@ -8,34 +8,44 @@ import { GeolocationService } from './../../services/geolocation.service';
  * LICENSE.md file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MouseEvent } from '@agm/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavParams } from '@ionic/angular';
 import { RideService } from '@app/services/ride/ride.service';
 import { APIService } from '@app/services/api/api.service';
 import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { UtilService } from '@app/services/util/util.service';
 import { Driver } from '@app/models/driver';
+import { RideMapComponent } from '@app/components/ride-map/ride-map.component';
+import { Ride } from '@app/models/ride';
+import { NextRideResponse } from '@app/models/rides-wrapper.models';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
-  public loggedInUser: Driver; // user data
-  public listenerId;
-  public driverAvailable;
-  public rideStage;
-  public mapData;
-
+  @ViewChild(RideMapComponent, {static: true}) rideMap: RideMapComponent;
+  map: any;
+  currentPos: Location;
+  driverMarker: any;
+  autofollow: boolean = true;
+  currentUser: any;
+  storageUrl: string = environment.storageUrl;
+  ride: Ride;
+  viewType: 'actual' | 'info' | 'offer' | 'none' = 'none';
+  infoExpanded: boolean;
   constructor(
     private menuCtrl: MenuController,
     private rideService: RideService,
     private api: APIService,
     private userProvider: InitUserProvider,
     private util: UtilService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private ridesService: RideService
   ) {
 
   }
@@ -45,8 +55,37 @@ export class HomePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    console.log('ionviewenter');
     this.menuCtrl.enable(true);
+  // if (this.navParams.get('is_ride_offer')) {
+  //   this.viewType = 'offer';
+  //   this.infoExpanded = true;
+  //   this.handleRide(this.navParams.get('ride'));
+  // }
+  // if (this.navParams.get('is_ride_view')) {
+  //   this.viewType = 'info';
+  // }
+ //   else {
+      this.viewType = 'actual';
+      this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
+        if (response.ride) {
+          this.handleRide(response.ride);
+        }
+      })
+  //  }
+  }
+
+  handleRide(ride) {
+    this.ride = { ...ride };
+  }
+
+  openChildSeatInfo(ev: any) {
+    //let popover = this.popoverController.create(ChildSeatDialogComponent, {
+    //  child_seats: this.ride.child_seats
+    //});
+    //popover.present({
+    //  ev: ev
+    //});
+
   }
 
   ionViewWillLeave() {

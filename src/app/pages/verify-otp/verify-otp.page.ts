@@ -50,7 +50,7 @@ export class VerifyOTPPage implements OnInit {
   }
 
   ngOnInit() {
-    this.phone = this.route.snapshot.paramMap.get("phone")
+    this.phone = this.authService.mobilePhone;
 
     if (!this.phone) {
       this.util.goToNew('signin')

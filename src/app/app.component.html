@@ -9,37 +9,16 @@
               (click)="profile()">
               <div class="driverProfileImage">
                 <ion-avatar slot="start" class="profile">
-                  <img [src]="loggedInUser.profile_img ? loggedInUser.profile_img : 'assets/driver.jpeg'" />
+                  <img src="{{storageUrl + loggedInUser.avatar_url}}">
                 </ion-avatar>
                 <div class="ion-margin-start">
-                  <h3 class="textBold userName ion-no-margin">{{loggedInUser.name}}</h3>
-                  <span class="lightTextColor drivermemberType userDetails">
-                    <ion-icon name="star"></ion-icon>Golden Member
-                  </span>
+                  <h5 class="textBold userName ion-no-margin">{{loggedInUser.first_name}} {{loggedInUser.last_name}}</h5>
+                  <span>{{loggedInUser.partner.company_name}}</span>
                 </div>
               </div>
             </ion-item>
 
-            <ion-card-content class="ion-no-margin ion-no-padding">
-              <div class="cardContent">
-                <div class="driverDetails">
-                  <ion-icon name="time" class="driverStatusIcons"></ion-icon>
-                  <ion-label class="textColor textBold detailsLabel">{{rideService.stats.hoursOnline || 0}}</ion-label>
-                  <p class="detailText ion-text-uppercase ">Hours Online</p>
-                </div>
-                <div class="driverDetails">
-                  <ion-icon name="speedometer" class="driverStatusIcons"></ion-icon>
-                  <ion-label class="textColor textBold detailsLabel ion-text-uppercase">
-                    {{rideService.stats.totalDistance || 0}} KM</ion-label>
-                  <p class="detailText ion-text-uppercase">Total Distance</p>
-                </div>
-                <div class="driverDetails">
-                  <ion-icon name="time" class="driverStatusIcons"></ion-icon>
-                  <ion-label class="textColor textBold detailsLabel">{{rideService.stats.totalRides || 0}}</ion-label>
-                  <p class="detailText ion-text-uppercase">Total Jobs</p>
-                </div>
-              </div>
-            </ion-card-content>
+
           </ion-card>
         </div>
         <!--End of Profile-->
