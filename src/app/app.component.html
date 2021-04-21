@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane contentId="content">
-    <ion-menu contentId="content">
+    <ion-menu contentId="content" *ngIf="loggedInUser" >
       <ion-content class="contentBg">
         <!--Profile-->
         <div class="driverCardBottom">

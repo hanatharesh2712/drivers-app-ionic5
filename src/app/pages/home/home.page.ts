@@ -1,3 +1,4 @@
+import { GeolocationService } from './../../services/geolocation.service';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -34,20 +35,13 @@ export class HomePage implements OnInit {
     private api: APIService,
     private userProvider: InitUserProvider,
     private util: UtilService,
+    private geolocationService: GeolocationService
   ) {
-    this.loggedInUser = this.userProvider.getUserData();
-    this.driverAvailable = this.loggedInUser.available;
-    this.rideStage = this.rideService.rideStage;
-    this.mapData = this.rideService.mapData;
+
   }
 
   async ngOnInit() {
-    const rideId = await this.rideService.getRideId();
-    if (rideId) {
-      this.rideService.checkIfExistingRide(rideId);
-    } else {
-      this.rideService.load();
-    }
+    this.geolocationService.initTracking();
   }
 
   ionViewDidEnter() {
@@ -56,46 +50,13 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillLeave() {
-    this.rideService.clearIncomingRideListener();
-    this.rideService.clearRideStatusListener();
+
   }
 
   async cancelRide() {
-    await this.rideService.showDriverCanceledRideAlert();
-  }
-
-  mapReady(a, event) {
-    if (event) {
-      console.log('event if');
-    }
-  }
-
-  markerDragEnd($event: MouseEvent) {
-    console.log(
-      'dragEnd',
-      $event,
-      '$event.coords.lat',
-      $event.coords.lat,
-      '$event.coords.lng',
-      $event.coords.lng
-    );
-    this.rideService.mapData.lat = $event.coords.lat;
-    this.rideService.mapData.lng = $event.coords.lng;
-  }
-
-  driverStatusChange(event) {
-    if (event.detail.checked) {
-      if (!this.listenerId) { this.rideService.setIncomingRideListener(); }
-    } else {
-      this.rideService.clearIncomingRideListener();
-    }
-    this.loggedInUser.available = event.detail.checked;
-    this.api.updateDriverData(this.loggedInUser.id, { available: event.detail.checked })
-      .subscribe(driver => {
-        console.log(driver);
-      }, err => console.log(err));
 
   }
+
 
   goToCustomerDetail() {
     this.util.goForward('/customer-detail');

@@ -1,3 +1,4 @@
+import { DrvnAuthenticationService } from './services/auth/auth.service';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -59,60 +60,50 @@ export class AppComponent {
     public statusBar: StatusBar,
     public util: UtilService,
     public userProvider: InitUserProvider,
-    public rideService: RideService
+    public rideService: RideService,
+    private authService: DrvnAuthenticationService
   ) {
     this.initializeApp();
-    this.loggedInUser = this.userProvider.getUserData();
-    console.log('user', this.loggedInUser);
+    this.authService.onLogin.subscribe(data => {
+      if (data) {
+        this.loggedInUser = data;
+      }
 
-    if (!this.loggedInUser.id) {
+    });
+
+    this.authService.getCurrentDriverInfo().then(response => {
+      if (response) {
+        this.util.goToNew('/home');
+      }
+
+    }, error => {
       this.util.goToNew('/login');
-    } else if (!this.loggedInUser['approved']) {
-      this.util.goToNew('/approved');
-    } else {
-      this.util.goToNew('/home');
-    }
+    });
+
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      if (environment.GOOGLE_MAPS_API_KEY && environment.GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY') {
-        this.showAPIKeyAlert();
-      }
+
     });
   }
 
   profile() {
-    this.util.goForward('/profile');
+    this.util.goForward('profile');
   }
 
   redirectTo(page) {
-    this.util.goForward(`/${page.url}`);
+    this.util.goForward(`${page.url}`);
   }
 
   logout() {
     this.userProvider.logout().then(res => {
       console.log(res);
-      this.util.goToNew('/login');
+      this.util.goToNew('login');
     });
   }
 
-  async showAPIKeyAlert() {
 
-    const cancelAlert = await this.util.createAlert(
-      'Wait!',
-      false,
-      'You have not entered your Maps API key in environment. Make sure you enter the API key in both debug and prod environment, config.xml and package.json. Read more in the documentation or README.md of source code.',
-      {
-        text: 'Ok',
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: async () => {
-        }
-      }
-    );
-    await cancelAlert.present();
-  }
 }

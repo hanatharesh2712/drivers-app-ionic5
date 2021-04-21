@@ -1,3 +1,4 @@
+import { DrvnAuthenticationService } from './../../services/auth/auth.service';
 
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
@@ -9,14 +10,16 @@
  */
 
 
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { UtilService } from '@app/services/util/util.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-verify-otp',
   templateUrl: './verify-otp.page.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./verify-otp.page.scss'],
 })
 export class VerifyOTPPage implements OnInit {
@@ -29,10 +32,17 @@ export class VerifyOTPPage implements OnInit {
   public otpInput2: any;
   public otpInput3: any;
   public otpInput4: any;
+  verificationForm: any;
+  phone: string;
+  code: any;
 
   constructor(
     private util: UtilService,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private _fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: DrvnAuthenticationService
   ) {
     // this.inputFocus1 = true;
     this.inputFocus2 = true;
@@ -40,45 +50,40 @@ export class VerifyOTPPage implements OnInit {
   }
 
   ngOnInit() {
-  }
+    this.phone = this.route.snapshot.paramMap.get("phone")
 
-  verify() {
-    this.util.goToNew('/home');
-  }
-
-  onchange(num) {
-    console.log('change', num, typeof num);
-    if (num === 1) {
-      this.inputFocus1 = false;
-      this.inputFocus2 = true;
-    } else if (num === 2) {
-      this.inputFocus3 = true;
-    } else if (num === 3) {
-      this.inputFocus4 = true;
-    } else {
-      this.inputFocus1 = false;
-      this.inputFocus2 = false;
-      this.inputFocus3 = false;
-      this.inputFocus4 = false;
+    if (!this.phone) {
+      this.util.goToNew('signin')
     }
 
-  }
-  next(el, val) {
-    const numberRegex = /^[0-9\s]*$/;
-    const regexp = /^\S*$/;
-    if (val === '1' && numberRegex.test(this.otpInput1) && regexp.test(this.otpInput1)) {
-      el.setFocus();
-    } else if (val === '2' && numberRegex.test(this.otpInput2) && regexp.test(this.otpInput2)) {
-      el.setFocus();
-    } else if (val === '3' && numberRegex.test(this.otpInput3) && regexp.test(this.otpInput3)) {
-      el.setFocus();
-    }
 
   }
-  preview(el) {
-    if (el === 'otp4') {
-      el.setFocus();
-    }
+
+  onOtpChange(otp) {
+    this.code = otp;
+  }
+
+
+
+  verification() {
+    this.authService.login(this.phone, this.code)
+      .then(response => {
+        this.util.goToNew('home');
+      }).catch(async (err) => {
+        let error_msg = 'An error ocurred, try again later.';
+        if (err.status == 401) {
+          error_msg = 'Invalid code';
+        }
+        let alert = await this.util.createAlert('Sign in', true, error_msg, {
+          text: 'Ok',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: async () => {
+
+          }
+        });
+        await alert.present();
+      });
   }
 
 }

@@ -37,7 +37,6 @@ export class CustomerDetailPage implements OnInit {
   ngOnInit() {
     this.tripPayments = environment.TRIP_PAYMENTS;
     this.loggedInUser = this.userProvider.getUserData();
-    this.mapData = this.rideService.mapData;
   }
 
   startNavigationToPickup() {

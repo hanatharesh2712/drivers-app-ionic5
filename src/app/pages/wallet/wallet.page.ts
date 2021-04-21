@@ -54,7 +54,7 @@ export class WalletPage implements OnInit, OnChanges {
         for (let i = 0; i < this.walletData.length; i++) {
           total = total + this.walletData[i].fare
         }
-        this.rideService.stats.totalFare = total;
+      //  this.rideService.stats.totalFare = total;
         loader.dismiss();
       });
   }

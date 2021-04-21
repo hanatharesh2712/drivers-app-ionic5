@@ -1,0 +1,8 @@
+<div class="child-seat-dialog-content">
+    <h5>Child seat required!</h5>
+    <ul>
+      <li *ngFor="let childSeat of child_seats" >
+        {{ childSeat.count + 'x ' + childSeat.type }}
+      </li>
+    </ul>
+</div>

@@ -26,7 +26,6 @@ import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { environment } from '@env/environment';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
@@ -36,7 +35,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { AgmDirectionModule } from 'agm-direction';
+import { DrvnAuthenticationService } from './services/auth/auth.service';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GeolocationService } from './services/geolocation.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +46,7 @@ import { AgmDirectionModule } from 'agm-direction';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    IonicStorageModule.forRoot({ name: 'driverdb' }),
+    IonicStorageModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: environment.GOOGLE_MAPS_API_KEY,
       libraries: ['places']
@@ -69,7 +71,9 @@ import { AgmDirectionModule } from 'agm-direction';
     LaunchNavigator,
     SocialSharing,
     InAppBrowser,
+    DrvnAuthenticationService,
     AuthenticationService,
+    GeolocationService,
     FirestoreService,
     StorageService,
     APIService,

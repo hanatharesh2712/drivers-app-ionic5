@@ -4,10 +4,10 @@ import { map } from "rxjs/operators";
 import { Subject } from 'rxjs';
 import { User } from '@app/models/user';
 import { environment } from '@env/environment';
-
+import { Storage } from '@ionic/storage';
 @Injectable()
 
-export class AuthenticationService implements OnInit {
+export class DrvnAuthenticationService implements OnInit {
   public authTokenStale = 'stale_auth_token';
   public authTokenNew = 'new_auth_token';
   public currentToken: string;

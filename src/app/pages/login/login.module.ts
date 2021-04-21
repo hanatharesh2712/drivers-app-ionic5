@@ -1,3 +1,4 @@
+import { DirectivesModule } from './../../directives/directives.module';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -28,6 +29,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    DirectivesModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

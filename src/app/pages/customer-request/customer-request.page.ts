@@ -43,11 +43,9 @@ export class CustomerRequestPage implements OnInit {
   }
 
   requestAccept() {
-    this.rideService.userCard = true;
     this.util.goToNew('/home');
   }
   requestCancel() {
-    this.rideService.userCard = false;
     this.util.goToNew('/home');
   }
 

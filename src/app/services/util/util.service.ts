@@ -65,8 +65,8 @@ export class UtilService {
     this.navCtrl.navigateBack(route);
   }
 
-  goForward(route) {
-    this.navCtrl.navigateForward(route);
+  goForward(route, data = null) {
+    this.navCtrl.navigateForward([route, data]);
   }
 
   async createAlert(header, backdropDismiss, message, buttonOptions1, buttonOptions2?): Promise<HTMLIonAlertElement> {
@@ -128,11 +128,6 @@ export class UtilService {
     });
   }
 
-
-  async getCurrentLatLng() {
-    const { coords } = await this.geolocation.getCurrentPosition();
-    return coords;
-  }
 
   async getGooglePlaceAutoCompleteList(searchText, geolocation, country) {
     const service = new window['google'].maps.places.AutocompleteService();

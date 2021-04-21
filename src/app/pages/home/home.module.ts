@@ -1,3 +1,4 @@
+import { RideMapModule } from './../../components/ride-map/ride-map.module';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -26,6 +27,7 @@ import { HomePage } from './home.page';
     IonicModule,
     AgmCoreModule,
     AgmDirectionModule,
+  RideMapModule,
     RouterModule.forChild([
       {
         path: '',

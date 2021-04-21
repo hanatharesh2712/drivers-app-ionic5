@@ -10,12 +10,13 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
 import { VerifyOTPPage } from './verify-otp.page';
+import { NgOtpInputModule } from  'ng-otp-input';
 
 const routes: Routes = [
   {
@@ -28,7 +29,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    NgOtpInputModule,
     IonicModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [VerifyOTPPage]

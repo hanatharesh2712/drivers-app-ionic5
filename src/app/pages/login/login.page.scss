@@ -19,18 +19,20 @@ ion-header.header {
     width: 100%;
 }
 
+.logo
+{
+  max-width: 200px;
+  margin-bottom: 24px;
+}
 .loginContent {
-    background: url("assets/img/Home.png") no-repeat;
+  //  background: url("assets/img/Home.png") no-repeat;
     background-size: cover !important;
     background-position: center !important;
     height: 100%;
     width: 100%;
-    top: 0;
-    right: 0;
-    left: 0;
-    position: absolute;
+
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     padding: 20px;
     flex-direction: column;
@@ -53,7 +55,7 @@ ion-list
     border: 1px solid #eaeaee;
     border-radius: 10px;
     font-size: 14px;
-    margin-bottom: 15px;
+    margin: 15px 0px;
     padding: 10px !important;
 }
 
