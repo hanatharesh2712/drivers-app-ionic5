@@ -1,0 +1,97 @@
+/**
+ * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
+ *
+ * Copyright © 2019-present Enappd. All rights reserved.
+ *
+ * This source code is licensed as per the terms found in the
+ * LICENSE.md file in the root directory of this source tree.
+ */
+
+.contentBg {
+  --background: #fff !important;
+}
+
+.driverlocationIcon {
+  bottom: 190px;
+
+  .locationIcon {
+    font-size: 26px;
+  }
+  ion-fab-button {
+    --background: #fff;
+    --color: #000;
+    height: 40px;
+    width: 40px;
+  }
+}
+
+.driverCard {
+  position: relative;
+  width: 100%;
+  // border-radius: 11px;
+  padding-bottom: 5%;
+  box-shadow: none;
+  background: #ffd524;
+  border-radius: 0;
+}
+
+.cardContent {
+  display: flex;
+  justify-content: space-around;
+  border-radius: 6px;
+  padding: 3%;
+
+  .driverDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .driverStatusIcons {
+    font-size: 26px;
+    color: #c3a527;
+  }
+  .detailText {
+    color: #c3a527;
+    font-size: 10px;
+  }
+  .detailsLabel {
+    font-size: 18px;
+  }
+}
+
+.profile {
+  width: 60px;
+  height: 60px;
+  margin: 0;
+  border: 2px solid #fff;
+}
+.drivermemberType {
+  color: #ffc107;
+  font-size: 11px;
+}
+.userDetails {
+  background: #fff;
+  border-radius: 90px;
+  display: flex;
+  padding-left: 6px;
+  padding-right: 6px;
+  align-items: center;
+  height: 1.8em;
+  padding-bottom: 0;
+}
+.userName {
+  letter-spacing: 1px;
+}
+
+.driverProfileDetails {
+  padding: 15px 26px;
+  padding-bottom: 0;
+}
+
+.driverProfileImage {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}

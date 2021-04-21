@@ -1,0 +1,194 @@
+/**
+ * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
+ *
+ * Copyright © 2019-present Enappd. All rights reserved.
+ *
+ * This source code is licensed as per the terms found in the
+ * LICENSE.md file in the root directory of this source tree.
+ */
+
+.line-breaker {
+  white-space: pre-line;
+}
+.input-wrap {
+  display: flex;
+  input {
+    flex: 1;
+    border: 0;
+    border-style: solid;
+    padding: 10px;
+  }
+}
+.message-wrap {
+  // padding: 0 10px;
+  .message {
+    position: relative;
+    padding: 7px 0;
+    .user-img {
+      position: absolute;
+      object-fit: cover;
+      border-radius: 45px;
+      width: 45px;
+      height: 45px;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
+    }
+    .msg-detail {
+      width: 100%;
+      display: inline-block;
+      p {
+        margin: 0;
+      }
+      .msg-info {
+        p {
+          font-size: 0.8em;
+          color: #888;
+        }
+      }
+      .msg-content {
+        position: relative;
+        margin-top: 5px;
+        border-radius: 5px;
+        padding: 8px;
+        border: 1px solid #ddd;
+        width: auto;
+        max-width: 65%;
+        span.triangle {
+          border-radius: 2px;
+          height: 8px;
+          width: 8px;
+          top: 12px;
+          display: block;
+          border-style: solid;
+          border-color: #ddd;
+          border-width: 1px;
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+          position: absolute;
+        }
+      }
+    }
+  }
+  .message-left {
+    .msg-content {
+      float: left;
+    }
+    .msg-detail {
+      // padding-left: 60px;
+    }
+    .user-img {
+      left: 0;
+    }
+    .msg-content {
+      color: #5d593b;
+      background: #fdfefe;
+    }
+  }
+  .message-right {
+    .msg-detail {
+      // padding-right: 60px;
+      .msg-info {
+        text-align: right;
+      }
+    }
+    .user-img {
+      right: 0;
+    }
+    .msg-content {
+      float: right;
+      color: #5d593b;
+      background: #fed62f;
+    }
+  }
+}
+
+.avatarImg {
+  border-radius: 50%;
+  width: 34px;
+  border: 1px solid black;
+  height: 34px;
+  object-fit: cover;
+}
+
+.userProdDetail {
+  border: 5px solid gray !important;
+  padding: 0px;
+}
+
+.rate {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 0px;
+}
+
+.proImg {
+  height: 65px;
+  object-fit: cover;
+  width: 70px;
+  border-radius: 5%;
+}
+
+.detail {
+  font-size: 16px;
+  color: rgb(59, 89, 152) !important;
+  font-weight: bold;
+}
+
+.msgScroll {
+  width: 100% !important;
+  height: 50px !important;
+  margin-left: 0px !important;
+  // margin-bottom:6px !important;
+  background-color: white;
+  margin-top: 0px !important;
+}
+
+.rowScroll {
+  margin-top: 7px !important;
+  padding-left: 4px;
+}
+
+.msgSpace {
+  margin-right: 8px !important;
+}
+
+.iconMsg {
+  background-color: transparent !important;
+  margin-right: -12px !important;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.sendbtn {
+  margin-top: -12px;
+  font-size: 30px;
+}
+
+.placeholder-text {
+  // font-size: 20px !important;
+}
+
+.backbtn {
+  margin-right: 10px !important;
+  font-size: 3.4rem !important;
+  color: black !important;
+}
+.send-btn {
+  opacity: 1 !important;
+}
+.input-container {
+  width: 80%;
+}
+
+.input-message {
+  border: 1px solid #d8d8e0;
+  border-radius: 10px;
+}
+
+.footer {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+}

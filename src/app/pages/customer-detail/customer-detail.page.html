@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ride #{{rideService.rideInfo.id}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content slot="fixed">
+  <ion-card class="userCard ion-no-margin" *ngIf="rideService.rideUser.id">
+    <ion-card-header color="light" class="userCardHeader dFlex">
+      <ion-thumbnail>
+        <img [src]="rideService.rideUser.profile_img" class="userIcon">
+      </ion-thumbnail>
+      <div class="ion-padding-horizontal">
+        <div>
+          <ion-label>{{rideService.rideUser.name}}</ion-label>
+        </div>
+        <div class="dFlex ion-align-items-center">
+          <ion-button color="primary" shape="round"
+            class="textBold boxShadow fontSmall userDetails ion-text-capitalize ion-no-padding">Cash</ion-button>
+          <ion-button color="primary" shape="round"
+            class="textBold boxShadow fontSmall userDetails ion-text-capitalize ion-no-padding">No Coupon</ion-button>
+        </div>
+      </div>
+      <div class="userPayDetails ion-float-right ion-padding-start">
+        <div>
+          <ion-label class="textBold textMid"> $ {{rideService.rideInfo.fare | number : '1.2-2'}}</ion-label>
+        </div>
+        <div>
+          <ion-label class="textBold lightTextColor fontSmall">{{rideService.rideInfo.distance}} KM</ion-label>
+        </div>
+      </div>
+
+
+    </ion-card-header>
+    <ion-card-content color="light" class="ion-no-margin">
+      <div class="borderBottom paddingVertical">
+        <div class="detailText fontSmall" class="ion-text-uppercase">Pick Up</div>
+        <ion-label class="detailsLabel textColor textBold">
+          {{mapData.originAddress}}
+        </ion-label>
+      </div>
+
+      <div class="borderBottom paddingVertical">
+        <div class="detailText fontSmall" class="ion-text-uppercase">Drop Off</div>
+        <ion-label class="detailsLabel  textColor textBold">
+          {{mapData.destinationAddress}}
+        </ion-label>
+      </div>
+
+      <div class="borderBottom paddingVertical">
+        <div class="detailText fontSmall ion-text-uppercase">Note</div>
+        <ion-label class="detailsLabel  textColor textBold">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Deleniti illo ut, nulla et natus </ion-label>
+      </div>
+      <div class="borderBottom paddingVertical">
+        <div class="detailText fontSmall ion-text-uppercase">Trip Fare</div>
+
+        <ion-list class="ion-no-padding ion-no-margin">
+          <ion-item lines="none" *ngFor="let trip of tripPayments" class="tripItems">
+            <h6 slot="start" class="detailsLabel  textColor textBold ion-no-padding ion-no-margin">{{trip.title}}</h6>
+            <span slot="end" class="textBold">{{trip.pay}}</span>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div>
+        <ion-row>
+          <ion-col>
+            <ion-button class="detailsBtn userCall" (click)="callUser(rideService.rideUser.phone)">
+              <div class="contactDetails ion-padding">
+                <ion-icon name="call" class="contactIcon"></ion-icon>
+                <span class="textBold textWhite contactTextSize">Call</span>
+              </div>
+            </ion-button>
+          </ion-col>
+
+          <ion-col>
+            <ion-button class="detailsBtn userMsg" (click)="chatWithUser()">
+              <div class="contactDetails ion-padding">
+                <ion-icon name="chatbubbles" class="contactIcon"></ion-icon>
+                <span class="textBold textWhite contactTextSize">Message</span>
+              </div>
+            </ion-button>
+          </ion-col>
+
+          <ion-col>
+            <ion-button class="detailsBtn userCancel" (click)="userCancel()">
+              <div class="contactDetails ion-padding">
+                <ion-icon name="trash" class="contactIcon"></ion-icon>
+                <span class="textBold textWhite contactTextSize">Cancel</span>
+              </div>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary" class="ion-text-center" (click)="startNavigationToPickup()">
+    <ion-title class="footerTitle textMid textBold">Go To Pick Up</ion-title>
+  </ion-toolbar>
+</ion-footer>

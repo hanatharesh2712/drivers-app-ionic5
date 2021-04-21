@@ -1,0 +1,43 @@
+/**
+ * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
+ *
+ * Copyright © 2019-present Enappd. All rights reserved.
+ *
+ * This source code is licensed as per the terms found in the
+ * LICENSE.md file in the root directory of this source tree.
+ */
+
+ion-header.header {
+  height: 200px;
+
+  ion-toolbar {
+    height: 200px;
+  }
+}
+
+ion-button {
+  margin: 0 !important;
+}
+
+.loginContent {
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  top: 120px;
+}
+
+.cardHeader {
+  background: #fff;
+  .headerText {
+    font-size: 26px;
+  }
+}
+
+ion-icon {
+  font-size: 120px;
+  text-align: center;
+}
+
+ion-card-content {
+  font-size: 20px;
+}

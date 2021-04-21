@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" color="dark">Vehicle Management</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-radio-group>
+    <ion-card class="wallet_card" *ngFor="let item of vehicleList">
+      <ion-item class="no_borderbottom">
+        <ion-avatar class="avatar_class" slot="start">
+          <ion-icon name={{item.icon}} expand="icon-only" class="icon_avatar"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{item.name}}</h2>
+          <p>{{item.car_no}}</p>
+        </ion-label>
+        <ion-radio slot="end" checked></ion-radio>
+      </ion-item>
+    </ion-card>
+  </ion-radio-group>
+</ion-content>
+<ion-footer>
+  <div class="footer-center-item">
+    <div class="footer-center-item-background" (click)="openpageTransition()">
+      <ion-avatar class="avatar_class1">
+        <ion-icon name="add" expand="icon-only" class="icon-avatar1"></ion-icon>
+      </ion-avatar>
+    </div>
+  </div>
+</ion-footer>

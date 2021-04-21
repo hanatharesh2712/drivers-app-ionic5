@@ -1,3 +1,67 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="content">
+    <ion-menu contentId="content">
+      <ion-content class="contentBg">
+        <!--Profile-->
+        <div class="driverCardBottom">
+          <ion-card slot="fixed" class="driverCard fixed ion-no-padding ion-no-margin" color="primary">
+            <ion-item lines="none" color="primary" class="driverProfileDetails ion-padding-vertical"
+              (click)="profile()">
+              <div class="driverProfileImage">
+                <ion-avatar slot="start" class="profile">
+                  <img [src]="loggedInUser.profile_img ? loggedInUser.profile_img : 'assets/driver.jpeg'" />
+                </ion-avatar>
+                <div class="ion-margin-start">
+                  <h3 class="textBold userName ion-no-margin">{{loggedInUser.name}}</h3>
+                  <span class="lightTextColor drivermemberType userDetails">
+                    <ion-icon name="star"></ion-icon>Golden Member
+                  </span>
+                </div>
+              </div>
+            </ion-item>
+
+            <ion-card-content class="ion-no-margin ion-no-padding">
+              <div class="cardContent">
+                <div class="driverDetails">
+                  <ion-icon name="time" class="driverStatusIcons"></ion-icon>
+                  <ion-label class="textColor textBold detailsLabel">{{rideService.stats.hoursOnline || 0}}</ion-label>
+                  <p class="detailText ion-text-uppercase ">Hours Online</p>
+                </div>
+                <div class="driverDetails">
+                  <ion-icon name="speedometer" class="driverStatusIcons"></ion-icon>
+                  <ion-label class="textColor textBold detailsLabel ion-text-uppercase">
+                    {{rideService.stats.totalDistance || 0}} KM</ion-label>
+                  <p class="detailText ion-text-uppercase">Total Distance</p>
+                </div>
+                <div class="driverDetails">
+                  <ion-icon name="time" class="driverStatusIcons"></ion-icon>
+                  <ion-label class="textColor textBold detailsLabel">{{rideService.stats.totalRides || 0}}</ion-label>
+                  <p class="detailText ion-text-uppercase">Total Jobs</p>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <!--End of Profile-->
+
+        <ion-list lines="none" class="ion-padding-top">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" (click)="redirectTo(page)" *ngFor="let page of appPages">
+              <ion-icon slot="start" [name]="page.icon"></ion-icon>
+              <ion-label>
+                {{ page.title }}
+              </ion-label>
+            </ion-item>
+            <ion-item [routerDirection]="'root'" (click)="logout()" lines="none">
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label>
+                Logout
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet [swipeGesture]="false" id="content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

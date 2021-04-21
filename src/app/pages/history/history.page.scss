@@ -1,0 +1,124 @@
+/**
+ * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
+ *
+ * Copyright © 2019-present Enappd. All rights reserved.
+ *
+ * This source code is licensed as per the terms found in the
+ * LICENSE.md file in the root directory of this source tree.
+ */
+
+.weekdays_col {
+  background: darkorange;
+  border: 2px solid darkorange !important;
+  border-radius: 10px !important;
+  margin-right: 10px;
+  padding: 7px !important;
+  color: white !important;
+}
+
+.defaultClass {
+  border: 1px solid #444 !important;
+  border-radius: 10px !important;
+  margin-right: 10px;
+  padding: 7px !important;
+  color: darkorange !important;
+  background: rgba(241, 242, 246, 0.54);
+  color: var(--ion-color-medium) !important;
+}
+
+.header-md:after {
+  left: 0;
+  background-position: left 0 top 0;
+  position: absolute;
+  width: 100%;
+  height: 1px !important;
+  background-repeat: repeat-x;
+  content: "";
+  bottom: 0px;
+}
+
+.week_days {
+  display: flex;
+  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+h6.header_Para {
+  margin: 0 5px 1px !important;
+}
+
+h2 {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+ion-grid {
+  background: white;
+}
+
+.usd_card {
+  --background: #ffd523 !important;
+}
+
+.car_card {
+  --background: #ffd523 !important;
+}
+
+ion-thumbnail.card_jobEarn {
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0px 8px 4px 0px !important;
+}
+
+ion-thumbnail.usercard-thumbnail {
+  width: 48px !important;
+  height: 48px !important;
+  margin: 0px 8px 4px 0px !important;
+  // background: red;
+  border-radius: 8px;
+}
+
+ion-item.car-item {
+  --background: transparent !important;
+  --inner-border-width: 0 0 0px 0 !important;
+}
+
+ion-item.usd_item {
+  --background: transparent !important;
+  --inner-border-width: 0 0 0px 0 !important;
+}
+
+ion-button {
+  --background: #ffd523;
+  --background-focused: #ffd523;
+  --color: var(--ion-color-dark, #222428);
+  --color-activated: var(--ion-color-dark, #222428);
+  --color-focused: var(--ion-color-dark, #222428);
+  text-transform: capitalize;
+  font-weight: normal;
+  font-size: 11px;
+  --border-radius: 18px;
+  height: 1.8em;
+}
+
+.userdetail_Card {
+  border-radius: 8px;
+}
+
+p.userdetail_Card {
+  color: rgba(102, 102, 102, 0.6196078431372549) !important;
+}
+
+.image-border {
+  border-radius: 15px;
+}
+
+agm-map {
+  height: 200px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}

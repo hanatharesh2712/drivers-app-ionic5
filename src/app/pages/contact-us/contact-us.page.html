@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contact Us</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full">
+    <ion-item class="paddingVertical" *ngFor="let contact of contactUs" (click)="openUrl(contact.titleUrl)">
+      <img [src]="contact.imageUrl" alt="enappd-logo" *ngIf="contact.imageUrl" style="width: 40px;">
+      <ion-icon [name]="contact.iconUrl" class="contactIconFontSize" [ngStyle]="{'color':contact.color}"
+        *ngIf="!contact.imageUrl"></ion-icon>
+      <div class="contactText ion-padding-start">
+        <h5 class="contactHeading ion-no-margin">{{contact.title}}</h5>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

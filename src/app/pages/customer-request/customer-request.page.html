@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>You have {{userRequests.length}} new requests.</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="contentBgColor">
+  <div>
+    <ion-card slot="fixed" class="userCard ion-no-padding ion-no-margin ion-margin-bottom"
+      *ngFor="let user of userRequests;let i = index" (click)="userRiderDetails(i)">
+      <ion-card-header color="light" class="userCardHeader dFlex">
+        <ion-thumbnail>
+          <img [src]="user.userImage" class="userIcon">
+        </ion-thumbnail>
+
+        <div class="ion-padding-start">
+          <div>
+            <ion-label class="textBold">{{user.userName}}</ion-label>
+          </div>
+          <div class="dFlex ion-align-items-center">
+            <ion-button size="small" color="primary" shape="round"
+              class="card-Chip textBold boxShadow ion-text-capitalize">{{user.paymentType}}</ion-button>
+            <ion-button size="small" color="primary" shape="round"
+              class="card-Chip textBold boxShadow ion-text-capitalize">{{user.coupon}}</ion-button>
+          </div>
+        </div>
+
+        <div class="headerRightContent ion-float-right ion-padding-start">
+          <div>
+            <ion-label class="textBold">{{user.price}}</ion-label>
+          </div>
+          <div>
+            <ion-label class="textBold lightTextColor">{{user.distance}} KM</ion-label>
+          </div>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content color="light" class="ion-no-margin">
+        <div class="borderBottom paddingVertical">
+          <div class="detailText fontSmall ion-text-uppercase">Pick Up</div>
+          <ion-label class="detailsLabel textColor textBold">{{user.pickupLocation}} </ion-label>
+        </div>
+
+        <div class="borderBottom paddingVertical">
+          <div class="detailText fontSmall ion-text-uppercase">Drop Off</div>
+          <ion-label class="detailsLabel  textColor textBold">{{user.dropOffLocation}} </ion-label>
+        </div>
+
+        <div class="userCardFooter" *ngIf="user.checked">
+          <ion-button color="primary" expand="block" class="textBold boxShadow" (click)="requestAccept()">Accept
+          </ion-button>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+<ion-footer (click)="requestAccept()">
+  <div class="userCardFooter">
+    <ion-button color="primary" expand="block" class="textBold boxShadow" (click)="requestAccept()">
+      Cancel
+    </ion-button>
+  </div>
+</ion-footer>

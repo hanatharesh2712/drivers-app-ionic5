@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" color="dark">
+      History
+    </ion-title>
+  </ion-toolbar>
+  <ion-grid class="ion-padding-vertical">
+    <ion-row>
+      <div class="week_days">
+        <div *ngFor="let week of monthDays; let i; of: index"
+          [ngClass]="selected == i ? 'weekdays_col' : 'defaultClass'" (click)="weekChecked(i)">
+          <ion-label class="ion-text-center">
+            <h6>{{ week.day }}</h6>
+            <h6 class="header_Para">{{ week.date }}</h6>
+          </ion-label>
+        </div>
+      </div>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content>
+  <ion-row class="ion-padding-vertical">
+    <ion-col size="6">
+      <ion-card class="car_card">
+        <ion-item class="car-item">
+          <ion-thumbnail slot="start" class="card_jobEarn">
+            <ion-img src="assets/img/cab.png"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <p>Total Jobs</p>
+            <h2 *ngIf="rides && rides.length">{{ rides.length}}</h2>
+            <h2 *ngIf="!rides || !rides.length">0</h2>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+    <ion-col size="6">
+      <ion-card class="usd_card">
+        <ion-item class="usd_item">
+          <ion-thumbnail slot="start" class="card_jobEarn">
+            <ion-img src="assets/img/badge.png"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <p>Earned</p>
+            <h2>${{totalEarning}}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-card *ngFor="let ride of rides">
+    <div ion-fixed class="map">
+      <agm-map [latitude]="ride.origin.lat" [longitude]="ride.origin.lng" gestureHandling="cooperative">
+        <agm-direction [origin]="ride.origin" [destination]="ride.destination"></agm-direction>
+      </agm-map>
+    </div>
+
+    <ion-card-content class="content">
+      <span *ngIf="ride.createdAt">{{ ride.createdAt.toDate() | date }}</span>
+      <span *ngIf="!ride.createdAt">Date not available</span>
+      <span>$ {{ ride.fare }}</span></ion-card-content>
+  </ion-card>
+</ion-content>

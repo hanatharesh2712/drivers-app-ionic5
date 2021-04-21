@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" (click)="shareAlert()">
+      <ion-button fill="clear" class="ion-text-capitalize" color="secondary">Next</ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" color="dark">Invite Friends</ion-title>
+  </ion-toolbar>
+  <ion-searchbar placeholder="Search" class="searcbar" color="secondary" inputmode="search">
+    <ion-icon name="mic" expand="icon-only" class="searchbar_icon"></ion-icon>
+  </ion-searchbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-radio-group>
+      <ion-item *ngFor="let data of contactList">
+        <ion-avatar slot="start" class="usercard_avatar">
+          <ion-img src={{data.image}} class="image-border"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{data.name}}</h2>
+          <p color="medium">{{data.button1}}</p>
+        </ion-label>
+        <ion-radio slot="end" checked color="secondary"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>

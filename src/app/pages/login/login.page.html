@@ -1,0 +1,29 @@
+<ion-content>
+  <div  class="loginContent ion-padding">
+    <ion-card   class="loginCard ion-no-margin ion-margin-top ">
+      <ion-card-header class="cardHeader">
+        <ion-card-title class="headerText"><b>Login</b> with your <br />
+          credentials <br />
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content   class="cardContents ion-padding-top ion-no-padding ">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-input class="placeholder-text inputField ion-padding-start" type="text" placeholder="name@example.com" [(ngModel)]="email"
+               clearInput></ion-input>
+          </ion-item>
+
+          <div class="ion-padding-vertical ion-padding-horizontal" >
+            <ion-button color="dark" expand="block" [disabled]="disabled" class="btnSubmit" (click)="login()">Next
+              <span *ngIf="spinner">
+                <ion-spinner name="lines"></ion-spinner>
+              </span>
+            </ion-button>
+          </div>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

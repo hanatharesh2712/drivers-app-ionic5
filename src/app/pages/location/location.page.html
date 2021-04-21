@@ -1,0 +1,22 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>location</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding ion-text-center">
+  <div class="locationSection">
+    <img src="assets/locations.png" alt="" class="liveTrackingImg">
+    <div class="ion-margin-bottom">
+      <h1 class="textBold">Enable Your Location</h1>
+      <span class="textsliderfont">Choose your location to start finding customer requests around you</span>
+    </div>
+    <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical">
+      <ion-button color="primary" class="textSmall lightTextColor textBold ion-text-uppercase" (click)="locationTracking()" >
+        Use my location </ion-button>
+    </div>
+    <div class="ion-padding-horizontal ion-margin-horizontal">
+      <ion-button fill="clear" class="textSmall lightTextColor" (click)="skip()">Skip for now</ion-button>
+    </div>
+  </div>
+</ion-content>

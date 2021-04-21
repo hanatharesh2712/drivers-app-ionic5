@@ -1,26 +1,68 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
+/**
+ * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
+ *
+ * Copyright © 2019-present Enappd. All rights reserved.
+ *
+ * This source code is licensed as per the terms found in the
+ * LICENSE.md file in the root directory of this source tree.
  */
 
-/* Core CSS required for Ionic components to work properly */
+// http://ionicframework.com/docs/theming/
 @import "~@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
 
-/* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+@import url("https://fonts.googleapis.com/css?family=PT+Sans");
+
+ion-app.ion-page {
+    font-family: "PT Sans", sans-serif;
+}
+
+ion-title {
+    margin-right: 32px !important;
+}
+ion-content {
+    --background: #f0f4f9 !important;
+}
+h3 {
+    font-weight: bold !important;
+}
+.searchbar-input {
+    background: #fff !important;
+    border-radius: 30px !important;
+    height: 40px !important;
+    max-width: 400px;
+    font-size: 1.25em !important;
+    border: 1px solid transparent;
+}
+.searchbar-clear-icon.sc-ion-searchbar-md {
+    margin-right: 25px !important;
+}
+.action-sheet-group.sc-ion-action-sheet-md:first-child {
+    padding-top: 6px;
+    border-radius: 10px !important;
+    margin: 10px !important;
+}
+.action-sheet-button.sc-ion-action-sheet-md {
+    padding: 0 16px;
+    position: relative;
+    height: 52px;
+    background: transparent;
+    color: #1589fd !important;
+    font-size: 20px !important;
+}
+.action-sheet-button-inner.sc-ion-action-sheet-md {
+    -ms-flex-pack: start;
+    justify-content: center;
+}
+.action-sheet-group.sc-ion-action-sheet-md:last-child {
+    padding-bottom: 0;
+    margin: 0px 10px 10px 10px !important;
+    border-radius: 10px;
+}

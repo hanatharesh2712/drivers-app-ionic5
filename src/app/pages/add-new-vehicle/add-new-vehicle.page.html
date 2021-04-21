@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" color="dark">Add New Vehicle</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top">
+  <ion-list>
+    <div *ngFor="let item of allVehicleData">
+      <ion-label class="ion-text-uppercase ion-padding-start">{{item.label}}</ion-label>
+      <ion-card class="margin-top-10">
+        <ion-item>
+          <ion-select [interfaceOptions]="customAlertOptions" interface="popover" placeholder={{item.placeholder}}
+            [(ngModel)]="newVechicle[item.label]" (ionChange)="getValueChange()">
+            <ion-select-option value={{selectData.name}} *ngFor="let selectData of item.data;let  i of index">
+              {{selectData.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card>
+    </div>
+    <ion-label class="ion-text-uppercase ion-padding-start">License Plate</ion-label>
+    <ion-card class="margin-top-10">
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="newVechicle.license" placeholder="License Plate No"></ion-input>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-content>
+<ion-footer (click)="addVehicle()">
+  <div class="footer-center-item">
+    <div class="footer-center-item-background">
+      <h2 class="ion-text-uppercase"> COMPLETE</h2>
+    </div>
+  </div>
+</ion-footer>

@@ -1,0 +1,41 @@
+<ion-content class="ion-padding ion-margin-top">
+  <div class="fullDiv">
+    <ion-card class="signupCard ion-no-margin ion-margin-top">
+      <ion-card-header class="cardHeader">
+        <ion-card-title class="headerText"><b>Sign up</b> with <br />
+          email and password
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="cardContents ion-no-padding ion-padding-top">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-input class="placeholder-text inputField ion-padding-start" type="text" placeholder="Full Name"
+              [(ngModel)]="user.name" autofocus="true"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-input class="placeholder-text inputField ion-padding-start" type="text" placeholder="name@example.com"
+              [(ngModel)]="user.email" autofocus="true"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-input class="placeholder-text inputField ion-padding-start" type="password" placeholder="Password"
+              [(ngModel)]="user.password" clearInput></ion-input>
+          </ion-item>
+
+          <div class="ion-padding-vertical ion-padding-horizontal">
+            <ion-button color="dark" expand="block" [disabled]="disabled" class="btnSubmit" (click)="register()">Sign Up
+              <span *ngIf="spinner">
+                <ion-spinner name="lines"></ion-spinner>
+              </span>
+            </ion-button>
+          </div>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    <div class="ion-text-center ion-padding-bottom" (click)="login()" class="footerBottomText">
+      <ion-label>Already have an account? <b>Sign In</b></ion-label>
+    </div>
+  </div>
+</ion-content>

@@ -1,5 +1,5 @@
 {
-  "name": "drvn-drivers-app",
+  "name": "iondriver",
   "integrations": {
     "cordova": {}
   },
