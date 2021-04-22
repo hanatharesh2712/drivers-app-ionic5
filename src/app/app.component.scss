@@ -8,7 +8,10 @@
  */
 
 .contentBg {
-  --background: #fff !important;
+  --background: #1c1c1c  !important;
+  --ion-item-background: #1c1c1c  !important;
+  --ion-item-color: white;
+
 }
 
 .driverlocationIcon {
@@ -25,6 +28,13 @@
   }
 }
 
+.nav-item
+{
+  ion-icon
+  {
+    color: var(--ion-theme-color);
+  }
+}
 .driverCard {
   position: relative;
   width: 100%;

@@ -20,7 +20,7 @@ import { UtilService } from '@app/services/util/util.service';
   styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
-  public phone = '';
+  public phone = '3179833835';
   public spinner = false;
   public disabled = false;
 

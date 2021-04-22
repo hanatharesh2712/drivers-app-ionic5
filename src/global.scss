@@ -20,8 +20,59 @@
 @import "~@ionic/angular/css/flex-utils.css";
 @import url("https://fonts.googleapis.com/css?family=PT+Sans");
 
+
+@font-face {
+    font-family: 'Google Sans';
+    src: url('/assets/font/google-sans/GoogleSans-Regular.woff2') format('woff2'), url('/assets/font/google-sans/GoogleSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Google Sans';
+    src: url('/assets/font/google-sans/GoogleSans-MediumItalic.woff2') format('woff2'), url('/assets/font/google-sans/GoogleSans-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Google Sans';
+    src: url('/assets/font/google-sans/GoogleSans-Bold.woff2') format('woff2'), url('/assets/font/google-sans/GoogleSans-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Google Sans';
+    src: url('/assets/font/google-sans/GoogleSans-BoldItalic.woff2') format('woff2'), url('/assets/font/google-sans/GoogleSans-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Google Sans';
+    src: url('/font/google-sans/GoogleSans-Medium.woff2') format('woff2'), url('/assets/font/google-sans/GoogleSans-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Google Sans';
+    src: url('/assets/font/google-sans/GoogleSans-Italic.woff2') format('woff2'), url('/assets/font/google-sans/GoogleSans-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+
+
+
+
+html
+{
+  font-size: 10px;
+}
 ion-app.ion-page {
-    font-family: "PT Sans", sans-serif;
+    font-family: "Google Sans", sans-serif;
 }
 
 ion-title {
@@ -65,4 +116,19 @@ h3 {
     padding-bottom: 0;
     margin: 0px 10px 10px 10px !important;
     border-radius: 10px;
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
 }

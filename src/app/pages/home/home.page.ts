@@ -10,7 +10,7 @@ import { GeolocationService } from './../../services/geolocation.service';
 
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MouseEvent } from '@agm/core';
-import { MenuController, NavParams } from '@ionic/angular';
+import { MenuController, NavParams, PopoverController } from '@ionic/angular';
 import { RideService } from '@app/services/ride/ride.service';
 import { APIService } from '@app/services/api/api.service';
 import { InitUserProvider } from '@app/services/inituser/inituser.service';
@@ -20,6 +20,7 @@ import { RideMapComponent } from '@app/components/ride-map/ride-map.component';
 import { Ride } from '@app/models/ride';
 import { NextRideResponse } from '@app/models/rides-wrapper.models';
 import { environment } from '@env/environment';
+import { ChildSeatDialogComponent } from '@app/components/child-seat-dialog/child-seat-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -45,7 +46,8 @@ export class HomePage implements OnInit {
     private userProvider: InitUserProvider,
     private util: UtilService,
     private geolocationService: GeolocationService,
-    private ridesService: RideService
+    private ridesService: RideService,
+    private popoverController: PopoverController
   ) {
 
   }
@@ -65,7 +67,8 @@ export class HomePage implements OnInit {
   //   this.viewType = 'info';
   // }
  //   else {
-      this.viewType = 'actual';
+      this.viewType = 'offer';
+      this.infoExpanded = true;
       this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
         if (response.ride) {
           this.handleRide(response.ride);
@@ -78,13 +81,17 @@ export class HomePage implements OnInit {
     this.ride = { ...ride };
   }
 
-  openChildSeatInfo(ev: any) {
-    //let popover = this.popoverController.create(ChildSeatDialogComponent, {
-    //  child_seats: this.ride.child_seats
-    //});
-    //popover.present({
-    //  ev: ev
-    //});
+  async openChildSeatInfo(ev: any) {
+    const popover = await this.popoverController.create({
+      component: ChildSeatDialogComponent,
+      cssClass: 'my-custom-class',
+      event: ev,
+      componentProps: {
+        child_seats: this.ride.child_seats
+      },
+      translucent: true
+    });
+    await popover.present();
 
   }
 

@@ -19,8 +19,10 @@ dark: #222);
 :root {
 
 
+  --ion-theme-background: black;
   --ion-theme-color:  #bb9669;
-
+  --ion-theme-info-color:  #686868;
+  --ion-secondary-bg-color:  #1c1c1c ;
   /** primary **/
   --ion-color-primary: #bb9669;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -94,7 +96,7 @@ dark: #222);
   --ion-color-light-tint: #f5f6f9;
 
   /**Font Family**/
-  --ion-font-family: "PT Sans", sans-serif;
+  --ion-font-family: "Google Sans", sans-serif;
 }
 
 /******Hide map Extra Content*****/
@@ -104,10 +106,35 @@ dark: #222);
 /****** Hide map Extra Content*****/
 
 /********Custom Css******/
+.d-flex
+{
+  display: flex !important;
+  width: 100%;
+
+  &.column
+  {
+    flex-direction: column;
+  }
+
+  .end {
+    margin-left: auto;
+    margin-right: 0;
+    display: block;
+  }
+}
+
+
+.item h3, .item h4, .item h5, .item h6 {
+  margin: 2px 0;
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: normal;
+}
 
 ion-header ion-toolbar {
   --background: black;
-  color: var(--ion-theme-color);
+  color: white;
+
 }
 .header-md:after {
   background-image: none !important;
@@ -174,7 +201,7 @@ ion-header ion-toolbar {
 }
 
 .contentBgColor {
-  --background: #383838  !important;
+  --background: black   !important;
 }
 
 .bgWhite {

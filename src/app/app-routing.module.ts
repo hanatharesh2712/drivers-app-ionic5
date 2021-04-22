@@ -1,4 +1,5 @@
 
+
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -18,6 +19,7 @@ const routes: Routes = [
     loadChildren: () => import('@app/pages/home/home.module').then(m => m.HomePageModule)
   },
   { path: 'wallet', loadChildren: () => import('@app/pages/wallet/wallet.module').then(m => m.WalletPageModule) },
+  { path: 'my-rides', loadChildren: () => import('@app/pages/my_rides/my_rides.module').then(m => m.MyRidesPageModule) },
   { path: 'paymentmethod', loadChildren: () => import('@app/pages/payment-method/payment-method.module').then(m => m.PaymentmethodPageModule) },
   { path: 'profile', loadChildren: () => import('@app/pages/profile/profile.module').then(m => m.ProfilePageModule) },
   { path: 'paymentmethod', loadChildren: () => import('@app/pages/payment-method/payment-method.module').then(m => m.PaymentmethodPageModule) },

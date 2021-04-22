@@ -32,26 +32,16 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'My Wallet',
-      url: '/wallet',
-      icon: 'wallet'
+      title: 'My Rides',
+      url: '/my-rides',
+      icon: 'car'
     },
     {
-      title: 'History',
-      url: '/history',
-      icon: 'time'
+      title: 'My Profile',
+      url: '/profile',
+      icon: 'person-circle-outline'
     },
-    { title: 'Notifications', url: '/notifications', icon: 'notifications' },
-    {
-      title: 'Invite Friends',
-      url: '/invite',
-      icon: 'gift'
-    },
-    {
-      title: 'Settings',
-      url: '/setting',
-      icon: 'settings'
-    }
+
   ];
   public loggedInUser: User;
   storageUrl: string = environment.storageUrl;

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar  hideBackButton="true">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">My Rides</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <div class="ion-padding-horizontal segment-container">
+      <ion-segment value="offers" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="offers">
+          Offers
+        </ion-segment-button>
+        <ion-segment-button value="accepted">
+          Accepted
+        </ion-segment-button>
+        <ion-segment-button value="done">
+          Done
+        </ion-segment-button>
+
+      </ion-segment>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-color">
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-list class="list" no-lines>
+      <ion-item *ngFor="let ride of rides" class="item">
+        <div class="d-flex column">
+          <div class="item_header  d-flex">
+            <div class="profile_details">
+              <h3 class="d-flex">{{ride.pu_date}}, {{ride.pu_time}} <span class="end">Ride #{{ride.ride_id}}</span></h3>
+              <h4 class="d-flex">{{ride.ride_status}}<span class="end">{{ride.service_type}}</span></h4>
+              <h4 class="d-flex">{{ride.passenger_name}}</h4>
+            </div>
+          </div>
+          <div class="rides_details">
+            <div class="d-flex item_box">
+              <ion-icon name="location"></ion-icon>
+              <h6>{{ride.pu_location}}</h6>
+            </div>
+            <div class="d-flex item_box">
+              <ion-icon name="navigate"></ion-icon>
+              <h6>{{ride.do_location}}</h6>
+            </div>
+          </div>
+        </div>
+
+      </ion-item>
+
+    </ion-list>
+</ion-content>
