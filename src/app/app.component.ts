@@ -41,6 +41,11 @@ export class AppComponent {
       url: '/profile',
       icon: 'person-circle-outline'
     },
+    {
+      title: 'Contact Us',
+      url: '/contact',
+      icon: 'headset-outline'
+    },
 
   ];
   public loggedInUser: User;
@@ -56,23 +61,13 @@ export class AppComponent {
     private authService: DrvnAuthenticationService
   ) {
     this.initializeApp();
+    this.loggedInUser = this.authService.currentUser;
     this.authService.onLogin.subscribe(data => {
       if (data) {
         this.loggedInUser = data;
       }
-
     });
 
-    this.authService.getCurrentDriverInfo().then(response => {
-      if (response) {
-       // this.util.goToNew('/home');
-      }
-      else
-      {
-        this.util.goToNew('/login');
-      }
-
-    });
 
   }
 

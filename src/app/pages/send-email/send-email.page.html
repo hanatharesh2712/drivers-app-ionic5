@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Send Email</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list lines="full">
+    <ion-list-header class="contact-title">Please, give us information about your problem. </ion-list-header>
+    <form>
+      <ion-item>
+        <ion-label>Type</ion-label>
+        <ion-select value="reservations" okText="SELECT" cancelText="CANCEL" interface="action-sheet" [(ngModel)]="type" name="type">
+          <ion-select-option value="reservations">Reservations</ion-select-option>
+          <ion-select-option value="billing">Billing</ion-select-option>
+          <ion-select-option value="operations">Operations</ion-select-option>
+          <ion-select-option value="Technical Help">Technical Help</ion-select-option>
+          <ion-select-option value="Other">Other</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-textarea placeholder="Enter more information here..." rows="6"> </ion-textarea>
+      </ion-item>
+
+    </form>
+    <ion-button expand="full" fill="solid" size="large"  color="primary" class="send-btn">
+      SEND EMAIL
+    </ion-button>
+
+
+  </ion-list>
+
+</ion-content>

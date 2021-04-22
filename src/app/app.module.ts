@@ -1,3 +1,4 @@
+import { RouteGuard } from './services/util/route.guard';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -71,6 +72,7 @@ import { AuthHttpInterceptor } from './services/util/http-interceptor';
     NativePageTransitions,
     Camera,
     CallNumber,
+    RouteGuard,
     GoogleMapsAPIWrapper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
@@ -96,5 +98,5 @@ import { AuthHttpInterceptor } from './services/util/http-interceptor';
 export class AppModule { }
 
 export function initUserProviderFactory(provider: DrvnAuthenticationService) {
-  return () => provider.getCurrentDriverInfo();
+  return () => provider.initUser();
 }

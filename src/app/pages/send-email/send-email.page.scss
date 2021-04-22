@@ -8,7 +8,7 @@
  */
 
 
-app-contact-us {
+app-send-email {
 
 
   .descText {
@@ -30,19 +30,17 @@ app-contact-us {
     }
 
     ion-item {
-      text-transform: uppercase;
-      letter-spacing: 1px;
+
       --background: var(--ion-secondary-bg-color);
 
       &:not(:last-child)
       {
-        border-bottom: 1px solid grey;
+       // border-bottom: 1px solid grey;
       }
 
       ion-label {
         display: flex !important;
         align-items: center;
-        height: 50px;
         ion-icon {
           margin-right: 24px;
           font-size: 2.5rem;
@@ -57,23 +55,18 @@ app-contact-us {
 
       }
 
+
     }
 
-    .available-text
-    {
-      color: white;
-    text-align: center;
-    font-size: 1.5rem;
-    margin-top: 0 auto;
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2rem;
-    }
+    .send-btn
+     {
+      margin: 0px;
+     }
+
+
     .contact-title {
       color: white;
-      font-size: 3rem;
+      font-size: 2rem;
 
     }
   }

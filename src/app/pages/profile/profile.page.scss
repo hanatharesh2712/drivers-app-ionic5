@@ -30,6 +30,10 @@
     }
 }
 
+ion-list
+{
+  background: var(--ion-background);
+}
 ion-item
 {
   --background: var(--ion-secondary-bg-color);
@@ -37,7 +41,7 @@ ion-item
 }
 ion-text
 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-align: right;
   max-width: 70%;
   color: white;

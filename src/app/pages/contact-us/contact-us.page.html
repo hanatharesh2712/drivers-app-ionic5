@@ -1,21 +1,32 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar >
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Contact Us</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list lines="full">
-    <ion-item class="paddingVertical" *ngFor="let contact of contactUs" (click)="openUrl(contact.titleUrl)">
-      <img [src]="contact.imageUrl" alt="enappd-logo" *ngIf="contact.imageUrl" style="width: 40px;">
-      <ion-icon [name]="contact.iconUrl" class="contactIconFontSize" [ngStyle]="{'color':contact.color}"
-        *ngIf="!contact.imageUrl"></ion-icon>
-      <div class="contactText ion-padding-start">
-        <h5 class="contactHeading ion-no-margin">{{contact.title}}</h5>
-      </div>
+  <ion-list lines="none">
+    <ion-list-header class="contact-title">How do you want to contact us?</ion-list-header>
+    <ion-item>
+      <ion-label>
+        <ion-icon name="mail"></ion-icon>
+        Send us an email
+        <ion-icon name="caret-forward"  slot="end" class="go-icon"></ion-icon>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-icon name="call"></ion-icon>
+        Call us
+        <ion-icon name="caret-forward" slot="end" class="go-icon"></ion-icon>
+      </ion-label>
     </ion-item>
   </ion-list>
+  <div class="available-text">
+    Moveo is available to assist you 24/7/365
+  </div>
 </ion-content>

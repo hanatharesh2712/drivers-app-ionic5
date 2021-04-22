@@ -45,7 +45,8 @@ const routes: Routes = [
   { path: 'verify-otp', loadChildren: () => import('@app/pages/verify-otp/verify-otp.module').then(m => m.VerifyOTPPageModule) },
   { path: 'slides', loadChildren: () => import('@app/pages/slides/slides.module').then(m => m.SlidesPageModule) },
   { path: 'terms-condictions', loadChildren: () => import('@app/pages/terms-conditions/terms-conditions.module').then(m => m.TermsCondictionsPageModule) },
-  { path: 'contact-us', loadChildren: () => import('@app/pages/contact-us/contact-us.module').then(m => m.ContactUSPageModule) },
+  { path: 'contact', loadChildren: () => import('@app/pages/contact-us/contact-us.module').then(m => m.ContactUSPageModule) },
+  { path: 'send-email', loadChildren: () => import('@app/pages/send-email/send-email.module').then(m => m.SendEmailPageModule) },
   { path: 'approved', loadChildren: () => import('@app/pages/approved/approved.module').then(m => m.ApprovedPageModule) },
   {
     path: '**',

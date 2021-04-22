@@ -25,7 +25,7 @@ export class MyRidesPageComponent implements OnInit {
 
   segmentChanged(e: any) {
     this.rides = [];
-    this.segmentModel = e.value;
+    this.segmentModel = e.detail.value;
     this.getRides(this.authService.currentUser.id, null);
   }
 
@@ -53,10 +53,10 @@ export class MyRidesPageComponent implements OnInit {
         this.rides = res.filter(ride => ride.is_offer);
         break;
       case 'accepted':
-        this.rides = res.rides.filter(ride => !ride.is_offer && !ride.is_done);
+        this.rides = res.filter(ride => !ride.is_offer && !ride.is_done);
         break;
       case 'done':
-        this.rides = res.rides.filter(ride => ride.is_done);
+        this.rides = res.filter(ride => ride.is_done);
         break;
       default:
         break;

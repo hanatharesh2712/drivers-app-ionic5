@@ -18,6 +18,7 @@ import {
 } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import {_throw as observableThrowError} from 'rxjs/observable/throw';
+import { auth } from 'firebase';
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
@@ -45,9 +46,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     > {
 
         const authService = this.injector.get(DrvnAuthenticationService);
-        return from(authService.getAuthToken()).pipe(
-          switchMap(token => {
-            return next.handle(this.addToken(req, token ? JSON.parse(token).access_token : '')).pipe(
+            return next.handle(this.addToken(req, authService.authToken)).pipe(
               catchError(error => {
                   if (error instanceof HttpErrorResponse) {
                       switch ((<HttpErrorResponse>error).status) {
@@ -67,8 +66,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
                   }
               })
           );
-          })
-        )
 
     }
 

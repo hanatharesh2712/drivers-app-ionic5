@@ -9,18 +9,14 @@
 
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { environment } from '@env/environment';
-
 
 @Component({
-  selector: 'app-contact-us',
-  templateUrl: './contact-us.page.html',
+  selector: 'app-send-email',
+  templateUrl: './send-email.page.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./contact-us.page.scss'],
+  styleUrls: ['./send-email.page.scss'],
 })
-export class ContactUsPage implements OnInit {
-  public contactUs = environment.CONTACT_US_LIST;
+export class SendEmailPage implements OnInit {
 
   type = '';
   ngOnInit() {
