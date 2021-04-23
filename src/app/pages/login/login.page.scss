@@ -38,12 +38,21 @@ ion-header.header {
     flex-direction: column;
 }
 
+ion-card {
+  --background: var(--ion-secondary-bg-color);
+}
+
 ion-list
 {
   padding-top: 8px;
+  --ion-item-background: var(--ion-secondary-bg-color);
+  --ion-item-color: var(--ion-secondary-bg-color);
+  --background: var(--ion-secondary-bg-color);
+}
+ion-card-content {
+  background: var(--ion-secondary-bg-color);
 }
 .cardHeader {
-    background: #ededed;
 
     .headerText {
         font-size: 26px;
@@ -71,4 +80,8 @@ ion-card {
     font-size: 16px;
     padding-top: 15px;
     letter-spacing: 1px;
+}
+
+ion-input {
+  --color: white;
 }

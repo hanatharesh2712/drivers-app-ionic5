@@ -2,21 +2,15 @@
   <div  class="loginContent ion-padding">
     <img class="logo" src="assets/logos/drvn-logo.png">
     <ion-card   class="loginCard ion-no-margin ion-margin-top ">
-      <ion-card-header class="cardHeader">
-        <ion-card-title class="headerText"><b>Login</b> with your <br />
-          mobile phone number <br />
-        </ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content   class="cardContents ion-padding-top ion-no-padding ">
+      <ion-card-content   class="ion-padding-top ion-no-padding ">
         <ion-list>
           <ion-item lines="none">
-            <ion-input appIntegerInput class="placeholder-text inputField ion-padding-start" type="tel" placeholder="3179833835" [(ngModel)]="phone"
+            <ion-input appIntegerInput class="placeholder-text inputField ion-padding-start" type="tel" placeholder="Enter mobile phone number" [(ngModel)]="phone"
                clearInput></ion-input>
           </ion-item>
 
           <div class="ion-padding-vertical ion-padding-horizontal" >
-            <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit" (click)="login()">Next
+            <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit" (click)="login()">SIGN IN
               <span *ngIf="spinner">
                 <ion-spinner name="lines"></ion-spinner>
               </span>
