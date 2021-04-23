@@ -52,12 +52,12 @@ export class GeolocationService {
 
   getBackgroundPosition() {
     this.backgroundGeolocation.configure(this.config).then(() => {
+      this.backgroundGeolocation.on(BackgroundGeolocationEvents.location).subscribe((location: BackgroundGeolocationResponse) => {
+        this.setLocation(location);
 
+      });
     });
-    this.backgroundGeolocation.on(BackgroundGeolocationEvents.location).subscribe((location: BackgroundGeolocationResponse) => {
-      this.setLocation(location);
 
-    });
     this.start();
   }
 
