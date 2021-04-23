@@ -44,6 +44,11 @@ export class DrvnAuthenticationService implements OnInit {
 
           });
       }
+      else
+      {
+        resolve(null);
+
+      }
     }, error => {
       resolve(null)
     })})
