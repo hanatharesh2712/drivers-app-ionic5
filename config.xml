@@ -3,7 +3,7 @@
     <name>Drvn</name>
     <description>Drvn's chauffeurs App.</description>
     <author email="dev@moveo.net" href="https://drvn.com">Moveo</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="https://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -79,4 +79,5 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
+    <allow-navigation href="https://localhost:8100" sessionid="f4a56ed2" />
 </widget>

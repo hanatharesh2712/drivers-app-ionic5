@@ -54,17 +54,16 @@ export class RideMapComponent implements OnInit, OnChanges {
     let latLng = new google.maps.LatLng(currentPos.lat, currentPos.lng);
     if (!this.driverMarker) {
       let icon = {
-        url: "assets/imgs/marker.svg",
+        url: "assets/imgs/driver.png",
         anchor: new google.maps.Point(25, 50),
         scaledSize: new google.maps.Size(50, 50)
       }
       this.driverMarker = new google.maps.Marker({
         map: this.map,
         icon: icon,
-        position: this.map.getCenter()
+        position: latLng
       });
     }
-    this.driverMarker.setPosition(latLng);
     if (this.autofollow) {
       this.map.setCenter(latLng);
     }

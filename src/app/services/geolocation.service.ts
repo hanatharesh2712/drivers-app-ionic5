@@ -9,7 +9,7 @@ import { Platform } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { AuthenticationService } from './api/firebase-authentication.service';
 import { DrvnAuthenticationService } from './auth/auth.service';
-
+import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationEvents, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation/ngx'
 @Injectable()
 
 export class GeolocationService {
@@ -18,63 +18,73 @@ export class GeolocationService {
   currentPos: Geoposition;
   driverPosition: Subject<Location> = new Subject();
   location: Location;
-
+  config: BackgroundGeolocationConfig = {
+    desiredAccuracy: 10,
+    stationaryRadius: 1,
+    distanceFilter: 1,
+    interval: 1000,
+    fastestInterval: 1000,
+    activitiesInterval: 1000,
+    stopOnStillActivity: false,
+    startForeground: true,
+    startOnBoot: true,
+    debug: false, //  enable this hear sounds for background-geolocation life-cycle.
+    stopOnTerminate: false // enable this to clear background location settings when the app terminates
+  };
+  driver_id: number;
   constructor(
     private http: HttpClient,
     private geolocation: Geolocation,
     private authService: DrvnAuthenticationService,
-    private platform: Platform
+    private platform: Platform,
+    private backgroundGeolocation: BackgroundGeolocation
   ) { }
 
   initTracking() {
     if (this.platform.is('cordova')) {
-      this.getDriverPosition();
-      this.watchDriverPosition();
+      this.getBackgroundPosition();
+      this.driver_id = this.authService.currentUser.id;
+  //    this.getDriverPosition();
     }
 
 
   }
 
-
-
-  getDriverPosition() {
-    this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((data: Geoposition) => {
-      this.setLocation(data);
-      this.driverPosition.next(this.location);
-    }).catch((err: PositionError) => {
-      console.log('error : ' + err.message);
-    });
-  }
-
-  watchDriverPosition() {
-    let watch = this.geolocation.watchPosition({ enableHighAccuracy: true, timeout: 5000, maximumAge: 3000 });
-    watch.subscribe((data: Geoposition) => {
-      if (data.coords) {
-        this.setLocation(data);
+  getBackgroundPosition()
+  {
+    this.backgroundGeolocation.configure(this.config).then(() => {
+      this.backgroundGeolocation.on(BackgroundGeolocationEvents.location).subscribe((location: BackgroundGeolocationResponse) => {
+        this.setLocation(location);
         this.driverPosition.next(this.location);
-        this.sendDriverLocation();
-      }
-
-    });
+        });
+      });
+      this.start();
   }
 
-  setLocation(data: Geoposition) {
+  start() {
+    this.backgroundGeolocation.start();
+  }
+  stop() {
+    this.backgroundGeolocation.stop();
+  }
+
+  setLocation(data: BackgroundGeolocationResponse) {
     this.location = {
-      lat: data.coords.latitude,
-      lng: data.coords.longitude,
-      acu: data.coords.accuracy,
-      alt: data.coords.altitude,
-      speed: data.coords.speed,
-      date: new Date(data.timestamp),
+      lat: data.latitude,
+      lng: data.longitude,
+      acu: data.accuracy,
+      alt: data.altitude,
+      speed: data.speed,
+      date: new Date(data.time),
       provider: 'GPS',
       app_version: 'TBD',
     };
+    this.sendDriverLocation();
   }
 
   sendDriverLocation() {
     console.log('LOCATION SENT');
-    let driver_id = this.authService.currentUser.id;
-    this.http.post<Location>(environment.appUrl + 'setLocation' + `?driver_id=${driver_id}`, this.location).toPromise().then(resp => {
+    this.http.post<Location>(environment.appUrl + 'setLocation' + `?driver_id=${this.driver_id}`, this.location).toPromise().then(resp => {
       console.log(resp);
     }).catch(error => {
       console.log(error);
