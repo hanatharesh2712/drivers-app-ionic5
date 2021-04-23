@@ -11,11 +11,17 @@
 <ion-content>
 
   <ion-list lines="full">
-    <ion-list-header class="contact-title">Please, give us information about your problem. </ion-list-header>
+    <ion-list-header>
+      <div class="contact-title">Write us</div>
+      <div class="contact-subtitle">
+        Describe us your issue
+      </div>
+    </ion-list-header>
     <form>
       <ion-item>
         <ion-label>Type</ion-label>
-        <ion-select value="reservations" okText="SELECT" cancelText="CANCEL" interface="action-sheet" [(ngModel)]="type" name="type">
+        <ion-select value="reservations" okText="SELECT" cancelText="CANCEL" interface="action-sheet" [(ngModel)]="type"
+          name="type">
           <ion-select-option value="reservations">Reservations</ion-select-option>
           <ion-select-option value="billing">Billing</ion-select-option>
           <ion-select-option value="operations">Operations</ion-select-option>
@@ -29,11 +35,15 @@
       </ion-item>
 
     </form>
-    <ion-button expand="full" fill="solid" size="large"  color="primary" class="send-btn">
-      SEND EMAIL
-    </ion-button>
+
 
 
   </ion-list>
 
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="full" fill="solid" size="large" color="primary" class="send-btn">
+    SEND EMAIL
+  </ion-button>
+</ion-footer>

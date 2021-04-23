@@ -34,12 +34,11 @@ page-my-rides {
 
   .list {
     --background: var(--ion-theme-background);
-
+    padding: 0px;
     h2 {
       margin: 0;
       font-size: 1.3rem;
       color: var(--ion-theme-info-color);
-      ;
       font-weight: 400;
       padding: 10px 24px;
       padding-bottom: 20px;

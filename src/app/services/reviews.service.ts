@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Review } from '@app/models/review';
 import { environment } from '@env/environment';
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 
 export class ReviewsService {
 

@@ -22,7 +22,7 @@ import { environment } from '@env/environment';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
   public loggedInUser: User;
   storageUrl: string = environment.storageUrl;
   constructor(
@@ -30,11 +30,12 @@ export class ProfilePage implements OnInit {
     private util: UtilService,
     private menu: MenuController
   ) {
-    this.loggedInUser = this.authService.currentUser;
+
     this.menu.close();
   }
 
-  ngOnInit() {
+  ionViewDidEnter(){
+    this.loggedInUser = this.authService.currentUser;
   }
 
   editProfile() {

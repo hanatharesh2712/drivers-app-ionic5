@@ -29,7 +29,7 @@ import { ChildSeatDialogComponent } from '@app/components/child-seat-dialog/chil
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
-  @ViewChild(RideMapComponent, {static: true}) rideMap: RideMapComponent;
+  @ViewChild(RideMapComponent, { static: true }) rideMap: RideMapComponent;
   map: any;
   currentPos: Location;
   driverMarker: any;
@@ -58,23 +58,22 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.menuCtrl.enable(true);
-  // if (this.navParams.get('is_ride_offer')) {
-  //   this.viewType = 'offer';
-  //   this.infoExpanded = true;
-  //   this.handleRide(this.navParams.get('ride'));
-  // }
-  // if (this.navParams.get('is_ride_view')) {
-  //   this.viewType = 'info';
-  // }
- //   else {
-      this.viewType = 'offer';
-      this.infoExpanded = true;
-      this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
-        if (response.ride) {
-          this.handleRide(response.ride);
-        }
-      })
-  //  }
+    // if (this.navParams.get('is_ride_offer')) {
+    //   this.viewType = 'offer';
+    //   this.infoExpanded = true;
+    //   this.handleRide(this.navParams.get('ride'));
+    // }
+    // if (this.navParams.get('is_ride_view')) {
+    //   this.viewType = 'info';
+    // }
+    //   else {
+    this.viewType = 'actual';
+    this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
+      if (response.ride) {
+        this.handleRide(response.ride);
+      }
+    })
+    //  }
   }
 
   handleRide(ride) {
@@ -110,6 +109,29 @@ export class HomePage implements OnInit {
 
   async requestIgnore() {
     this.util.goForward('/customerRequest');
+  }
+
+  async changeStatus() {
+    let alert = await this.util.createAlert('Confirm', false, this.ride.next_status_alert, {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+
+      }
+    }, {
+      text: 'Confirm',
+      handler: () => {
+        this.ridesService.changeStatus(this.ride.next_status_code, this.ride.ride_id).subscribe(response => {
+          if (this.ride.next_status_code == 'DON') {
+            //mostrar rating
+            return;
+          }
+          this.handleRide(response.ride);
+        }
+        )
+      }
+    });
+    alert.present();
   }
 
 

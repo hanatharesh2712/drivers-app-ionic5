@@ -37,6 +37,11 @@ export class AppComponent {
       icon: 'car'
     },
     {
+      title: 'My Reviews',
+      url: '/my-reviews',
+      icon: 'star'
+    },
+    {
       title: 'My Profile',
       url: '/profile',
       icon: 'person-circle-outline'

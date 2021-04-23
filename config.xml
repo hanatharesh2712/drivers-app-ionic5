@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.enappd.iondriver" version="2.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Ion Driver</name>
-    <description>Ionic 5 Taxi Booking Complete App</description>
-    <author email="support@enappd.com" href="https://enappd.com">Enappd</author>
+    <name>Drvn</name>
+    <description>Drvn's chauffeurs App.</description>
+    <author email="dev@moveo.net" href="https://drvn.com">Moveo</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

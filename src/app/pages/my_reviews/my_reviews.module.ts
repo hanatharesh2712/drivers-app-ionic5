@@ -1,13 +1,13 @@
+import { RouteGuard } from './../../services/util/route.guard';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MyRidesPageComponent } from './my_rides.component';
 import { IonicModule } from '@ionic/angular';
-import { Routes, Router, RouterModule } from '@angular/router';
-import { RouteGuard } from '@app/services/util/route.guard';
+import { Routes, RouterModule } from '@angular/router';
+import { MyReviewsPage } from './my_reviews.component';
 const routes: Routes = [
   {
     path: '',
-    component: MyRidesPageComponent,
+    component: MyReviewsPage,
     canActivate: [RouteGuard]
   }
 ];
@@ -17,6 +17,6 @@ const routes: Routes = [
     CommonModule,
     IonicModule, RouterModule.forChild(routes)
   ],
-  declarations: [MyRidesPageComponent]
+  declarations: [MyReviewsPage]
 })
-export class MyRidesPageModule { }
+export class MyReviewsPageModule { }

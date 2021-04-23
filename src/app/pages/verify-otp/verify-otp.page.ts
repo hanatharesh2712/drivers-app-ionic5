@@ -68,7 +68,10 @@ export class VerifyOTPPage implements OnInit {
   verification() {
     this.authService.login(this.phone, this.code)
       .then(response => {
-        this.util.goToNew('home');
+        setTimeout(() => {
+          this.util.goToNew('/home');
+        }, 500);
+
       }).catch(async (err) => {
         let error_msg = 'An error ocurred, try again later.';
         if (err.status == 401) {

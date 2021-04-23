@@ -28,11 +28,7 @@ export class DrvnAuthenticationService implements OnInit {
   }
 
   ngOnInit() {
-    this.storage.get('accessInfo').then((val) => {
-      if (val) {
-        this.getCurrentDriverInfo();
-      }
-    });
+
 
   }
 
@@ -45,11 +41,11 @@ export class DrvnAuthenticationService implements OnInit {
         this.getCurrentDriverInfo().then(response =>
           {
             resolve(response);
+
           });
       }
-
     }, error => {
-      console.log('not logged');
+      resolve(null)
     })})
   }
 

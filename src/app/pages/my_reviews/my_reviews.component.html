@@ -1,0 +1,70 @@
+<ion-header class="header bg-black">
+  <ion-toolbar hideBackButton="true">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">My Reviews</ion-title>
+  </ion-toolbar>
+  <div class=" current-rating">
+    <h3 class="ion-text-uppercase">Your current rating</h3>
+    <p class="d-flex">
+      <ion-badge>
+        <span class="text">{{ score }}</span>
+        <ion-icon name="star"></ion-icon>
+      </ion-badge>
+      <span class="people">
+        {{ paxReviewsTotal }} People rated
+      </span>
+    </p>
+    <div class="ion-padding-horizontal segment-container">
+      <ion-segment value="pax-reviews" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="pax-reviews">
+          PAX REVIEWS
+        </ion-segment-button>
+        <ion-segment-button value="my-reviews">
+          MY REVIEWS
+        </ion-segment-button>
+
+
+      </ion-segment>
+    </div>
+
+
+  </div>
+</ion-header>
+
+<ion-content class="bg-color">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list class="list" lines="none">
+
+
+    <ion-item *ngFor="let review of reviews">
+      <div class="d-flex column container">
+        <div class="item_header d-flex">
+          <!-- <div class="img_box center_img">
+          <img src="assets/imgs/img_passenger.png" class="crop_img">
+          </div> -->
+          <div class="profile_details">
+            <h3 class="d-flex">{{ review.ride.passenger_last_name }}, {{ review.ride.passenger_first_name }}
+              <ion-badge class="end">
+                <span class="text">{{ review.rating }}</span>
+                <ion-icon name="star"></ion-icon>
+              </ion-badge>
+            </h3>
+            <h4 class="d-flex">Ride # {{review.ride.ride_number}} - {{ review.created_at | date:'medium' }}</h4>
+          </div>
+        </div>
+        <p class="comment">{{ review.comments }}</p>
+      </div>
+    </ion-item>
+
+  </ion-list>
+  <ion-title *ngIf="!reviews.length" class="empty-text">
+    <div text-center>
+      <span>There are no reviews</span>
+    </div>
+  </ion-title>
+</ion-content>

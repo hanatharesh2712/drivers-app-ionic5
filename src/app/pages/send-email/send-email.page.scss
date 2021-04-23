@@ -27,6 +27,9 @@ app-send-email {
 
     ion-list-header {
       margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     ion-item {
@@ -58,17 +61,26 @@ app-send-email {
 
     }
 
-    .send-btn
-     {
-      margin: 0px;
-     }
+
 
 
     .contact-title {
       color: white;
-      font-size: 2rem;
+      font-size: 3rem;
 
     }
+
+    .contact-subtitle
+    {
+      font-size: 1.3rem;
+      color: #686868;
+      margin: 0;
+      letter-spacing: 0;
+    }
+  }
+  .send-btn
+  {
+   margin: 0px;
   }
 
 

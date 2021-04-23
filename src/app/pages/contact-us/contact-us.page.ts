@@ -1,3 +1,4 @@
+import { UtilService } from '@app/services/util/util.service';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -23,11 +24,20 @@ export class ContactUsPage implements OnInit {
   public contactUs = environment.CONTACT_US_LIST;
 
   type = '';
+  constructor(private util: UtilService)
+  {
+
+  }
   ngOnInit() {
   }
 
   openUrl(url) {
     window.open(url);
+  }
+
+  goToSendEmail()
+  {
+    this.util.goForward('send-email')
   }
 
 }

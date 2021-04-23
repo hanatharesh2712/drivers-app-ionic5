@@ -4,10 +4,10 @@ export class Review {
     ride_id: number;
     driver_id: number;
     ride: Ride;
-	rating: number;
+    rating: number;
     comments: string;
     created_at: Date;
-    
+
     constructor(obj?) {
         Object.assign(this, ...obj);
         this.ride = obj ? obj.ride ? new Ride(obj.ride) : null : null;

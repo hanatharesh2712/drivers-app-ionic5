@@ -10,17 +10,18 @@ import { Ride } from '@app/models/ride';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./my_rides.component.scss']
 })
-export class MyRidesPageComponent implements OnInit {
+export class MyRidesPageComponent  {
 
   segmentModel: 'offers' | 'accepted' | 'done' = "offers";
   rides: Ride[];
 
   constructor(private ridesService: RideService, private authService: DrvnAuthenticationService,
     private util: UtilService) {
-    this.getRides(this.authService.currentUser.id, null);
+
   }
 
-  ngOnInit() {
+  ionViewDidEnter() {
+    this.getRides(this.authService.currentUser.id, null);
   }
 
   segmentChanged(e: any) {

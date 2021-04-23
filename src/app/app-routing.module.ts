@@ -20,6 +20,7 @@ const routes: Routes = [
   },
   { path: 'wallet', loadChildren: () => import('@app/pages/wallet/wallet.module').then(m => m.WalletPageModule) },
   { path: 'my-rides', loadChildren: () => import('@app/pages/my_rides/my_rides.module').then(m => m.MyRidesPageModule) },
+  { path: 'my-reviews', loadChildren: () => import('@app/pages/my_reviews/my_reviews.module').then(m => m.MyReviewsPageModule) },
   { path: 'paymentmethod', loadChildren: () => import('@app/pages/payment-method/payment-method.module').then(m => m.PaymentmethodPageModule) },
   { path: 'profile', loadChildren: () => import('@app/pages/profile/profile.module').then(m => m.ProfilePageModule) },
   { path: 'paymentmethod', loadChildren: () => import('@app/pages/payment-method/payment-method.module').then(m => m.PaymentmethodPageModule) },
