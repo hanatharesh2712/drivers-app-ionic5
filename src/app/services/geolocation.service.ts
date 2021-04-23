@@ -20,15 +20,15 @@ export class GeolocationService {
   location: Location;
   config: BackgroundGeolocationConfig = {
     desiredAccuracy: 10,
-    stationaryRadius: 1,
-    distanceFilter: 1,
+    stationaryRadius: 0,
+    distanceFilter: 0,
     interval: 1000,
     fastestInterval: 1000,
     activitiesInterval: 1000,
     stopOnStillActivity: false,
     startForeground: true,
     startOnBoot: true,
-    debug: false, //  enable this hear sounds for background-geolocation life-cycle.
+    debug: true, //  enable this hear sounds for background-geolocation life-cycle.
     stopOnTerminate: false // enable this to clear background location settings when the app terminates
   };
   driver_id: number;
@@ -44,21 +44,21 @@ export class GeolocationService {
     if (this.platform.is('cordova')) {
       this.getBackgroundPosition();
       this.driver_id = this.authService.currentUser.id;
-  //    this.getDriverPosition();
+      //    this.getDriverPosition();
     }
 
 
   }
 
-  getBackgroundPosition()
-  {
+  getBackgroundPosition() {
     this.backgroundGeolocation.configure(this.config).then(() => {
-      this.backgroundGeolocation.on(BackgroundGeolocationEvents.location).subscribe((location: BackgroundGeolocationResponse) => {
-        this.setLocation(location);
-        this.driverPosition.next(this.location);
-        });
-      });
-      this.start();
+
+    });
+    this.backgroundGeolocation.on(BackgroundGeolocationEvents.location).subscribe((location: BackgroundGeolocationResponse) => {
+      this.setLocation(location);
+
+    });
+    this.start();
   }
 
   start() {
@@ -79,6 +79,7 @@ export class GeolocationService {
       provider: 'GPS',
       app_version: 'TBD',
     };
+   // this.driverPosition.next(this.location);
     this.sendDriverLocation();
   }
 
