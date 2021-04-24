@@ -19,12 +19,12 @@ export class GeolocationService {
   driverPosition: Subject<Location> = new Subject();
   location: Location;
   config: BackgroundGeolocationConfig = {
-    desiredAccuracy: 10,
+    desiredAccuracy: 0,
     stationaryRadius: 0,
-    distanceFilter: 0,
-    interval: 1000,
-    fastestInterval: 1000,
-    activitiesInterval: 1000,
+    distanceFilter: 1,
+    interval: 100,
+    fastestInterval: 100,
+    activitiesInterval: 100,
     stopOnStillActivity: false,
     startForeground: true,
     startOnBoot: true,
@@ -44,7 +44,6 @@ export class GeolocationService {
     if (this.platform.is('cordova')) {
       this.getBackgroundPosition();
       this.driver_id = this.authService.currentUser.id;
-      //    this.getDriverPosition();
     }
 
 
@@ -79,7 +78,6 @@ export class GeolocationService {
       provider: 'GPS',
       app_version: 'TBD',
     };
-   // this.driverPosition.next(this.location);
     this.sendDriverLocation();
   }
 

@@ -1,6 +1,8 @@
 
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Location } from '@app/models/location';
+import { Subject } from 'rxjs';
+import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
 import { GeolocationService } from '@app/services/geolocation.service';
 declare var google;
 import { Ride } from '../../models/ride';
@@ -17,15 +19,17 @@ export class RideMapComponent implements OnInit, OnChanges {
   map: any;
   autofollow: any;
   driverMarker: any;
-  currentPos: Location;
+  currentPosition: Location;
   defLatitude = 39.3902468;
   defLongitude = -91.71869;
+  driverPosition: Subject<Location> = new Subject();
   ride: Ride;
   markers = [];
   directionsService = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true, preserveViewport: true });
   calculatedRoute: boolean;
-  constructor(private geolocationService: GeolocationService) { }
+  constructor(private geolocationService: GeolocationService,
+    private geolocation: Geolocation,) { }
 
   ngOnInit() {
     this.initMap();
@@ -44,11 +48,38 @@ export class RideMapComponent implements OnInit, OnChanges {
     };
     google.maps.event.addListener(this.map, 'dragstart', autofollowFalse);
 
-    this.geolocationService.driverPosition.subscribe(data => {
+    this.watchDriverPosition();
+    this.driverPosition.subscribe(data => {
       this.updateDriverMarkerPosition(data);
     });
   }
 
+  watchDriverPosition() {
+    let watch = this.geolocation.watchPosition({ enableHighAccuracy: true, timeout: 5000, maximumAge: 1000 });
+    watch.subscribe((data) => {
+      if (data) {
+        this.setLocation(data);
+        this.driverPosition.next(this.currentPosition);
+      }
+    });
+  }
+
+
+  setLocation(data: Geoposition | PositionError) {
+    if ((data as Geoposition).coords != undefined) {
+      var pos = (data as Geoposition);
+      this.currentPosition = {
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+        acu: pos.coords.accuracy,
+        alt: pos.coords.altitude,
+        speed: pos.coords.speed,
+        date: new Date(pos.timestamp),
+        provider: 'GPS',
+        app_version: 'TBD',
+      };
+    }
+  }
 
   updateDriverMarkerPosition(currentPos: Location) {
     let latLng = new google.maps.LatLng(currentPos.lat, currentPos.lng);
