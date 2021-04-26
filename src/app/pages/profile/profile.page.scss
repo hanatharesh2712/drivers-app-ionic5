@@ -13,6 +13,7 @@
 
 .profileHeader {
     display: flex;
+    height: 80px;
     flex-direction: column;
     align-items: center;
     line-height: 1.5;
@@ -20,8 +21,8 @@
     padding: 10px 0px;
 
     .profileImage {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
     }
 
     .drivermemberType {

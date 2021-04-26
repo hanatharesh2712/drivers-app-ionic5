@@ -1,3 +1,4 @@
+import { SettleDialogComponent } from './../../components/settle-dialog/settle-dialog.component';
 import { GeolocationService } from './../../services/geolocation.service';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
@@ -21,6 +22,7 @@ import { Ride } from '@app/models/ride';
 import { NextRideResponse } from '@app/models/rides-wrapper.models';
 import { environment } from '@env/environment';
 import { ChildSeatDialogComponent } from '@app/components/child-seat-dialog/child-seat-dialog.component';
+import { RatingDialogComponent } from '@app/components/rating-dialog/rating-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -39,6 +41,7 @@ export class HomePage implements OnInit {
   ride: Ride;
   viewType: 'actual' | 'info' | 'offer' | 'none' = 'none';
   infoExpanded: boolean;
+  isDone: boolean;
   constructor(
     private menuCtrl: MenuController,
     private rideService: RideService,
@@ -112,27 +115,40 @@ export class HomePage implements OnInit {
   }
 
   async changeStatus() {
-    let alert = await this.util.createAlert('Confirm', false, this.ride.next_status_alert, {
-      text: 'Cancel',
-      role: 'cancel',
-      handler: () => {
-
-      }
-    }, {
-      text: 'Confirm',
-      handler: () => {
-        this.ridesService.changeStatus(this.ride.next_status_code, this.ride.ride_id).subscribe(response => {
-          if (this.ride.next_status_code == 'DON') {
-            //mostrar rating
-            return;
-          }
-          this.handleRide(response.ride);
+    this.rideService.changeStatus(this.ride).then(response => {
+      if (response)
+        {
+          this.handleRide(response);
         }
-        )
-      }
+        else
+        {
+          this.isDone =true;
+          this.openRating();
+        }
     });
-    alert.present();
   }
 
 
+  acceptRide() {
+    this.rideService.acceptRide(this.ride).then(response => {
+      if (response) {
+        this.handleRide(response);
+      }
+
+    });
+  }
+
+ async  openRating()
+  {
+    let dialog = await this.util.createModal(RatingDialogComponent, { ride: this.ride}, 'rating-modal');
+    dialog.present();
+
+  }
+
+  async  openSettle()
+  {
+    let dialog = await this.util.createModal(SettleDialogComponent, { ride: this.ride}, 'settle-modal');
+    dialog.present();
+
+  }
 }

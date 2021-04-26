@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Location } from '@app/models/location';
 import { environment } from '@env/environment';
-import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
+import { Coordinates, Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
 import { Platform } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { AuthenticationService } from './api/firebase-authentication.service';
@@ -42,7 +42,7 @@ export class GeolocationService {
 
   initTracking() {
     if (this.platform.is('cordova')) {
-      this.getBackgroundPosition();
+      this.initGettingPosition();
       this.driver_id = this.authService.currentUser.id;
       //    this.getDriverPosition();
     }
@@ -50,11 +50,21 @@ export class GeolocationService {
 
   }
 
-  getBackgroundPosition() {
+  initGettingPosition() {
     this.backgroundGeolocation.configure(this.config).then(() => {
       this.backgroundGeolocation.on(BackgroundGeolocationEvents.location).subscribe((location: BackgroundGeolocationResponse) => {
-        this.setLocation(location);
+        this.setLocation(location, location.time);
 
+      });
+      this.geolocation.getCurrentPosition().then((resp: Geoposition) => {
+        this.setLocation(resp.coords, resp.timestamp)
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
+
+      let watch = this.geolocation.watchPosition();
+      watch.subscribe((data: Geoposition) => {
+        this.setLocation(data.coords, data.timestamp)
       });
     });
 
@@ -68,18 +78,18 @@ export class GeolocationService {
     this.backgroundGeolocation.stop();
   }
 
-  setLocation(data: BackgroundGeolocationResponse) {
+  setLocation(data: BackgroundGeolocationResponse | Coordinates, time) {
     this.location = {
       lat: data.latitude,
       lng: data.longitude,
       acu: data.accuracy,
       alt: data.altitude,
       speed: data.speed,
-      date: new Date(data.time),
+      date: new Date(time),
       provider: 'GPS',
       app_version: 'TBD',
     };
-   // this.driverPosition.next(this.location);
+   this.driverPosition.next(this.location);
     this.sendDriverLocation();
   }
 

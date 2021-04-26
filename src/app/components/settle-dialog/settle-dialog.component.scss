@@ -1,0 +1,22 @@
+
+app-settle-dialog {
+  ion-content {
+    padding-top: 48px;
+  }
+  ion-header ion-toolbar {
+    color: black;
+
+  }
+
+  ion-rating {
+    margin: 0 auto;
+    --star-color: white;
+    padding: 24px;
+    --star-color-filled: green;
+  }
+
+  .send-btn
+  {
+    margin: 0 auto;
+  }
+}

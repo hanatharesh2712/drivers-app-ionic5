@@ -1,3 +1,4 @@
+
 import { RouteGuard } from './../../services/util/route.guard';
 import { RideMapModule } from './../../components/ride-map/ride-map.module';
 /**
@@ -19,6 +20,8 @@ import { RouterModule } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction'
 import { HomePage } from './home.page';
+import { SettleDialogModule } from '@app/components/settle-dialog/settle-dialog.module';
+import { RatingDialogModule } from '@app/components/rating-dialog/rating-dialog.module';
 
 
 @NgModule({
@@ -28,7 +31,7 @@ import { HomePage } from './home.page';
     IonicModule,
     AgmCoreModule,
     AgmDirectionModule,
-  RideMapModule,
+    RideMapModule,
     RouterModule.forChild([
       {
         path: '',

@@ -1,0 +1,51 @@
+<div class="ion-page">
+  <ion-header translucent color="secondary">
+    <ion-toolbar color="secondary">
+      <ion-title>SET YOUR RIDE</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content color="secondary" [formGroup]="settleForm">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="floating">Tolls</ion-label>
+        <ion-input type="number" placeholder="$"  (ionChange)="formataNumero($event)"></ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Parking</ion-label>
+        <ion-input type="number" placeholder="$" (ionChange)="formataNumero($event)"></ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Stops</ion-label>
+        <ion-input type="number" placeholder="Insert Stops Quantity" (ionChange)="formataNumero($event)"></ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Waiting</ion-label>
+        <ion-input type="number" placeholder="Insert Waitings Quantity" (ionChange)="formataNumero($event)"></ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Miscellaneous</ion-label>
+        <ion-input type="number" placeholder="$" (ionChange)="formataNumero($event)"></ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Describe misc or add notes...</ion-label>
+        <ion-textarea placeholder="Enter more information about misc or notes" rows="6" > </ion-textarea>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+
+
+    <ion-footer>
+      <ion-button expand="full" fill="solid" size="large" (click)="sendRating()" color="primary" class="send-btn" [disabled]="settleForm.invalid">
+       CONFIRM SETTLE
+      </ion-button>
+    </ion-footer>
+</div>

@@ -1,3 +1,5 @@
+import { SettleDialogModule } from '@app/components/settle-dialog/settle-dialog.module';
+import { RatingDialogModule } from './components/rating-dialog/rating-dialog.module';
 import { RouteGuard } from './services/util/route.guard';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
@@ -65,6 +67,8 @@ import { AuthHttpInterceptor } from './services/util/http-interceptor';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
+    RatingDialogModule,
+    SettleDialogModule
   ],
   providers: [
     StatusBar,
