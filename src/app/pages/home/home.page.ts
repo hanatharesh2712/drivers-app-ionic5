@@ -23,6 +23,7 @@ import { NextRideResponse } from '@app/models/rides-wrapper.models';
 import { environment } from '@env/environment';
 import { ChildSeatDialogComponent } from '@app/components/child-seat-dialog/child-seat-dialog.component';
 import { RatingDialogComponent } from '@app/components/rating-dialog/rating-dialog.component';
+import { Insomnia } from '@ionic-native/insomnia/ngx';
 
 @Component({
   selector: 'app-home',
@@ -50,13 +51,19 @@ export class HomePage implements OnInit {
     private util: UtilService,
     private geolocationService: GeolocationService,
     private ridesService: RideService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private insomnia: Insomnia
   ) {
 
   }
 
   async ngOnInit() {
     this.geolocationService.initTracking();
+    this.insomnia.keepAwake()
+      .then(
+        () => console.log('success'),
+        () => console.log('error')
+      );
   }
 
   ionViewDidEnter() {

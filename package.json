@@ -27,6 +27,7 @@
     "@ionic-native/core": "^5.23.0",
     "@ionic-native/geolocation": "^5.32.1",
     "@ionic-native/in-app-browser": "^5.23.0",
+    "@ionic-native/insomnia": "^5.32.1",
     "@ionic-native/launch-navigator": "^5.23.0",
     "@ionic-native/native-page-transitions": "^5.23.0",
     "@ionic-native/screen-orientation": "^5.23.0",
@@ -83,6 +84,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "cordova-plugin-insomnia": "^4.3.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
@@ -95,7 +97,8 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-geolocation": {
-        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you",
+        "GPS_REQUIRED": "true"
       },
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {
         "GOOGLE_API_KEY_FOR_ANDROID": "YOUR_API_KEY",
@@ -128,7 +131,8 @@
         "ACCOUNT_LABEL": "@string/app_name",
         "ACCOUNT_TYPE": "$PACKAGE_NAME.account",
         "CONTENT_AUTHORITY": "$PACKAGE_NAME"
-      }
+      },
+      "cordova-plugin-insomnia": {}
     },
     "platforms": [
       "ios",
