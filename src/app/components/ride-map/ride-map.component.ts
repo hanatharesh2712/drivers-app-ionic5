@@ -32,7 +32,7 @@ export class RideMapComponent implements OnInit, OnChanges {
   firstTime: boolean = true;
 
   constructor(private geolocationService: GeolocationService,
-    private geolocation: Geolocation,) { }
+    private geolocation: Geolocation) { }
 
   ngOnInit() {
     this.initMap();
