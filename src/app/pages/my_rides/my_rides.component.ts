@@ -67,4 +67,9 @@ export class MyRidesPageComponent  {
   doRefresh(refresher) {
     this.getRides(this.authService.currentUser.id, refresher);
   }
+
+  viewOffer(ride)
+  {
+    this.util.goForward('ride-offer')
+  }
 }

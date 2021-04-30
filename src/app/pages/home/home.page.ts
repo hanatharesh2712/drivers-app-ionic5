@@ -68,16 +68,7 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.menuCtrl.enable(true);
-    // if (this.navParams.get('is_ride_offer')) {
-    //   this.viewType = 'offer';
-    //   this.infoExpanded = true;
-    //   this.handleRide(this.navParams.get('ride'));
-    // }
-    // if (this.navParams.get('is_ride_view')) {
-    //   this.viewType = 'info';
-    // }
-    //   else {
-    this.viewType = 'actual';
+
     this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
       if (response.ride) {
         this.handleRide(response.ride);

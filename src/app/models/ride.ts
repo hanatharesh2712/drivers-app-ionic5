@@ -20,6 +20,7 @@ export class Ride {
   ride_id?: number;
   passenger_name?: string;
   passenger_number?: string;
+  handicap;
   settled?: string;
   occasion?: string;
   pickup_lat?: string;

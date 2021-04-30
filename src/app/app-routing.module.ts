@@ -49,6 +49,7 @@ const routes: Routes = [
   { path: 'contact', loadChildren: () => import('@app/pages/contact-us/contact-us.module').then(m => m.ContactUSPageModule) },
   { path: 'send-email', loadChildren: () => import('@app/pages/send-email/send-email.module').then(m => m.SendEmailPageModule) },
   { path: 'approved', loadChildren: () => import('@app/pages/approved/approved.module').then(m => m.ApprovedPageModule) },
+  { path: 'ride-offer', loadChildren: () => import('@app/pages/ride-offer/ride-offer.module').then(m => m.RideOfferPageModule) },
   {
     path: '**',
     redirectTo: 'home'

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar  hideBackButton="true">
+  <ion-toolbar  hideBackButton="true" color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -29,7 +29,7 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <ion-list class="list" no-lines>
-      <ion-item *ngFor="let ride of rides" class="item">
+      <ion-item *ngFor="let ride of rides" class="item" (click)="viewOffer()">
         <div class="d-flex column">
           <div class="item_header  d-flex">
             <div class="profile_details">

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -24,6 +24,7 @@
         </div>
       </span>
     </ion-title>
+
 
 
   </ion-toolbar>
@@ -109,15 +110,15 @@
   </div>
   <app-ride-map [actualRide]="ride"></app-ride-map>
   <div class="ride-actions">
-    <ion-buttons>
-      <button ion-button class="update-status"
-      (click)="openSettle()">
-     SET RIDE
-    </button>
+   <ion-buttons>
+  <!--   <button ion-button class="update-status"
+  <!--   (click)="openSettle()">
+  <!--  SET RIDE
+  <!-- </button> -->
       <ng-container *ngIf="ride && viewType == 'actual' && !isDone">
-        <button ion-button class="update-status" [style.background]="ride.next_status_button_color"
+        <button ion-button class="update-status" [style.background]="ride.next_status_color"
           (click)="changeStatus()">
-          {{ride.next_status_button_text}}
+          {{ride.next_status_alert}}
         </button>
         <button ion-button class="call" (click)="someThingLikeLogOut()">
           <ion-icon name="call"></ion-icon>

@@ -28,13 +28,14 @@ dark: #222);
 
   --ion-theme-background: black;
   --ion-theme-color:  #bb9669;
+  --ion-theme-color-lighter: #bb9669a8;
   --ion-theme-info-color:  #686868;
   --ion-secondary-bg-color:  #1c1c1c ;
 
 
   --ion-color-secondary: #ffffff;
   --ion-color-secondary-rgb: 255,255,255;
-  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast: #c2a178;
   --ion-color-secondary-contrast-rgb: 0,0,0;
   --ion-color-secondary-shade: #e0e0e0;
   --ion-color-secondary-tint: #ffffff;
@@ -121,6 +122,11 @@ dark: #222);
     margin-left: auto;
     margin-right: 0;
     display: block;
+  }
+
+  &.a-center
+  {
+    align-items: center;
   }
 }
 
@@ -211,9 +217,6 @@ ion-header ion-toolbar {
 
 .bgWhite {
   background: #fff;
-}
-ion-menu-button.button.ion-activatable {
-  color: var(--ion-theme-color);
 }
 
 .sc-ion-modal-md-h {
