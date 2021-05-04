@@ -9,6 +9,7 @@
 <ion-content class="ion-padding">
   <div class="content-container">
     <div class="ion-padding-bottom">
+      <img class="logo" src="assets/logos/drvn-logo.png">
       <div class="ion-text-center textColor">
         <h1 class="textBold">Verification code</h1>
         <span>Enter code we've sent on given number</span>
@@ -17,7 +18,7 @@
       <div class="divOuter marginTop">
         <div class="divInner marginTop">
           <!-- <ion-input  class="partitioned  marginTop" maxlength="4"   ></ion-input> -->
-          <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
+          <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:4, allowNumbersOnly: true}"></ng-otp-input>
         </div>
       </div>
     </div>

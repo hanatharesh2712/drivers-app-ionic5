@@ -60,11 +60,11 @@ export class RideMapComponent implements OnInit, OnChanges {
 
   initMap() {
     const mapOptions = {
+      mapId: "5ec923e22a6df1ff",
       center: new google.maps.LatLng(this.defLatitude, this.defLongitude),
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true,
-      styles: MapStyles,
+      disableDefaultUI: true
     };
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     const autofollowFalse = () => {
@@ -183,7 +183,7 @@ export class RideMapComponent implements OnInit, OnChanges {
         const listener = google.maps.event.addListener(this.map, 'idle', () => {
           if (quantity == 1) {
             this.map.setZoom(11);
-            // google.maps.event.removeListener(listener);
+             google.maps.event.removeListener(listener);
           }
         });
       }, 500);

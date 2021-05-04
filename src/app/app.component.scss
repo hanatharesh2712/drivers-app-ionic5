@@ -28,9 +28,19 @@
   }
 }
 
-ion-menu
+ion-menu, ion-menu > ion-content
 {
-  max-width: 300px;
+  max-width: 280px;
+}
+
+.logo
+{
+  width: 50%;
+    display: block;
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nav-item

@@ -26,6 +26,13 @@ app-verify-otp {
     font-size: 24px;
   }
 
+  .logo
+  {
+    max-width: 200px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 24px;
+  }
   .divInner {
     left: 0;
     position: sticky;
@@ -38,7 +45,7 @@ app-verify-otp {
   }
 
   .marginTop {
-    margin-top: 10%;
+    margin-top: 5%;
     justify-content: center;
     display: flex;
   }

@@ -82,6 +82,21 @@ ion-content {
     --background: black ;
 }
 
+.action-sheet-group
+{
+  --button-background: var(--ion-secondary-bg-color) !important;
+  --button-background-selected: var(--ion-theme-color) !important;
+}
+
+.action-sheet-group-cancel
+{
+  --button-background-selected: var(--ion-secondary-bg-color) !important
+}
+.action-sheet-selected
+{
+  color: white !important
+}
+
 ion-toolbar
 {
   ion-title

@@ -29,12 +29,10 @@ export class GeolocationService {
     stationaryRadius: 1,
     distanceFilter: 5,
     interval: 500,
-    fastestInterval: 500,
-    activitiesInterval: 500,
-    stopOnStillActivity: false,
-    startForeground: true,
+    startForeground: false,
+    notificationsEnabled: false,
     startOnBoot: true,
-    debug: true, //  enable this hear sounds for background-geolocation life-cycle.
+    debug: false, //  enable this hear sounds for background-geolocation life-cycle.
     stopOnTerminate: false, // enable this to clear background location settings when the app terminates
   };
   driver_id: number;
