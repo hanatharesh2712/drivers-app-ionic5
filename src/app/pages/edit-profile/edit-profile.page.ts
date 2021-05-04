@@ -9,8 +9,6 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { APIService } from '@app/services/api/api.service';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { UtilService } from '@app/services/util/util.service';
 import { NavController } from '@ionic/angular';
 
@@ -24,13 +22,11 @@ export class EditProfilePage implements OnInit {
   public user: any;
   constructor(
     private util: UtilService,
-    private navCtrl: NavController,
-    private userProvider: InitUserProvider,
-    private api: APIService,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
-    this.user = this.userProvider.getUserData();
+   // this.user = this.userProvider.getUserData();
   }
 
   dismiss() {
@@ -47,12 +43,12 @@ export class EditProfilePage implements OnInit {
       role: 'destructive',
       cssClass: 'buttonCss',
       handler: () => {
-        this.userProvider.openCamera();
+        //this.userProvider.openCamera();
       }
     }, {
       text: 'Pick From Gallery',
       handler: () => {
-        this.userProvider.openGallery();
+      //  this.userProvider.openGallery();
       }
     }, {
       text: 'Cancel',
@@ -84,11 +80,11 @@ export class EditProfilePage implements OnInit {
         id: this.user.id
       };
       console.log('id', this.user.id);
-      this.api.updateDriverData(this.user.id, update).subscribe(async res => {
-        const toast = await this.util.createToast('Profile Updated', true, 'bottom', 2100);
-        await toast.present();
-        this.navCtrl.back();
-      }, err => console.log(err));
+     // this.api.updateDriverData(this.user.id, update).subscribe(async res => {
+     //   const toast = await this.util.createToast('Profile Updated', true, 'bottom', 2100);
+     //   await toast.present();
+     //   this.navCtrl.back();
+     // }, err => console.log(err));
     }
 
   }

@@ -1,0 +1,20 @@
+.ride-map-dialog
+{
+  --width: 90%;
+  --height: 400px;
+  #map
+  {
+    height: 100%;
+    min-height: 400px;
+  }
+
+  .close-icon
+  {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10000;
+    font-size: 3rem;
+    color: black;
+  }
+}

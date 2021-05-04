@@ -26,8 +26,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import { InitUserProvider } from '../inituser/inituser.service';
-import { StorageService } from '../api/firestorage.service';
 import { environment } from '@env/environment';
 declare let google;
 

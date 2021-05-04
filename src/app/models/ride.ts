@@ -39,7 +39,11 @@ export class Ride {
   routing: RideRouting[];
   next_status_alert: string;
   next_status_code: string;
-  next_status_color: string;
+  next_status_button_color: string;
+  next_status_button_text: string;
+  pu_datetime: string;
+  cost_total;
+  costs;
   constructor(obj?) {
       Object.assign(this, ...obj);
   }

@@ -4,12 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RideMapComponent } from './ride-map.component';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [RideMapComponent,
-  ChildSeatDialogComponent],
+  imports: [CommonModule],
+  declarations: [RideMapComponent, ChildSeatDialogComponent],
   exports: [RideMapComponent],
-  entryComponents: [ChildSeatDialogComponent]
+  entryComponents: [ChildSeatDialogComponent],
 })
-export class RideMapModule { }
+export class RideMapModule {}

@@ -1,0 +1,280 @@
+.pricing-details-popover {
+  --background: black !important;
+  color: white;
+
+  .ride-pricing-popover {
+    padding: 12px
+  }
+
+}
+
+ride-detail {
+  background: black;
+
+  ion-content {
+    --background: var(--ion-secondary-bg-color);
+  }
+
+  .ride-info {
+    --ion-item-background: var(--ion-secondary-bg-color);
+    padding-top: 12px;
+
+    ion-item {
+
+      --color: white;
+      --border-color: #a8875e14;
+      font-size: 1.6rem;
+    }
+
+    ion-label:not(.detail-title) {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px !important;
+      font-size: 1.4rem !important;
+      color: var(--ion-theme-color-lighter) !important;
+    }
+
+
+    ion-icon {
+      color: var(--ion-theme-color);
+      margin-right: 8px;
+      font-size: 18px;
+    }
+
+    .content {
+      padding-left: 12px;
+      display: flex;
+      margin: 12px 0px;
+
+
+
+      .pax-count {
+        margin-right: 8px;
+        display: flex;
+        align-items: center;
+      }
+
+      .sub-content {
+        display: flex;
+        margin-right: 8px;
+        align-items: center;
+      }
+
+      &.notes {
+        display: inline-block;
+        font-size: 1.4rem;
+
+        .read-more {
+          font-size: 1.2rem;
+        }
+      }
+
+    }
+
+    .routing-title
+    {
+      display: flex;
+
+      .view-map-span
+      {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        font-size: 1.2rem;
+
+        ion-icon
+        {
+          color: black;
+          font-size: 1.4rem;
+        }
+      }
+    }
+
+    .requirements-list {
+      padding-inline-start: 12px;
+      margin-block-start: 4px;
+      flex-direction: column;
+      list-style: none;
+
+      ion-icon {
+        position: relative;
+        top: 4px;
+      }
+
+      li {
+        margin-top: 4px;
+      }
+
+      .child-seat-types {
+        margin-top: 6px;
+        font-size: 1.2rem;
+        color: grey;
+      }
+    }
+
+    .rides_details {
+      padding-left: 4px !important;
+      margin-bottom: 4px;
+    }
+
+
+    .pricing-section
+    {
+
+      ion-item
+      {
+        width: 100%;
+        color: var(--ion-theme-info-color);
+        font-size: 1.4rem;
+        --border-width: 0px;
+        height: 30px;
+      }
+
+      .ride-total
+      {
+        color: white !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+      }
+    }
+
+  }
+
+  .settle-footer {
+    max-height: 100px;
+    transition: .7s ease all;
+
+    &.active {
+      max-height: 500px;
+    }
+  }
+
+
+  .offer-footer {
+    max-height: 130px;
+    transition: all .5s ease;
+
+    .expand-icon {
+      transition: all .5s ease;
+    }
+
+    &.active {
+      max-height: 500px;
+
+      .expand-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    .pricing-details-list {
+      --ion-item-background: black !important;
+      --ion-item-color: white !important;
+
+
+      ion-list-header
+      {
+        min-height: 20px;
+        margin-top: 20px;
+        .list-title
+        {
+          color: white;
+          font-size: 1.6rem;
+        }
+      }
+
+
+      .detail
+      {
+        --color: grey;
+        font-size: 1.4rem;
+        height: 30px;
+      }
+    }
+  }
+
+
+  ion-footer {
+    background: black;
+    padding: 12px;
+    border-top: 1px solid var(--ion-theme-color);
+
+    ion-toolbar {
+      --background: black;
+    }
+
+    ion-buttons {
+
+      margin: 12px;
+
+      ion-button {
+        height: 40px !important;
+        display: flex;
+        color: white;
+
+        &.reject-btn {
+          --border-radius: 50%;
+          width: 40px;
+          --background: red !important;
+          margin-right: 12px;
+        }
+
+        &.accept-btn {
+          flex-grow: 1;
+          --background: var(--ion-theme-color) !important;
+        }
+      }
+    }
+
+
+    .offer-price {
+      color: white;
+      font-size: 2.5rem;
+      margin: 0 auto;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+
+      ion-icon {
+        font-size: 2.5rem;
+        margin-left: 4px;
+      }
+    }
+
+
+    .settle-list {
+      --background: black;
+      --ion-item-background: black;
+      --ion-item-color: white;
+
+      ion-input
+      {
+        max-width: 60px;
+      }
+
+      .value
+      {
+        width: 15px;
+        text-align: center;
+      }
+      .increase-container
+      {
+        ion-icon
+        {
+          color: var(--ion-theme-color);
+          font-size: 2rem;
+          margin: 0px 4px;
+        }
+      }
+    }
+
+    .settle-text {
+      color: var(--ion-theme-info-color);
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+  }
+}

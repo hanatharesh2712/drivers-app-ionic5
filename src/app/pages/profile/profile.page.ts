@@ -12,7 +12,6 @@ import { DrvnAuthenticationService } from './../../services/auth/auth.service';
 
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { Driver } from '@app/models/driver';
 import { UtilService } from '@app/services/util/util.service';
 import { environment } from '@env/environment';

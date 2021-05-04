@@ -15,19 +15,42 @@ import { Injectable } from '@angular/core';
 import { RidesWrapper, NextRideResponse, ChangeRideStatusResponse } from '@app/models/rides-wrapper.models';
 import { environment } from '@env/environment';
 import { map } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { DrvnAuthenticationService } from '../auth/auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class RideService {
-  constructor(private http: HttpClient, private util: UtilService, private ridesService: RideService) { }
+  rides = [];
+  onDidRidesLoaded = new BehaviorSubject([]);
+  constructor(private http: HttpClient, private util: UtilService, private ridesService: RideService,
+    private authService: DrvnAuthenticationService) { }
 
-  getRides(driver_id: number) {
-    return this.http.get<RidesWrapper>(environment.appUrl + 'getRides' + `?driver_id=${driver_id}`);
+  getRides() {
+    let driver_id = this.authService.currentUser.id;
+    return this.http.get<RidesWrapper>(environment.appUrl + 'getRides' + `?driver_id=${driver_id}`).pipe(map(response => {
+      response.rides.forEach(ride => {
+        ride.pu_datetime = ride.pu_date + ' ' + ride.pu_time;
+        this.parseRideResponse(ride);
+      });
+      this.rides['offers'] = response.rides.filter(ride => ride.is_offer);
+      this.rides['accepted'] = response.rides.filter(ride =>  !ride.is_offer && !ride.is_done);
+      this.rides['done'] = response.rides.filter(ride =>  ride.is_done);
+      this.onDidRidesLoaded.next(this.rides);
+      return response;
+    }));;
+  }
+
+  getRideInfo(ride_id: number) {
+    return this.http.get<any>(environment.appUrl + 'getRide' + `?ride_id=${ride_id}`).pipe(map(response => {
+      this.parseRideResponse(response.ride);
+      return response;
+    }));
   }
 
   getNextRide() {
     return this.http.get<NextRideResponse>(environment.appUrl + 'getNextRide').pipe(map(response => {
-      this.parseRideResponse(response);
+      this.parseRideResponse(response.ride);
       return response;
     }));
   }
@@ -43,7 +66,7 @@ export class RideService {
       ride.child_seats.forEach(cseat => {
         text += cseat.count + ' x ' + cseat.type + '<br>';
       });
-      text += `<b>${ride.next_status_alert}</b>`;
+      text += `<b>Are you sure you want to accept this ride?</b>`;
     }
     return new Promise(async (resolve, reject) => {
       let alert = await this.util.createAlert(title, false, text, {
@@ -55,8 +78,8 @@ export class RideService {
       }, {
         text: 'YES, I ACCEPT',
         handler: () => {
-          this.ridesService.sendChangeStatus(ride.next_status_code, ride.ride_id).subscribe(response => {
-
+          this.sendChangeStatus(ride.next_status_code, ride.ride_id).subscribe(response => {
+            this.parseRideResponse(response.ride);
             resolve(response.ride);
 
           })
@@ -80,6 +103,7 @@ export class RideService {
         text: 'Confirm',
         handler: () => {
           this.ridesService.sendChangeStatus('RJCT', ride.ride_id).subscribe(response => {
+            this.parseRideResponse(response.ride);
             resolve(response.ride);
 
           })
@@ -99,6 +123,12 @@ export class RideService {
   }
 
 
+  sendSettle(data) {
+    return this.http.post(environment.appUrl + 'setRideSettle',
+      data).pipe(map(response => {
+        return response;
+      })).toPromise();
+  }
 
 
   changeStatus(ride) {
@@ -114,11 +144,12 @@ export class RideService {
         role: 'confirm',
         handler: () => {
           this.sendChangeStatus(ride.next_status_code, ride.ride_id).subscribe(async (response) => {
-            const toast = await this.util.createToast('Ride status has been changed successfully.', false, 'top', 2000)
+            const toast = await this.util.createToast('Ride status has been changed successfully.', false, 'middle', 5000)
             toast.present();
             if (ride.next_status_code == 'DON') {
               resolve(null);
             }
+            this.parseRideResponse(response.ride);
             resolve(response.ride);
 
           }, error =>
@@ -137,17 +168,21 @@ export class RideService {
       {
         next_status_code, ride_id
       }).pipe(map(response => {
-        this.parseRideResponse(response);
+        this.parseRideResponse(response.ride);
         return response;
       }));
   }
 
-  parseRideResponse(response) {
-    if (!response.ride) {
+  parseRideResponse(ride) {
+    if (!ride) {
       return;
     }
-    response.ride.routing = response.routing;
-    response.ride.pickUp = response.routing.find(e => e.RIType == 'PU');
-    response.ride.dropOff = response.routing.find(e => e.RIType == 'DO');
+   ride.routing = ride.routing;
+   ride.pickUp = ride.routing.find(e => e.RIType == 'PU');
+   ride.dropOff = ride.routing.find(e => e.RIType == 'DO');
+   ride.waitsAndStops = ride.routing.filter(e => e.RIType == 'WT' || e.RIType == 'ST');
+   ride.pu_datetime = ride.pu_date + ' ' + ride.pu_time;
   }
+
+
 }

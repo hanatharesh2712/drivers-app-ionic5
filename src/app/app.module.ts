@@ -22,11 +22,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
-import { APIService } from '@app/services/api/api.service';
-import { AuthenticationService } from '@app/services/api/firebase-authentication.service';
-import { StorageService } from '@app/services/api/firestorage.service';
-import { FirestoreService } from '@app/services/api/firestore.service';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { environment } from '@env/environment';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
@@ -44,6 +39,7 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx'
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationService } from './services/geolocation.service';
 import { AuthHttpInterceptor } from './services/util/http-interceptor';
+import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialog.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -68,6 +64,7 @@ import { AuthHttpInterceptor } from './services/util/http-interceptor';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
+    RideMapDialogModule,
     RatingDialogModule,
     SettleDialogModule
   ],
@@ -86,18 +83,13 @@ import { AuthHttpInterceptor } from './services/util/http-interceptor';
     BackgroundGeolocation,
     InAppBrowser,
     DrvnAuthenticationService,
-    AuthenticationService,
     GeolocationService,
-    FirestoreService,
-    StorageService,
-    APIService,
     Insomnia,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
       multi: true
   },
-    InitUserProvider,
     { provide: APP_INITIALIZER, useFactory: initUserProviderFactory, deps: [DrvnAuthenticationService], multi: true }
   ],
   bootstrap: [AppComponent]

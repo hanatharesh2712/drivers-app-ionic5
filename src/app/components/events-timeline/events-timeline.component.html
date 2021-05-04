@@ -1,0 +1,13 @@
+<div class="rides_details">
+
+  <div class="d-flex pu item_box" *ngFor="let time of ride.times">
+    <h6>{{time.ride_time_type.name}}</h6>
+    <div class="event-icon">
+
+    </div>
+    <h6>{{time.time | date:'hh:mmaaaa'}}</h6>
+
+
+  </div>
+
+</div>

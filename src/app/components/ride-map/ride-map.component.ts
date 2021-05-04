@@ -1,22 +1,37 @@
 import { Marker } from './../../models/marker';
 
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Location } from '@app/models/location';
 import { Subject } from 'rxjs';
-import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
+import {
+  Geolocation,
+  GeolocationOptions,
+  Geoposition,
+  PositionError,
+} from '@ionic-native/geolocation/ngx';
 import { GeolocationService } from '@app/services/geolocation.service';
 declare var google;
 import { Ride } from '../../models/ride';
-
+import { MapStyles } from './ride-map-styles';
 
 @Component({
   selector: 'app-ride-map',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './ride-map.component.html'
+  templateUrl: './ride-map.component.html',
 })
 export class RideMapComponent implements OnInit, OnChanges {
-  @ViewChild('map', {static: true}) mapElement: ElementRef;
+  @ViewChild('map', { static: true }) mapElement: ElementRef;
   @Input() actualRide;
+  @Input() showDriverPosition = true;
   map: any;
   autofollow: boolean;
   driverMarker: any;
@@ -27,38 +42,54 @@ export class RideMapComponent implements OnInit, OnChanges {
   ride: Ride;
   markers = [];
   directionsService = new google.maps.DirectionsService();
-  directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true, preserveViewport: true });
+  directionsDisplay = new google.maps.DirectionsRenderer({
+    suppressMarkers: true,
+    preserveViewport: true,
+  });
   calculatedRoute: boolean;
   firstTime: boolean = true;
 
-  constructor(private geolocationService: GeolocationService,
-    private geolocation: Geolocation) { }
+  constructor(
+    private geolocationService: GeolocationService,
+    private geolocation: Geolocation
+  ) {}
 
   ngOnInit() {
     this.initMap();
   }
 
   initMap() {
-    let mapOptions = {
+    const mapOptions = {
       center: new google.maps.LatLng(this.defLatitude, this.defLongitude),
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true,
+      styles: MapStyles,
     };
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    let autofollowFalse = () => {
+    const autofollowFalse = () => {
       this.setAutofollow(false);
     };
+    if (this.ride) {
+      this.initRideMarkers();
+    }
+
     google.maps.event.addListener(this.map, 'dragstart', autofollowFalse);
 
-    this.watchDriverPosition();
-    this.driverPosition.subscribe(data => {
-      this.updateDriverMarkerPosition(data);
-    });
+    if (this.showDriverPosition) {
+      this.watchDriverPosition();
+      this.driverPosition.subscribe((data) => {
+        this.updateDriverMarkerPosition(data);
+      });
+    }
   }
 
   watchDriverPosition() {
-    let watch = this.geolocation.watchPosition({ enableHighAccuracy: true, timeout: 5000, maximumAge: 1000 });
+    const watch = this.geolocation.watchPosition({
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 1000,
+    });
     watch.subscribe((data) => {
       if (data) {
         this.setLocation(data);
@@ -67,10 +98,9 @@ export class RideMapComponent implements OnInit, OnChanges {
     });
   }
 
-
   setLocation(data: Geoposition | PositionError) {
     if ((data as Geoposition).coords != undefined) {
-      var pos = (data as Geoposition);
+      const pos = data as Geoposition;
       this.currentPosition = {
         lat: pos.coords.latitude,
         lng: pos.coords.longitude,
@@ -85,111 +115,115 @@ export class RideMapComponent implements OnInit, OnChanges {
   }
 
   updateDriverMarkerPosition(currentPos: Location) {
-    let latLng = new google.maps.LatLng(currentPos.lat, currentPos.lng);
+    const latLng = new google.maps.LatLng(currentPos.lat, currentPos.lng);
     if (!this.driverMarker) {
-      let icon = {
-        url: "assets/imgs/driver.png",
+      const icon = {
+        url: 'assets/imgs/driver.png',
         anchor: new google.maps.Point(25, 50),
-        scaledSize: new google.maps.Size(50, 50)
+        scaledSize: new google.maps.Size(50, 50),
       };
       this.driverMarker = new google.maps.Marker({
         map: this.map,
         icon: icon,
-        position: latLng
+        position: latLng,
       });
     }
-    if (this.firstTime)
-    {
+    if (this.firstTime) {
       this.fitBoundsAndCenter();
       this.firstTime = false;
     }
-    else
-    {
-      this.map.setCenter(latLng);
-    }
-
   }
-
 
   setAutofollow(state: boolean) {
     this.autofollow = state;
   }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.actualRide && changes.actualRide.currentValue) {
       this.ride = changes.actualRide.currentValue;
       this.initRideMarkers();
     }
-
   }
 
   initRideMarkers() {
-    this.ride.routing.forEach(route => {
-      this.markers.push(new google.maps.Marker({
-        map: this.map,
-        icon: {
-          url: `assets/imgs/${route.RIType.toLowerCase()}.png`,
-          anchor: new google.maps.Point(25, 50),
-          scaledSize: new google.maps.Size(50, 50)
-        },
-        position: new google.maps.LatLng(route.RILat, route.RILng)
-      }));
-
-    });
-    this.fitBoundsAndCenter();
-    this.setDirections();
-
-
+    if (this.map) {
+      this.markers = [];
+      this.ride.routing.forEach((route) => {
+        this.markers.push(
+          new google.maps.Marker({
+            map: this.map,
+            icon: {
+              url: `assets/imgs/${route.RIType.toLowerCase()}.png`,
+              anchor: new google.maps.Point(25, 50),
+              scaledSize: new google.maps.Size(50, 50),
+            },
+            position: new google.maps.LatLng(route.RILat, route.RILng),
+          })
+        );
+      });
+      this.fitBoundsAndCenter();
+      this.setDirections();
+    }
   }
 
-
   fitBoundsAndCenter() {
-    let bounds = new google.maps.LatLngBounds();
-    this.markers.forEach(marker => {
-      bounds.extend(marker.getPosition());
-    });
-    if (this.driverMarker)
-    {
-      bounds.extend(this.driverMarker.getPosition());
+    if (this.map) {
+      let quantity = 0;
+      const bounds = new google.maps.LatLngBounds();
+      this.markers.forEach((marker) => {
+        quantity++;
+        bounds.extend(marker.getPosition());
+      });
+      if (this.driverMarker) {
+        quantity++;
+        bounds.extend(this.driverMarker.getPosition());
+      }
+      setTimeout(() => {
+        this.map.fitBounds(bounds);
+        const listener = google.maps.event.addListener(this.map, 'idle', () => {
+          if (quantity == 1) {
+            this.map.setZoom(11);
+            // google.maps.event.removeListener(listener);
+          }
+        });
+      }, 500);
     }
-
-    this.map.fitBounds(bounds);
   }
 
   setDirections() {
-    let wpoints = this.ride.routing.filter(e => e.RIType != 'DO' && e.RIType != 'PU');
-    let request = {
-      origin: {
-        lat: parseFloat(this.ride.pickUp.RILat),
-        lng: parseFloat(this.ride.pickUp.RILng)
-      },
-      destination: {
-        lat: parseFloat(this.ride.dropOff.RILat),
-        lng: parseFloat(this.ride.dropOff.RILng)
-      },
-      waypoints: wpoints.map(wp =>
-      ({
-        location: {
-          lat: parseFloat(wp.RILat),
-          lng: parseFloat(wp.RILng)
+    if (this.ride.pickUp && this.ride.dropOff) {
+      const wpoints = this.ride.routing.filter(
+        (e) => e.RIType != 'DO' && e.RIType != 'PU'
+      );
+      const request = {
+        origin: {
+          lat: parseFloat(this.ride.pickUp.RILat),
+          lng: parseFloat(this.ride.pickUp.RILng),
         },
-        stopover: false,
-      })),
-      optimizeWaypoints: true,
-      travelMode: 'DRIVING',
-    };
-    //  }
-    const directions = this.directionsDisplay;
-    this.directionsService.route(request, (result, status: any) => {
-      if (status === 'OK') {
-        directions.setMap(this.map);
-        directions.setDirections(result);
-        //  this.onDirectionResponse(result.routes);
-        this.calculatedRoute = true;
-
-      }
-    });
-
+        destination: {
+          lat: parseFloat(this.ride.dropOff.RILat),
+          lng: parseFloat(this.ride.dropOff.RILng),
+        },
+        waypoints: wpoints.map((wp) => ({
+          location: {
+            lat: parseFloat(wp.RILat),
+            lng: parseFloat(wp.RILng),
+          },
+          stopover: false,
+        })),
+        optimizeWaypoints: true,
+        travelMode: 'DRIVING',
+      };
+      //  }
+      const directions = this.directionsDisplay;
+      this.directionsService.route(request, (result, status: any) => {
+        if (status === 'OK') {
+          directions.setMap(this.map);
+          directions.setDirections(result);
+          //  this.onDirectionResponse(result.routes);
+          this.calculatedRoute = true;
+        }
+      });
+    }
   }
 }

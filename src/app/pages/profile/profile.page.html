@@ -1,8 +1,7 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
 
     <ion-buttons slot="start">
-      <ion-back-button text=""></ion-back-button>
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title class="ion-text-center">My Profile</ion-title>
@@ -14,7 +13,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="loggedInUser" class="contentBgColor">
+<ion-content *ngIf="loggedInUser" >
   <div class="profileHeader  ion-margin-bottom">
     <ion-avatar class="profileImage">
       <img [src]="storageUrl + loggedInUser.avatar_url" />

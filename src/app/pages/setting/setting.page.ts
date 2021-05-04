@@ -1,5 +1,4 @@
 import { User } from '@app/models/user';
-import { AuthenticationService } from '@app/services/api/firebase-authentication.service';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *

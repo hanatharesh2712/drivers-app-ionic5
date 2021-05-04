@@ -9,14 +9,16 @@ import { GeolocationService } from './../../services/geolocation.service';
  * LICENSE.md file in the root directory of this source tree.
  */
 
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MouseEvent } from '@agm/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MenuController, NavParams, PopoverController } from '@ionic/angular';
 import { RideService } from '@app/services/ride/ride.service';
-import { APIService } from '@app/services/api/api.service';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { UtilService } from '@app/services/util/util.service';
-import { Driver } from '@app/models/driver';
 import { RideMapComponent } from '@app/components/ride-map/ride-map.component';
 import { Ride } from '@app/models/ride';
 import { NextRideResponse } from '@app/models/rides-wrapper.models';
@@ -29,7 +31,7 @@ import { Insomnia } from '@ionic-native/insomnia/ngx';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['home.page.scss']
+  styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
   @ViewChild(RideMapComponent, { static: true }) rideMap: RideMapComponent;
@@ -46,24 +48,19 @@ export class HomePage implements OnInit {
   constructor(
     private menuCtrl: MenuController,
     private rideService: RideService,
-    private api: APIService,
-    private userProvider: InitUserProvider,
     private util: UtilService,
     private geolocationService: GeolocationService,
     private ridesService: RideService,
     private popoverController: PopoverController,
     private insomnia: Insomnia
-  ) {
-
-  }
+  ) {}
 
   async ngOnInit() {
     this.geolocationService.initTracking();
-    this.insomnia.keepAwake()
-      .then(
-        () => console.log('success'),
-        () => console.log('error')
-      );
+    this.insomnia.keepAwake().then(
+      () => console.log('success'),
+      () => console.log('error')
+    );
   }
 
   ionViewDidEnter() {
@@ -73,7 +70,7 @@ export class HomePage implements OnInit {
       if (response.ride) {
         this.handleRide(response.ride);
       }
-    })
+    });
     //  }
   }
 
@@ -87,22 +84,16 @@ export class HomePage implements OnInit {
       cssClass: 'my-custom-class',
       event: ev,
       componentProps: {
-        child_seats: this.ride.child_seats
+        child_seats: this.ride.child_seats,
       },
-      translucent: true
+      translucent: true,
     });
     await popover.present();
-
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave() {}
 
-  }
-
-  async cancelRide() {
-
-  }
-
+  async cancelRide() {}
 
   goToCustomerDetail() {
     this.util.goForward('/customer-detail');
@@ -113,40 +104,31 @@ export class HomePage implements OnInit {
   }
 
   async changeStatus() {
-    this.rideService.changeStatus(this.ride).then(response => {
-      if (response)
-        {
-          this.handleRide(response);
-        }
-        else
-        {
-          this.isDone =true;
-          this.openRating();
-        }
-    });
-  }
-
-
-  acceptRide() {
-    this.rideService.acceptRide(this.ride).then(response => {
+    this.rideService.changeStatus(this.ride).then((response) => {
       if (response) {
         this.handleRide(response);
+      } else {
+        this.isDone = true;
+        this.openRating();
       }
-
     });
   }
 
- async  openRating()
-  {
-    let dialog = await this.util.createModal(RatingDialogComponent, { ride: this.ride}, 'rating-modal');
+  async openRating() {
+    const dialog = await this.util.createModal(
+      RatingDialogComponent,
+      { ride: this.ride },
+      'rating-modal'
+    );
     dialog.present();
-
   }
 
-  async  openSettle()
-  {
-    let dialog = await this.util.createModal(SettleDialogComponent, { ride: this.ride}, 'settle-modal');
+  async openSettle() {
+    const dialog = await this.util.createModal(
+      SettleDialogComponent,
+      { ride: this.ride },
+      'settle-modal'
+    );
     dialog.present();
-
   }
 }

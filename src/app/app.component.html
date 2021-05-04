@@ -26,13 +26,13 @@
         <ion-list lines="none" class="ion-padding-top contentBg">
           <ion-menu-toggle auto-hide="false">
             <ion-item [routerDirection]="'root'" (click)="redirectTo(page)" *ngFor="let page of appPages" class="nav-item">
-              <ion-icon slot="start" [name]="page.icon"></ion-icon>
+              <ion-icon slot="start" [src]="'assets/custom-ion-icons/' + page.icon +'.svg'"></ion-icon>
               <ion-label>
                 {{ page.title }}
               </ion-label>
             </ion-item>
             <ion-item [routerDirection]="'root'" (click)="logout()" lines="none" class="nav-item">
-              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-icon slot="start" [src]="'assets/custom-ion-icons/logout.svg'"></ion-icon>
               <ion-label>
                 Logout
               </ion-label>

@@ -8,7 +8,6 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MenuController } from '@ionic/angular';
 
@@ -19,7 +18,6 @@ import { MenuController } from '@ionic/angular';
 })
 export class ApprovedPage implements OnInit {
   constructor(
-    private userProvider: InitUserProvider,
     private util: UtilService,
     private menuCtrl: MenuController
   ) {
@@ -30,8 +28,8 @@ export class ApprovedPage implements OnInit {
   }
 
   logout() {
-    this.userProvider.logout().then(res => {
-      this.util.goToNew('/login');
-    });
+  // this.userProvider.logout().then(res => {
+  //   this.util.goToNew('/login');
+  // });
   }
 }

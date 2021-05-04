@@ -1,56 +1,55 @@
 <ion-header>
-  <ion-toolbar  hideBackButton="true" color="primary">
+  <ion-toolbar hideBackButton="true" color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">My Rides</ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <div class="ion-padding-horizontal segment-container">
-      <ion-segment value="offers" (ionChange)="segmentChanged($event)">
-        <ion-segment-button value="offers">
-          Offers
-        </ion-segment-button>
-        <ion-segment-button value="accepted">
-          Accepted
-        </ion-segment-button>
-        <ion-segment-button value="done">
-          Done
-        </ion-segment-button>
-
-      </ion-segment>
-    </div>
+    <ion-title class="ion-text-center">Rides</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="bg-color">
 
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-    <ion-list class="list" no-lines>
-      <ion-item *ngFor="let ride of rides" class="item" (click)="viewOffer()">
-        <div class="d-flex column">
-          <div class="item_header  d-flex">
-            <div class="profile_details">
-              <h3 class="d-flex">{{ride.pu_date}}, {{ride.pu_time}} <span class="end">Ride #{{ride.ride_id}}</span></h3>
-              <h4 class="d-flex">{{ride.ride_status}}<span class="end">{{ride.service_type}}</span></h4>
-              <h4 class="d-flex">{{ride.passenger_name}}</h4>
-            </div>
-          </div>
-          <div class="rides_details">
-            <div class="d-flex item_box">
-              <ion-icon name="location"></ion-icon>
-              <h6>{{ride.pu_location}}</h6>
-            </div>
-            <div class="d-flex item_box">
-              <ion-icon name="navigate"></ion-icon>
-              <h6>{{ride.do_location}}</h6>
-            </div>
-          </div>
-        </div>
+  <!-- <div *ngIf="segmentModel == 'offers'">
+    <h4 class="tab-title">RIDES OFFERS</h4>
+    <rides-list [rides]="ridesOffers">
+      <p class="empty-text">You don't have any ride offer yet.</p>
+    </rides-list>
+  </div>
 
-      </ion-item>
+  <div *ngIf="segmentModel == 'accepted'">
+    <h4 class="tab-title">RIDES ACCEPTED</h4>
+    <rides-list [rides]="ridesAccepted">
+      <p class="empty-text">You don't have any ride accepted yet.</p>
+    </rides-list>
+  </div>
+  <div *ngIf="segmentModel == 'done'">
+    <h4 class="tab-title">RIDES COMPLETED</h4>
+    <rides-list [rides]="ridesDone">
+      <p class="empty-text">You don't have any ride completed yet.</p>
+    </rides-list>
+  </div> -->
+  <ion-tabs>
 
-    </ion-list>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button  tab="offers" (click)="changeTab('offers')" >
+        <ion-icon src="assets/custom-ion-icons/local_offer.svg" class="icon drvn-icon"></ion-icon>
+        <ion-label class="letter-spacing">OFFERS</ion-label>
+        <ion-badge>{{ridesOffers.length}}</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button  tab="accepted" (click)="changeTab('accepted')">
+        <ion-icon src="assets/custom-ion-icons/task_alt.svg" class="icon drvn-icon"></ion-icon>
+        <ion-label class="letter-spacing">ACCEPTED</ion-label>
+        <ion-badge>{{ridesAccepted.length}}</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button  tab="done" (click)="changeTab('done')" >
+        <ion-icon src="assets/custom-ion-icons/account_balance_wallet.svg" class="icon drvn-icon">
+        </ion-icon>
+        <ion-label class="letter-spacing">COMPLETED</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+
 </ion-content>

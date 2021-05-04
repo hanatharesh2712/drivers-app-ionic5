@@ -1,0 +1,8 @@
+<div class="ride-pricing-popover">
+  <h6>Pricing Details:</h6>
+  <ul>
+    <li *ngFor="let cost of costs  | keyvalue" >
+      <label class="title">{{cost.key}}</label>
+    </li>
+  </ul>
+</div>

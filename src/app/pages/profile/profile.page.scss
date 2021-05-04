@@ -17,12 +17,12 @@
     flex-direction: column;
     align-items: center;
     line-height: 1.5;
-    background: var(--ion-theme-color);
+    background: var(--ion-secondary-bg-color);
     padding: 10px 0px;
-
+    margin-bottom: 36px;
     .profileImage {
         width: 100px;
-        height: 100px;
+        min-height: 100px;
     }
 
     .drivermemberType {

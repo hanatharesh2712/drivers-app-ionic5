@@ -3,6 +3,7 @@ import { RideService } from '@app/services/ride/ride.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DrvnAuthenticationService } from '@app/services/auth/auth.service';
 import { Ride } from '@app/models/ride';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'page-my-rides',
@@ -14,9 +15,13 @@ export class MyRidesPageComponent  {
 
   segmentModel: 'offers' | 'accepted' | 'done' = "offers";
   rides: Ride[];
-
+  selectedTab;
+  ridesOffers: Ride[] = [];
+  ridesAccepted: Ride[] = [];
+  ridesDone: Ride[] = [];
   constructor(private ridesService: RideService, private authService: DrvnAuthenticationService,
-    private util: UtilService) {
+    private util: UtilService,
+    private router: Router) {
 
   }
 
@@ -24,52 +29,32 @@ export class MyRidesPageComponent  {
     this.getRides(this.authService.currentUser.id, null);
   }
 
-  segmentChanged(e: any) {
-    this.rides = [];
-    this.segmentModel = e.detail.value;
-    this.getRides(this.authService.currentUser.id, null);
-  }
-
   async getRides(driver_id, refresher) {
     const loader = await this.util.createLoader('Loading Ride History ...');
     loader.present();
-    this.ridesService.getRides(driver_id).subscribe(
-      res => {
+    this.ridesService.getRides().subscribe(
+      (res: any) => {
         this.filterRides(res.rides);
-        if (refresher != null) {
-          refresher.target.complete();
-        }
         loader.dismiss();
       },
       err => {
         console.log(err);
+        loader.dismiss();
       }
     );
   }
 
   filterRides(res) {
-
-    switch (this.segmentModel) {
-      case 'offers':
-        this.rides = res.filter(ride => ride.is_offer);
-        break;
-      case 'accepted':
-        this.rides = res.filter(ride => !ride.is_offer && !ride.is_done);
-        break;
-      case 'done':
-        this.rides = res.filter(ride => ride.is_done);
-        break;
-      default:
-        break;
-    }
+    this.ridesOffers = res.filter(ride => ride.is_offer);
+    this.ridesAccepted = res.filter(ride =>  !ride.is_offer && !ride.is_done);
+    this.ridesDone = res.filter(ride => ride.is_done);
   };
 
-  doRefresh(refresher) {
-    this.getRides(this.authService.currentUser.id, refresher);
-  }
 
-  viewOffer(ride)
+
+
+  changeTab(tab)
   {
-    this.util.goForward('ride-offer')
+    this.segmentModel = tab;
   }
 }

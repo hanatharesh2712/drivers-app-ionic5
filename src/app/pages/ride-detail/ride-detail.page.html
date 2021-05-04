@@ -1,0 +1,258 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" >RIDE {{ride ? ride.is_done ? 'COMPLETED' : ride.is_offer ? 'OFFER' : 'ACCEPTED' : ''}}
+      #{{ride_id}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-color" *ngIf="ride" (click)="closeFooters()">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list class="ride-info" lines="full">
+    <ion-item>
+      <ion-label position="stacked">
+        Pick-up Date
+      </ion-label>
+      <div class="content">
+        <ion-icon name="calendar"></ion-icon>
+        {{ride.pu_datetime | niceDateFormatPipe }}
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">
+        Pax Count / Luggage Count
+      </ion-label>
+      <div class="content">
+        <div class="sub-content">
+          <ion-icon name="people" class="icon drvn-icon"></ion-icon> {{ride.passenger_count}}
+          Passenger{{ride.passenger_count > 1 ? 's' : ''}}
+        </div>
+        <div class="sub-content">
+          <ion-icon src="assets\custom-ion-icons/luggage.svg" class="icon drvn-icon" color="primary"></ion-icon>
+          {{ride.luggage_count}}
+          Bag{{ride.luggage_count > 1 ? 's' : ''}}
+        </div>
+
+      </div>
+
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">
+        Service Type / Vehicle Type
+      </ion-label>
+      <div class="content">
+        <div class="sub-content">
+          <ion-icon name="information-circle"></ion-icon>
+          {{ride.service_type}}
+        </div>
+        <div class="sub-content">
+          <ion-icon name="car"></ion-icon>
+          {{ride.vehicle_type}}
+        </div>
+      </div>
+
+    </ion-item>
+
+    <ion-item *ngIf="ride.handicap || ride.child_seats.length">
+      <ion-label position="stacked">
+        Special Requirements
+      </ion-label>
+      <ul class="requirements-list content">
+        <li *ngIf="ride.handicap == 1">
+          <ion-icon src="assets\custom-ion-icons/accessible.svg"></ion-icon> Handicap
+        </li>
+        <li *ngIf="ride.child_seats.length">
+          <div>
+            <ion-icon src="assets\custom-ion-icons/care.svg"></ion-icon> Child seat Required
+            <ul class="child-seat-types">
+              <li *ngFor="let childSeat of ride.child_seats">
+                {{ childSeat.count + 'x ' + childSeat.type }}
+              </li>
+            </ul>
+          </div>
+
+        </li>
+
+      </ul>
+
+
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked" class="routing-title">
+        <span>
+          Routing Information</span>
+
+        <ion-badge color="primary" slot="end" class="view-map-span" (click)="openRoutingMap()"> <ion-icon name="map-outline"></ion-icon>
+          VIEW MAP</ion-badge>
+      </ion-label>
+      <routing-details [ride]="ride" [showNotes]="true"></routing-details>
+
+    </ion-item>
+    <ion-item *ngIf="ride.notes">
+      <ion-label position="stacked">
+        Notes
+      </ion-label>
+      <div class="content notes">
+        {{ride.notes}}
+      </div>
+    </ion-item>
+    <ion-item *ngIf="ride.is_done">
+      <ion-label position="stacked">
+        Timeline
+      </ion-label>
+      <events-timeline [ride]="ride"></events-timeline>
+
+    </ion-item>
+    <ion-item *ngIf="ride.is_done" class="pricing-section">
+      <ion-label position="stacked">
+        PRICING INFORMATION
+      </ion-label>
+      <ng-container *ngTemplateOutlet="costsList; context: {ride: ride}"></ng-container>
+      <ion-item  class="detail ride-total">
+        <ion-label class="detail-title">Your ride total</ion-label>
+        <span class="value"  slot="end">{{ride.cost_total | currency}}</span>
+      </ion-item>
+
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer *ngIf="ride && ride.is_offer" class="offer-footer"  [ngClass]="{'active': showingPricing}">
+  <ion-toolbar>
+
+    <ion-buttons>
+      <ng-container>
+        <ion-button fill="solid" class="reject-btn" (click)="rejectRide()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" class="accept-btn" (click)="acceptRide()">
+          ACCEPT RIDE
+        </ion-button>
+      </ng-container>
+
+    </ion-buttons>
+    <ion-text class="offer-price">
+      {{ride.cost_total | currency}} <ion-icon name="chevron-down-circle-outline" class="expand-icon" (click)="showingPricing = !showingPricing">
+      </ion-icon>
+    </ion-text>
+    <ion-list class="pricing-details-list">
+      <ion-list-header>
+        <ion-label class="list-title">
+          Price Details:
+        </ion-label>
+      </ion-list-header>
+       <ng-container *ngTemplateOutlet="costsList; context: {ride: ride}"></ng-container>
+
+    </ion-list>
+  </ion-toolbar>
+
+</ion-footer>
+<ion-footer *ngIf="ride && ride.is_done && canSettle" class="settle-footer" [ngClass]="{'active': settlingRide}">
+  <ion-toolbar>
+    <div class="settle-text" *ngIf="ride.is_done">
+      You have 30 min left to settle this ride.
+    </div>
+    <ion-buttons *ngIf="!settlingRide">
+
+      <ion-button fill="solid" class="accept-btn" (click)="settlingRide = true">
+        SETTLE RIDE
+      </ion-button>
+
+    </ion-buttons>
+    <ion-list lines="full" class="settle-list" [formGroup]="settleForm" *ngIf="settleForm">
+      <ion-item>
+        <ion-label>Tolls</ion-label>
+        <ion-input type="number" formControlName="tolls" placeholder="$0.00" slot="end"></ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label>Parking</ion-label>
+        <ion-input type="number" formControlName="parking"  placeholder="$0.00" slot="end"></ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-label>Stops</ion-label>
+        <div slot="end" class="increase-container">
+          <div class="d-flex a-center">
+            <ion-icon name="remove-circle-outline" (click)="decrease('stops')"></ion-icon>
+            <span class="value">
+              {{settleForm.get('stops').value}}
+            </span>
+            <ion-icon name="add-circle-outline" (click)="increase('stops')"></ion-icon>
+          </div>
+
+        </div>
+
+
+
+      </ion-item>
+      <ion-item>
+        <ion-label>Waiting</ion-label>
+        <div slot="end" class="increase-container">
+          <div class="d-flex a-center">
+            <ion-icon name="remove-circle-outline" (click)="decrease('waiting')"></ion-icon>
+            <span class="value">
+              {{settleForm.get('waiting').value}}
+            </span>
+            <ion-icon name="add-circle-outline"  (click)="increase('waiting')"></ion-icon>
+          </div>
+
+        </div>
+
+      </ion-item>
+
+
+    </ion-list>
+    <ion-buttons>
+      <ion-button fill="solid" class="accept-btn" (click)="setSettle()" >
+        CONFIRM SETTLE
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-footer>
+
+
+<ng-template #costsList let-ride="ride">
+  <ion-item *ngIf="ride.costs['rate']" class="detail">
+    <ion-label class="detail-title">Base Rate</ion-label>
+    <span class="value"  slot="end">{{ride.costs['rate'] | currency}}</span>
+  </ion-item>
+  <ion-item  *ngIf="ride.costs['additional_hour_qty'] > 0"  class="detail">
+    <ion-label class="detail-title">Add. Hour ({{ride.costs['additional_hour_qty']}} x {{ride.costs['additional_hour']}}) </ion-label>
+    <span class="value"  slot="end">{{(ride.costs['additional_hour_qty'] * ride.costs['additional_hour']) | currency}}</span>
+  </ion-item>
+  <ion-item  *ngIf="ride.costs['child_seat_qty'] > 0"  class="detail">
+    <ion-label class="detail-title">Child Seat ({{ride.costs['child_seat_qty']}} x {{ride.costs['child_seat']}}) </ion-label>
+    <span class="value" slot="end">{{(ride.costs['child_seat_qty'] * ride.costs['child_seat']) | currency}}</span>
+  </ion-item>
+  <ion-item *ngIf="ride.costs['admin_fee']  > 0"  class="detail">
+    <ion-label class="detail-title">Admin Fee</ion-label>
+    <span class="value"  slot="end">{{ride.costs['admin_fee'] | currency}}</span>
+  </ion-item>
+  <ion-item *ngIf="ride.costs['airport_fee']  > 0"  class="detail">
+    <ion-label class="detail-title">Airporte Fee</ion-label>
+    <span class="value"  slot="end">{{ride.costs['airport_fee'] | currency}}</span>
+  </ion-item>
+  <ion-item *ngIf="ride.costs['cruise_port_fee']  > 0"  class="detail">
+    <ion-label class="detail-title">Cruiseport Fee</ion-label>
+    <span class="value"  slot="end">{{ride.costs['cruise_port_fee'] | currency}}</span>
+  </ion-item>
+  <ion-item *ngIf="ride.costs['gratuity']  > 0"  class="detail">
+    <ion-label class="detail-title">Gratuity</ion-label>
+    <span class="value"  slot="end">{{ride.costs['gratuity'] | currency}}</span>
+  </ion-item>
+  <ion-item *ngIf="ride.costs['tolls']  > 0"  class="detail">
+    <ion-label class="detail-title">Tolls</ion-label>
+    <span class="value"  slot="end">{{ride.costs['tolls'] | currency}}</span>
+  </ion-item>
+  <ion-item *ngIf="ride.costs['parking']  > 0"  class="detail">
+    <ion-label class="detail-title">Parking</ion-label>
+    <span class="value"  slot="end">{{ride.costs['parking'] | currency}}</span>
+  </ion-item>
+</ng-template>

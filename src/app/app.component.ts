@@ -13,7 +13,6 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { User } from './models/user';
 import { UtilService } from './services/util/util.service';
 import { RideService } from './services/ride/ride.service';
@@ -29,27 +28,27 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'other_houses'
     },
     {
-      title: 'My Rides',
-      url: '/my-rides',
-      icon: 'car'
+      title: 'Rides',
+      url: '/my-rides/accepted',
+      icon: 'directions_car'
     },
     {
-      title: 'My Reviews',
+      title: 'Reviews',
       url: '/my-reviews',
-      icon: 'star'
+      icon: 'star_border'
     },
     {
-      title: 'My Profile',
+      title: 'Profile',
       url: '/profile',
-      icon: 'person-circle-outline'
+      icon: 'account_circle'
     },
     {
-      title: 'Contact Us',
+      title: 'Support',
       url: '/contact',
-      icon: 'headset-outline'
+      icon: 'contact_support'
     },
 
   ];
@@ -61,7 +60,6 @@ export class AppComponent {
     public splashScreen: SplashScreen,
     public statusBar: StatusBar,
     public util: UtilService,
-    public userProvider: InitUserProvider,
     public rideService: RideService,
     private authService: DrvnAuthenticationService
   ) {
@@ -93,10 +91,8 @@ export class AppComponent {
   }
 
   logout() {
-    this.userProvider.logout().then(res => {
-      console.log(res);
-      this.util.goToNew('login');
-    });
+    this.authService.logout()
+    this.util.goToNew('login');
   }
 
 

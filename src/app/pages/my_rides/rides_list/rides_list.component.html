@@ -1,0 +1,28 @@
+<ion-content>
+  <h4 class="tab-title">
+    {{type == 'offers' ? 'RIDES OFFERS' : type == 'accepted' ? 'RIDES ACCEPTED' : 'RIDES COMPLETED' }} <span class="rides-count">({{rides && rides.length}})</span>
+  </h4>
+  <ion-list class="list" lines="none">
+    <ion-item *ngFor="let ride of rides" class="item" >
+      <div class="d-flex column" (click)="viewRide(ride.ride_id)">
+        <div class="item_header  d-flex">
+          <div class="profile_details">
+            <h3 class="d-flex"> {{ride.pu_datetime | niceDateFormatPipe }} <span class="end">
+                #{{ride.ride_id}}</span></h3>
+            <h4 class="d-flex">{{ride.service_type | uppercase}} | {{ride.vehicle_type  | uppercase}}</h4>
+          </div>
+        </div>
+        <routing-details [ride]="ride" [showNotes]="false" [showStops]="false" [showStopsCount]="true"></routing-details>
+
+      </div>
+
+    </ion-item>
+
+  </ion-list>
+  <div *ngIf="rides && rides.length == 0 && loaded" class="empty-text-container">
+    You don't have any {{type == 'offers' ? 'ride offer' : type == 'accepted' ? 'accepted ride' : 'completed ride'}} yet.
+  </div>
+
+</ion-content>
+
+

@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { UtilService } from '@app/services/util/util.service';
 import { RideService } from '@app/services/ride/ride.service';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
 import { Driver } from '@app/models/driver';
 
 
@@ -30,13 +29,11 @@ export class CustomerDetailPage implements OnInit {
   constructor(
     private route: Router,
     private util: UtilService,
-    public rideService: RideService,
-    private userProvider: InitUserProvider
+    public rideService: RideService
   ) { }
 
   ngOnInit() {
     this.tripPayments = environment.TRIP_PAYMENTS;
-    this.loggedInUser = this.userProvider.getUserData();
   }
 
   startNavigationToPickup() {

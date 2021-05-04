@@ -35,7 +35,7 @@
   <div class="widget-ride-info" *ngIf="ride">
     <ion-row class="widget-content d-flex" [ngClass]="infoExpanded ? 'active' : ''">
 
-      <div class="main-info">
+      <div class="main-info"   (click)="infoExpanded = !infoExpanded">
         <ng-container *ngIf="viewType != 'offer'">
           <div>
             {{ride.passenger_name}}
@@ -52,7 +52,7 @@
         <ion-icon src="assets\custom-ion-icons/luggage.svg" class="icon drvn-icon" color="primary"></ion-icon>
         {{ride.luggage_count}}
         <ion-icon class="show-icon" name="{{!infoExpanded ? 'caret-down-outline' : 'caret-up-outline'}}"
-          (click)="infoExpanded = !infoExpanded"></ion-icon>
+        ></ion-icon>
 
 
 
@@ -75,16 +75,7 @@
           <span>{{ride.spot_time}}
           </span>
         </div>
-        <div class="rides_details">
-          <div class="d-flex item_box">
-            <ion-icon name="location"></ion-icon>
-            <h6>{{ride.pu_location}}</h6>
-          </div>
-          <div class="d-flex item_box">
-            <ion-icon name="navigate"></ion-icon>
-            <h6>{{ride.do_location}}</h6>
-          </div>
-        </div>
+        <routing-details [ride]="ride" [showNotes]="true"></routing-details>
 
       </div>
 
@@ -103,7 +94,7 @@
         (click)="$event.target.parentElement.classList.toggle('active')">
         <ng-container>
           <ion-icon src="assets\custom-ion-icons/accessible.svg"></ion-icon>
-          Weelchair requested
+          Handicap
         </ng-container>
       </div>
     </ion-row>
@@ -115,10 +106,10 @@
   <!--   (click)="openSettle()">
   <!--  SET RIDE
   <!-- </button> -->
-      <ng-container *ngIf="ride && viewType == 'actual' && !isDone">
-        <button ion-button class="update-status" [style.background]="ride.next_status_color"
+      <ng-container *ngIf="ride && !isDone">
+        <button ion-button class="update-status" [style.background]="ride.next_status_button_color"
           (click)="changeStatus()">
-          {{ride.next_status_alert}}
+          {{ride.next_status_button_text}}
         </button>
         <button ion-button class="call" (click)="someThingLikeLogOut()">
           <ion-icon name="call"></ion-icon>

@@ -9,8 +9,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from '@app/services/util/util.service';
-import { InitUserProvider } from '@app/services/inituser/inituser.service';
-
 @Component({
   selector: 'app-driving-license',
   templateUrl: './driving-license.page.html',
@@ -27,7 +25,7 @@ export class DrivingLicensePage implements OnInit {
   expiryDate: any = '';
   photos: any = [];
 
-  constructor(private util: UtilService, private userProvider: InitUserProvider) { }
+  constructor(private util: UtilService) { }
 
   ngOnInit() {
   }
@@ -38,12 +36,12 @@ export class DrivingLicensePage implements OnInit {
       role: 'destructive',
       cssClass: 'buttonCss',
       handler: () => {
-        this.userProvider.openCamera();
+     ///   this.userProvider.openCamera();
       }
     }, {
       text: 'Pick From Gallery',
       handler: () => {
-        this.userProvider.openGallery();
+    //    this.userProvider.openGallery();
       }
     }, {
       text: 'Cancel',
