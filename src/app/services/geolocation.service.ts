@@ -25,12 +25,12 @@ export class GeolocationService {
   driverPosition: Subject<Location> = new Subject();
   location: Location;
   config: BackgroundGeolocationConfig = {
-    desiredAccuracy: 0,
-    stationaryRadius: 0,
-    distanceFilter: 1,
-    interval: 1000,
-    fastestInterval: 1000,
-    activitiesInterval: 100,
+    desiredAccuracy: 10,
+    stationaryRadius: 1,
+    distanceFilter: 5,
+    interval: 500,
+    fastestInterval: 500,
+    activitiesInterval: 500,
     stopOnStillActivity: false,
     startForeground: true,
     startOnBoot: true,
@@ -58,11 +58,11 @@ export class GeolocationService {
       this.backgroundGeolocation
         .on(BackgroundGeolocationEvents.location)
         .subscribe((location: BackgroundGeolocationResponse) => {
-          this.setLocation(location, location.time);
+          this.setLocation(location, location.time, 'BCK');
           this.geolocation
             .getCurrentPosition()
             .then((resp: Geoposition) => {
-              this.setLocation(resp.coords, resp.timestamp);
+              this.setLocation(resp.coords, resp.timestamp, 'TBD');
             })
             .catch((error) => {
               console.log('Error getting location', error);
@@ -70,7 +70,7 @@ export class GeolocationService {
 
           const watch = this.geolocation.watchPosition();
           watch.subscribe((data: Geoposition) => {
-            this.setLocation(data.coords, data.timestamp);
+            this.setLocation(data.coords, data.timestamp, 'TBD');
           });
         });
     });
@@ -85,19 +85,23 @@ export class GeolocationService {
     this.backgroundGeolocation.stop();
   }
 
-  setLocation(data: BackgroundGeolocationResponse | Coordinates, time) {
-    this.location = {
-      lat: data.latitude,
-      lng: data.longitude,
-      acu: data.accuracy,
-      alt: data.altitude,
-      speed: data.speed,
-      date: new Date(time),
-      provider: 'GPS',
-      app_version: 'TBD',
-    };
-    this.driverPosition.next(this.location);
-    this.sendDriverLocation();
+  setLocation(data: BackgroundGeolocationResponse | Coordinates, time, type) {
+    if (!this.location || data.longitude != this.location.lng || data.latitude != this.location.lng) {
+      this.location = {
+        lat: data.latitude,
+        lng: data.longitude,
+        acu: data.accuracy,
+        alt: data.altitude,
+        speed: data.speed,
+        date: new Date(time),
+        provider: 'GPS',
+        app_version: type,
+      };
+      this.driverPosition.next(this.location);
+      this.sendDriverLocation();
+    }
+
+
   }
 
   sendDriverLocation() {
