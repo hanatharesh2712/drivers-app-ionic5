@@ -144,7 +144,7 @@ export class RideService {
         role: 'confirm',
         handler: () => {
           this.sendChangeStatus(ride.next_status_code, ride.ride_id).subscribe(async (response) => {
-            const toast = await this.util.createToast('Ride status has been changed successfully.', false, 'middle', 5000)
+            const toast = await this.util.createToast('Ride status has been changed.', false, 'middle', 3000)
             toast.present();
             if (ride.next_status_code == 'DON') {
               resolve(null);
