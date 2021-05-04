@@ -20,11 +20,20 @@ export const environment = {
     appId: '1:214474905314:web:0364de4cdad898ecf2f0bb',
     measurementId: 'G-S12H8PS6ZK'
   },
-  GOOGLE_MAPS_API_KEY: 'YOUR_API_KEY',
+  appUrl: 'https://dispatch-api.moveo.net/api/drivers/',
+  loginUrl: 'https://dispatch-api.moveo.net/oauth/token',
+  storageUrl: 'https://dispatch-api.moveo.net/storage/',
+  noLoginUrl: 'https://dispatch-api.moveo.net/',
+  configs: {
+
+  },
+  versionCheckURL : 'https://vip.moveo.net/version.json',
+  GOOGLE_MAPS_API_KEY: 'AIzaSyBzPIxztJQWfQR_Ekxsv08SljGTpYItr_Y',
   API_URLS: {
     dev: 'http://192.168.1.2:3000',
     prod: '',
   },
+
   DEFAULT_LAT: 51.5,
   DEFAULT_LNG: 0.0,
   TRIP_PAYMENTS: [
