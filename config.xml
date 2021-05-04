@@ -21,6 +21,7 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="Orientation" value="portrait" />
+    <resource-file src="assets/ic_launcher.png" target="app/src/main/res/mipmap/icon.png" />
     <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
         <string>We use your location for full functionality of certain app features.</string>
     </config-file>
