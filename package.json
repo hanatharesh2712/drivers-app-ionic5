@@ -68,6 +68,8 @@
     "cordova-android": "^9.1.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-insomnia": "^4.3.0",
+    "cordova-plugin-ionic-webview": "^5.0.0",
+    "cordova-plugin-whitelist": "^1.3.4",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
@@ -104,11 +106,13 @@
         "ACCOUNT_LABEL": "@string/app_name",
         "ACCOUNT_TYPE": "$PACKAGE_NAME.account",
         "CONTENT_AUTHORITY": "$PACKAGE_NAME"
-      }
+      },
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-ionic-webview": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
