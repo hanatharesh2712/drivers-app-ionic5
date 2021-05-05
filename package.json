@@ -83,7 +83,7 @@
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "cordova-android": "^9.1.0",
-    "cordova-ios": "^5.1.1",
+    "cordova-ios": "^6.2.0",
     "cordova-plugin-insomnia": "^4.3.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
@@ -144,8 +144,8 @@
       }
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
