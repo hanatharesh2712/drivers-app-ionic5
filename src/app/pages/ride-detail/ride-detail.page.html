@@ -26,18 +26,28 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">
-        Pax Count / Luggage Count
+        {{isRideActive ? 'Passenger Information' : 'Pax Count / Luggage Count'}}
       </ion-label>
       <div class="content">
-        <div class="sub-content">
-          <ion-icon name="people" class="icon drvn-icon"></ion-icon> {{ride.passenger_count}}
-          Passenger{{ride.passenger_count > 1 ? 's' : ''}}
+        <div class="d-flex column">
+          <div *ngIf="isRideActive" class="pax-info ">
+            <ion-icon name="person" class="icon drvn-icon"></ion-icon>
+            {{ride.passenger_name}}
+          </div>
+          <div class="d-flex pax-lug" [ngClass]="{'secondary': isRideActive}">
+            <div class="sub-content">
+              <ion-icon name="people" class="icon drvn-icon"></ion-icon> {{ride.passenger_count}}
+              Passenger{{ride.passenger_count > 1 ? 's' : ''}}
+
+            </div>
+            <div class="sub-content">
+              <ion-icon src="assets\custom-ion-icons/luggage.svg" class="icon drvn-icon" color="primary"></ion-icon>
+              {{ride.luggage_count}}
+              Bag{{ride.luggage_count > 1 ? 's' : ''}}
+            </div>
+          </div>
         </div>
-        <div class="sub-content">
-          <ion-icon src="assets\custom-ion-icons/luggage.svg" class="icon drvn-icon" color="primary"></ion-icon>
-          {{ride.luggage_count}}
-          Bag{{ride.luggage_count > 1 ? 's' : ''}}
-        </div>
+
 
       </div>
 
@@ -124,8 +134,12 @@
     </ion-item>
   </ion-list>
 
-  <div class="expand-map-badget" [ngClass]="{'active': showingMap}" *ngIf="isRideActive" (click)="showingMap = !showingMap">
-    <ion-icon name="arrow-up-circle-outline" [ngClass]="{'active': showingMap}"></ion-icon> Map
+  <div class="expand-map-badget-container" [ngClass]="{'active': showingMap}" *ngIf="isRideActive"
+    (click)="showingMap = !showingMap">
+    <div class="expand-map-badget">
+      <ion-icon name="arrow-up-circle-outline" [ngClass]="{'active': showingMap}"></ion-icon>
+    </div>
+
   </div>
 
 </ion-content>
@@ -137,12 +151,27 @@
   </ion-fab-button>
   <ion-fab-list side="top">
     <ion-fab-button>
-      <ion-icon name="logo-facebook"></ion-icon>
-      CALL PASSENGER
+      <div class="text-container">
+        <ion-icon src="assets\custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
+        CALL DRVN
+      </div>
+
     </ion-fab-button>
-    <ion-fab-button >
-      <ion-icon name="logo-twitter"></ion-icon>
-      CALL MOVEO
+    <ion-fab-button>
+
+      <div class="text-container">
+        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+        TEXT PASSENGER
+      </div>
+
+    </ion-fab-button>
+    <ion-fab-button>
+
+      <div class="text-container">
+        <ion-icon name="call-outline"></ion-icon>
+        CALL PASSENGER
+      </div>
+
     </ion-fab-button>
 
   </ion-fab-list>
@@ -239,7 +268,7 @@
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
-    <ion-toolbar *ngIf="isRideActive" class="active-ride-footer" >
+    <ion-toolbar *ngIf="isRideActive" class="active-ride-footer">
       <div class="map-buttons-container" [ngClass]="{'active': showingMap}">
 
         <ion-buttons>

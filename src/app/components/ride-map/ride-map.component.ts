@@ -1,6 +1,7 @@
 import { Marker } from './../../models/marker';
 
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -28,7 +29,7 @@ import { MapStyles } from './ride-map-styles';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './ride-map.component.html',
 })
-export class RideMapComponent implements OnInit, OnChanges {
+export class RideMapComponent implements OnChanges, AfterViewInit {
   @ViewChild('map', { static: true }) mapElement: ElementRef;
   @Input() actualRide;
   @Input() showDriverPosition = true;
@@ -54,9 +55,7 @@ export class RideMapComponent implements OnInit, OnChanges {
     private geolocation: Geolocation
   ) {}
 
-  ngOnInit() {
-    this.initMap();
-  }
+
 
   initMap() {
     const mapOptions = {
@@ -186,7 +185,7 @@ export class RideMapComponent implements OnInit, OnChanges {
         const listener = google.maps.event.addListener(this.map, 'idle', () => {
           if (quantity == 1) {
             this.map.setZoom(11);
-            google.maps.event.trigger(this.map, 'resize');
+
             google.maps.event.removeListener(listener);
           }
         });
@@ -229,5 +228,12 @@ export class RideMapComponent implements OnInit, OnChanges {
         }
       });
     }
+  }
+
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.initMap(), 500);
+
+
   }
 }

@@ -1,7 +1,7 @@
 <ion-app>
-  <ion-split-pane contentId="content">
-    <ion-menu contentId="content" *ngIf="loggedInUser" >
-      <ion-content class="contentBg">
+  <ion-split-pane  contentId="mainContent">
+    <ion-menu contentId="mainContent" >
+      <ion-content class="contentBg" *ngIf="loggedInUser">
         <!--Profile-->
         <div class="driverCardBottom">
           <ion-card slot="fixed" class="driverCard fixed ion-no-padding ion-no-margin" color="dark">
@@ -42,6 +42,6 @@
         <img class="logo" src="assets/logos/drvn-logo.png">
       </ion-content>
     </ion-menu>
-    <ion-router-outlet [swipeGesture]="false" id="content" main></ion-router-outlet>
+    <ion-router-outlet [swipeGesture]="false" id="mainContent" main></ion-router-outlet>
   </ion-split-pane>
 </ion-app>

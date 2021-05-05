@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RideMapDialogComponent } from '@app/components/ride-map-dialog/ride-map-dialog.component';
@@ -25,6 +25,7 @@ export class RideDetailPage implements OnInit {
   isRideActive = true;
   canSettle: boolean = true;
   showingMap = false;
+  @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
   constructor(
     private rideService: RideService,
     private util: UtilService,
@@ -176,4 +177,7 @@ export class RideDetailPage implements OnInit {
     );
     dialog.present();
   }
+
+
+
 }
