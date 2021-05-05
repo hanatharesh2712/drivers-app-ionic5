@@ -60,11 +60,11 @@ export class RideMapComponent implements OnInit, OnChanges {
 
   initMap() {
     const mapOptions = {
-      mapId: "5ec923e22a6df1ff",
+      mapId: '5ec923e22a6df1ff',
       center: new google.maps.LatLng(this.defLatitude, this.defLongitude),
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
+      disableDefaultUI: true,
     };
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     const autofollowFalse = () => {
@@ -115,6 +115,9 @@ export class RideMapComponent implements OnInit, OnChanges {
   }
 
   updateDriverMarkerPosition(currentPos: Location) {
+    if (!currentPos) {
+      return;
+    }
     const latLng = new google.maps.LatLng(currentPos.lat, currentPos.lng);
     if (!this.driverMarker) {
       const icon = {
@@ -183,7 +186,8 @@ export class RideMapComponent implements OnInit, OnChanges {
         const listener = google.maps.event.addListener(this.map, 'idle', () => {
           if (quantity == 1) {
             this.map.setZoom(11);
-             google.maps.event.removeListener(listener);
+            google.maps.event.trigger(this.map, 'resize');
+            google.maps.event.removeListener(listener);
           }
         });
       }, 500);

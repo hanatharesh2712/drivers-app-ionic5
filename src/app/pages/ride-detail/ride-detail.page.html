@@ -88,7 +88,7 @@
         <span>
           Routing Information</span>
 
-        <ion-badge color="primary" slot="end" class="view-map-span" (click)="openRoutingMap()">
+        <ion-badge color="primary" slot="end" class="view-map-span" (click)="openRoutingMap()" *ngIf="!isRideActive">
           <ion-icon name="map-outline"></ion-icon>
           VIEW MAP
         </ion-badge>
@@ -123,10 +123,30 @@
 
     </ion-item>
   </ion-list>
+
+  <div class="expand-map-badget" [ngClass]="{'active': showingMap}" *ngIf="isRideActive" (click)="showingMap = !showingMap">
+    <ion-icon name="arrow-up-circle-outline" [ngClass]="{'active': showingMap}"></ion-icon> Map
+  </div>
+
 </ion-content>
 
 
+<ion-fab horizontal="start" vertical="bottom" slot="fixed">
+  <ion-fab-button>
+    <ion-icon name="call"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button>
+      <ion-icon name="logo-facebook"></ion-icon>
+      CALL PASSENGER
+    </ion-fab-button>
+    <ion-fab-button >
+      <ion-icon name="logo-twitter"></ion-icon>
+      CALL MOVEO
+    </ion-fab-button>
 
+  </ion-fab-list>
+</ion-fab>
 
 <ion-footer>
   <ng-container *ngIf="ride">
@@ -219,19 +239,22 @@
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
-    <ion-toolbar *ngIf="isRideActive" class="active-ride-footer">
+    <ion-toolbar *ngIf="isRideActive" class="active-ride-footer" >
+      <div class="map-buttons-container" [ngClass]="{'active': showingMap}">
 
-      <ion-buttons>
+        <ion-buttons>
 
-        <button ion-button class="update-status" [style.background]="ride.next_status_button_color"
-          (click)="changeStatus()">
-          {{ride.next_status_button_text}}
-        </button>
-        <button ion-button class="call" (click)="someThingLikeLogOut()">
-          <ion-icon name="call"></ion-icon>
-        </button>
+          <button ion-button class="update-status" [style.background]="ride.next_status_button_color"
+            (click)="changeStatus()">
+            {{ride.next_status_button_text}}
+          </button>
 
-      </ion-buttons>
+
+
+        </ion-buttons>
+
+        <app-ride-map [actualRide]="ride"></app-ride-map>
+      </div>
 
     </ion-toolbar>
   </ng-container>

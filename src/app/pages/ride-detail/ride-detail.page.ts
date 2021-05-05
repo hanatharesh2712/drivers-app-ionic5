@@ -22,8 +22,9 @@ export class RideDetailPage implements OnInit {
   settlingRide: boolean;
   showingPricing = false;
   settleForm: FormGroup;
-  isRideActive = false;
+  isRideActive = true;
   canSettle: boolean = true;
+  showingMap = false;
   constructor(
     private rideService: RideService,
     private util: UtilService,

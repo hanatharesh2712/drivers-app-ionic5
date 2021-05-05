@@ -71,19 +71,17 @@ ride-detail {
 
     }
 
-    .routing-title
-    {
+    .routing-title {
       display: flex;
 
-      .view-map-span
-      {
+      .view-map-span {
         display: flex;
         align-items: center;
         margin-left: auto;
         font-size: 1.2rem;
+        padding: 4px 12px;
 
-        ion-icon
-        {
+        ion-icon {
           color: black;
           font-size: 1.4rem;
         }
@@ -118,11 +116,9 @@ ride-detail {
     }
 
 
-    .pricing-section
-    {
+    .pricing-section {
 
-      ion-item
-      {
+      ion-item {
         width: 100%;
         color: var(--ion-theme-info-color);
         font-size: 1.4rem;
@@ -130,8 +126,7 @@ ride-detail {
         height: 30px;
       }
 
-      .ride-total
-      {
+      .ride-total {
         color: white !important;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -144,8 +139,8 @@ ride-detail {
 
 
   ion-footer {
+    padding: 0px;
     background: black;
-    padding: 12px;
     border-top: 1px solid var(--ion-theme-color);
 
     ion-toolbar {
@@ -176,6 +171,8 @@ ride-detail {
 
     .settle-footer {
       max-height: 90px;
+
+      padding: 12px;
       transition: .7s ease all;
 
       &.active {
@@ -187,20 +184,17 @@ ride-detail {
         --ion-item-background: black;
         --ion-item-color: white;
 
-        ion-input
-        {
+        ion-input {
           max-width: 60px;
         }
 
-        .value
-        {
+        .value {
           width: 15px;
           text-align: center;
         }
-        .increase-container
-        {
-          ion-icon
-          {
+
+        .increase-container {
+          ion-icon {
             color: var(--ion-theme-color);
             font-size: 2rem;
             margin: 0px 4px;
@@ -219,6 +213,8 @@ ride-detail {
 
 
     .offer-footer {
+
+      padding: 12px;
       max-height: 110px;
       transition: all .5s ease;
 
@@ -255,12 +251,11 @@ ride-detail {
         --ion-item-color: white !important;
 
 
-        ion-list-header
-        {
+        ion-list-header {
           min-height: 20px;
           margin-top: 20px;
-          .list-title
-          {
+
+          .list-title {
             margin-top: 12px;
             color: white;
             font-size: 1.6rem;
@@ -268,8 +263,7 @@ ride-detail {
         }
 
 
-        .detail
-        {
+        .detail {
           --color: grey;
           font-size: 1.4rem;
           height: 30px;
@@ -277,45 +271,146 @@ ride-detail {
       }
     }
 
-    .active-ride-footer
-    {
-      ion-buttons {
-        display: flex;
-        align-items: center;
+    .active-ride-footer {
+      transition: 1s ease all;
+      --padding-start: 0px;
+      --padding-end: 0px;
+      --padding-top: 0px;
+      --padding-end: 0px;
 
-        button {
-          box-shadow: 0 5px 5px -5px black;
-          color: white;
-          font-size: 1.4rem;
-          &.call {
-            margin-left: auto;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            background: var(--ion-theme-color);
 
-            ion-icon
-            {
-              font-size: 24px;
+      .map-buttons-container
+      {
+
+        height: 100%;
+        max-height: 70px;
+        transition: 1s ease all;
+
+
+        ion-buttons {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          bottom: 0px;
+          width: 100%;
+          padding: 12px;
+
+          button {
+            box-shadow: 0 5px 5px -5px black;
+            color: white;
+            font-size: 1.4rem;
+            border-radius: 4px;
+            border: 1px solid grey;
+            &.call {
+              margin-left: auto;
+
+              width: 50px;
+              height: 40px;
+              background: var(--ion-theme-color);
+
+              ion-icon {
+                font-size: 24px;
+              }
+            }
+
+            &.update-status {
+              position: relative;
+              height: 40px;
+              width: 100%;
+              margin-left: 48px;
             }
           }
 
-          &.update-status {
-            position: relative;
-            height: 40px;
-            width: 100%;
-            margin-right: 24px;
-          }
         }
 
+        #map {
+          width: 100%;
+          height: 300px;
+          top: 0px;
+          transition: transform 1s ease;
+
+
+        }
+
+        &.active
+        {
+          max-height: 300px;
+
+        }
       }
+
+
+
     }
 
-
-
-
-
-
-
   }
+
+  .expand-map-badget
+      {
+        font-size: 1.2rem;
+        position: fixed;
+        bottom: 70px;
+        right: 0px;
+        height: 30px;
+        padding: 4px;
+        display: flex;
+        transition: 1s ease all;
+        background-color: var(--ion-theme-color);
+        color:  white;
+        border: 1px solid var(--ion-theme-color);
+        border-bottom: none;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        ion-icon
+        {
+          font-size: 1.5rem;
+          margin-right: 4px;
+          transition: 1s ease all;
+          &.active {
+            transform: rotate(180deg);
+          }
+
+        }
+
+        &.active{
+          bottom: 300px;
+        }
+      }
+
+
+      ion-fab
+      {
+
+        ion-fab-button
+        {
+          --color: white;
+          --background: var(--ion-theme-color);
+        }
+        > ion-fab-button
+        {
+          height: 40px;
+          width: 40px;
+          --border-radius: 4px;
+          position: relative;
+          top: -2px;
+        }
+        ion-fab-list
+        {
+          ion-fab-button
+          {
+            width: 175px;
+            border-radius: 4px;
+            --border-radius: 4px;
+            --ion-color-base:var(--ion-theme-color) !important;
+
+            ion-icon
+            {
+              margin-right: 12px;
+            }
+          }
+        }
+      }
+
+
 }

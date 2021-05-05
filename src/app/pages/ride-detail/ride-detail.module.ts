@@ -11,6 +11,7 @@ import { EventsTimelineModule } from '@app/components/events-timeline/events-tim
 import { RidePricingPopoverModule } from '@app/components/ride-pricing-popover/ride-pricing-popover.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RideMapDialogModule } from '@app/components/ride-map-dialog/ride-map-dialog.module';
+import { RideMapModule } from '@app/components/ride-map/ride-map.module';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
     PipesModule,
     RideMapDialogModule,
     ReactiveFormsModule,
+    RideMapModule,
     RouterModule.forChild(routes),
     RoutingDetailsModule,
     EventsTimelineModule,
