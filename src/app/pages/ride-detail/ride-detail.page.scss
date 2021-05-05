@@ -141,57 +141,6 @@ ride-detail {
 
   }
 
-  .settle-footer {
-    max-height: 100px;
-    transition: .7s ease all;
-
-    &.active {
-      max-height: 500px;
-    }
-  }
-
-
-  .offer-footer {
-    max-height: 130px;
-    transition: all .5s ease;
-
-    .expand-icon {
-      transition: all .5s ease;
-    }
-
-    &.active {
-      max-height: 500px;
-
-      .expand-icon {
-        transform: rotate(180deg);
-      }
-    }
-
-    .pricing-details-list {
-      --ion-item-background: black !important;
-      --ion-item-color: white !important;
-
-
-      ion-list-header
-      {
-        min-height: 20px;
-        margin-top: 20px;
-        .list-title
-        {
-          color: white;
-          font-size: 1.6rem;
-        }
-      }
-
-
-      .detail
-      {
-        --color: grey;
-        font-size: 1.4rem;
-        height: 30px;
-      }
-    }
-  }
 
 
   ion-footer {
@@ -205,7 +154,6 @@ ride-detail {
 
     ion-buttons {
 
-      margin: 12px;
 
       ion-button {
         height: 40px !important;
@@ -226,55 +174,148 @@ ride-detail {
       }
     }
 
+    .settle-footer {
+      max-height: 90px;
+      transition: .7s ease all;
 
-    .offer-price {
-      color: white;
-      font-size: 2.5rem;
-      margin: 0 auto;
-      display: flex;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-
-      ion-icon {
-        font-size: 2.5rem;
-        margin-left: 4px;
+      &.active {
+        max-height: 500px;
       }
+
+      .settle-list {
+        --background: black;
+        --ion-item-background: black;
+        --ion-item-color: white;
+
+        ion-input
+        {
+          max-width: 60px;
+        }
+
+        .value
+        {
+          width: 15px;
+          text-align: center;
+        }
+        .increase-container
+        {
+          ion-icon
+          {
+            color: var(--ion-theme-color);
+            font-size: 2rem;
+            margin: 0px 4px;
+          }
+        }
+      }
+
+      .settle-text {
+        color: var(--ion-theme-info-color);
+        text-align: center;
+        font-size: 1.4rem;
+        margin-bottom: 4px;
+      }
+
     }
 
 
-    .settle-list {
-      --background: black;
-      --ion-item-background: black;
-      --ion-item-color: white;
+    .offer-footer {
+      max-height: 110px;
+      transition: all .5s ease;
 
-      ion-input
-      {
-        max-width: 60px;
-      }
-
-      .value
-      {
-        width: 15px;
+      .offer-price {
+        color: white;
+        font-size: 2.5rem;
+        margin: 0 auto;
+        display: flex;
         text-align: center;
+        justify-content: center;
+        align-items: center;
+
+        ion-icon {
+          font-size: 2.5rem;
+          margin-left: 4px;
+        }
       }
-      .increase-container
-      {
-        ion-icon
+
+
+      .expand-icon {
+        transition: all .5s ease;
+      }
+
+      &.active {
+        max-height: 500px;
+
+        .expand-icon {
+          transform: rotate(180deg);
+        }
+      }
+
+      .pricing-details-list {
+        --ion-item-background: black !important;
+        --ion-item-color: white !important;
+
+
+        ion-list-header
         {
-          color: var(--ion-theme-color);
-          font-size: 2rem;
-          margin: 0px 4px;
+          min-height: 20px;
+          margin-top: 20px;
+          .list-title
+          {
+            margin-top: 12px;
+            color: white;
+            font-size: 1.6rem;
+          }
+        }
+
+
+        .detail
+        {
+          --color: grey;
+          font-size: 1.4rem;
+          height: 30px;
         }
       }
     }
 
-    .settle-text {
-      color: var(--ion-theme-info-color);
-      text-align: center;
-      font-size: 1.4rem;
-      margin-bottom: 4px;
+    .active-ride-footer
+    {
+      ion-buttons {
+        display: flex;
+        align-items: center;
+
+        button {
+          box-shadow: 0 5px 5px -5px black;
+          color: white;
+          font-size: 1.4rem;
+          &.call {
+            margin-left: auto;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            background: var(--ion-theme-color);
+
+            ion-icon
+            {
+              font-size: 24px;
+            }
+          }
+
+          &.update-status {
+            position: relative;
+            height: 40px;
+            width: 100%;
+            margin-right: 24px;
+          }
+        }
+
+      }
     }
+
+
+
+
+
+
 
   }
 }

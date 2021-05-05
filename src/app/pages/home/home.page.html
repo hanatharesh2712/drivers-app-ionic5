@@ -36,12 +36,13 @@
     <ion-row class="widget-content d-flex" [ngClass]="infoExpanded ? 'active' : ''">
 
       <div class="main-info"   (click)="infoExpanded = !infoExpanded">
-        <ng-container *ngIf="viewType != 'offer'">
-          <div>
-            {{ride.passenger_name}}
-          </div>
-          <span class="separator">|</span>
-        </ng-container>
+        <ion-row>
+
+        </ion-row>
+        <div>
+          {{ride.passenger_name}}
+        </div>
+        <span class="separator">|</span>
 
 
         <ion-icon name="people" class="icon drvn-icon"></ion-icon>

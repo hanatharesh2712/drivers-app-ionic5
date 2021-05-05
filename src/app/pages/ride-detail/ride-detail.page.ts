@@ -22,6 +22,7 @@ export class RideDetailPage implements OnInit {
   settlingRide: boolean;
   showingPricing = false;
   settleForm: FormGroup;
+  isRideActive = false;
   canSettle: boolean = true;
   constructor(
     private rideService: RideService,
@@ -29,7 +30,8 @@ export class RideDetailPage implements OnInit {
     private route: ActivatedRoute,
     private popoverController: PopoverController,
     private fb: FormBuilder
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -42,8 +44,7 @@ export class RideDetailPage implements OnInit {
     });
   }
 
-  initRide()
-  {
+  initRide() {
     this.getRideInfo();
     this.createSettleForm();
   }
@@ -53,8 +54,8 @@ export class RideDetailPage implements OnInit {
       ride_id: this.ride_id,
       waiting: 0,
       stops: 0,
-      tolls: "",
-      parking: "",
+      tolls: '',
+      parking: '',
     });
   }
 
@@ -76,7 +77,12 @@ export class RideDetailPage implements OnInit {
   acceptRide() {
     this.rideService.acceptRide(this.ride).then((response) => {
       if (response) {
-        this.util.createToast('Your ride offer was accepted. Thank you!',  false, 'bottom', 4000 )
+        this.util.createToast(
+          'Your ride offer was accepted. Thank you!',
+          false,
+          'bottom',
+          4000
+        );
         this.initRide();
       }
     });
@@ -89,7 +95,12 @@ export class RideDetailPage implements OnInit {
   rejectRide() {
     this.rideService.rejectRide(this.ride).then((response) => {
       if (response) {
-        this.util.createToast('Your ride offer was rejected. Thank you!',  false, 'bottom', 4000 )
+        this.util.createToast(
+          'Your ride offer was rejected. Thank you!',
+          false,
+          'bottom',
+          4000
+        );
         this.util.goBack('my-rides');
       }
     });
@@ -118,31 +129,50 @@ export class RideDetailPage implements OnInit {
   }
 
   increase(fieldName) {
-    let control = this.settleForm.get(fieldName);
+    const control = this.settleForm.get(fieldName);
     control.setValue(control.value + 1);
   }
 
   decrease(fieldName) {
-    let control = this.settleForm.get(fieldName);
+    const control = this.settleForm.get(fieldName);
     if (control.value != 0) {
       control.setValue(control.value - 1);
     }
   }
 
   setSettle() {
-    let value = this.settleForm.getRawValue();
+    const value = this.settleForm.getRawValue();
     this.rideService.sendSettle(value).then(async (response) => {
       if (response) {
-        let toast = await this.util.createToast('You settle has been sent. Thank you!', true, 'bottom', 4000);
+        let toast = await this.util.createToast(
+          'You settle has been sent. Thank you!',
+          true,
+          'bottom',
+          4000
+        );
         this.canSettle = false;
         toast.present();
       }
-    })
+    });
   }
 
-  async openRoutingMap()
-  {
-    let dialog = await this.util.createModal(RideMapDialogComponent, { ride: this.ride}, 'ride-map-dialog');
+  async changeStatus() {
+    this.rideService.changeStatus(this.ride).then((response) => {
+      if (response) {
+        // this.handleRide(response);
+      } else {
+        //    this.isDone = true;
+        //    this.openRating();
+      }
+    });
+  }
+
+  async openRoutingMap() {
+    const dialog = await this.util.createModal(
+      RideMapDialogComponent,
+      { ride: this.ride },
+      'ride-map-dialog'
+    );
     dialog.present();
   }
 }
