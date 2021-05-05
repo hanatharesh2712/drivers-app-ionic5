@@ -14,10 +14,6 @@ import { RouteGuard } from './services/util/route.guard';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -25,10 +21,8 @@ import { AppComponent } from '@app/app.component';
 import { environment } from '@env/environment';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -60,10 +54,6 @@ import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialo
     AgmDirectionModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.config),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
     RideMapDialogModule,
     RatingDialogModule,
     SettleDialogModule
@@ -79,9 +69,7 @@ import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialo
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
     LaunchNavigator,
-    SocialSharing,
     BackgroundGeolocation,
-    InAppBrowser,
     DrvnAuthenticationService,
     GeolocationService,
     Insomnia,

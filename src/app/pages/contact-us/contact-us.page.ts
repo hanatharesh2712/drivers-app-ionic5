@@ -10,7 +10,6 @@ import { UtilService } from '@app/services/util/util.service';
 
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { environment } from '@env/environment';
 
 

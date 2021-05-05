@@ -18,7 +18,6 @@ import {
 } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import {_throw as observableThrowError} from 'rxjs/observable/throw';
-import { auth } from 'firebase';
 
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
