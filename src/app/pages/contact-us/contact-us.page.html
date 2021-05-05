@@ -4,13 +4,20 @@
 
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Contact Us</ion-title>
+    <ion-title>Support Center</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list lines="none">
-    <ion-list-header class="contact-title">How do you want to contact us?</ion-list-header>
+    <ion-list-header class="contact-title">How can we help?</ion-list-header>
+    <ion-item (click)="goToSendEmail()">
+      <ion-label>
+        <ion-icon name="help-circle-outline"></ion-icon>
+        FAQ
+        <ion-icon name="caret-forward"  slot="end" class="go-icon"></ion-icon>
+      </ion-label>
+    </ion-item>
     <ion-item (click)="goToSendEmail()">
       <ion-label>
         <ion-icon name="mail"></ion-icon>
@@ -27,6 +34,6 @@
     </ion-item>
   </ion-list>
   <div class="available-text">
-    Moveo is available to assist you 24/7/365
+    drvn is available to assist you 24/7/365
   </div>
 </ion-content>

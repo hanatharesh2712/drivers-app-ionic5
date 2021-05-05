@@ -1,7 +1,7 @@
 <ion-app>
   <ion-split-pane  contentId="mainContent">
-    <ion-menu contentId="mainContent" >
-      <ion-content class="contentBg" *ngIf="loggedInUser">
+    <ion-menu contentId="mainContent" *ngIf="loggedInUser"  type="overlay">
+      <ion-content class="contentBg">
         <!--Profile-->
         <div class="driverCardBottom">
           <ion-card slot="fixed" class="driverCard fixed ion-no-padding ion-no-margin" color="dark">

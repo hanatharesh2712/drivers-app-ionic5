@@ -21,15 +21,14 @@
         <ion-label>Type</ion-label>
         <ion-select value="reservations" okText="SELECT" cancelText="CANCEL" interface="action-sheet" [(ngModel)]="type"
           name="type">
-          <ion-select-option value="billing">Billing</ion-select-option>
-          <ion-select-option value="operations">Operations</ion-select-option>
+          <ion-select-option value="billing">Chauffeur Support</ion-select-option>
+          <ion-select-option value="operations">Billing Questions</ion-select-option>
           <ion-select-option value="Technical Help">Technical Help</ion-select-option>
-          <ion-select-option value="Other">Other</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Description</ion-label>
-        <ion-textarea placeholder="Enter more information here..." rows="6"> </ion-textarea>
+        <ion-textarea placeholder="Enter more information here..." rows="6"  [(ngModel)]="description"> </ion-textarea>
       </ion-item>
 
     </form>
@@ -41,7 +40,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="full" fill="solid" size="large" color="primary" class="send-btn">
+  <ion-button expand="full" fill="solid" size="large" color="primary" class="send-btn" [disabled]="!description">
     SEND EMAIL
   </ion-button>
 </ion-footer>

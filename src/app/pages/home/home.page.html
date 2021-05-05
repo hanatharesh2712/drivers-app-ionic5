@@ -1,139 +1,103 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
+
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title text-uppercase class="ion-text-center">
-      <span class="title">
-        <!-- <ion-icon class="material-icons">fiber_manual_record</ion-icon>-->
-
-        <div class="j-center">
-          <ng-container *ngIf="ride">
-            {{viewType == 'offer' ? 'RIDE OFFER' : viewType == 'info' ? 'RIDE INFO' : !isDone ?  'CURRENT RIDE' : 'RIDE COMPLETED'}}
-            #{{ride.ride_id}}
-          </ng-container>
-          <ng-container *ngIf="!ride">
-            HOME
-          </ng-container>
-
-        </div>
-        <div class="date-info j-center" *ngIf="ride">
-          {{ride.service_type | uppercase}}
-          <span class="separator">|</span>
-          {{ride.pu_date}} at {{ride.pu_time}}
-        </div>
-      </span>
-    </ion-title>
-
-
-
   </ion-toolbar>
 </ion-header>
 
-<ion-content slot="fixed">
+<ion-content>
+  <ion-list lines="none">
+    <ion-list-header>
+      <div class="dashboard-title">Welcome, <br>
+        Mario</div>
+    </ion-list-header>
+    <ion-item class="ion-no-padding">
+      <div class="widget next-ride ">
+        <div class="title">Your next ride:</div>
+        <div class="ride_id">#127181</div>
+        <div class="date">Today, 05/05/21 at 11:45PM </div>
+        <div class="type">Hourly - Executive Sedan</div>
+        <ion-icon name="chevron-forward-outline" class="go-icon"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-item class="ion-no-padding">
+      <div class="widget rides-board ">
+        <div class="title">Your rides board:</div>
+        <div class="container d-flex">
+          <div class="count-info">
+            <div class="center-container">
+              <div  class="d-flex a-center  j-center value">
+                <span>1</span>
+                <ion-icon src="assets/custom-ion-icons/local_offer.svg" class="icon drvn-icon"></ion-icon>
+              </div>
+              <span class="text">
+                Offers
+              </span>
+            </div>
+          </div>
 
-  <div class="widget-ride-info" *ngIf="ride">
-    <ion-row class="widget-content d-flex" [ngClass]="infoExpanded ? 'active' : ''">
 
-      <div class="main-info"   (click)="infoExpanded = !infoExpanded">
-        <ion-row>
+          <div class="count-info">
+            <div class="center-container">
+              <div  class="d-flex a-center j-center value">
+                <span>3</span>
+                <ion-icon src="assets/custom-ion-icons/task_alt.svg" class="icon drvn-icon"></ion-icon>
+              </div>
+              <span class="text">
+                Accepted
+              </span>
 
-        </ion-row>
-        <div>
-          {{ride.passenger_name}}
+            </div>
+
+          </div>
+          <div class="count-info">
+            <div class="center-container">
+              <div class="d-flex a-center  j-center value">
+                <span>15</span>
+                <ion-icon src="assets/custom-ion-icons/account_balance_wallet.svg" class="icon drvn-icon"></ion-icon>
+              </div>
+              <span class="text">
+                COMPLETED
+              </span>
+            </div>
+          </div>
         </div>
-        <span class="separator">|</span>
 
-
-        <ion-icon name="people" class="icon drvn-icon"></ion-icon>
-
-
-        {{ride.passenger_count}}
-        <span class="separator">|</span>
-        <ion-icon src="assets\custom-ion-icons/luggage.svg" class="icon drvn-icon" color="primary"></ion-icon>
-        {{ride.luggage_count}}
-        <ion-icon class="show-icon" name="{{!infoExpanded ? 'caret-down-outline' : 'caret-up-outline'}}"
-        ></ion-icon>
-
-
-
-
+        <ion-icon name="chevron-forward-outline" class="go-icon"></ion-icon>
       </div>
-      <div class="ride-info expanded-info">
-        <div class="info-line">
-          <ion-icon src="assets/custom-ion-icons/directions_car.svg"></ion-icon>
-          <span>
-            {{ride.vehicle_type}}
-          </span>
+    </ion-item>
+    <ion-item class="ion-no-padding">
+      <div class="widget rating ">
+        <div class="title">Your current rating:</div>
+        <div class="ratings d-flex">
+          <div class="rating-stars">
+            <ion-badge>
+              <span class="text">4</span>
+              <ion-icon name="star"></ion-icon>
+            </ion-badge>
+            <span class="people">
+              Vehicle
+            </span>
 
+          </div>
+          <div class="rating-stars">
+            <ion-badge>
+              <span class="text">4</span>
+              <ion-icon name="star"></ion-icon>
+            </ion-badge>
+            <span class="people">
+              Chauffeur
+            </span>
+
+          </div>
         </div>
-        <div class="info-line">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          <span>Meet inside terminal </span>
-        </div>
-        <div class="info-line" *ngIf="ride.spot_time">
-          <ion-icon name="time-outline"></ion-icon> Spot time:
-          <span>{{ride.spot_time}}
-          </span>
-        </div>
-        <routing-details [ride]="ride" [showNotes]="true"></routing-details>
 
+        <ion-icon name="chevron-forward-outline" class="go-icon"></ion-icon>
       </div>
+    </ion-item>
 
+  </ion-list>
 
-
-    </ion-row>
-    <ion-row class="extra-nofications-bar">
-      <div class="notification" *ngIf="ride.child_seats.length" (click)="openChildSeatInfo($event)">
-        <ng-container>
-          <ion-icon src="assets\custom-ion-icons/care.svg"></ion-icon>
-
-        </ng-container>
-
-      </div>
-      <div class="notification weelchair" *ngIf="ride.handicap == 1"
-        (click)="$event.target.parentElement.classList.toggle('active')">
-        <ng-container>
-          <ion-icon src="assets\custom-ion-icons/accessible.svg"></ion-icon>
-          Handicap
-        </ng-container>
-      </div>
-    </ion-row>
-  </div>
-  <app-ride-map [actualRide]="ride"></app-ride-map>
-  <div class="ride-actions">
-   <ion-buttons>
-  <!--   <button ion-button class="update-status"
-  <!--   (click)="openSettle()">
-  <!--  SET RIDE
-  <!-- </button> -->
-      <ng-container *ngIf="ride && !isDone">
-        <button ion-button class="update-status" [style.background]="ride.next_status_button_color"
-          (click)="changeStatus()">
-          {{ride.next_status_button_text}}
-        </button>
-        <button ion-button class="call" (click)="someThingLikeLogOut()">
-          <ion-icon name="call"></ion-icon>
-        </button>
-      </ng-container>
-
-    </ion-buttons>
-  </div>
-  <div class="ride-offer-actions" *ngIf="ride && viewType == 'offer'">
-    <div class="offer-actions-content">
-      <div class="title">Please review ride information and let us know if you want to accept or reject this
-        ride.</div>
-      <div class="offer-buttons">
-        <ion-buttons>
-
-          <button ion-button class="reject" (click)="changeStatus()">
-            REJECT
-          </button>
-          <button ion-button class="accept" [style.background]="ride.next_status_button_color" (click)="openRating()">
-            ACCEPT
-          </button>
-        </ion-buttons>
-      </div>
-    </div>
-  </div>
 </ion-content>

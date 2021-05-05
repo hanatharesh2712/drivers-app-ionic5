@@ -10,284 +10,175 @@
 app-home {
 
 
-  ion-toolbar {
-    height: 54px;
-    display: flex;
-
-    .title {
-      letter-spacing: 1px;
-      font-size: 1.55rem;
-      text-align: center;
-
-      .date-info {
-        font-size: 1.2rem;
-        color: black;
-      }
-    }
-  }
-
-  .welcome-card ion-img {
-    max-height: 35vh;
-    overflow: hidden;
-  }
-
-  .fixed {
-    position: fixed;
-  }
-
-  .nowrap {
-    white-space: nowrap;
-  }
-
-  #map {
-    width: 100%;
-    height: 100%;
-  }
-
   ion-content {
-    font-size: 1.4rem;
-    .widget-ride-info {
-      position: absolute;
-      left: 0px;
-      width: 100%;
-      height: auto;
-      padding: 12px;
-      z-index: 1000;
+    ion-list {
+      --ion-item-background: var(--ion-theme-background);
+      --ion-item-color: white;
+    }
 
-      .widget-content {
-        padding: 0px 4px;
-        background-color: #fffffff3;
-        /* border: 1px solid #b08c6373; */
-        height: 45px;
-        z-index: 10000;
-        display: flex;
-        overflow: hidden;
-        box-shadow: 0 5px 5px -5px;
+    ion-list-header {
+      margin: 32px 0px;
+      font-size: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      color: white;
+    }
+
+    ion-item {
+      --inner-padding-end: 0px;
+    }
+
+    .widget {
+      border-radius: 4px;
+      padding: 12px 24px;
+      width: 100%;
+      margin-bottom: 12px;
+      height: 150px;
+      position: relative;
+
+      .title {
+        font-size: 2.2rem;
+        margin-bottom: 12px;
+      }
+
+      .go-icon {
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        font-size: 3rem;
+        transform: translateY(-50%);
+        color: var(--ion-theme-color);
+      }
+
+    }
+
+    .next-ride {
+
+      background: linear-gradient(90deg, #252525 0%, var(--ion-theme-color));
+
+
+
+      .ride_id {
+        margin-bottom: 4px;
+        font-size: 1.4rem;
+      }
+
+
+
+      .date {
+        font-size: 1.6rem;
+        margin-bottom: 4px;
+        font-weight: bold;
+        text-transform: uppercase;
         letter-spacing: 1px;
-
-        &.active {
-          height: auto;
-        }
-
-        .main-info {
-          width: 100%;
-          align-items: center;
-          display: flex;
-          font-weight: bold;
-          height: 45px;
-          padding: 0px 6px;
-          .drvn-icon {
-            height: 20px;
-            width: 20px;
-            margin-right: 8px;
-            font-size: 20px;
-            line-height: 25px;
-            color:  var(--ion-theme-color);
-
-
-          }
-
-          .separator {
-            margin: 0px 8px;
-          }
-
-          .show-icon {
-            margin-left: auto;
-            height: 18px;
-          }
-        }
-
-        .expanded-info {
-          padding-top: 8px;
-
-          ion-icon {
-
-            min-width: 28px;
-            z-index: 99;
-            font-size: 2rem;
-          }
-
-          .info-line {
-            display: flex;
-            font-weight: bold;
-            margin-bottom: 8px;
-            align-items: center;
-          }
-
-          .rides_details {
-            margin-top: 12px;
-            padding: 0px  !important;
-
-            .item_box h6
-            {
-              color: black !important;
-            }
-
-          }
-
-
-        }
-
       }
 
-      .extra-nofications-bar {
-        margin-top: 12px;
+      .type {
+        font-size: 1.4rem;
+        color: #e8e8e8;
+      }
 
-        .notification {
-          background-color: #ffffffe8;
-          box-shadow: 0 5px 5px -5px black;
-          border-radius: 20px;
-          height: 40px;
-          width: 40px;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-          border: 1px solid orangered;
-          white-space: nowrap;
-          transition: width 1s ease;
-
-          &:not(:first-child) {
-            margin-left: 12px;
-          }
-
-          &.active {
-            width: 100%;
-
-          }
-
-          &.weelchair {
-            max-width: 115px;
-          }
-
-          ion-icon {
-            height: 20px;
-            min-width: 38px;
-            display: flex;
-            justify-content: center;
-            color: orangered;
-
-          }
-
-        }
+      .go-icon {
+        color: #79644b;
       }
 
 
     }
 
+    .rating {
+      background: linear-gradient(10deg, #525252 0%, var(--ion-secondary-bg-color));
+      border: 1px solid #1f1f1f;
 
-    .ride-actions {
-      position: absolute;
-      left: 0px;
-      bottom: 24px;
-      width: 100%;
 
-      height: auto;
-      padding: 12px;
-      z-index: 1000;
-
-      ion-buttons {
-        display: flex;
+      .rating-stars {
+        margin: 8px 0px 20px;
+        margin-right: 24px;
         align-items: center;
+        text-align: center;
 
-        button {
-          box-shadow: 0 5px 5px -5px black;
-          color: white;
-          font-size: 1.4rem;
-          &.call {
-            margin-left: auto;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            background: var(--ion-theme-color);
-
-            ion-icon
-            {
-              font-size: 24px;
-            }
-          }
-
-          &.update-status {
-            position: relative;
-            left: 50%;
-            height: 40px;
-            min-width: 200px;
-            transform: translateX(-50%);
-
-          }
-        }
-
-      }
-
-
-    }
-
-    .ride-offer-actions {
-      position: absolute;
-      bottom: 0px;
-      left: 0;
-      width: 100%;
-      padding: 0px 12px;
-
-      .offer-actions-content {
-        margin: 0 auto;
-        width: 100%;
-        max-width: 600px;
-        background-color: #ffffffb8;
-        padding: 24px 12px;
-
-        .title {
-          font-size: 1.5rem;
+        ion-badge {
+          padding: 0;
+          border-radius: 50px;
           text-align: center;
-          font-weight: bold;
-          margin-bottom: 18px;
+          background: #65aa50;
+          font-weight: 400;
+          width: 88px;
+          height: 38px;
+          font-size: 2.2rem;
+          line-height: 38px;
+
+          ion-icon {
+            font-size: 2.3rem;
+            color: #fbff1c;
+            vertical-align: middle;
+            position: relative;
+            top: -2px;
+          }
+
+          .text {
+            display: inline-block;
+            margin: 0px 5px;
+          }
         }
 
-        ion-buttons {
-          display: flex;
-          justify-content: space-between;
+        .people {
+          margin: 0 10px;
+          display: block;
+          text-transform: uppercase;
+          font-size: 1.2rem;
+          letter-spacing: 1px;
+          margin-top: 5px;
+        }
+      }
 
-          button {
-            height: 50px;
-            width: 50%;
+      .go-icon {
+        color: #808080;
+      }
+    }
 
-            &.reject
+    .rides-board {
+      background: linear-gradient(
+        90deg
+        , #252525 0%, #4a889c);
+
+      .container {
+        display: flex;
+        max-width: 85%;
+        margin-top: 30px;
+
+        .count-info {
+          width: 33%;
+          border: 1px solid #987c5930;
+          padding: 4px;
+          .center-container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+            .value
             {
-              color: white;
-              background: var( --ion-color-danger);
+              font-size: 2.3rem;
+              margin-bottom: 4px;
+
+              ion-icon
+              {
+                color: var(--ion-theme-color);
+                margin-left: 8px;
+              }
             }
 
-            &:first-child
+            .text
             {
-              margin-right: 4px;
-            }
-            &:nth-child(2)
-            {
-              margin-left: 4px;
+              text-transform: uppercase;
+              font-size: 1.2rem;
+              letter-spacing: 1px;
+              color: var(--ion-theme-color);
             }
           }
         }
       }
-    }
 
-
-    @-webkit-keyframes mymove {
-      from {
-        bottom: -200px;
-      }
-
-      to {
-        bottom: 20px;
-      }
-    }
-
-    @keyframes mymove {
-      from {
-        bottom: -200px;
-      }
-
-      to {
-        bottom: 20px;
-      }
     }
 
   }

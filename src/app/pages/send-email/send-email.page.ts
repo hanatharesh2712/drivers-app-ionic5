@@ -18,6 +18,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class SendEmailPage implements OnInit {
 
+  description = '';
   type = 'operations';
   ngOnInit() {
   }
