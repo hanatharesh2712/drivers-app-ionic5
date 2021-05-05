@@ -168,20 +168,13 @@ Details about getting Google Maps API key [here](https://developers.google.com/m
 ```
       "cordova-plugin-geolocation",
       "cordova-plugin-googlemaps",
-	  "cordova-plugin-whitelist",
 	  "cordova-plugin-statusbar",
 	  "cordova-plugin-device",
 	  "cordova-plugin-splashscreen",
-	  "cordova-plugin-ionic-webview",
-	  "cordova-plugin-ionic-keyboard"
       "mx.ferreyra.callnumber"
       "call-number"
-      "cordova-plugin-x-socialsharing"
-      "cordova-plugin-inappbrowser"
       "cordova-plugin-camera"
       "cordova-plugin-geolocation"
-      "uk.co.workingedge.phonegap.plugin.launchnavigator"
-      "com.telerik.plugins.nativepagetransitions"
 ```
 
 
