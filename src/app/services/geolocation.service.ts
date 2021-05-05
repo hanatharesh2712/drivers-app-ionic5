@@ -24,17 +24,6 @@ export class GeolocationService {
   currentPos: Geoposition;
   driverPosition: Subject<Location> = new Subject();
   location: Location;
-  config: BackgroundGeolocationConfig = {
-    desiredAccuracy: 10,
-    stationaryRadius: 1,
-    distanceFilter: 5,
-    interval: 500,
-    startForeground: false,
-    notificationsEnabled: false,
-    startOnBoot: true,
-    debug: false, //  enable this hear sounds for background-geolocation life-cycle.
-    stopOnTerminate: false, // enable this to clear background location settings when the app terminates
-  };
   driver_id: number;
   constructor(
     private http: HttpClient,
@@ -52,25 +41,43 @@ export class GeolocationService {
   }
 
   initGettingPosition() {
-    this.backgroundGeolocation.configure(this.config).then(() => {
+    this.backgroundGeolocation.configure({
+      desiredAccuracy: 10,
+      stationaryRadius: 1,
+      distanceFilter: 5,
+      interval: 500,
+      notificationTitle: 'Drvn verification',
+      notificationText: 'Getting your position',
+      startForeground: false,
+      notificationsEnabled: false,
+      startOnBoot: true,
+      debug: false, //  enable this hear sounds for background-geolocation life-cycle.
+      stopOnTerminate: true, // enable this to clear background location settings when the app terminates
+    }).then(() => {
       this.backgroundGeolocation
         .on(BackgroundGeolocationEvents.location)
         .subscribe((location: BackgroundGeolocationResponse) => {
+      //  this.backgroundGeolocation.startTask().then(() =>
+      //  {
+      //    this.setLocation(location, location.time, 'BCK');
+      //    this.backgroundGeolocation.endTask();
+      //  });
           this.setLocation(location, location.time, 'BCK');
-          this.geolocation
-            .getCurrentPosition()
-            .then((resp: Geoposition) => {
-              this.setLocation(resp.coords, resp.timestamp, 'TBD');
-            })
-            .catch((error) => {
-              console.log('Error getting location', error);
-            });
 
-          const watch = this.geolocation.watchPosition();
-          watch.subscribe((data: Geoposition) => {
-            this.setLocation(data.coords, data.timestamp, 'TBD');
-          });
         });
+        this.geolocation
+        .getCurrentPosition()
+        .then((resp: Geoposition) => {
+          this.setLocation(resp.coords, resp.timestamp, 'TBD');
+        })
+        .catch((error) => {
+          console.log('Error getting location', error);
+        });
+
+      const watch = this.geolocation.watchPosition();
+      watch.subscribe((data: Geoposition) => {
+        this.setLocation(data.coords, data.timestamp, 'TBD');
+      });
     });
 
     this.start();
