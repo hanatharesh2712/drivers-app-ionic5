@@ -44,20 +44,12 @@
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
-    <plugin name="com.telerik.plugins.nativepagetransitions" spec="^0.6.5" />
-    <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
-    </plugin>
-    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^5.0.4">
-        <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="AIzaSyBzPIxztJQWfQR_Ekxsv08SljGTpYItr_Y" />
-        <variable name="OKHTTP_VERSION" value="3.+" />
-        <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
-    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
     <plugin name="mx.ferreyra.callnumber" spec="0.0.2" />
     <plugin name="call-number" spec="^1.0.1" />
     <platform name="android">

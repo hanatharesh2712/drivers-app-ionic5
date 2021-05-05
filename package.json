@@ -23,13 +23,9 @@
     "@angular/router": "~8.2.14",
     "@ionic-native/background-geolocation": "^5.32.1",
     "@ionic-native/call-number": "^5.23.0",
-    "@ionic-native/camera": "^5.23.0",
     "@ionic-native/core": "^5.23.0",
     "@ionic-native/geolocation": "^5.32.1",
     "@ionic-native/insomnia": "^5.32.1",
-    "@ionic-native/launch-navigator": "^5.23.0",
-    "@ionic-native/native-page-transitions": "^5.23.0",
-    "@ionic-native/screen-orientation": "^5.23.0",
     "@ionic-native/splash-screen": "^5.23.0",
     "@ionic-native/status-bar": "^5.23.0",
     "@ionic/angular": "^5.0.7",
@@ -38,15 +34,10 @@
     "agm-direction": "^0.7.5",
     "angular2-uuid": "^1.1.1",
     "call-number": "^1.0.1",
-    "com.telerik.plugins.nativepagetransitions": "^0.6.5",
     "cordova-plugin-actionsheet": "^2.3.3",
-    "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-dialogs": "^2.0.1",
-    "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-geolocation": "^4.0.1",
-    "cordova-plugin-ionic-keyboard": "^2.1.3",
-    "cordova-plugin-screen-orientation": "^3.0.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "core-js": "^2.5.4",
@@ -57,7 +48,6 @@
     "rxjs": "~6.5.1",
     "rxjs-compat": "^6.6.7",
     "tslib": "^1.9.1",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "^5.0.4",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -85,26 +75,15 @@
   "description": "drvn Chauffeurs App",
   "cordova": {
     "plugins": {
-      "com.telerik.plugins.nativepagetransitions": {},
-      "cordova-plugin-camera": {
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      },
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate you",
         "GPS_REQUIRED": "true"
       },
-      "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-        "GOOGLE_API_KEY_FOR_ANDROID": "YOUR_API_KEY",
-        "OKHTTP_VERSION": "3.+",
-        "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
-      },
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-keyboard": {},
       "mx.ferreyra.callnumber": {},
       "call-number": {},
-      "cordova-plugin-file": {},
       "cordova-plugin-insomnia": {},
       "@mauron85/cordova-plugin-background-geolocation": {
         "GOOGLE_PLAY_SERVICES_VERSION": "11+",

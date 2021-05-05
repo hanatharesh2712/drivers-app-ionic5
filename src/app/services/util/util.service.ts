@@ -21,10 +21,8 @@ import {
   NavController
 } from '@ionic/angular';
 import { UUID } from 'angular2-uuid';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { environment } from '@env/environment';
 declare let google;
@@ -39,11 +37,9 @@ export class UtilService {
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
-    private camera: Camera,
     private statusBar: StatusBar,
     private route: Router,
     private geolocation: Geolocation,
-    private launchNavigator: LaunchNavigator,
     private callNumber: CallNumber,
     private navCtrl: NavController,
 
@@ -145,18 +141,6 @@ export class UtilService {
     return pred;
   }
 
-  startNavigationToPickup(startLocation, endLocation) {
-    const options: LaunchNavigatorOptions = {
-      start: startLocation,
-      app: this.launchNavigator.APP.GOOGLE_MAPS,
-    };
-
-    this.launchNavigator.navigate(endLocation, options)
-      .then(
-        success => console.log('Launched navigator', success),
-        error => console.log('Error launching navigator', error)
-      );
-  }
 
   call(number) {
     this.callNumber.callNumber(number, true)

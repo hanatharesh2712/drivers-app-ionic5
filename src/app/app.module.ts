@@ -20,9 +20,6 @@ import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { environment } from '@env/environment';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
-import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
-import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -61,14 +58,11 @@ import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialo
   providers: [
     StatusBar,
     SplashScreen,
-    NativePageTransitions,
-    Camera,
     CallNumber,
     RouteGuard,
     GoogleMapsAPIWrapper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
-    LaunchNavigator,
     BackgroundGeolocation,
     DrvnAuthenticationService,
     GeolocationService,

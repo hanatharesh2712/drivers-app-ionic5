@@ -9,7 +9,6 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { UtilService } from '@app/services/util/util.service';
@@ -23,7 +22,6 @@ export class VehicleManagementPage implements OnInit {
   public vehicleList = environment.VEHICLE_LIST;
 
   constructor(
-    public nativePageTransitions: NativePageTransitions,
     public util: UtilService
   ) { }
 
