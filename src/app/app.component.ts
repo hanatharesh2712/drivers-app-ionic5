@@ -17,6 +17,7 @@ import { User } from './models/user';
 import { UtilService } from './services/util/util.service';
 import { RideService } from './services/ride/ride.service';
 import { environment } from '@env/environment';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: 'app-root',
@@ -54,6 +55,7 @@ export class AppComponent {
   ];
   public loggedInUser: User;
   storageUrl: string = environment.storageUrl;
+  version: string;
 
   constructor(
     public platform: Platform,
@@ -61,7 +63,8 @@ export class AppComponent {
     public statusBar: StatusBar,
     public util: UtilService,
     public rideService: RideService,
-    private authService: DrvnAuthenticationService
+    private authService: DrvnAuthenticationService,
+    private appVersion: AppVersion
   ) {
     this.initializeApp();
     this.loggedInUser = this.authService.currentUser;
@@ -78,6 +81,9 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.appVersion.getVersionNumber().then(value => {
+        this.version = value;
+      });
 
     });
   }

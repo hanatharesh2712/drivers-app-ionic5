@@ -39,7 +39,11 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
-        <img class="logo" src="assets/logos/drvn-logo.png">
+        <div class="footer-info">
+          <img class="logo" src="assets/logos/drvn-logo.png">
+          <span class="version">v {{version}}</span>
+        </div>
+
       </ion-content>
     </ion-menu>
     <ion-router-outlet [swipeGesture]="false" id="mainContent" main></ion-router-outlet>

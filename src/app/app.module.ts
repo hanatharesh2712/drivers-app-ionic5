@@ -32,6 +32,7 @@ import { GeolocationService } from './services/geolocation.service';
 import { AuthHttpInterceptor } from './services/util/http-interceptor';
 import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialog.module';
 import { SMS } from '@ionic-native/sms/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -60,6 +61,7 @@ import { SMS } from '@ionic-native/sms/ngx';
     StatusBar,
     SplashScreen,
     CallNumber,
+    AppVersion,
     SMS,
     RouteGuard,
     GoogleMapsAPIWrapper,

@@ -167,7 +167,7 @@ export class UtilService {
   sendSms(number = '', defaultText = '') {
     this.sms.hasPermission().then((hasPermission) => {
       if (hasPermission) {
-        this.sms.send(environment.drvnSupportNumber, '', {
+        this.sms.send(number, '', {
           replaceLineBreaks: false, // true to replace \n by a new line, false by default
           android: {
             intent: 'INTENT', // send SMS with the native android SMS messaging

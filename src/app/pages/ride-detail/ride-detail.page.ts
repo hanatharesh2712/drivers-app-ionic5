@@ -192,6 +192,6 @@ export class RideDetailPage implements OnInit {
   }
 
   sendSMS() {
-    this.util.sendSms();
+    this.util.sendSms(this.ride.passenger_number);
   }
 }

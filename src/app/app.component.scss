@@ -8,8 +8,8 @@
  */
 
 .contentBg {
-  --background: #1c1c1c  !important;
-  --ion-item-background: #1c1c1c  !important;
+  --background: #1c1c1c !important;
+  --ion-item-background: #1c1c1c !important;
   --ion-item-color: white;
 
 }
@@ -20,6 +20,7 @@
   .locationIcon {
     font-size: 26px;
   }
+
   ion-fab-button {
     --background: #fff;
     --color: #000;
@@ -29,24 +30,32 @@
 }
 
 
+.footer-info {
+  position: absolute;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-.logo
-{
-  width: 50%;
+  .logo {
     display: block;
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 50%;
+  }
+
+  .version
+  {
+    color: var(--ion-theme-info-color);
+  }
+
 }
 
-.nav-item
-{
-  ion-icon
-  {
+
+.nav-item {
+  ion-icon {
     color: var(--ion-theme-color);
   }
 }
+
 .driverCard {
   position: relative;
   width: 100%;
@@ -68,14 +77,17 @@
     justify-content: center;
     align-items: center;
   }
+
   .driverStatusIcons {
     font-size: 26px;
     color: #c3a527;
   }
+
   .detailText {
     color: #c3a527;
     font-size: 10px;
   }
+
   .detailsLabel {
     font-size: 18px;
   }
@@ -87,10 +99,12 @@
   margin: 0;
   border: 2px solid #fff;
 }
+
 .drivermemberType {
   color: #ffc107;
   font-size: 11px;
 }
+
 .userDetails {
   background: #fff;
   border-radius: 90px;
@@ -101,6 +115,7 @@
   height: 1.8em;
   padding-bottom: 0;
 }
+
 .userName {
   letter-spacing: 1px;
 }
