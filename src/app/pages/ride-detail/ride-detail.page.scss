@@ -362,12 +362,14 @@ ride-detail {
     width: 50px;
     height: 50px;
     left: 50%;
-    transform: translateX(-50%);
-    bottom: 100px;
+    bottom: 104px;
+    z-index: 100000;
     background: transparent;
     transition: 1s ease all;
     display: flex;
+    transform: translate3d(0,0,0)  translateX(-50%);
     position: fixed;
+    position: -webkit-sticky;
     align-items: flex-end;
     justify-content: center;
     .expand-map-badget
@@ -399,14 +401,14 @@ ride-detail {
 
     }
     &.active{
-      bottom: 300px;
+      bottom: 304px;
     }
   }
 
 
       ion-fab
       {
-
+        transform: translateY(-22px);
         ion-fab-button
         {
           --color: white;
@@ -417,8 +419,6 @@ ride-detail {
           height: 40px;
           width: 40px;
           --border-radius: 4px;
-          position: relative;
-          top: -22px;
         }
         ion-fab-list
         {

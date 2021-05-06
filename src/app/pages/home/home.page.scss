@@ -142,6 +142,7 @@ app-home {
         90deg
         , #252525 0%, #4a889c);
 
+
       .container {
         display: flex;
         max-width: 85%;
@@ -151,6 +152,8 @@ app-home {
           width: 33%;
           border: 1px solid #987c5930;
           padding: 4px;
+          border-radius: 20%;
+          margin-right: 12px;
           .center-container {
             display: flex;
             align-items: center;

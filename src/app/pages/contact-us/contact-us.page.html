@@ -14,21 +14,40 @@
     <ion-item (click)="goToSendEmail()">
       <ion-label>
         <ion-icon name="help-circle-outline"></ion-icon>
-        FAQ
-        <ion-icon name="caret-forward"  slot="end" class="go-icon"></ion-icon>
+        <div>
+          <div class="title">
+            F.A.Q
+          </div>
+          <div class="subtitle">You might find what you're looking for.
+          </div>
+        </div>
+
+        <ion-icon name="caret-forward" slot="end" class="go-icon"></ion-icon>
       </ion-label>
     </ion-item>
     <ion-item (click)="goToSendEmail()">
       <ion-label>
         <ion-icon name="mail"></ion-icon>
-        Send us an email
-        <ion-icon name="caret-forward"  slot="end" class="go-icon"></ion-icon>
+        <div>
+          <div class="title">
+            Send us an email
+          </div>
+          <div class="subtitle">Send us the details and we'll get back to you.
+          </div>
+        </div>
+        <ion-icon name="caret-forward" slot="end" class="go-icon"></ion-icon>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
         <ion-icon name="call"></ion-icon>
-        Call us
+        <div>
+          <div class="title">
+            Call us
+          </div>
+          <div class="subtitle">Get in touch and let us know how we can help.
+          </div>
+        </div>
         <ion-icon name="caret-forward" slot="end" class="go-icon"></ion-icon>
       </ion-label>
     </ion-item>

@@ -91,6 +91,7 @@ export class DrvnAuthenticationService implements OnInit {
         if (response) {
           this.storage.set('accessInfo', JSON.stringify(response));
           this.authToken = response.access_token;
+          this.getCurrentDriverInfo().then();
         } else {
           this.logout();
         }
