@@ -41,7 +41,7 @@
 
             </div>
             <div class="sub-content">
-              <ion-icon src="assets\custom-ion-icons/luggage.svg" class="icon drvn-icon" color="primary"></ion-icon>
+              <ion-icon src="assets/custom-ion-icons/luggage.svg" class="icon drvn-icon" color="primary"></ion-icon>
               {{ride.luggage_count}}
               Bag{{ride.luggage_count > 1 ? 's' : ''}}
             </div>
@@ -75,11 +75,11 @@
       </ion-label>
       <ul class="requirements-list content">
         <li *ngIf="ride.handicap == 1">
-          <ion-icon src="assets\custom-ion-icons/accessible.svg"></ion-icon> Handicap
+          <ion-icon src="assets/custom-ion-icons/accessible.svg"></ion-icon> Handicap
         </li>
         <li *ngIf="ride.child_seats.length">
           <div>
-            <ion-icon src="assets\custom-ion-icons/care.svg"></ion-icon> Child seat Required
+            <ion-icon src="assets/custom-ion-icons/care.svg"></ion-icon> Child seat Required
             <ul class="child-seat-types">
               <li *ngFor="let childSeat of ride.child_seats">
                 {{ childSeat.count + 'x ' + childSeat.type }}
@@ -152,7 +152,7 @@
   <ion-fab-list side="top">
     <ion-fab-button>
       <div class="text-container">
-        <ion-icon src="assets\custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
+        <ion-icon src="assets/custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
         CALL DRVN
       </div>
 
