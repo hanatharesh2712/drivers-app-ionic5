@@ -21,7 +21,6 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
-    "@ionic-native/app-version": "^5.32.1",
     "@ionic-native/background-geolocation": "^5.32.1",
     "@ionic-native/call-number": "^5.32.1",
     "@ionic-native/core": "^5.23.0",
@@ -37,7 +36,6 @@
     "angular2-uuid": "^1.1.1",
     "call-number": "^1.0.1",
     "cordova-plugin-actionsheet": "^2.3.3",
-    "cordova-plugin-app-version": "^0.1.12",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-dialogs": "^2.0.1",
     "cordova-plugin-geolocation": "^4.0.1",
@@ -113,8 +111,7 @@
       },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-sms-plugin": {},
-      "cordova-plugin-app-version": {}
+      "cordova-sms-plugin": {}
     },
     "platforms": [
       "ios",
