@@ -49,14 +49,12 @@ export class HomePage implements OnInit {
     private menuCtrl: MenuController,
     private rideService: RideService,
     private util: UtilService,
-    private geolocationService: GeolocationService,
     private ridesService: RideService,
     private popoverController: PopoverController,
     private insomnia: Insomnia
   ) {}
 
   async ngOnInit() {
-    this.geolocationService.initTracking();
     this.insomnia.keepAwake().then(
       () => console.log('success'),
       () => console.log('error')

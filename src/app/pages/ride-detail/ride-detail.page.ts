@@ -6,6 +6,7 @@ import { RideMapComponent } from '@app/components/ride-map/ride-map.component';
 import { RidePricingPopoverComponent } from '@app/components/ride-pricing-popover/ride-pricing-popover.component';
 import { SettleDialogComponent } from '@app/components/settle-dialog/settle-dialog.component';
 import { Ride } from '@app/models/ride';
+import { GeolocationService } from '@app/services/geolocation.service';
 import { RideService } from '@app/services/ride/ride.service';
 import { UtilService } from '@app/services/util/util.service';
 import { NavParams, PopoverController } from '@ionic/angular';
@@ -31,7 +32,8 @@ export class RideDetailPage implements OnInit {
     private util: UtilService,
     private route: ActivatedRoute,
     private popoverController: PopoverController,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private geolocationService: GeolocationService
   ) {
   }
 
@@ -49,6 +51,8 @@ export class RideDetailPage implements OnInit {
   initRide() {
     this.getRideInfo();
     this.createSettleForm();
+
+    this.geolocationService.initTracking();
   }
 
   createSettleForm() {

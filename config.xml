@@ -33,9 +33,6 @@
     <config-file parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
         <string>need photo library access to get pictures from there</string>
     </config-file>
-    <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
-        <string>need location access to find things nearby</string>
-    </config-file>
     <config-file parent="NSPhotoLibraryAddUsageDescription" target="*-Info.plist">
         <string>need photo library access to save pictures there</string>
     </config-file>
