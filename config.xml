@@ -3,7 +3,7 @@
     <name>Drvn</name>
     <description>Drvn's chauffeurs App.</description>
     <author email="dev@moveo.net" href="https://drvn.com">Moveo</author>
-    <content original-src="index.html" src="https://localhost:8100" />
+    <content original-src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
