@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RideMapDialogComponent } from '@app/components/ride-map-dialog/ride-map-dialog.component';
@@ -34,8 +40,7 @@ export class RideDetailPage implements OnInit {
     private popoverController: PopoverController,
     private fb: FormBuilder,
     private geolocationService: GeolocationService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -182,6 +187,11 @@ export class RideDetailPage implements OnInit {
     dialog.present();
   }
 
+  callSuport() {
+    this.util.callSuport();
+  }
 
-
+  sendSMS() {
+    this.util.sendSms();
+  }
 }

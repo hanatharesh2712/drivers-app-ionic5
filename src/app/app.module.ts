@@ -31,6 +31,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationService } from './services/geolocation.service';
 import { AuthHttpInterceptor } from './services/util/http-interceptor';
 import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialog.module';
+import { SMS } from '@ionic-native/sms/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -59,6 +60,7 @@ import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialo
     StatusBar,
     SplashScreen,
     CallNumber,
+    SMS,
     RouteGuard,
     GoogleMapsAPIWrapper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

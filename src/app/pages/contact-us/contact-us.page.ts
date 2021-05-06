@@ -8,10 +8,8 @@ import { UtilService } from '@app/services/util/util.service';
  * LICENSE.md file in the root directory of this source tree.
  */
 
-
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { environment } from '@env/environment';
-
 
 @Component({
   selector: 'app-contact-us',
@@ -21,22 +19,20 @@ import { environment } from '@env/environment';
 })
 export class ContactUsPage implements OnInit {
   public contactUs = environment.CONTACT_US_LIST;
-
+  drvnNumber = environment.drvnSupportNumber;
   type = '';
-  constructor(private util: UtilService)
-  {
-
-  }
-  ngOnInit() {
-  }
+  constructor(private util: UtilService) {}
+  ngOnInit() {}
 
   openUrl(url) {
     window.open(url);
   }
 
-  goToSendEmail()
-  {
-    this.util.goForward('send-email')
+  goToSendEmail() {
+    this.util.goForward('send-email');
   }
 
+  callSuport() {
+    this.util.callSuport();
+  }
 }

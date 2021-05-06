@@ -19,7 +19,7 @@
     <form>
       <ion-item>
         <ion-label>Type</ion-label>
-        <ion-select value="reservations" okText="SELECT" cancelText="CANCEL" interface="action-sheet" [(ngModel)]="type"
+        <ion-select value="reservations" okText="SELECT" cancelText="CANCEL" interface="action-sheet" [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
           name="type">
           <ion-select-option value="billing">Chauffeur Support</ion-select-option>
           <ion-select-option value="operations">Billing Questions</ion-select-option>
@@ -28,7 +28,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Description</ion-label>
-        <ion-textarea placeholder="Enter more information here..." rows="6"  [(ngModel)]="description"> </ion-textarea>
+        <ion-textarea placeholder="Enter more information here..." rows="6"  [(ngModel)]="description" [ngModelOptions]="{standalone: true}"> </ion-textarea>
       </ion-item>
 
     </form>
