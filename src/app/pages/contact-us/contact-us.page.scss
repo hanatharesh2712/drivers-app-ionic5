@@ -34,8 +34,7 @@ app-contact-us {
       letter-spacing: 1px;
       --background: var(--ion-secondary-bg-color);
 
-      &:not(:last-child)
-      {
+      &:not(:last-child) {
         border-bottom: 1px solid grey;
       }
 
@@ -44,8 +43,7 @@ app-contact-us {
         align-items: center;
         height: 60px;
 
-        .subtitle
-        {
+        .subtitle {
           font-size: 1.2rem;
           margin-top: 4px;
           max-width: 90%;
@@ -53,13 +51,13 @@ app-contact-us {
           white-space: pre-wrap;
           text-transform: none;
         }
+
         ion-icon {
           margin-right: 24px;
           font-size: 2.5rem;
           color: var(--ion-theme-color);
 
-          &.go-icon
-          {
+          &.go-icon {
             margin-left: auto;
           }
         }
@@ -69,18 +67,25 @@ app-contact-us {
 
     }
 
-    .available-text
-    {
+    .available-text {
       color: white;
-    text-align: center;
-    font-size: 1.5rem;
-    margin-top: 0 auto;
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2rem;
+      text-align: center;
+      font-size: 1.5rem;
+      margin-top: 0 auto;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      align-items: center;
+      transform: translateX(-50%);
+      font-size: 2rem;
+
+      .logo {
+        width: 150px;
+      }
     }
+
     .contact-title {
       color: white;
       font-size: 3rem;

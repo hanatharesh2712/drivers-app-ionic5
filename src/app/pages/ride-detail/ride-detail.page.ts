@@ -29,10 +29,11 @@ export class RideDetailPage implements OnInit {
   settlingRide: boolean;
   showingPricing = false;
   settleForm: FormGroup;
-  isRideActive = true;
+  isRideActive = false;
   canSettle: boolean = true;
   showingMap = false;
   @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
+  loading: boolean;
   constructor(
     private rideService: RideService,
     private util: UtilService,
@@ -48,7 +49,7 @@ export class RideDetailPage implements OnInit {
       if (this.ride_id) {
         this.initRide();
       } else {
-        this.util.goBack('my-rides');
+        this.util.goBack('rides');
       }
     });
   }
@@ -71,18 +72,24 @@ export class RideDetailPage implements OnInit {
   }
 
   async getRideInfo(refresher = null) {
-    const loader = await this.util.createLoader('Getting Ride details ...');
-    loader.present();
+    this.loading = true;
     this.rideService.getRideInfo(this.ride_id).subscribe((response: any) => {
       if (response.ride) {
         this.ride = response.ride;
+        if (
+          this.ride.next_status_code &&
+          !this.ride.is_offer &&
+          !this.ride.is_done
+        ) {
+          this.isRideActive = true;
+        }
         if (refresher) {
           refresher.target.complete();
         }
       } else {
-        this.util.goBack('my-rides');
+        this.util.goBack('rides');
       }
-      loader.dismiss();
+      this.loading = false;
     });
   }
   acceptRide() {
@@ -112,7 +119,7 @@ export class RideDetailPage implements OnInit {
           'bottom',
           4000
         );
-        this.util.goBack('my-rides');
+        this.util.goBack('rides');
       }
     });
   }
@@ -124,6 +131,7 @@ export class RideDetailPage implements OnInit {
   closeFooters() {
     this.settlingRide = false;
     this.showingPricing = false;
+    this.showingMap = false;
   }
 
   async openPricingPopover(ev: any) {
@@ -139,15 +147,15 @@ export class RideDetailPage implements OnInit {
     await popover.present();
   }
 
-  increase(fieldName) {
+  increase(fieldName, increment) {
     const control = this.settleForm.get(fieldName);
-    control.setValue(control.value + 1);
+    control.setValue(control.value + increment);
   }
 
-  decrease(fieldName) {
+  decrease(fieldName, decrement) {
     const control = this.settleForm.get(fieldName);
     if (control.value != 0) {
-      control.setValue(control.value - 1);
+      control.setValue(control.value - decrement);
     }
   }
 
@@ -187,11 +195,21 @@ export class RideDetailPage implements OnInit {
     dialog.present();
   }
 
+  expandMap(event)
+  {
+    event.stopPropagation();
+    this.showingMap = !this.showingMap;
+  }
+
   callSuport() {
     this.util.callSuport();
   }
 
   sendSMS() {
     this.util.sendSms(this.ride.passenger_number);
+  }
+
+  callPassenger() {
+    this.util.call(this.ride.passenger_number);
   }
 }

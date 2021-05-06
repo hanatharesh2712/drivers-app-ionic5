@@ -33,7 +33,7 @@ export class AppComponent {
     },
     {
       title: 'Rides',
-      url: '/my-rides/accepted',
+      url: '/rides/accepted',
       icon: 'directions_car'
     },
     {

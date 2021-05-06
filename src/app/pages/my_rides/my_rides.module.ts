@@ -26,7 +26,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'done',
+        path: 'completed',
         children: [
           {
             path: '',

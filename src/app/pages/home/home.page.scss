@@ -30,10 +30,9 @@ app-home {
     }
 
     .widget {
-      border-radius: 4px;
       padding: 12px 24px;
       width: 100%;
-      margin-bottom: 12px;
+      margin: 6px 3px;
       height: 150px;
       position: relative;
 
@@ -145,7 +144,6 @@ app-home {
 
       .container {
         display: flex;
-        max-width: 85%;
         margin-top: 30px;
 
         .count-info {
@@ -183,6 +181,41 @@ app-home {
       }
 
     }
+
+    .gradient-border {
+      --border-width: 3px;
+      margin: 6px 3px;
+      margin-top: 12px;
+      color: white;
+
+      &::after {
+        position: absolute;
+        content: "";
+        top: calc(-1 * var(--border-width));
+        left: calc(-1 * var(--border-width));
+        z-index: -1;
+        width: calc(100% + var(--border-width) * 2);
+        height: calc(100% + var(--border-width) * 2);
+        background: linear-gradient(
+          60deg,
+          black,
+          #585858,
+          var(--ion-theme-color),
+          #7a6803,
+
+        );
+        background-size: 300% 300%;
+        background-position: 0 50%;
+        animation: moveGradient 4s alternate infinite;
+      }
+    }
+
+    @keyframes moveGradient {
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
 
   }
 }

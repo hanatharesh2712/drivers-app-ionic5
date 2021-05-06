@@ -41,7 +41,7 @@
         </ion-list>
         <div class="footer-info">
           <img class="logo" src="assets/logos/drvn-logo.png">
-          <span class="version">v {{version}}</span>
+          <span class="version" *ngIf="version">v {{version}}</span>
         </div>
 
       </ion-content>

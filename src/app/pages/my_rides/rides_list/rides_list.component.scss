@@ -12,8 +12,7 @@
       padding-bottom: 20px;
     }
 
-    -ion-content
-    {
+    -ion-content {
       --background: black;
     }
 
@@ -74,9 +73,15 @@
     }
 
   }
+
+  ion-skeleton-text {
+    --background-rgb: 255, 255, 255;
+  }
+
   routing-details {
     border: 2px solid #1c1c1c;
   }
+
   .tab-title {
     letter-spacing: 1px;
     color: white;
@@ -85,8 +90,7 @@
     margin: 30px 0px 12px;
   }
 
-  .rides-count
-  {
+  .rides-count {
     color: var(--ion-theme-color);
   }
 

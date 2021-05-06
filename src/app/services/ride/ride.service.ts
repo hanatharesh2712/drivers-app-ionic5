@@ -37,7 +37,7 @@ export class RideService {
       this.rides['accepted'] = response.rides.filter(ride =>  !ride.is_offer && !ride.is_done);
       this.rides['done'] = response.rides.filter(ride =>  ride.is_done);
       this.onDidRidesLoaded.next(this.rides);
-      return response;
+      return this.rides;
     }));;
   }
 

@@ -81,6 +81,7 @@ export class GeolocationService {
         notificationTitle: 'drvn chauffeur app',
         notificationText: 'Ready to receive new rides',
         startForeground: true,
+        notificationIconColor: '#bb9669',
         notificationsEnabled: false,
         startOnBoot: true,
         debug: false, //  enable this hear sounds for background-geolocation life-cycle.

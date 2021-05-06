@@ -3,6 +3,10 @@
     padding: 5px 19px 5px 19px;
   }
 
+  ion-skeleton-text {
+    --background-rgb: 255, 255, 255;
+  }
+
   .item_box {
     align-items: flex-start;
     padding: 8px 0;

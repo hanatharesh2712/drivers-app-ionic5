@@ -8,52 +8,83 @@
  */
 
 .sc-ion-back-button-ios-h {
-    display: inline;
+  display: inline;
 }
 
 .profileHeader {
-    display: flex;
-    height: 80px;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1.5;
-    background: var(--ion-secondary-bg-color);
-    padding: 10px 0px;
-    margin-bottom: 36px;
-    .profileImage {
-        width: 100px;
-        min-height: 100px;
-    }
+  display: flex;
+  height: 80px;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.5;
+  background: var(--ion-secondary-bg-color);
+  padding: 10px 0px;
+  margin-bottom: 36px;
 
-    .drivermemberType {
-        color: #9b9b9f;
-        font-size: 14px;
-    }
+  .profileImage {
+    width: 100px;
+    min-height: 100px;
+  }
+
+  .drivermemberType {
+    color: #9b9b9f;
+    font-size: 14px;
+  }
 }
 
-ion-list
-{
+ion-content {
+  padding-bottom: 24px;
+}
+
+ion-list.info-list {
+
   background: var(--ion-background);
+
+  ion-item {
+    --background: var(--ion-secondary-bg-color);
+    --color: var(--ion-theme-info-color);
+    --min-height: 50px;
+    --padding-start: 24px
+  }
+
+  ion-list-header {
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  ion-text {
+    font-size: 1.2rem;
+    text-align: right;
+    max-width: 70%;
+    color: white;
+  }
+
+  .option-item {
+    ion-label {
+      display: flex !important;
+      align-items: center;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+    .go-icon
+    {
+      margin-left: auto;
+    }
+
+  }
+
 }
-ion-item
-{
-  --background: var(--ion-secondary-bg-color);
-  --color: var(--ion-theme-info-color);;
-}
-ion-text
-{
-  font-size: 1.2rem;
-  text-align: right;
-  max-width: 70%;
-  color: white;
-}
+
+
+
+
 .detailsItems {
-    // --min-height: 30px;
-    --padding-start: 8px;
+  // --min-height: 30px;
+  --padding-start: 8px;
 }
 
 .rightArrow {
-    width: 16px;
-    right: 0;
-    position: absolute;
+  width: 16px;
+  right: 0;
+  position: absolute;
 }

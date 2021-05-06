@@ -45,6 +45,10 @@ export class HomePage implements OnInit {
   viewType: 'actual' | 'info' | 'offer' | 'none' = 'none';
   infoExpanded: boolean;
   isDone: boolean;
+  nextRide: Ride;
+  rides: Ride[];
+  loadingRide: boolean;
+  loadingRideBoard: boolean;
   constructor(
     private menuCtrl: MenuController,
     private rideService: RideService,
@@ -64,30 +68,19 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.menuCtrl.enable(true);
 
+    this.loadingRide = true;
     this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
+      this.loadingRide = false;
       if (response.ride) {
-        this.handleRide(response.ride);
+        this.nextRide = response.ride;
       }
     });
+    this.ridesService.getRides().subscribe(rides => {
+      this.rides = rides;
+    })
     //  }
   }
 
-  handleRide(ride) {
-    this.ride = { ...ride };
-  }
-
-  async openChildSeatInfo(ev: any) {
-    const popover = await this.popoverController.create({
-      component: ChildSeatDialogComponent,
-      cssClass: 'my-custom-class',
-      event: ev,
-      componentProps: {
-        child_seats: this.ride.child_seats,
-      },
-      translucent: true,
-    });
-    await popover.present();
-  }
 
   ionViewWillLeave() {}
 
@@ -101,32 +94,14 @@ export class HomePage implements OnInit {
     this.util.goForward('/customerRequest');
   }
 
-  async changeStatus() {
-    this.rideService.changeStatus(this.ride).then((response) => {
-      if (response) {
-        this.handleRide(response);
-      } else {
-        this.isDone = true;
-        this.openRating();
-      }
-    });
+  goToNextRide()
+  {
+    this.util.goForward('ride/' + this.nextRide.ride_id);
   }
 
-  async openRating() {
-    const dialog = await this.util.createModal(
-      RatingDialogComponent,
-      { ride: this.ride },
-      'rating-modal'
-    );
-    dialog.present();
+  goToRides(type)
+  {
+    this.util.goForward('rides/' + type);
   }
 
-  async openSettle() {
-    const dialog = await this.util.createModal(
-      SettleDialogComponent,
-      { ride: this.ride },
-      'settle-modal'
-    );
-    dialog.present();
-  }
 }

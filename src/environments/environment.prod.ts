@@ -27,6 +27,7 @@ export const environment = {
   configs: {
 
   },
+  drvnSupportNumber: '305-967-7474',
   versionCheckURL : 'https://vip.moveo.net/version.json',
   GOOGLE_MAPS_API_KEY: 'AIzaSyBzPIxztJQWfQR_Ekxsv08SljGTpYItr_Y',
   API_URLS: {

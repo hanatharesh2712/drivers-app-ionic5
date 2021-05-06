@@ -30,24 +30,21 @@ export class MyRidesPageComponent  {
   }
 
   async getRides(driver_id, refresher) {
-    const loader = await this.util.createLoader('Loading Ride History ...');
-    loader.present();
+
     this.ridesService.getRides().subscribe(
       (res: any) => {
-        this.filterRides(res.rides);
-        loader.dismiss();
+        this.filterRides(res);
       },
       err => {
         console.log(err);
-        loader.dismiss();
       }
     );
   }
 
   filterRides(res) {
-    this.ridesOffers = res.filter(ride => ride.is_offer);
-    this.ridesAccepted = res.filter(ride =>  !ride.is_offer && !ride.is_done);
-    this.ridesDone = res.filter(ride => ride.is_done);
+    this.ridesOffers = res['offers'];
+    this.ridesAccepted =  res['done'];
+    this.ridesDone = res['completed'];
   };
 
 
