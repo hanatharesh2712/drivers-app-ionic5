@@ -79,7 +79,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.version = '2.1.3';
+      this.version = '2.1.4';
     });
   }
 
