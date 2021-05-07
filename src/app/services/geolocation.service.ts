@@ -25,6 +25,7 @@ export class GeolocationService {
   driverPosition: Subject<Location> = new Subject();
   location: Location;
   driver_id: number;
+  public started: boolean;
   constructor(
     private http: HttpClient,
     private geolocation: Geolocation,
@@ -81,7 +82,6 @@ export class GeolocationService {
         notificationTitle: 'drvn chauffeur app',
         notificationText: 'Ready to receive new rides',
         startForeground: true,
-        notificationIconColor: '#bb9669',
         notificationsEnabled: false,
         startOnBoot: true,
         debug: false, //  enable this hear sounds for background-geolocation life-cycle.
@@ -90,9 +90,9 @@ export class GeolocationService {
       .then(() => {
 
       });
-
-
     this.start();
+    this.initFrontGeoposition();
+    this.started = true;
   }
 
   start() {

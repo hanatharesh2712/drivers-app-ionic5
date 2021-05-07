@@ -108,10 +108,13 @@ dark: #222);
 /****** Hide map Extra Content*****/
 
 /********Custom Css******/
+.w-100-p
+{
+  width: 100%;
+}
 .d-flex
 {
   display: flex !important;
-  width: 100%;
 
   &.column
   {

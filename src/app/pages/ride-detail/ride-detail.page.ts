@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
   ViewEncapsulation,
@@ -16,6 +17,7 @@ import { GeolocationService } from '@app/services/geolocation.service';
 import { RideService } from '@app/services/ride/ride.service';
 import { UtilService } from '@app/services/util/util.service';
 import { NavParams, PopoverController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'ride-detail',
@@ -23,7 +25,7 @@ import { NavParams, PopoverController } from '@ionic/angular';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./ride-detail.page.scss'],
 })
-export class RideDetailPage implements OnInit {
+export class RideDetailPage implements OnInit, OnDestroy {
   ride: Ride;
   ride_id: any;
   settlingRide: boolean;
@@ -32,35 +34,79 @@ export class RideDetailPage implements OnInit {
   isRideActive = false;
   canSettle: boolean = true;
   showingMap = false;
+  isMapLoaded = false;
   @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
   loading: boolean;
+  showTimeCounter: boolean;
+  gracePeriodMins = 0.5;
+  timeOnLocationSet: Date;
+  minutesSinceOnLocation: string;
+  secondsSinceOnLocation: string;
+  isOnGracePeriod: boolean;
+  gracePeriodPercentage: any;
+  wtInterval: any;
+  waitStartedDate: any;
+  storageInfo: any = {};
   constructor(
     private rideService: RideService,
     private util: UtilService,
     private route: ActivatedRoute,
     private popoverController: PopoverController,
     private fb: FormBuilder,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private storage: Storage
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.ride_id = params['ride_id'];
       if (this.ride_id) {
-        this.initRide();
+        this.getRideInfo();
       } else {
         this.util.goBack('rides');
       }
     });
   }
 
-  initRide() {
-    this.getRideInfo();
+  initRide(ride) {
+    this.ride = ride;
+    this.initStorageData();
+    if (
+      this.ride.next_status_code &&
+      !this.ride.is_offer &&
+      !this.ride.is_done
+    ) {
+      this.isRideActive = true;
+      if (this.ride.next_status_code == 'POB') {
+        this.initWaitingTime();
+      } else {
+        this.showTimeCounter = false;
+      }
+      if (!this.geolocationService.started) {
+        this.geolocationService.initTracking();
+      }
+    }
     this.createSettleForm();
-
-    this.geolocationService.initTracking();
   }
 
+  initStorageData() {
+    this.storage.get('ride-' + this.ride_id).then((alreadyStorageInfo) => {
+      if (!alreadyStorageInfo) {
+        this.storage.set('ride-' + this.ride_id, {}).then((newStorageInfo) => {
+          this.storageInfo = newStorageInfo;
+        });
+      } else {
+        this.storageInfo = alreadyStorageInfo;
+      }
+    });
+  }
+
+  updateStorage(newInfo) {
+    this.storage.set('ride-' + this.ride_id, newInfo).then(newValue =>
+      {
+        this.storageInfo = newValue;
+      });
+  }
   createSettleForm() {
     this.settleForm = this.fb.group({
       ride_id: this.ride_id,
@@ -75,14 +121,7 @@ export class RideDetailPage implements OnInit {
     this.loading = true;
     this.rideService.getRideInfo(this.ride_id).subscribe((response: any) => {
       if (response.ride) {
-        this.ride = response.ride;
-        if (
-          this.ride.next_status_code &&
-          !this.ride.is_offer &&
-          !this.ride.is_done
-        ) {
-          this.isRideActive = true;
-        }
+        this.initRide(response.ride);
         if (refresher) {
           refresher.target.complete();
         }
@@ -95,13 +134,7 @@ export class RideDetailPage implements OnInit {
   acceptRide() {
     this.rideService.acceptRide(this.ride).then((response) => {
       if (response) {
-        this.util.createToast(
-          'Your ride offer was accepted. Thank you!',
-          false,
-          'bottom',
-          4000
-        );
-        this.initRide();
+        this.initRide(response);
       }
     });
   }
@@ -113,12 +146,6 @@ export class RideDetailPage implements OnInit {
   rejectRide() {
     this.rideService.rejectRide(this.ride).then((response) => {
       if (response) {
-        this.util.createToast(
-          'Your ride offer was rejected. Thank you!',
-          false,
-          'bottom',
-          4000
-        );
         this.util.goBack('rides');
       }
     });
@@ -161,24 +188,17 @@ export class RideDetailPage implements OnInit {
 
   setSettle() {
     const value = this.settleForm.getRawValue();
-    this.rideService.sendSettle(value).then(async (response) => {
+    this.rideService.sendSettle(value).then((response) => {
       if (response) {
-        let toast = await this.util.createToast(
-          'You settle has been sent. Thank you!',
-          true,
-          'bottom',
-          4000
-        );
         this.canSettle = false;
-        toast.present();
       }
     });
   }
 
   async changeStatus() {
-    this.rideService.changeStatus(this.ride).then((response) => {
+    this.rideService.changeStatus(this.ride).then((response: Ride) => {
       if (response) {
-        // this.handleRide(response);
+        this.initRide(response);
       } else {
         //    this.isDone = true;
         //    this.openRating();
@@ -195,8 +215,7 @@ export class RideDetailPage implements OnInit {
     dialog.present();
   }
 
-  expandMap(event)
-  {
+  expandMap(event) {
     event.stopPropagation();
     this.showingMap = !this.showingMap;
   }
@@ -211,5 +230,110 @@ export class RideDetailPage implements OnInit {
 
   callPassenger() {
     this.util.call(this.ride.passenger_number);
+  }
+
+  initWaitingTime() {
+    this.showTimeCounter = true;
+    this.timeOnLocationSet = new Date(
+      this.ride.times.find((e) => e.type_id == 3).time
+    );
+
+    this.wtInterval = setInterval(() => {
+      this.calculateTimerValue();
+    }, 1000);
+  }
+
+  calculateTimerValue() {
+    if (this.timeOnLocationSet) {
+      let difInDates =
+        new Date(
+          new Date(this.timeOnLocationSet).getTime() +
+            this.gracePeriodMins * 60000
+        ).getTime() - new Date().getTime();
+      let secondsDif = difInDates / 1000;
+      if (secondsDif < 0) {
+        this.isOnGracePeriod = false;
+        if (this.storageInfo.waitStartedDate) {
+          difInDates =
+            new Date().getTime() -
+            new Date(this.storageInfo.waitStartedDate).getTime();
+          secondsDif = Math.abs(difInDates / 1000);
+          this.minutesSinceOnLocation = this.pad(
+            Math.trunc(secondsDif / 60),
+            2
+          );
+          this.secondsSinceOnLocation = this.pad(
+            Math.trunc(secondsDif % 60),
+            2
+          );
+        }
+      } else {
+        this.isOnGracePeriod = true;
+        this.gracePeriodPercentage = (
+          ((((this.gracePeriodMins - secondsDif / 60) * 100) /
+            this.gracePeriodMins) *
+            175) /
+          100
+        ).toFixed(2);
+        secondsDif = Math.abs(secondsDif);
+        this.minutesSinceOnLocation = this.pad(Math.trunc(secondsDif / 60), 2);
+        this.secondsSinceOnLocation = this.pad(Math.trunc(secondsDif % 60), 2);
+      }
+    }
+  }
+
+  startWTTime() {
+    this.storageInfo.waitStartedDate = new Date().getTime();
+    this.updateStorage(this.storageInfo);
+  }
+  pad(num, size) {
+    num = num.toString();
+    while (num.length < size) num = '0' + num;
+    return num;
+  }
+
+  async requestConfirmStop() {
+    if (this.storageInfo.requestedStop)
+    {
+      const alert = await this.util.createAlert(
+        'CONFIRM STOP LOCATION',
+        false,
+        'Are you on the stop location?',
+        {
+          text: 'Not yet',
+          handler: () => {},
+        },
+        {
+          text: 'Yes, confirm',
+          handler: () => {},
+        }
+      );
+      alert.present();
+    }
+    else {
+      const alert = await this.util.createAlert(
+        'STOP REQUESTED',
+        false,
+        'Now, please confirm when you arrive to the stop location',
+        {
+          text: 'Confirm',
+          handler: () => {
+            this.storageInfo.requestedStop = true;
+            this.updateStorage(this.storageInfo);
+          },
+        }
+      );
+      alert.present();
+    }
+
+
+  }
+
+  async confirmStop() {
+
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.wtInterval);
   }
 }

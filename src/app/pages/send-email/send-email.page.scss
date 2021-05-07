@@ -32,6 +32,11 @@ app-send-email {
       align-items: flex-start;
     }
 
+    ion-select
+    {
+      min-width: 190px;
+    }
+
     ion-item {
 
       --background: var(--ion-secondary-bg-color);

@@ -54,15 +54,13 @@ ride-detail {
         align-items: center;
       }
 
-      .pax-info
-      {
+      .pax-info {
         margin-bottom: 8px;
         align-items: center;
         display: flex;
       }
 
-      .pax-lug.secondary
-      {
+      .pax-lug.secondary {
         color: var(--ion-theme-info-color);
       }
 
@@ -93,6 +91,7 @@ ride-detail {
         font-size: 1.2rem;
         padding: 4px 12px;
         border-radius: 4px;
+
         ion-icon {
           color: black;
           font-size: 1.4rem;
@@ -157,6 +156,7 @@ ride-detail {
     padding: 0px;
     background: black;
     border-top: 1px solid var(--ion-theme-color);
+    min-height: 100px;
 
     ion-toolbar {
       --background: black;
@@ -200,8 +200,9 @@ ride-detail {
         height: 100%;
         max-height: 0px;
         transition: all 1s ease;
+
         &.active {
-           max-height: 190px;
+          max-height: 190px;
 
           margin-bottom: 12px;
         }
@@ -249,6 +250,7 @@ ride-detail {
         justify-content: center;
         align-items: center;
         margin-top: 12px;
+
         ion-icon {
           font-size: 2.5rem;
           margin-left: 4px;
@@ -264,6 +266,8 @@ ride-detail {
         max-height: 500px;
 
         .expand-icon {
+          ms-transform: rotate(180deg);
+          webkit-transform: rotate(180deg);
           transform: rotate(180deg);
         }
       }
@@ -300,50 +304,69 @@ ride-detail {
       --padding-top: 0px;
       --padding-end: 0px;
 
+      &.loading {
+        --background: #7d7c7cc9;
+      }
 
-      .map-buttons-container
-      {
 
+
+      .map-buttons-container {
+        --padding-bottom: 0px;
         height: 100%;
         max-height: 100px;
         transition: 1s ease all;
 
 
-        ion-buttons {
-          display: flex;
-          align-items: center;
+
+        .absolute-container {
           position: absolute;
           bottom: 20px;
           width: 100%;
-          padding: 12px;
+          z-index: 1000;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
 
-          button {
-            box-shadow: 0 5px 5px -5px black;
-            color: white;
-            font-size: 1.4rem;
-            border-radius: 4px;
-            border: 1px solid grey;
-            &.call {
-              margin-left: auto;
 
-              width: 50px;
-              height: 40px;
-              background: var(--ion-theme-color);
 
-              ion-icon {
-                font-size: 24px;
+          ion-buttons {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 12px;
+
+            button {
+              box-shadow: 0 5px 5px -5px black;
+              color: white;
+              font-size: 1.4rem;
+              border-radius: 4px;
+              border: 1px solid grey;
+
+              &.call {
+                margin-left: auto;
+
+                width: 50px;
+                height: 40px;
+                background: var(--ion-theme-color);
+
+                ion-icon {
+                  font-size: 24px;
+                }
+              }
+
+              &.update-status {
+                position: relative;
+                height: 40px;
+                width: 100%;
+                margin-left: 48px;
               }
             }
 
-            &.update-status {
-              position: relative;
-              height: 40px;
-              width: 100%;
-              margin-left: 48px;
-            }
           }
 
+
         }
+
 
         #map {
           width: 100%;
@@ -354,8 +377,7 @@ ride-detail {
 
         }
 
-        &.active
-        {
+        &.active {
           max-height: 300px;
 
         }
@@ -367,39 +389,146 @@ ride-detail {
 
   }
 
-  .expand-map-badget-container
-  {
+
+  .counter {
+    font-size: 2rem;
+
+
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    --background: transparent;
+    background-image: url('assets/imgs/counter-bg.png');
+    background-size: 100% 100%;
+    background-position-x: -175px;
+    background-repeat: no-repeat;
+    transition:background-position 2s ease;
+    width: 100%;
+
+    &.starting-wt-time
+    {
+      background-position-x: 0px !important;
+      .start-wt-btn
+      {
+        font-size: 1.6rem;
+      }
+    }
+
+    &:not(.starting-wt-time)
+    {
+      &.draw {
+        overflow: hidden;
+        position: relative;
+      }
+
+      &.draw::before,
+      &.draw::after {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        border: 2px solid transparent;
+        width: 0;
+        height: 0;
+      }
+
+      &.draw::before {
+        top: 0;
+        left: 0;
+        border-top-color: var(--ion-theme-color);
+        border-right-color: var(--ion-theme-color);
+        animation: border 4s infinite;
+      }
+
+      &.draw::after {
+        bottom: 0;
+        right: 0;
+        animation: border 4s 2s infinite, borderColor 4s 2s infinite;
+      }
+
+      @keyframes border {
+        0% {
+          width: 0;
+          height: 0;
+        }
+
+        25% {
+          width: 100%;
+          height: 0;
+        }
+
+        50% {
+          width: 100%;
+          height: 100%;
+        }
+
+        100% {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      @keyframes borderColor {
+        0% {
+          border-bottom-color: var(--ion-theme-color);
+          border-left-color: var(--ion-theme-color);
+        }
+
+        50% {
+          border-bottom-color: var(--ion-theme-color);
+          border-left-color: var(--ion-theme-color);
+        }
+
+        51% {
+          border-bottom-color: transparent;
+          border-left-color: transparent;
+        }
+
+        100% {
+          border-bottom-color: transparent;
+          border-left-color: transparent;
+        }
+      }
+
+    }
+
+
+    .subtitle {
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 1rem;
+      color: var(--ion-theme-info-color);
+    }
+  }
+
+  .expand-map-badget-container {
     width: 50px;
     height: 50px;
     left: 50%;
-    bottom: 100px;
-    z-index: 100000;
-    background: transparent;
+    position: absolute;
+    bottom: 83px;
     transition: 1s ease all;
     display: flex;
-    transform: translate3d(0,0,0)  translateX(-50%);
-    position: fixed;
-    position: -webkit-sticky;
-    align-items: flex-end;
-    justify-content: center;
-    .expand-map-badget
-    {
+    transform: translate3d(0, 0, 0) translateX(-50%);
+
+    .expand-map-badget {
 
       height: 30px;
       border-radius: 20px 20px 0px 0px;
       width: 35px;
       display: flex;
       justify-content: center;
-      opacity: 0.95;
+      opacity: 0.85;
       align-items: center;
       background-color: var(--ion-theme-color);
       color: white;
       border: 1px solid var(--ion-theme-color);
       border-bottom: none;
-      ion-icon
-      {
+
+      ion-icon {
         font-size: 1.5rem;
         transition: 1s ease all;
+
         &.active {
           transform: rotate(180deg);
         }
@@ -408,53 +537,55 @@ ride-detail {
 
 
     }
-    &.active{
-      bottom: 300px;
+
+    &.active {
+      bottom: 283px;
     }
   }
 
 
-      ion-fab
-      {
-        transform: translateY(-22px);
-        ion-fab-button
-        {
-          --color: white;
-          --background: var(--ion-theme-color);
-        }
-        > ion-fab-button
-        {
-          height: 40px;
-          width: 40px;
-          --border-radius: 4px;
-        }
-        ion-fab-list
-        {
-          ion-fab-button
-          {
+  ion-fab {
+    margin-bottom: 22px;
 
-            border: 1px solid var(--ion-theme-color);
-            width: 175px;
-            border-radius: 4px;
-            --border-radius: 4px;
-            --ion-color-base:var(--ion-theme-color) !important;
-            .text-container
-            {
-              width: 100%;
-              text-align: left;
-              display: flex;
-              align-items: center;
-              padding-left: 12px;
-            }
+    ion-fab-button {
+      --color: white;
+      --background: var(--ion-theme-color);
+    }
 
-            ion-icon
-            {
-              font-size: 2rem;
-              margin-right: 12px;
-            }
-          }
+    >ion-fab-button {
+      height: 40px;
+      width: 40px;
+      --border-radius: 4px;
+    }
+
+    ion-fab-list {
+      ion-fab-button {
+
+        border: 1px solid black;
+        width: 175px;
+        border-radius: 4px;
+        --border-radius: 4px;
+        --ion-color-base: var(--ion-theme-color) !important;
+
+        .text-container {
+          width: 100%;
+          text-align: left;
+          display: flex;
+          align-items: center;
+          padding-left: 12px;
+        }
+
+        ion-icon {
+          font-size: 2rem;
+          margin-right: 12px;
         }
       }
+
+      .counter-btn{
+        height: 55px;
+      }
+    }
+  }
 
 
 }

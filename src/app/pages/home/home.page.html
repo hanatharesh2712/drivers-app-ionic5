@@ -14,7 +14,7 @@
         Mario</div>
     </ion-list-header>
     <ion-item class="ion-no-padding" (click)="goToNextRide()">
-      <div class="widget next-ride " [ngClass]="{'gradient-border': nextRide && nextRide.next_status_code}">
+      <div class="widget next-ride " [ngClass]="{'gradient-border active': nextRide && nextRide.next_status_code}">
         <div class="title">
           <ng-container *ngIf="!loadingRide">
             Your {{nextRide && nextRide.next_status_code ? 'active' : 'current'}} ride:
@@ -37,7 +37,7 @@
       </div>
     </ion-item>
     <ion-item class="ion-no-padding"  >
-      <div class="widget rides-board ">
+      <div class="widget rides-board " >
         <div class="title">Your rides board:</div>
         <div class="container d-flex" >
           <div class="count-info" (click)="goToRides('offers')"  *ngIf="rides">
@@ -94,21 +94,21 @@
         <div class="ratings d-flex">
           <div class="rating-stars">
             <ion-badge>
-              <span class="text">4</span>
+              <span class="text">4.0</span>
               <ion-icon name="star"></ion-icon>
             </ion-badge>
             <span class="people">
-              Vehicle
+              Chauffeur
             </span>
 
           </div>
           <div class="rating-stars">
             <ion-badge>
-              <span class="text">4</span>
+              <span class="text">4.3</span>
               <ion-icon name="star"></ion-icon>
             </ion-badge>
             <span class="people">
-              Chauffeur
+              Vehicle
             </span>
 
           </div>

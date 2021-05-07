@@ -54,8 +54,17 @@ app-home {
 
     .next-ride {
 
-      background: linear-gradient(90deg, #252525 0%, var(--ion-theme-color));
+      background: linear-gradient(
+        90deg
+         , #252525 0%, #4a889c);
 
+
+      &.active
+      {
+        background: linear-gradient(
+        90deg
+        , #000000a6 0%, #c79f0c);
+      }
 
 
       .ride_id {
@@ -87,7 +96,7 @@ app-home {
 
     .rating {
       background: linear-gradient(10deg, #525252 0%, var(--ion-secondary-bg-color));
-      border: 1px solid #1f1f1f;
+
 
 
       .rating-stars {
@@ -98,9 +107,8 @@ app-home {
 
         ion-badge {
           padding: 0;
-          border-radius: 50px;
+          background-color: transparent;
           text-align: center;
-          background: #65aa50;
           font-weight: 400;
           width: 88px;
           height: 38px;
@@ -109,7 +117,7 @@ app-home {
 
           ion-icon {
             font-size: 2.3rem;
-            color: #fbff1c;
+            color: #35eb44;
             vertical-align: middle;
             position: relative;
             top: -2px;
@@ -118,6 +126,8 @@ app-home {
           .text {
             display: inline-block;
             margin: 0px 5px;
+            font-size: 3.5rem;
+            color: white;
           }
         }
 
@@ -137,9 +147,7 @@ app-home {
     }
 
     .rides-board {
-      background: linear-gradient(
-        90deg
-        , #252525 0%, #4a889c);
+      background: linear-gradient(90deg, #252525 0%, var(--ion-theme-color));
 
 
       .container {
@@ -148,9 +156,7 @@ app-home {
 
         .count-info {
           width: 33%;
-          border: 1px solid #987c5930;
           padding: 4px;
-          border-radius: 20%;
           margin-right: 12px;
           .center-container {
             display: flex;
@@ -164,7 +170,6 @@ app-home {
 
               ion-icon
               {
-                color: var(--ion-theme-color);
                 margin-left: 8px;
               }
             }
@@ -174,7 +179,6 @@ app-home {
               text-transform: uppercase;
               font-size: 1.2rem;
               letter-spacing: 1px;
-              color: var(--ion-theme-color);
             }
           }
         }

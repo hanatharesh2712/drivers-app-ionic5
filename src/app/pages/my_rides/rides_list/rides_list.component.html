@@ -1,10 +1,10 @@
 <ion-content>
   <h4 class="tab-title">
-    {{type == 'offers' ? 'RIDES OFFERS' : type == 'accepted' ? 'RIDES ACCEPTED' : 'RIDES COMPLETED' }} <span class="rides-count" *ngIf="!loading">({{rides && rides.length}})</span>
+    {{type == 'offers' ? 'RIDES OFFERS' : type == 'accepted' ? 'RIDES ACCEPTED' : 'RIDES COMPLETED' }} <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
   </h4>
   <ion-list class="list" lines="none" *ngIf="!loading">
     <ion-item *ngFor="let ride of rides" class="item" >
-      <div class="d-flex column" (click)="viewRide(ride.ride_id)">
+      <div class="d-flex column w-100-p" (click)="viewRide(ride.ride_id)">
         <div class="item_header  d-flex">
           <div class="profile_details">
             <h3 class="d-flex"> {{ride.pu_datetime | niceDateFormatPipe }} <span class="end">
@@ -22,7 +22,7 @@
 
   <ion-list class="list" lines="none" *ngIf="loading">
     <ion-item class="item" >
-      <div class="d-flex column">
+      <div class="d-flex column w-100-p">
         <div class="item_header  d-flex">
           <div class="profile_details">
 
@@ -37,7 +37,7 @@
 
     </ion-item>
     <ion-item class="item" >
-      <div class="d-flex column">
+      <div class="d-flex column w-100-p">
         <div class="item_header  d-flex">
           <div class="profile_details">
 
@@ -52,7 +52,7 @@
     </ion-item>
 
     <ion-item class="item" >
-      <div class="d-flex column">
+      <div class="d-flex column w-100-p">
         <div class="item_header  d-flex">
           <div class="profile_details">
 

@@ -43,6 +43,7 @@ export class Ride {
   next_status_button_text: string;
   pu_datetime: string;
   cost_total;
+  times: RideTime[];
   costs;
   constructor(obj?) {
       Object.assign(this, ...obj);
@@ -54,6 +55,16 @@ export interface ChildSeat
   type:string;
   count: number;
 }
+
+export interface RideTime
+{
+  id;
+  ride_id;
+  type_id;
+  time;
+}
+
+
 export interface RideRouting
 {
   id: number;

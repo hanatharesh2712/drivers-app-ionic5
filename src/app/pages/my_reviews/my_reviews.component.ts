@@ -12,11 +12,11 @@ import { Review } from '@app/models/review';
 })
 export class MyReviewsPage {
 
-  segmentModel: 'pax-reviews' | 'my-reviews' = 'pax-reviews';
   reviews: any[] = [];
   error: any;
-  score: number;
-  paxReviewsTotal: number;
+  score: any = 0;
+  paxReviewsTotal: number = 0;
+  vehicleScore: any = 0;
 
   constructor(private reviewsService: ReviewsService, private authService: DrvnAuthenticationService,
     private util: UtilService) {
@@ -27,31 +27,19 @@ export class MyReviewsPage {
     this.getReviews(this.authService.currentUser.id);
   }
 
-  segmentChanged(e: any) {
-    this.segmentModel = e.detail.value;
-    this.getReviews(this.authService.currentUser.id);
-  }
-
   async getReviews(driver_id, refresher = null) {
     let promise;
     this.reviews = [];
     const loader = await this.util.createLoader('Loading Reviews...');
     loader.present();
-    if (this.segmentModel == 'pax-reviews') {
-      promise = this.reviewsService.getReviews(driver_id);
-    }
-    else if (this.segmentModel == 'my-reviews') {
-      promise = this.reviewsService.getPaxReviews(driver_id);
-    }
+    promise = this.reviewsService.getPaxReviews(driver_id);
     promise.subscribe(
       res => {
         this.reviews = res.map(review => {
           return new Review(review);
         });
-        if (this.segmentModel == 'pax-reviews') {
-             this.getScore();
-             this.paxReviewsTotal = this.reviews.length;
-        }
+        this.getScore();
+        this.paxReviewsTotal = this.reviews.length;
         if (refresher) {
           refresher.target.complete();
         }
@@ -64,12 +52,12 @@ export class MyReviewsPage {
   }
 
   getScore() {
-    this.score = 0;
     this.reviews.forEach(obj => {
-      this.score += obj.rating;
+      this.score += obj.driver_rating;
+      this.vehicleScore += obj.vehicle_rating;
     });
-    this.score = Math.round((this.score + Number.EPSILON) * 1) / 1
-    this.score = this.score / this.reviews.length;
+    this.score = (this.score / this.reviews.length).toFixed(1);
+    this.vehicleScore = (this.vehicleScore / this.reviews.length).toFixed(1);
   }
 
   doRefresh(refresher) {

@@ -160,7 +160,8 @@
         Service Type / Vehicle Type
       </ion-label>
       <div class="content">
-        <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>   <ion-skeleton-text animated style="width: 80px; margin-left: 24px;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 80px; margin-left: 24px;"></ion-skeleton-text>
       </div>
     </ion-item>
 
@@ -169,12 +170,12 @@
         Special Requirements
       </ion-label>
       <ul class="requirements-list content">
-          <li>
-            <ion-skeleton-text animated style="width: 100px"></ion-skeleton-text>
-          </li>
-          <li >
-            <ion-skeleton-text animated style="width: 100px"></ion-skeleton-text>
-          </li>
+        <li>
+          <ion-skeleton-text animated style="width: 100px"></ion-skeleton-text>
+        </li>
+        <li>
+          <ion-skeleton-text animated style="width: 100px"></ion-skeleton-text>
+        </li>
       </ul>
 
 
@@ -199,20 +200,20 @@
   </ion-list>
 
 
-  <div class="expand-map-badget-container" [ngClass]="{'active': showingMap}" *ngIf="isRideActive"
-    (click)="expandMap($event)">
-    <div class="expand-map-badget">
-      <ion-icon name="arrow-up-circle-outline" [ngClass]="{'active': showingMap}"></ion-icon>
-    </div>
-
-  </div>
 
 </ion-content>
 
+<div class="expand-map-badget-container" [ngClass]="{'active': showingMap, 'showingCounter': showTimeCounter}"
+  *ngIf="isRideActive" (click)="expandMap($event)">
+  <div class="expand-map-badget">
+    <ion-icon name="arrow-up-circle-outline" [ngClass]="{'active': showingMap}"></ion-icon>
+  </div>
+
+</div>
 
 <ion-fab horizontal="start" vertical="bottom" slot="fixed" *ngIf="isRideActive">
   <ion-fab-button>
-    <ion-icon name="call"></ion-icon>
+    <ion-icon name="ellipsis-vertical"></ion-icon>
   </ion-fab-button>
   <ion-fab-list side="top">
     <ion-fab-button (click)="callSuport()">
@@ -239,6 +240,28 @@
 
     </ion-fab-button>
 
+    <ion-fab-button class="counter-btn counter draw" [style.backgroundPosition]="'-' + gracePeriodPercentage + 'px'" [ngClass]="{'starting-wt-time': !isOnGracePeriod}" *ngIf="showTimeCounter" >
+      <div class="d-flex column">
+        <ng-container *ngIf="isOnGracePeriod || (!isOnGracePeriod && storageInfo.waitStartedDate)">
+          {{minutesSinceOnLocation}} : {{secondsSinceOnLocation}}
+          <span class="subtitle">
+            {{isOnGracePeriod ? 'GRACE PERIOD' : 'WAITING TIME'}}
+          </span>
+        </ng-container>
+        <div *ngIf="!isOnGracePeriod && !storageInfo.waitStartedDate" class="start-wt-btn" (click)="startWTTime()">
+          START WAIT TIME
+        </div>
+
+      </div>
+    </ion-fab-button>
+    <ion-fab-button (click)="requestConfirmStop()">
+
+      <div class="text-container">
+        <ion-icon name="remove-circle-outline"></ion-icon>
+        {{storageInfo.requestedStop ? 'CONFIRM STOP' : 'REQUEST STOP'}}
+      </div>
+
+    </ion-fab-button>
   </ion-fab-list>
 </ion-fab>
 
@@ -272,11 +295,12 @@
 
       </ion-list>
     </ion-toolbar>
-    <ion-toolbar *ngIf="ride.is_done && !isRideActive" class="settle-footer" >
+    <ion-toolbar *ngIf="ride.is_done && !isRideActive" class="settle-footer">
       <div class="settle-text" *ngIf="ride.is_done">
         You have 30 min left to settle this ride.
       </div>
-      <ion-list lines="full" class="settle-list" [formGroup]="settleForm" *ngIf="settleForm" [ngClass]="{'active': settlingRide}">
+      <ion-list lines="full" class="settle-list" [formGroup]="settleForm" *ngIf="settleForm"
+        [ngClass]="{'active': settlingRide}">
         <ion-item>
           <ion-label>Tolls</ion-label>
           <ion-input type="number" formControlName="tolls" placeholder="$0.00" slot="end"></ion-input>
@@ -332,21 +356,28 @@
 
 
     </ion-toolbar>
-    <ion-toolbar *ngIf="isRideActive" class="active-ride-footer">
-      <div class="map-buttons-container" [ngClass]="{'active': showingMap}">
+    <ion-toolbar *ngIf="isRideActive" class="active-ride-footer" [ngClass]="{'loading': !isMapLoaded}">
+      <div class="map-buttons-container" [ngClass]="{'active': showingMap, 'showingCounter': showTimeCounter}">
 
-        <ion-buttons>
+        <div class="absolute-container">
 
-          <button ion-button class="update-status" [style.background]="ride.next_status_button_color"
-            (click)="changeStatus()">
-            {{ride.next_status_button_text}}
-          </button>
+          <ion-buttons>
+
+            <button ion-button class="update-status" [style.background]="ride.next_status_button_color"
+              (click)="changeStatus()">
+              {{ride.next_status_button_text}}
+            </button>
 
 
 
-        </ion-buttons>
+          </ion-buttons>
+        </div>
 
-        <app-ride-map [actualRide]="ride"></app-ride-map>
+
+        <ion-skeleton-text animated style="width: 100%; height: 103px; margin: 0px"
+          *ngIf="!isMapLoaded && isRideActive"></ion-skeleton-text>
+        <app-ride-map [actualRide]="ride" (mapLoaded)="isMapLoaded = true;"></app-ride-map>
+
       </div>
 
     </ion-toolbar>

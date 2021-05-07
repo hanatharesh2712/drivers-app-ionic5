@@ -5,9 +5,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -33,6 +35,7 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
   @ViewChild('map', { static: true }) mapElement: ElementRef;
   @Input() actualRide;
   @Input() showDriverPosition = true;
+  @Output() mapLoaded = new EventEmitter<any>();
   map: any;
   autofollow: boolean;
   driverMarker: any;
@@ -188,6 +191,7 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
 
             google.maps.event.removeListener(listener);
           }
+          this.mapLoaded.emit(true);
         });
       }, 500);
     }
