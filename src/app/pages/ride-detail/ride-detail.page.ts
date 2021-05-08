@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { RatingDialogComponent } from '@app/components/rating-dialog/rating-dialog.component';
 import { RideMapDialogComponent } from '@app/components/ride-map-dialog/ride-map-dialog.component';
 import { RideMapComponent } from '@app/components/ride-map/ride-map.component';
 import { RidePricingPopoverComponent } from '@app/components/ride-pricing-popover/ride-pricing-popover.component';
@@ -38,7 +39,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
   loading: boolean;
   showTimeCounter: boolean;
-  gracePeriodMins = 0.5;
+  gracePeriodMins = 1;
   timeOnLocationSet: Date;
   minutesSinceOnLocation: string;
   secondsSinceOnLocation: string;
@@ -47,6 +48,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   wtInterval: any;
   waitStartedDate: any;
   storageInfo: any = {};
+  isDone: boolean;
   constructor(
     private rideService: RideService,
     private util: UtilService,
@@ -97,6 +99,8 @@ export class RideDetailPage implements OnInit, OnDestroy {
         });
       } else {
         this.storageInfo = alreadyStorageInfo;
+        this.storageInfo.waitStartedDate = null;
+        this.updateStorage(this.storageInfo);
       }
     });
   }
@@ -174,18 +178,6 @@ export class RideDetailPage implements OnInit, OnDestroy {
     await popover.present();
   }
 
-  increase(fieldName, increment) {
-    const control = this.settleForm.get(fieldName);
-    control.setValue(control.value + increment);
-  }
-
-  decrease(fieldName, decrement) {
-    const control = this.settleForm.get(fieldName);
-    if (control.value != 0) {
-      control.setValue(control.value - decrement);
-    }
-  }
-
   setSettle() {
     const value = this.settleForm.getRawValue();
     this.rideService.sendSettle(value).then((response) => {
@@ -200,19 +192,27 @@ export class RideDetailPage implements OnInit, OnDestroy {
       if (response) {
         this.initRide(response);
       } else {
-        //    this.isDone = true;
-        //    this.openRating();
+        this.isDone = true;
+        this.openRating();
       }
     });
   }
 
-  async openRoutingMap() {
-    const dialog = await this.util.createModal(
-      RideMapDialogComponent,
-      { ride: this.ride },
-      'ride-map-dialog'
-    );
-    dialog.present();
+  async openRoutingMap(event) {
+    event.stopPropagation();
+    if (this.isRideActive)
+    {
+      this.showingMap = true;
+    }
+    else {
+      const dialog = await this.util.createModal(
+        RideMapDialogComponent,
+        { ride: this.ride },
+        'ride-map-dialog'
+      );
+      dialog.present();
+    }
+
   }
 
   expandMap(event) {
@@ -330,6 +330,13 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   async confirmStop() {
+
+  }
+
+  async  openRating()
+  {
+    const dialog = await this.util.createModal(RatingDialogComponent, { ride: this.ride}, 'rating-modal');
+    dialog.present();
 
   }
 

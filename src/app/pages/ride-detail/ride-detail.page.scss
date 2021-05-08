@@ -54,6 +54,13 @@ ride-detail {
         align-items: center;
       }
 
+      .spot-time {
+        margin-top: 4px;
+        margin-left: 28px;
+        font-size: 1.2rem;
+        color: var(--ion-theme-color);
+      }
+
       .pax-info {
         margin-bottom: 8px;
         align-items: center;
@@ -117,7 +124,7 @@ ride-detail {
       .child-seat-types {
         margin-top: 6px;
         font-size: 1.2rem;
-        color: grey;
+        color: var(--ion-theme-color);
       }
     }
 
@@ -370,7 +377,7 @@ ride-detail {
 
         #map {
           width: 100%;
-          height: 300px;
+          height: 400px;
           top: 0px;
           transition: transform 1s ease;
 
@@ -378,7 +385,7 @@ ride-detail {
         }
 
         &.active {
-          max-height: 300px;
+          max-height: 400px;
 
         }
       }
@@ -392,102 +399,111 @@ ride-detail {
 
   .counter {
     font-size: 2rem;
-
+    height: 55px;
 
     flex-direction: column;
     align-items: center;
     position: relative;
     --background: transparent;
-    background-image: url('assets/imgs/counter-bg.png');
-    background-size: 100% 100%;
-    background-position-x: -175px;
-    background-repeat: no-repeat;
-    transition:background-position 2s ease;
     width: 100%;
 
-    &.starting-wt-time
-    {
-      background-position-x: 0px !important;
-      .start-wt-btn
-      {
-        font-size: 1.6rem;
-      }
-    }
+    .button {
+      background-color: black;
+      background-repeat: no-repeat;
+      transition: background-position 2s ease;
+      background-image: url('assets/imgs/counter-bg.png');
+      background-size: 100% 100%;
+      background-position-x: -175px;
+      width: 100%;
+      height: 100%;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
 
-    &:not(.starting-wt-time)
-    {
-      &.draw {
-        overflow: hidden;
-        position: relative;
-      }
+      &.starting-wt-time {
+        background-position-x: 0px !important;
 
-      &.draw::before,
-      &.draw::after {
-        content: '';
-        box-sizing: border-box;
-        position: absolute;
-        border: 2px solid transparent;
-        width: 0;
-        height: 0;
+        .start-wt-btn {
+          font-size: 1.6rem;
+        }
       }
 
-      &.draw::before {
-        top: 0;
-        left: 0;
-        border-top-color: var(--ion-theme-color);
-        border-right-color: var(--ion-theme-color);
-        animation: border 4s infinite;
-      }
+      &:not(.starting-wt-time) {
+        &.draw {
+          overflow: hidden;
+          position: relative;
+        }
 
-      &.draw::after {
-        bottom: 0;
-        right: 0;
-        animation: border 4s 2s infinite, borderColor 4s 2s infinite;
-      }
-
-      @keyframes border {
-        0% {
+        &.draw::before,
+        &.draw::after {
+          content: '';
+          box-sizing: border-box;
+          position: absolute;
+          border: 2px solid transparent;
           width: 0;
           height: 0;
         }
 
-        25% {
-          width: 100%;
-          height: 0;
+        &.draw::before {
+          top: 0;
+          left: 0;
+          border-top-color: var(--ion-theme-color);
+          border-right-color: var(--ion-theme-color);
+          animation: border 4s infinite;
         }
 
-        50% {
-          width: 100%;
-          height: 100%;
+        &.draw::after {
+          bottom: 0;
+          right: 0;
+          animation: border 4s 2s infinite, borderColor 4s 2s infinite;
         }
 
-        100% {
-          width: 100%;
-          height: 100%;
+        @keyframes border {
+          0% {
+            width: 0;
+            height: 0;
+          }
+
+          25% {
+            width: 100%;
+            height: 0;
+          }
+
+          50% {
+            width: 100%;
+            height: 100%;
+          }
+
+          100% {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        @keyframes borderColor {
+          0% {
+            border-bottom-color: var(--ion-theme-color);
+            border-left-color: var(--ion-theme-color);
+          }
+
+          50% {
+            border-bottom-color: var(--ion-theme-color);
+            border-left-color: var(--ion-theme-color);
+          }
+
+          51% {
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+          }
+
+          100% {
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+          }
         }
       }
 
-      @keyframes borderColor {
-        0% {
-          border-bottom-color: var(--ion-theme-color);
-          border-left-color: var(--ion-theme-color);
-        }
 
-        50% {
-          border-bottom-color: var(--ion-theme-color);
-          border-left-color: var(--ion-theme-color);
-        }
-
-        51% {
-          border-bottom-color: transparent;
-          border-left-color: transparent;
-        }
-
-        100% {
-          border-bottom-color: transparent;
-          border-left-color: transparent;
-        }
-      }
 
     }
 
@@ -544,8 +560,13 @@ ride-detail {
   }
 
 
-  ion-fab {
-    margin-bottom: 22px;
+
+  ion-fab.options-menu {
+
+
+    position: absolute;
+    left: 12px;
+    bottom: 32px;
 
     ion-fab-button {
       --color: white;
@@ -581,9 +602,7 @@ ride-detail {
         }
       }
 
-      .counter-btn{
-        height: 55px;
-      }
+
     }
   }
 

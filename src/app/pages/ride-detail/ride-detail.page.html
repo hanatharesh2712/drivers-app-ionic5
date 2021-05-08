@@ -3,8 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">RIDE
-      {{ride ? ride.is_done ? 'COMPLETED' : ride.is_offer ? 'OFFER' : 'ACCEPTED' : ''}}
+    <ion-title class="ion-text-center">
+      <ng-container *ngIf="!isRideActive">
+        RIDE     {{ride ?  ride.is_done ? 'COMPLETED' : ride.is_offer ? 'OFFER' : 'ACCEPTED' : ''}}
+      </ng-container>
+      <ng-container *ngIf="isRideActive">
+        ACTIVE RIDE
+      </ng-container>
       #{{ride_id}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,8 +25,18 @@
         Pick-up Date
       </ion-label>
       <div class="content">
-        <ion-icon name="calendar"></ion-icon>
-        {{ride.pu_datetime | niceDateFormatPipe }}
+        <div class="d-flex column">
+          <div>
+            <ion-icon name="calendar"></ion-icon>
+            {{ride.pu_datetime | niceDateFormatPipe }}
+          </div>
+          <div class="spot-time a-center d-flex">
+            Spot time at 11:30PM
+
+          </div>
+
+        </div>
+
       </div>
     </ion-item>
     <ion-item>
@@ -30,12 +45,12 @@
       </ion-label>
       <div class="content">
         <div class="d-flex column">
-          <div *ngIf="isRideActive" class="pax-info ">
-            <ion-icon name="person" class="icon drvn-icon"></ion-icon>
-            {{ride.passenger_name}}
-          </div>
-          <div class="d-flex pax-lug" [ngClass]="{'secondary': isRideActive}">
-            <div class="sub-content">
+          <div  class="pax-info d-flex">
+            <div class="sub-content" *ngIf="isRideActive">
+              <ion-icon name="person" class="icon drvn-icon"></ion-icon>
+              {{ride.passenger_name}} <ng-container *ngIf="ride.passenger_count > 1"> (+ {{ride.passenger_count - 1}})</ng-container>
+            </div>
+            <div class="sub-content" *ngIf="!isRideActive">
               <ion-icon name="people" class="icon drvn-icon"></ion-icon> {{ride.passenger_count}}
               Passenger{{ride.passenger_count > 1 ? 's' : ''}}
 
@@ -46,6 +61,7 @@
               Bag{{ride.luggage_count > 1 ? 's' : ''}}
             </div>
           </div>
+
         </div>
 
 
@@ -93,12 +109,20 @@
 
 
     </ion-item>
+     <ion-item *ngIf="ride.notes">
+      <ion-label position="stacked">
+        Trip Notes
+      </ion-label>
+      <div class="content notes">
+        {{ride.notes}}
+      </div>
+    </ion-item>
     <ion-item>
       <ion-label position="stacked" class="routing-title">
         <span>
           Routing Information</span>
 
-        <ion-badge color="primary" slot="end" class="view-map-span" (click)="openRoutingMap()" *ngIf="!isRideActive">
+        <ion-badge color="primary" slot="end" class="view-map-span" (click)="openRoutingMap($event)" >
           <ion-icon name="map-outline"></ion-icon>
           VIEW MAP
         </ion-badge>
@@ -106,14 +130,7 @@
       <routing-details [ride]="ride" [showNotes]="true"></routing-details>
 
     </ion-item>
-    <ion-item *ngIf="ride.notes">
-      <ion-label position="stacked">
-        Notes
-      </ion-label>
-      <div class="content notes">
-        {{ride.notes}}
-      </div>
-    </ion-item>
+
     <ion-item *ngIf="ride.is_done">
       <ion-label position="stacked">
         Timeline
@@ -203,15 +220,15 @@
 
 </ion-content>
 
-<div class="expand-map-badget-container" [ngClass]="{'active': showingMap, 'showingCounter': showTimeCounter}"
+<!--<div class="expand-map-badget-container" [ngClass]="{'active': showingMap, 'showingCounter': showTimeCounter}"
   *ngIf="isRideActive" (click)="expandMap($event)">
   <div class="expand-map-badget">
     <ion-icon name="arrow-up-circle-outline" [ngClass]="{'active': showingMap}"></ion-icon>
   </div>
 
 </div>
-
-<ion-fab horizontal="start" vertical="bottom" slot="fixed" *ngIf="isRideActive">
+-->
+<ion-fab class="options-menu" *ngIf="isRideActive">
   <ion-fab-button>
     <ion-icon name="ellipsis-vertical"></ion-icon>
   </ion-fab-button>
@@ -240,8 +257,8 @@
 
     </ion-fab-button>
 
-    <ion-fab-button class="counter-btn counter draw" [style.backgroundPosition]="'-' + gracePeriodPercentage + 'px'" [ngClass]="{'starting-wt-time': !isOnGracePeriod}" *ngIf="showTimeCounter" >
-      <div class="d-flex column">
+    <ion-fab-button class="counter-btn counter " *ngIf="showTimeCounter" >
+      <div class="d-flex column button draw"  [style.backgroundPosition]="'-' + gracePeriodPercentage + 'px'" [ngClass]="{'starting-wt-time': !isOnGracePeriod}">
         <ng-container *ngIf="isOnGracePeriod || (!isOnGracePeriod && storageInfo.waitStartedDate)">
           {{minutesSinceOnLocation}} : {{secondsSinceOnLocation}}
           <span class="subtitle">
@@ -254,7 +271,7 @@
 
       </div>
     </ion-fab-button>
-    <ion-fab-button (click)="requestConfirmStop()">
+    <ion-fab-button (click)="requestConfirmStop()" *ngIf="ride.next_status_code == 'DON'">
 
       <div class="text-container">
         <ion-icon name="remove-circle-outline"></ion-icon>
@@ -313,32 +330,11 @@
         </ion-item>
         <ion-item>
           <ion-label>Stops</ion-label>
-          <div slot="end" class="increase-container">
-            <div class="d-flex a-center">
-              <ion-icon name="remove-circle-outline" (click)="decrease('stops', 1)"></ion-icon>
-              <span class="value">
-                {{settleForm.get('stops').value}}
-              </span>
-              <ion-icon name="add-circle-outline" (click)="increase('stops', 1)"></ion-icon>
-            </div>
-
-          </div>
-
 
 
         </ion-item>
         <ion-item>
           <ion-label>Waiting mins.</ion-label>
-          <div slot="end" class="increase-container">
-            <div class="d-flex a-center">
-              <ion-icon name="remove-circle-outline" (click)="decrease('waiting', 15)"></ion-icon>
-              <span class="value">
-                {{settleForm.get('waiting').value}}
-              </span>
-              <ion-icon name="add-circle-outline" (click)="increase('waiting', 15)"></ion-icon>
-            </div>
-
-          </div>
 
         </ion-item>
 
