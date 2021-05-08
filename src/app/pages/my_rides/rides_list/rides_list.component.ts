@@ -15,6 +15,7 @@ export class RidesListComponent {
   @Input() title;
   loaded: boolean = false;
   loading: boolean;
+  activeRide;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -29,6 +30,7 @@ export class RidesListComponent {
       this.ridesService.onDidRidesLoaded.subscribe((rides) => {
         this.loading = false;
         this.loaded = true;
+        this.activeRide = this.ridesService.activeRide;
         this.rides = rides[this.type];
       });
     });

@@ -1,20 +1,26 @@
 <ion-content>
+
+  <ng-container *ngIf="type == 'accepted' && activeRide">
+    <h4 class="tab-title">
+      ACTIVE RIDE
+    </h4>
+    <ion-list class="list" lines="none" *ngIf="!loading">
+      <ion-item>
+        <ng-container *ngTemplateOutlet="rideItem; context: {ride: activeRide}"></ng-container>
+      </ion-item>
+
+
+    </ion-list>
+  </ng-container>
+
+
   <h4 class="tab-title">
     {{type == 'offers' ? 'RIDES OFFERS' : type == 'accepted' ? 'RIDES ACCEPTED' : 'RIDES COMPLETED' }} <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
   </h4>
   <ion-list class="list" lines="none" *ngIf="!loading">
     <ion-item *ngFor="let ride of rides" class="item" >
-      <div class="d-flex column w-100-p" (click)="viewRide(ride.ride_id)">
-        <div class="item_header  d-flex">
-          <div class="profile_details">
-            <h3 class="d-flex"> {{ride.pu_datetime | niceDateFormatPipe }} <span class="end">
-                #{{ride.ride_id}}</span></h3>
-            <h4 class="d-flex">{{ride.service_type | uppercase}} | {{ride.vehicle_type  | uppercase}}</h4>
-          </div>
-        </div>
-        <routing-details [ride]="ride" [showNotes]="false" [showStops]="false" [showStopsCount]="true"></routing-details>
+      <ng-container *ngTemplateOutlet="rideItem; context: {ride: ride}"></ng-container>
 
-      </div>
 
     </ion-item>
 
@@ -77,3 +83,16 @@
 </ion-content>
 
 
+<ng-template #rideItem let-ride="ride">
+  <div class="d-flex column w-100-p" (click)="viewRide(ride.ride_id)">
+    <div class="item_header  d-flex">
+      <div class="profile_details">
+        <h3 class="d-flex"> {{ride.pu_datetime | niceDateFormatPipe }} <span class="end">
+            #{{ride.ride_id}}</span></h3>
+        <h4 class="d-flex">{{ride.service_type | uppercase}} | {{ride.vehicle_type  | uppercase}}</h4>
+      </div>
+    </div>
+    <routing-details [ride]="ride" [showNotes]="false" [showStops]="false" [showStopsCount]="true"></routing-details>
+
+  </div>
+</ng-template>

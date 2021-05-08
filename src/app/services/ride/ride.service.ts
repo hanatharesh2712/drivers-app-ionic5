@@ -20,12 +20,14 @@ import { environment } from '@env/environment';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DrvnAuthenticationService } from '../auth/auth.service';
+import { Ride } from '@app/models/ride';
 @Injectable({
   providedIn: 'root',
 })
 export class RideService {
   rides = [];
   onDidRidesLoaded = new BehaviorSubject([]);
+  activeRide: Ride;
   constructor(
     private http: HttpClient,
     private util: UtilService,
@@ -45,6 +47,13 @@ export class RideService {
             ride.pu_datetime = ride.pu_date + ' ' + ride.pu_time;
             this.parseRideResponse(ride);
           });
+          const activeIndex = response.rides.findIndex(
+            (e) => e.next_status_code != ''
+          );
+          if (activeIndex != -1) {
+            this.activeRide = response.rides.splice(activeIndex, 1)[0];
+          }
+
           this.rides['offers'] = response.rides.filter((ride) => ride.is_offer);
           this.rides['accepted'] = response.rides.filter(
             (ride) => !ride.is_offer && !ride.is_done
@@ -157,25 +166,22 @@ export class RideService {
     });
   }
 
-
-
-  addStop(ride_id)
-  {
+  addStop(ride_id) {
     return this.http
-    .post(environment.appUrl + 'addStop', ride_id)
-    .pipe(
-      map(async (response) => {
-        const toast = await this.util.createToast(
-          'Additional stop has been added.',
-          false,
-          'bottom',
-          4000
-        );
-        toast.present();
-        return response;
-      })
-    )
-    .toPromise();
+      .post(environment.appUrl + 'addStop', ride_id)
+      .pipe(
+        map(async (response) => {
+          const toast = await this.util.createToast(
+            'Additional stop has been added.',
+            false,
+            'bottom',
+            4000
+          );
+          toast.present();
+          return response;
+        })
+      )
+      .toPromise();
   }
 
   sendRating(data) {
