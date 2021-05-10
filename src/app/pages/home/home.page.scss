@@ -109,6 +109,8 @@ app-home {
           padding: 0;
           background-color: transparent;
           text-align: center;
+          display: flex;
+    align-items: center;
           font-weight: 400;
           width: 88px;
           height: 38px;
@@ -219,6 +221,22 @@ app-home {
         background-position: 100% 50%;
       }
     }
+
+
+    .faq
+    {
+      background-image: url('assets/imgs/faq3.png');
+      background-size: 100% 100%;
+
+      .title{
+        font-size: 6rem;
+        position: relative;
+        top: 30px;
+        letter-spacing: 10px;
+      }
+
+    }
+
 
 
   }

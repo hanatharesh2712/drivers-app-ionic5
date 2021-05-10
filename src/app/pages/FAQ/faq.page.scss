@@ -1,0 +1,64 @@
+:host {
+  ion-searchbar {
+    margin-top: 12px;
+  }
+
+  ion-list {
+    --ion-background-color: black;
+    --ion-item-color: white;
+
+    ion-list-header {
+      font-size: 2rem;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      background-color: var(--ion-secondary-bg-color);
+      ion-label {
+        padding-right: 24px;
+        color: var(--ion-theme-color);
+      }
+    }
+
+    ion-item
+    {
+      --border-color: var(--ion-theme-info-color);
+    }
+
+    .header {
+      .question {
+        white-space: initial;
+        line-height: 22px;
+        margin-right: 12px;
+        padding: 12px 0px;
+      }
+
+      .expand-question-icon {
+        font-size: 2.5rem;
+        margin-left: auto;
+        min-width: 25px;
+        color: var(--ion-theme-info-color);
+        transition: 1s ease all;
+
+        &.expanded
+        {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      color: var(--ion-theme-info-color);
+      padding-right: 24px;
+
+      text-align: justify;
+      height: 100%;
+      max-height: 0px;
+      transition: 1s ease all;
+      &.expanded {
+        max-height: 700px;
+        padding-bottom: 12px;
+      }
+    }
+
+  }
+}

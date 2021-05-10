@@ -26,6 +26,7 @@ import { environment } from '@env/environment';
 import { ChildSeatDialogComponent } from '@app/components/child-seat-dialog/child-seat-dialog.component';
 import { RatingDialogComponent } from '@app/components/rating-dialog/rating-dialog.component';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
+import { ReviewsService } from '@app/services/reviews.service';
 
 @Component({
   selector: 'app-home',
@@ -49,12 +50,14 @@ export class HomePage implements OnInit {
   rides: Ride[];
   loadingRide: boolean;
   loadingRideBoard: boolean;
+  score: any;
+  vehicleScore: any;
   constructor(
     private menuCtrl: MenuController,
     private rideService: RideService,
     private util: UtilService,
     private ridesService: RideService,
-    private popoverController: PopoverController,
+    private reviewsService: ReviewsService,
     private insomnia: Insomnia
   ) {}
 
@@ -74,10 +77,19 @@ export class HomePage implements OnInit {
       if (response.ride) {
         this.nextRide = response.ride;
       }
+    }, error =>
+    {
+      this.loadingRide = false;
     });
     this.ridesService.getRides().subscribe(rides => {
       this.rides = rides;
     })
+    this.reviewsService.getPaxReviews().subscribe(
+      res => {
+        this.score = this.reviewsService.score;
+        this.vehicleScore = this.reviewsService.vehicleScore;
+      },
+    );
     //  }
   }
 
@@ -94,14 +106,11 @@ export class HomePage implements OnInit {
     this.util.goForward('/customerRequest');
   }
 
-  goToNextRide()
-  {
-    this.util.goForward('ride/' + this.nextRide.ride_id);
-  }
 
-  goToRides(type)
+
+  goTo(route)
   {
-    this.util.goForward('rides/' + type);
+    this.util.goForward(route);
   }
 
 }

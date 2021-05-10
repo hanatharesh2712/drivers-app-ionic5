@@ -13,11 +13,11 @@
       <div class="dashboard-title">Welcome, <br>
         Mario</div>
     </ion-list-header>
-    <ion-item class="ion-no-padding" (click)="goToNextRide()">
+    <ion-item class="ion-no-padding" (click)="goTo('ride/' + nextRide.ride_id)" *ngIf="loadingRide || nextRide">
       <div class="widget next-ride " [ngClass]="{'gradient-border active': nextRide && nextRide.next_status_code}">
         <div class="title">
           <ng-container *ngIf="!loadingRide">
-            Your {{nextRide && nextRide.next_status_code ? 'active' : 'current'}} ride:
+            Your {{nextRide && nextRide.next_status_code ? 'active' : 'next'}} ride:
           </ng-container>
           <ion-skeleton-text *ngIf="loadingRide" animated style="width: 150px; height: 20px;"></ion-skeleton-text>
 
@@ -38,9 +38,9 @@
     </ion-item>
     <ion-item class="ion-no-padding"  >
       <div class="widget rides-board " >
-        <div class="title">Your rides board:</div>
+        <div class="title">Your ride board:</div>
         <div class="container d-flex" >
-          <div class="count-info" (click)="goToRides('offers')"  *ngIf="rides">
+          <div class="count-info"  (click)="goTo('rides/offers')"  *ngIf="rides">
             <div class="center-container">
               <div  class="d-flex a-center  j-center value">
                 <span>{{rides['offers'].length}}</span>
@@ -55,7 +55,7 @@
           <ion-skeleton-text *ngIf="!rides" animated style="width: 33%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
 
 
-          <div class="count-info" (click)="goToRides('accepted')" *ngIf="rides">
+          <div class="count-info"  (click)="goTo('rides/accepted')" *ngIf="rides">
             <div class="center-container" >
               <div  class="d-flex a-center j-center value">
                 <span>{{rides['accepted'].length}}</span>
@@ -70,7 +70,7 @@
 
           </div>
           <ion-skeleton-text *ngIf="!rides" animated style="width: 33%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
-          <div class="count-info" (click)="goToRides('completed')"  *ngIf="rides">
+          <div class="count-info" (click)="goTo('rides/completed')"  *ngIf="rides">
             <div class="center-container">
               <div class="d-flex a-center  j-center value">
                 <span>{{rides['done'].length}}</span>
@@ -88,13 +88,14 @@
 
       </div>
     </ion-item>
-    <ion-item class="ion-no-padding">
+    <ion-item class="ion-no-padding" (click)="goTo('my-reviews')">
       <div class="widget rating ">
         <div class="title">Your current rating:</div>
         <div class="ratings d-flex">
           <div class="rating-stars">
             <ion-badge>
-              <span class="text">4.0</span>
+              <span class="text">{{score}}</span>
+              <ion-skeleton-text *ngIf="!score" animated style="width: 100%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
               <ion-icon name="star"></ion-icon>
             </ion-badge>
             <span class="people">
@@ -104,7 +105,8 @@
           </div>
           <div class="rating-stars">
             <ion-badge>
-              <span class="text">4.3</span>
+              <span class="text">{{vehicleScore}}</span>
+              <ion-skeleton-text *ngIf="!vehicleScore" animated style="width: 100%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
               <ion-icon name="star"></ion-icon>
             </ion-badge>
             <span class="people">
@@ -117,7 +119,13 @@
         <ion-icon name="chevron-forward-outline" class="go-icon"></ion-icon>
       </div>
     </ion-item>
-
+    <ion-item class="ion-no-padding" (click)="goTo('FAQ')">
+      <div class="widget faq ">
+          <div class="title">
+            FAQ
+          </div>
+      </div>
+    </ion-item>
   </ion-list>
 
 </ion-content>

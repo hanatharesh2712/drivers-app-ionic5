@@ -102,20 +102,28 @@ export class GeolocationService {
     this.backgroundGeolocation.stop();
   }
 
-  initFrontGeoposition() {
-    this.geolocation
-      .getCurrentPosition()
-      .then((resp: Geoposition) => {
-        this.setLocation(resp.coords, resp.timestamp, 'TBD');
-      })
-      .catch((error) => {
-        console.log('Error getting location', error);
-      });
-
+  async initFrontGeoposition() {
+    const loc: any = await this.getCurrentLocation();
+    this.setLocation(loc.coords, loc.timestamp, 'TBD');
     const watch = this.geolocation.watchPosition();
     watch.subscribe((data: Geoposition) => {
       this.setLocation(data.coords, data.timestamp, 'TBD');
     });
+  }
+
+
+  getCurrentLocation()
+  {
+    return new Promise((resolve, reject) =>
+    {
+      this.geolocation.getCurrentPosition()
+      .then((resp: Geoposition) => {
+        resolve(resp);
+      })
+      .catch((error) => {
+        console.log('Error getting location', error);
+      });
+    })
   }
 
   setLocation(data: BackgroundGeolocationResponse | Coordinates, time, type) {

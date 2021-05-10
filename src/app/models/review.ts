@@ -5,6 +5,8 @@ export class Review {
     driver_id: number;
     ride: Ride;
     rating: number;
+    driver_rating: number;
+    vehicle_rating: number;
     comments: string;
     created_at: Date;
 

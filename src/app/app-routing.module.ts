@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('@app/pages/home/home.module').then(m => m.HomePageModule)
   },
-  { path: 'wallet', loadChildren: () => import('@app/pages/wallet/wallet.module').then(m => m.WalletPageModule) },
+  { path: 'payments', loadChildren: () => import('@app/pages/wallet/wallet.module').then(m => m.WalletPageModule) },
   { path: 'rides', loadChildren: () => import('@app/pages/my_rides/my_rides.module').then(m => m.MyRidesPageModule) },
   { path: 'my-reviews', loadChildren: () => import('@app/pages/my_reviews/my_reviews.module').then(m => m.MyReviewsPageModule) },
   { path: 'paymentmethod', loadChildren: () => import('@app/pages/payment-method/payment-method.module').then(m => m.PaymentmethodPageModule) },
@@ -33,6 +33,7 @@ const routes: Routes = [
   {
     path: 'customerRequest', loadChildren: () => import('@app/pages/customer-request/customer-request.module').then(m => m.CustomerRequestPageModule)
   },
+  { path: 'FAQ', loadChildren: () => import('@app/pages/FAQ/faq.module').then(m => m.FAQPageModule) },
   { path: 'chat', loadChildren: () => import('@app/pages/chat/chat.module').then(m => m.ChatPageModule) },
   { path: 'setting', loadChildren: () => import('@app/pages/setting/setting.module').then(m => m.SettingPageModule) },
   { path: 'documentmanagement', loadChildren: () => import('@app/pages/document-management/document-management.module').then(m => m.DocumentmanagementPageModule) },

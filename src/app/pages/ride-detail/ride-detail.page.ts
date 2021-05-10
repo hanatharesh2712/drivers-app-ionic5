@@ -73,6 +73,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   initRide(ride) {
     this.ride = ride;
     this.initStorageData();
+
     if (
       this.ride.next_status_code &&
       !this.ride.is_offer &&
@@ -81,11 +82,11 @@ export class RideDetailPage implements OnInit, OnDestroy {
       this.isRideActive = true;
       if (this.ride.next_status_code == 'POB') {
         this.initWaitingTime();
+      } else if (this.ride.next_status_code == 'DOC') {
+        this.storageInfo.waitStartedDate = null;
+        this.updateStorage();
       } else {
         this.showTimeCounter = false;
-      }
-      if (!this.geolocationService.started) {
-        this.geolocationService.initTracking();
       }
     }
     this.createSettleForm();
@@ -99,15 +100,15 @@ export class RideDetailPage implements OnInit, OnDestroy {
         });
       } else {
         this.storageInfo = alreadyStorageInfo;
-        this.storageInfo.waitStartedDate = null;
-        this.updateStorage(this.storageInfo);
+        this.updateStorage();
       }
     });
   }
 
-  updateStorage(newInfo) {
-    this.storage.set('ride-' + this.ride_id, newInfo).then(newValue =>
-      {
+  updateStorage() {
+    this.storage
+      .set('ride-' + this.ride_id, this.storageInfo)
+      .then((newValue) => {
         this.storageInfo = newValue;
       });
   }
@@ -188,23 +189,27 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   async changeStatus() {
-    this.rideService.changeStatus(this.ride).then((response: Ride) => {
-      if (response) {
-        this.initRide(response);
-      } else {
-        this.isDone = true;
-        this.openRating();
-      }
-    });
+    let secondsOnWaiting = null;
+    if (this.ride.next_status_code == 'POB') {
+      secondsOnWaiting = this.stopWaitingTime();
+    }
+    this.rideService
+      .changeStatus(this.ride, secondsOnWaiting)
+      .then((response: Ride) => {
+        if (response) {
+          this.initRide(response);
+        } else {
+          this.isDone = true;
+          this.openRating();
+        }
+      });
   }
 
   async openRoutingMap(event) {
     event.stopPropagation();
-    if (this.isRideActive)
-    {
+    if (this.isRideActive) {
       this.showingMap = true;
-    }
-    else {
+    } else {
       const dialog = await this.util.createModal(
         RideMapDialogComponent,
         { ride: this.ride },
@@ -212,7 +217,6 @@ export class RideDetailPage implements OnInit, OnDestroy {
       );
       dialog.present();
     }
-
   }
 
   expandMap(event) {
@@ -237,10 +241,19 @@ export class RideDetailPage implements OnInit, OnDestroy {
     this.timeOnLocationSet = new Date(
       this.ride.times.find((e) => e.type_id == 3).time
     );
-
     this.wtInterval = setInterval(() => {
       this.calculateTimerValue();
     }, 1000);
+  }
+
+  stopWaitingTime() {
+    const now = new Date();
+    this.storageInfo.waitEndDate = now.getTime();
+    this.updateStorage();
+    return Math.abs(
+      (now.getTime() - new Date(this.storageInfo.waitStartedDate).getTime()) /
+        1000
+    );
   }
 
   calculateTimerValue() {
@@ -284,7 +297,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
 
   startWTTime() {
     this.storageInfo.waitStartedDate = new Date().getTime();
-    this.updateStorage(this.storageInfo);
+    this.updateStorage();
   }
   pad(num, size) {
     num = num.toString();
@@ -293,8 +306,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   async requestConfirmStop() {
-    if (this.storageInfo.requestedStop)
-    {
+    if (this.storageInfo.requestedStop) {
       const alert = await this.util.createAlert(
         'CONFIRM STOP LOCATION',
         false,
@@ -305,12 +317,16 @@ export class RideDetailPage implements OnInit, OnDestroy {
         },
         {
           text: 'Yes, confirm',
-          handler: () => {},
+          handler: () => {
+            this.rideService.setStop(this.ride_id).then((response) => {
+              this.storageInfo.confirmedStop = true;
+              this.updateStorage();
+            });
+          },
         }
       );
       alert.present();
-    }
-    else {
+    } else {
       const alert = await this.util.createAlert(
         'STOP REQUESTED',
         false,
@@ -319,25 +335,23 @@ export class RideDetailPage implements OnInit, OnDestroy {
           text: 'Confirm',
           handler: () => {
             this.storageInfo.requestedStop = true;
-            this.updateStorage(this.storageInfo);
+            this.updateStorage();
           },
         }
       );
       alert.present();
     }
-
-
   }
 
-  async confirmStop() {
+  async confirmStop() {}
 
-  }
-
-  async  openRating()
-  {
-    const dialog = await this.util.createModal(RatingDialogComponent, { ride: this.ride}, 'rating-modal');
+  async openRating() {
+    const dialog = await this.util.createModal(
+      RatingDialogComponent,
+      { ride: this.ride },
+      'rating-modal'
+    );
     dialog.present();
-
   }
 
   ngOnDestroy(): void {

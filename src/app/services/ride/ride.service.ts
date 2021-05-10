@@ -21,6 +21,7 @@ import { map } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DrvnAuthenticationService } from '../auth/auth.service';
 import { Ride } from '@app/models/ride';
+import { GeolocationService } from '../geolocation.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -32,7 +33,8 @@ export class RideService {
     private http: HttpClient,
     private util: UtilService,
     private ridesService: RideService,
-    private authService: DrvnAuthenticationService
+    private authService: DrvnAuthenticationService,
+    private geolocationService: GeolocationService
   ) {}
 
   getRides() {
@@ -48,7 +50,7 @@ export class RideService {
             this.parseRideResponse(ride);
           });
           const activeIndex = response.rides.findIndex(
-            (e) => e.next_status_code != ''
+            (e) => e.next_status_code != '' && !e.is_done && !e.is_offer
           );
           if (activeIndex != -1) {
             this.activeRide = response.rides.splice(activeIndex, 1)[0];
@@ -166,9 +168,12 @@ export class RideService {
     });
   }
 
-  addStop(ride_id) {
+  async setStop(ride_id) {
     return this.http
-      .post(environment.appUrl + 'addStop', ride_id)
+      .post(environment.appUrl + 'setStop', {
+        ride_id,
+        ...this.geolocationService.location
+      })
       .pipe(
         map(async (response) => {
           const toast = await this.util.createToast(
@@ -216,7 +221,7 @@ export class RideService {
       });
   }
 
-  changeStatus(ride) {
+  changeStatus(ride, waiting_seconds = null) {
     return new Promise(async (resolve, reject) => {
       let alert = await this.util.createAlert(
         'Confirm',
@@ -233,7 +238,8 @@ export class RideService {
           handler: () => {
             this.sendChangeStatus(
               ride.next_status_code,
-              ride.ride_id
+              ride.ride_id,
+              waiting_seconds
             ).subscribe(
               async (response) => {
                 const toast = await this.util.createToast(
@@ -260,11 +266,13 @@ export class RideService {
     });
   }
 
-  sendChangeStatus(next_status_code, ride_id) {
+  sendChangeStatus(next_status_code, ride_id, waiting_seconds= null) {
     return this.http
       .post<ChangeRideStatusResponse>(environment.appUrl + 'setRideStatus', {
         next_status_code,
         ride_id,
+        waiting_seconds,
+        ...this.geolocationService.location
       })
       .pipe(
         map((response) => {

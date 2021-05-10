@@ -43,7 +43,7 @@ export class RidesListComponent {
   async doRefresh(refresher) {
     this.loading = true;
     this.ridesService.getRides().subscribe(() => {
-      this.loading = false;
+      this.loading = true;
       if (refresher) {
         refresher.target.complete();
       }

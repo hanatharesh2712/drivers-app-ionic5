@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" color="dark">
+      FAQ
+    </ion-title>
+  </ion-toolbar>
+  <!--<ion-toolbar>
+    <ion-segment [(ngModel)]="walletPage" (ionChange)="segmentChanged($event)" color="dark">
+      <ion-segment-button value="cash" color="dark">Cash</ion-segment-button>
+      <ion-segment-button value="discount" color="dark">Discount </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionChange)="filter($event)"   debounce="500"></ion-searchbar>
+  <ion-list  lines="full">
+    <ng-container *ngFor="let faqGroup of dataFiltered">
+      <ng-container *ngIf="faqGroup.faqs.length">
+      <ion-list-header>
+        <ion-label class="uppercase letter-spacing">
+          {{faqGroup.title}}
+        </ion-label>
+
+      </ion-list-header>
+      <ion-item   *ngFor="let item of faqGroup.faqs">
+
+        <div class="d-flex column">
+          <div class="d-flex a-center w-100-p header">
+            <div class="question">
+              {{item.question}}
+            </div>
+            <ion-icon name="chevron-down-outline" class="expand-question-icon" [ngClass]="{'expanded': item.expanded}" (click)="item.expanded = !item.expanded"></ion-icon>
+          </div>
+          <div class="answer" [ngClass]="{'expanded': item.expanded}" [innerHTML]="item.answer">
+          </div>
+
+        </div>
+
+      </ion-item>
+      </ng-container>
+    </ng-container>
+
+  </ion-list>
+
+</ion-content>

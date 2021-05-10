@@ -217,7 +217,6 @@
   </ion-list>
 
 
-
 </ion-content>
 
 <!--<div class="expand-map-badget-container" [ngClass]="{'active': showingMap, 'showingCounter': showTimeCounter}"
@@ -271,7 +270,7 @@
 
       </div>
     </ion-fab-button>
-    <ion-fab-button (click)="requestConfirmStop()" *ngIf="ride.next_status_code == 'DON'">
+    <ion-fab-button (click)="requestConfirmStop()" *ngIf="ride.next_status_code == 'DON' && !storageInfo.confirmedStop">
 
       <div class="text-container">
         <ion-icon name="remove-circle-outline"></ion-icon>

@@ -28,18 +28,17 @@ export class MyReviewsPage {
   }
 
   async getReviews(driver_id, refresher = null) {
-    let promise;
     this.reviews = [];
     const loader = await this.util.createLoader('Loading Reviews...');
     loader.present();
-    promise = this.reviewsService.getPaxReviews(driver_id);
-    promise.subscribe(
+    this.reviewsService.getPaxReviews().subscribe(
       res => {
         this.reviews = res.map(review => {
           return new Review(review);
         });
-        this.getScore();
         this.paxReviewsTotal = this.reviews.length;
+        this.score = this.reviewsService.score;
+        this.vehicleScore = this.reviewsService.vehicleScore;
         if (refresher) {
           refresher.target.complete();
         }
@@ -51,14 +50,7 @@ export class MyReviewsPage {
     );
   }
 
-  getScore() {
-    this.reviews.forEach(obj => {
-      this.score += obj.driver_rating;
-      this.vehicleScore += obj.vehicle_rating;
-    });
-    this.score = (this.score / this.reviews.length).toFixed(1);
-    this.vehicleScore = (this.vehicleScore / this.reviews.length).toFixed(1);
-  }
+
 
   doRefresh(refresher) {
     this.getReviews(this.authService.currentUser.id, refresher);

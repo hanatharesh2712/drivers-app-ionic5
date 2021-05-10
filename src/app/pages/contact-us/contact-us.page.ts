@@ -32,6 +32,9 @@ export class ContactUsPage implements OnInit {
     this.util.goForward('send-email');
   }
 
+  goToFaq() {
+    this.util.goForward('FAQ');
+  }
   callSuport() {
     this.util.callSuport();
   }

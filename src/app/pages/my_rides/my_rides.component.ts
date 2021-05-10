@@ -43,7 +43,7 @@ export class MyRidesPageComponent  {
 
   filterRides(res) {
     this.ridesOffers = res['offers'];
-    this.ridesAccepted =  res['done'];
+    this.ridesAccepted =  res['accepted'];
     this.ridesDone = res['completed'];
   };
 

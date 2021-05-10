@@ -17,6 +17,7 @@ import { User } from './models/user';
 import { UtilService } from './services/util/util.service';
 import { RideService } from './services/ride/ride.service';
 import { environment } from '@env/environment';
+import { GeolocationService } from './services/geolocation.service';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +42,11 @@ export class AppComponent {
       icon: 'star_border'
     },
     {
+      title: 'Payments',
+      url: '/payments',
+      icon: 'paid'
+    },
+    {
       title: 'Profile',
       url: '/profile',
       icon: 'account_circle'
@@ -63,6 +69,7 @@ export class AppComponent {
     public util: UtilService,
     public rideService: RideService,
     private authService: DrvnAuthenticationService,
+    private geolocationService: GeolocationService
   ) {
     this.initializeApp();
     this.loggedInUser = this.authService.currentUser;
@@ -77,8 +84,13 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString('#bb9669');
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      if (!this.geolocationService.started) {
+        this.geolocationService.initTracking();
+      }
       this.version = '2.1.4';
     });
   }

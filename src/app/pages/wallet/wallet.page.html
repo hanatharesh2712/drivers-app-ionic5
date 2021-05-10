@@ -1,18 +1,18 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title class="ion-text-center" color="dark">
-      My Wallet
+      Payments
     </ion-title>
   </ion-toolbar>
-  <ion-toolbar>
+  <!--<ion-toolbar>
     <ion-segment [(ngModel)]="walletPage" (ionChange)="segmentChanged($event)" color="dark">
       <ion-segment-button value="cash" color="dark">Cash</ion-segment-button>
       <ion-segment-button value="discount" color="dark">Discount </ion-segment-button>
     </ion-segment>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content>
@@ -21,12 +21,12 @@
       <ion-grid class="cash_Detail">
         <ion-row>
           <ion-col size="12" class="ion-text-center">
-            <h1 class="font_sizeh1"> $ {{rideService.stats.totalFare}}</h1>
-            <p>TOTAL EARN</p>
+            <h1 class="font_sizeh1"> {{total | currency}}</h1>
+            <p>TOTAL PAID</p>
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-card class="wallet_card" routerLink="/paymentmethod">
+    <!--   <ion-card class="wallet_card" routerLink="/paymentmethod">
         <ion-item class="no_borderbottom card-padding-vertical">
           <ion-avatar style="background: var(--ion-color-warning)" slot="start" class="abs_avatar">
             <ion-img src="assets/img/dollar.png"></ion-img>
@@ -36,28 +36,67 @@
           </ion-label>
           <ion-icon name="arrow-forward" slot="end" expand="icon-only"></ion-icon>
         </ion-item>
-      </ion-card>
-      <ion-list class="list_paddintTop">
+      </ion-card> -->
+      <ion-list class="list_paddintTop history-list" lines="full">
         <ion-list-header>
-          <ion-label class="ion-text-uppercase">
+          <ion-label class=" title">
             Payment History
           </ion-label>
         </ion-list-header>
 
-        <ion-card>
-          <ion-item *ngFor="let ride of walletData">
-            <ion-avatar style="background:var(--ion-color-warning)" slot="start">
-              <ion-img src='assets/img/dollar.png'></ion-img>
-            </ion-avatar>
-            <ion-label>
-              <h3 class="ion-text-capitalize">Ride #{{ride.id}}</h3>
-              <div class="amount_wallet">
-                <p color="medium">{{ride.distance}} km</p>
-                <h3> $ {{ride.fare}}</h3>
+        <ion-item *ngFor="let payment of payments" (click)="payment.expanded = !payment.expanded">
+          <div class="d-flex column  w-100-p">
+            <div class="header d-flex a-center ">
+              <ion-icon name="chevron-forward-outline" class="icon" [ngClass]="{'expanded': payment.expanded}"></ion-icon>
+              <div class="amount_wallet  w-100-p">
+                <div>
+                  <h3 class="ion-text-capitalize date-id">ID #{{payment.check_ref_number ? 'INV' : 'DRVN'}}{{payment.id}} - <span class="date">
+                      {{(payment.due_date ? payment.due_date : payment.date) | date:'MM/dd/yy'}}
+                    </span></h3>
+                    <div class="type secondary-text">
+                      Bank Transfer / ACH
+                    </div>
+
+
+                </div>
+
+                <div>
+                  <h3> {{payment.total | currency}}</h3>
+                </div>
+
               </div>
-            </ion-label>
-          </ion-item>
-        </ion-card>
+              </div>
+              <div class="details" [ngClass]="{'expanded': payment.expanded}">
+                <ion-list class="rides-detail-list">
+                  <ion-item lines="none" *ngFor="let ride of payment.bill_rides">
+                    <ion-label>
+                      <div class=" ride-info-container">
+                        <div class="ride-info d-flex column">
+                          <span class="ride-id">
+                            Ride #{{ride.ride_id}} -
+                            <span class="ride-date">{{ride.ride.pickup_datetime | date:	'MM/dd/yy h:mma'}}</span>
+                          </span>
+                          <span>
+                            {{ride.ride.service_type.name}} -   {{ride.ride.vehicle_type.name}}
+                          </span>
+                        </div>
+                        <div>
+                          <h3 lass="ride-price"> {{ride.calculated_farm_out_cost | currency}}</h3>
+                        </div>
+                      </div>
+
+
+
+                    </ion-label>
+                  </ion-item>
+
+                </ion-list>
+              </div>
+          </div>
+
+
+
+        </ion-item>
       </ion-list>
 
     </div>
