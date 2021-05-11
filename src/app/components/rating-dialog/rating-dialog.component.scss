@@ -8,8 +8,29 @@ app-rating-dialog {
 
   }
 
+  ion-list
+  {
+    --ion-item-background: black;
+    --ion-item-color: white;
+
+    ion-item
+    {
+      --border-color: var(--ion-theme-color);
+    }
+    ion-list-header
+    {
+      ion-label
+      {
+        color: white;
+    font-size: 2.5rem;
+    max-width: 230px;
+    margin-top: 24px;
+      }
+    }
+  }
+
   ion-rating {
-    margin: 0 auto;
+    margin: 48px auto;
     --star-color: white;
     padding: 24px;
     --star-color-filled: green;
@@ -20,4 +41,13 @@ app-rating-dialog {
     letter-spacing: 1px;
     margin: 0 auto;
   }
+  .close-icon
+  {
+    font-size: 2rem;
+  }
+}
+
+.rating-modal
+{
+  margin-top: 0px;
 }

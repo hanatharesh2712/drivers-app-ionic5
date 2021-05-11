@@ -33,16 +33,7 @@ export class GeolocationService {
     private platform: Platform,
     private backgroundGeolocation: BackgroundGeolocation
   ) {
-    this.backgroundGeolocation
-    .on(BackgroundGeolocationEvents.location)
-    .subscribe((location: BackgroundGeolocationResponse) => {
-      //  this.backgroundGeolocation.startTask().then(() =>
-      //  {
-      //    this.setLocation(location, location.time, 'BCK');
-      //    this.backgroundGeolocation.endTask();
-      //  });
-      this.setLocation(location, location.time, 'BCK');
-    });
+
   this.backgroundGeolocation
     .on(BackgroundGeolocationEvents.authorization)
     .subscribe((status: any) => {
@@ -76,19 +67,28 @@ export class GeolocationService {
     this.backgroundGeolocation
       .configure({
         desiredAccuracy: 10,
-        stationaryRadius: 1,
-        distanceFilter: 5,
+        stationaryRadius: 0,
+        distanceFilter: 0,
         interval: 500,
         notificationTitle: 'drvn chauffeur app',
         notificationText: 'Ready to receive new rides',
         startForeground: true,
-        notificationsEnabled: false,
+        notificationsEnabled: true,
         startOnBoot: true,
-        debug: false, //  enable this hear sounds for background-geolocation life-cycle.
+        debug: true, //  enable this hear sounds for background-geolocation life-cycle.
         stopOnTerminate: true, // enable this to clear background location settings when the app terminates
       })
       .then(() => {
-
+        this.backgroundGeolocation
+        .on(BackgroundGeolocationEvents.location)
+        .subscribe((location: BackgroundGeolocationResponse) => {
+          //  this.backgroundGeolocation.startTask().then(() =>
+          //  {
+          //    this.setLocation(location, location.time, 'BCK');
+          //    this.backgroundGeolocation.endTask();
+          //  });s
+          this.setLocation(location, location.time, 'BCK');
+        });
       });
     this.start();
     this.initFrontGeoposition();
@@ -127,10 +127,10 @@ export class GeolocationService {
   }
 
   setLocation(data: BackgroundGeolocationResponse | Coordinates, time, type) {
-    if (
+    if (data && (
       !this.location ||
       data.longitude != this.location.lng ||
-      data.latitude != this.location.lng
+      data.latitude != this.location.lng)
     ) {
       this.location = {
         lat: data.latitude,

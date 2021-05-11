@@ -233,6 +233,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   async changeStatus() {
+    this.openRating();
     let secondsOnWaiting = null;
     if (this.ride.next_status_code == 'POB') {
       secondsOnWaiting = this.stopWaitingTime();
