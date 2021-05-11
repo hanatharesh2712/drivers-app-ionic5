@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { niceDateFormatPipe } from '../date.pipe';
+import { niceDateFormatPipe } from '../ride-date.pipe';
+import { DateTimeFormatPipe } from '../datetime-format.pipe';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    niceDateFormatPipe
+    niceDateFormatPipe,
+    DateTimeFormatPipe
    ],
    exports: [
-    niceDateFormatPipe
+    niceDateFormatPipe,
+    DateTimeFormatPipe
    ],
    providers: [DatePipe]
 })

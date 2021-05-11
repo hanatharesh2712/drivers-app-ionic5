@@ -52,35 +52,27 @@
       <h6 slot="start" class="ion-no-margin">Address</h6>
       <ion-text color="dark" slot="end">{{loggedInUser.partner.address}}</ion-text>
     </ion-item>
-    <ion-item class="option-item">
+    <ion-item class="option-item" (click)="goTo('terms-conditions')">
       <ion-label>
-        <div>
-          <div class="title">
-            Terms & Conditions
-          </div>
+        <div class="title">
+          Terms & Conditions
         </div>
         <ion-icon name="chevron-forward-outline" class="go-icon"></ion-icon>
       </ion-label>
     </ion-item>
-    <ion-item class="option-item">
+    <ion-item class="option-item" (click)="goTo('privacy-policy')">
       <ion-label>
 
-        <div>
-          <div class="title">
-            Privacy Policy
-          </div>
-
+        <div class="title">
+          Privacy Policy
         </div>
         <ion-icon name="chevron-forward-outline" class="go-icon"></ion-icon>
       </ion-label>
     </ion-item>
-    <ion-item class="option-item">
+    <ion-item class="option-item" (click)="goTo('covid-19-terms')">
       <ion-label>
-        <div>
-          <div class="title">
-            GPS Tracking Policy
-          </div>
-
+        <div class="title">
+          COVID-19 Terms of Service
         </div>
         <ion-icon name="chevron-forward-outline" class="go-icon"></ion-icon>
       </ion-label>

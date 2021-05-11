@@ -60,7 +60,7 @@ export class GeolocationService {
           }
         }, 1000);
       } else {
-        this.initFrontGeoposition();
+      //  this.initFrontGeoposition();
       }
     });
   }

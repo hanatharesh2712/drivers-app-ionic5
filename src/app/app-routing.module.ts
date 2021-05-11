@@ -31,6 +31,8 @@ const routes: Routes = [
   { path: 'vehiclemanagement', loadChildren: () => import('@app/pages/vehicle-management/vehicle-management.module').then(m => m.VehiclemanagementPageModule) },
   { path: 'notifications', loadChildren: () => import('@app/pages/notifications/notifications.module').then(m => m.NotificationsPageModule) },
   { path: 'greeting-sign', loadChildren: () => import('@app/pages/greeting-sign/greeting-sign.module').then(m => m.GreetingSignPageModule) },
+  { path: 'privacy-policy', loadChildren: () => import('@app/pages/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyPageModule) },
+  { path: 'covid-19-terms', loadChildren: () => import('@app/pages/covid-terms/covid-terms.module').then(m => m.CovidTermsPageModule) },
   {
     path: 'customerRequest', loadChildren: () => import('@app/pages/customer-request/customer-request.module').then(m => m.CustomerRequestPageModule)
   },
@@ -42,7 +44,7 @@ const routes: Routes = [
   { path: 'edit-profile', loadChildren: () => import('@app/pages/edit-profile/edit-profile.module').then(m => m.EditProfilePageModule) },
   { path: 'login', loadChildren: () => import('@app/pages/login/login.module').then(m => m.LoginPageModule) },
   { path: 'verify-otp', loadChildren: () => import('@app/pages/verify-otp/verify-otp.module').then(m => m.VerifyOTPPageModule) },
-  { path: 'terms-condictions', loadChildren: () => import('@app/pages/terms-conditions/terms-conditions.module').then(m => m.TermsCondictionsPageModule) },
+  { path: 'terms-conditions', loadChildren: () => import('@app/pages/terms-conditions/terms-conditions.module').then(m => m.TermsCondictionsPageModule) },
   { path: 'contact', loadChildren: () => import('@app/pages/contact-us/contact-us.module').then(m => m.ContactUSPageModule) },
   { path: 'send-email', loadChildren: () => import('@app/pages/send-email/send-email.module').then(m => m.SendEmailPageModule) },
   { path: 'approved', loadChildren: () => import('@app/pages/approved/approved.module').then(m => m.ApprovedPageModule) },

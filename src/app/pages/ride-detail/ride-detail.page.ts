@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RatingDialogComponent } from '@app/components/rating-dialog/rating-dialog.component';
 import { RideMapDialogComponent } from '@app/components/ride-map-dialog/ride-map-dialog.component';
@@ -17,6 +17,7 @@ import { Ride } from '@app/models/ride';
 import { GeolocationService } from '@app/services/geolocation.service';
 import { RideService } from '@app/services/ride/ride.service';
 import { UtilService } from '@app/services/util/util.service';
+import { environment } from '@env/environment';
 import { NavParams, PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { GreetingSignPage } from '../greeting-sign/greeting-sign.page';
@@ -34,7 +35,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   showingPricing = false;
   settleForm: FormGroup;
   isRideActive = false;
-  canSettle: boolean = true;
+  canSettle: boolean = false;
   showingMap = false;
   isMapLoaded = false;
   @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
@@ -50,6 +51,8 @@ export class RideDetailPage implements OnInit, OnDestroy {
   waitStartedDate: any;
   storageInfo: any = {};
   isDone: boolean;
+  canGiveBackRide = false;
+  settleRemainingHours: number;
   constructor(
     private rideService: RideService,
     private util: UtilService,
@@ -74,26 +77,21 @@ export class RideDetailPage implements OnInit, OnDestroy {
   initRide(ride) {
     this.ride = ride;
     this.initStorageData();
-
     if (
       this.ride.next_status_code &&
       !this.ride.is_offer &&
       !this.ride.is_done
     ) {
       this.isRideActive = true;
-      if (this.ride.next_status_code == 'POB' && this.ride.service_type.toUpperCase() != 'HOURLY') {
-        this.initWaitingTime();
-      }
-      else {
-        this.showTimeCounter = false;
-      }
-      if (this.ride.next_status_code == 'DOC') {
-        this.storageInfo.waitStartedDate = null;
-        this.updateStorage();
-      }
+      this.initWaitingTime();
+    } else {
+      this.calculateCanGiveBackRide();
+      this.checkIfCanSettle();
     }
     this.createSettleForm();
   }
+
+
 
   initStorageData() {
     this.storage.get('ride-' + this.ride_id).then((alreadyStorageInfo) => {
@@ -115,11 +113,54 @@ export class RideDetailPage implements OnInit, OnDestroy {
         this.storageInfo = newValue;
       });
   }
+
+  checkIfCanSettle()
+  {
+    if (this.ride.is_offer)
+    {
+      if (
+        Math.abs(
+          new Date(this.ride.pu_datetime).getTime() - new Date().getTime()
+        ) /
+          36e5 >
+        environment.giveBackHoursLimit
+      ) {
+        this.canGiveBackRide = true;
+      }
+    }
+  }
+
+  calculateCanGiveBackRide()
+  {
+
+    if (this.ride.is_done) {
+      const endDate = this.ride.times.find(e => e.type_id == 1);
+      if (endDate)
+      {
+        const hoursSinceDropoff=   Math.abs(
+          new Date().getTime() - new Date(endDate.time).getTime()
+        ) /
+          36e5 ;
+        if (hoursSinceDropoff
+        <
+         this.ride.settle_deadline
+        ) {
+          this.canSettle = true;
+          this.settleRemainingHours = this.ride.settle_deadline - hoursSinceDropoff;
+        }
+      }
+
+    }
+  }
+
   createSettleForm() {
     this.settleForm = this.fb.group({
       ride_id: this.ride_id,
       waiting: 0,
-      stops: 0,
+      stops_description: [
+        '',
+        this.ride.costs.reported_stops > 0 ? [Validators.required] : null,
+      ],
       tolls: '',
       parking: '',
     });
@@ -240,13 +281,25 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   initWaitingTime() {
-    this.showTimeCounter = true;
-    this.timeOnLocationSet = new Date(
-      this.ride.times.find((e) => e.type_id == 3).time
-    );
-    this.wtInterval = setInterval(() => {
-      this.calculateTimerValue();
-    }, 1000);
+
+    if (
+      this.ride.next_status_code == 'POB' &&
+      this.ride.service_type.toUpperCase() != 'HOURLY'
+    ) {
+      this.showTimeCounter = true;
+      this.timeOnLocationSet = new Date(
+        this.ride.times.find((e) => e.type_id == 3).time
+      );
+      this.wtInterval = setInterval(() => {
+        this.calculateTimerValue();
+      }, 1000);
+    } else {
+      if (this.ride.next_status_code == 'DOC') {
+        this.storageInfo.waitStartedDate = null;
+        this.updateStorage();
+      }
+      this.showTimeCounter = false;
+    }
   }
 
   stopWaitingTime() {
@@ -266,34 +319,34 @@ export class RideDetailPage implements OnInit, OnDestroy {
           new Date(this.timeOnLocationSet).getTime() +
             this.gracePeriodMins * 60000
         ).getTime() - new Date().getTime();
-      let secondsDif = difInDates / 1000;
-      if (secondsDif < 0) {
+      let secondsRemainingGracePeriod = difInDates / 1000;
+      if (secondsRemainingGracePeriod < 0) {
         this.isOnGracePeriod = false;
         if (this.storageInfo.waitStartedDate) {
           difInDates =
             new Date().getTime() -
             new Date(this.storageInfo.waitStartedDate).getTime();
-          secondsDif = Math.abs(difInDates / 1000);
+            secondsRemainingGracePeriod = Math.abs(difInDates / 1000);
           this.minutesSinceOnLocation = this.pad(
-            Math.trunc(secondsDif / 60),
+            Math.trunc(secondsRemainingGracePeriod / 60),
             2
           );
           this.secondsSinceOnLocation = this.pad(
-            Math.trunc(secondsDif % 60),
+            Math.trunc(secondsRemainingGracePeriod % 60),
             2
           );
         }
       } else {
         this.isOnGracePeriod = true;
         this.gracePeriodPercentage = (
-          ((((this.gracePeriodMins - secondsDif / 60) * 100) /
+          ((((this.gracePeriodMins - secondsRemainingGracePeriod / 60) * 100) /
             this.gracePeriodMins) *
             175) /
           100
         ).toFixed(2);
-        secondsDif = Math.abs(secondsDif);
-        this.minutesSinceOnLocation = this.pad(Math.trunc(secondsDif / 60), 2);
-        this.secondsSinceOnLocation = this.pad(Math.trunc(secondsDif % 60), 2);
+        secondsRemainingGracePeriod = Math.abs(secondsRemainingGracePeriod);
+        this.minutesSinceOnLocation = this.pad(Math.trunc(secondsRemainingGracePeriod / 60), 2);
+        this.secondsSinceOnLocation = this.pad(Math.trunc(secondsRemainingGracePeriod % 60), 2);
       }
     }
   }
@@ -357,8 +410,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
     dialog.present();
   }
 
-  async goToGreetingSign()
-  {
+  async goToGreetingSign() {
     const dialog = await this.util.createModal(
       GreetingSignPage,
       { ride: this.ride },

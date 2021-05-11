@@ -46,7 +46,7 @@ export class RideService {
       .pipe(
         map((response) => {
           response.rides.forEach((ride) => {
-            ride.pu_datetime = ride.pu_date + ' ' + ride.pu_time;
+
             this.parseRideResponse(ride);
           });
           const activeIndex = response.rides.findIndex(
@@ -293,5 +293,6 @@ export class RideService {
       (e) => e.RIType == 'WT' || e.RIType == 'ST'
     );
     ride.pu_datetime = ride.pu_date + ' ' + ride.pu_time;
+
   }
 }

@@ -58,7 +58,7 @@
           <div class="count-info"  (click)="goTo('rides/accepted')" *ngIf="rides">
             <div class="center-container" >
               <div  class="d-flex a-center j-center value">
-                <span>{{rides['accepted'].length}}</span>
+                <span>{{rides['accepted'].length + (nextRide ? 1 : 0)}}</span>
                 <ion-icon src="assets/custom-ion-icons/task_alt.svg" class="icon drvn-icon"></ion-icon>
               </div>
               <span class="text">

@@ -40,6 +40,7 @@ app-send-email {
     ion-item {
 
       --background: var(--ion-secondary-bg-color);
+      --border-color: var(--ion-theme-color);
 
       &:not(:last-child)
       {

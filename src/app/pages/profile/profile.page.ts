@@ -37,8 +37,8 @@ export class ProfilePage {
     this.loggedInUser = this.authService.currentUser;
   }
 
-  editProfile() {
-    this.util.goForward('/edit-profile');
+  goTo(route) {
+    this.util.goForward(route);
   }
 
 }

@@ -1,7 +1,7 @@
 :host {
   .list {
     background: var(--ion-theme-background);
-    padding: 0px;
+    padding-top: 4px;
 
     h2 {
       margin: 0;
@@ -25,8 +25,8 @@
       --background: var(--ion-theme-background);
       margin: 0 auto;
 
-      margin-bottom: 12px;
-
+      margin-bottom: 16px;
+      box-shadow: #656565 0px 0px 10px;
       .item_header {
 
         padding: 12px 20px;
@@ -83,11 +83,17 @@
   }
 
   .tab-title {
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     color: white;
     padding-left: 12px;
     font-size: 2rem;
     margin: 30px 0px 12px;
+
+    &.active
+    {
+      color: var(--ion-theme-color);
+      font-weight: bold;
+    }
   }
 
   .rides-count {

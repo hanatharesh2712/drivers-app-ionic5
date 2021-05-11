@@ -10,29 +10,23 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
+import { PrivacyPolicyPage } from './privacy-policy.page';
 import { IonicModule } from '@ionic/angular';
-
-import { WalletPage } from './wallet.page';
-import { PipesModule } from '@app/pipes/pipes/pipes.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: WalletPage
+    component: PrivacyPolicyPage
   }
 ];
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    PipesModule,
     IonicModule,
+    CommonModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [WalletPage]
+  declarations: [PrivacyPolicyPage]
 })
-export class WalletPageModule { }
+export class PrivacyPolicyPageModule { }

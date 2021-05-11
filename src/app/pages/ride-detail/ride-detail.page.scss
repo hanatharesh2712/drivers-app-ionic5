@@ -45,7 +45,7 @@ ride-detail {
       padding-left: 12px;
       display: flex;
       margin: 12px 0px;
-
+      font-size: 1.8rem;
 
 
       .pax-count {
@@ -57,7 +57,7 @@ ride-detail {
       .spot-time {
         margin-top: 4px;
         margin-left: 28px;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         color: var(--ion-theme-color);
       }
 
@@ -79,7 +79,7 @@ ride-detail {
 
       &.notes {
         display: inline-block;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
 
         .read-more {
           font-size: 1.2rem;
@@ -104,6 +104,17 @@ ride-detail {
           font-size: 1.4rem;
         }
       }
+
+
+
+    }
+
+    routing-details
+    {
+      h6
+        {
+          font-size: 1.5rem !important;
+        }
     }
 
     .requirements-list {
@@ -136,20 +147,29 @@ ride-detail {
 
     .pricing-section {
 
-      ion-item {
+
+
+      ion-list
+      {
         width: 100%;
-        color: var(--ion-theme-info-color);
-        font-size: 1.4rem;
-        --border-width: 0px;
-        height: 30px;
+
+        ion-item {
+          width: 100%;
+          color: var(--ion-theme-info-color);
+          font-size: 1.4rem;
+          --border-width: 0px;
+          height: 30px;
+
+
+        }
+        .ride-total {
+          color: white !important;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 12px;
+        }
       }
 
-      .ride-total {
-        color: white !important;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 12px;
-      }
     }
 
   }
@@ -209,7 +229,7 @@ ride-detail {
         transition: all 1s ease;
 
         &.active {
-          max-height: 190px;
+          max-height: 350px;
 
           margin-bottom: 12px;
         }
@@ -219,7 +239,7 @@ ride-detail {
         }
 
         .value {
-          width: 100px;
+          width: 60px;
           text-align: center;
           color: var(--ion-theme-info-color);
         }

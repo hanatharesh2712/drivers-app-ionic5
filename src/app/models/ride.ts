@@ -44,6 +44,7 @@ export class Ride {
   next_status_button_text: string;
   pu_datetime: string;
   cost_total;
+  settle_deadline: number;
   times: RideTime[];
   costs;
   constructor(obj?) {

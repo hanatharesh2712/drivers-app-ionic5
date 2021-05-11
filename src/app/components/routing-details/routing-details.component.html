@@ -15,7 +15,7 @@
     <ng-container *ngIf="showStops">
       <ng-container *ngFor="let waypoint of ride.waitsAndStops">
         <div class="d-flex item_box">
-          <ion-icon name="chevron-forward-circle"></ion-icon>
+          <ion-icon name="remove-circle-outline"></ion-icon>
           <div>
             <h6>{{waypoint.formatted_address}}</h6>
             <div class="route-notes" *ngIf="showNotes">
@@ -31,7 +31,7 @@
     </ng-container>
     <ng-container *ngIf="!showStops && showStopsCount && ride.waitsAndStops.length">
       <div class="d-flex item_box stops-count">
-        <ion-icon name="chevron-forward-circle"></ion-icon>
+        <ion-icon name="remove-circle-outline"></ion-icon>
         <div>
           <h6 class="stops-count">{{ride.waitsAndStops.length}} stop{{ride.waitsAndStops.length > 1 ? 's' : ''}}</h6>
 

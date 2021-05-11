@@ -51,7 +51,7 @@
               <div class="amount_wallet  w-100-p">
                 <div>
                   <h3 class="ion-text-capitalize date-id">ID #{{payment.check_ref_number ? 'INV' : 'DRVN'}}{{payment.id}} - <span class="date">
-                      {{(payment.due_date ? payment.due_date : payment.date) | date:'MM/dd/yy'}}
+                      {{(payment.due_date ? payment.due_date : payment.date) | dateTime:'MM/dd/yy'}}
                     </span></h3>
                     <div class="type secondary-text">
                       Bank Transfer / ACH

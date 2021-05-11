@@ -34,6 +34,7 @@ app-home {
       width: 100%;
       margin: 6px 3px;
       height: 150px;
+      box-shadow: #ffffff82 0px 1px 10px;
       position: relative;
 
       .title {
@@ -190,7 +191,7 @@ app-home {
     }
 
     .gradient-border {
-      --border-width: 3px;
+      --border-width: 1px;
       margin: 6px 3px;
       margin-top: 12px;
       color: white;
@@ -226,14 +227,14 @@ app-home {
 
     .faq
     {
-      background-image: url('assets/imgs/faq3.png');
+      background-image: url('assets/imgs/faq-bg.png');
       background-size: 100% 100%;
 
       .title{
         font-size: 6rem;
         position: relative;
         top: 30px;
-        letter-spacing: 10px;
+        letter-spacing: 5px;
       }
 
     }
