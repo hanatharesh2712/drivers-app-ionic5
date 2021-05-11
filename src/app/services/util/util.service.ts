@@ -98,6 +98,7 @@ export class UtilService {
       message,
       position,
       duration,
+      color: 'primary',
       buttons: [
         {
           text: 'Done',

@@ -28,6 +28,7 @@ import { MapStyles } from './ride-map-styles';
 
 @Component({
   selector: 'app-ride-map',
+  styleUrls: ['ride-map.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './ride-map.component.html',
 })
@@ -52,6 +53,8 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
   });
   calculatedRoute: boolean;
   firstTime: boolean = true;
+  bounds: any;
+  showCenterBtn: any;
 
   constructor(
     private geolocationService: GeolocationService,
@@ -77,7 +80,11 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
     }
 
     google.maps.event.addListener(this.map, 'dragstart', autofollowFalse);
+    google.maps.event.addListener(this.map, 'drag', () => {
+    this.showCenterBtn = !this.bounds.contains(this.map.getCenter());
 
+
+    });
     if (this.showDriverPosition) {
       this.watchDriverPosition();
       this.driverPosition.subscribe((data) => {
@@ -174,17 +181,17 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
   fitBoundsAndCenter() {
     if (this.map) {
       let quantity = 0;
-      const bounds = new google.maps.LatLngBounds();
+      this.bounds = new google.maps.LatLngBounds();
       this.markers.forEach((marker) => {
         quantity++;
-        bounds.extend(marker.getPosition());
+        this.bounds.extend(marker.getPosition());
       });
       if (this.driverMarker) {
         quantity++;
-        bounds.extend(this.driverMarker.getPosition());
+        this.bounds.extend(this.driverMarker.getPosition());
       }
       setTimeout(() => {
-        this.map.fitBounds(bounds);
+        this.map.fitBounds(this.bounds);
         const listener = google.maps.event.addListener(this.map, 'idle', () => {
           if (quantity == 1) {
             this.map.setZoom(11);
@@ -232,6 +239,12 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
         }
       });
     }
+  }
+
+  centerMap()
+  {
+    this.fitBoundsAndCenter();
+    this.showCenterBtn = false;
   }
 
 

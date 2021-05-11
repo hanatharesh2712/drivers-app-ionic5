@@ -278,6 +278,14 @@
       </div>
 
     </ion-fab-button>
+    <ion-fab-button *ngIf="ride.greeting_sign" (click)="goToGreetingSign()">
+
+      <div class="text-container">
+        <ion-icon src="assets/custom-ion-icons/subtitles.svg" class="icon drvn-icon"></ion-icon>
+          GREETING SIGN
+      </div>
+
+    </ion-fab-button>
   </ion-fab-list>
 </ion-fab>
 
@@ -328,12 +336,13 @@
 
         </ion-item>
         <ion-item>
-          <ion-label>Stops</ion-label>
-
+          <ion-label>Additional Stops</ion-label>
+          <span class="value">{{ride.costs.reported_stops}}</span>
 
         </ion-item>
-        <ion-item>
-          <ion-label>Waiting mins.</ion-label>
+        <ion-item  *ngIf="ride.service_type != 'Hourly'">
+          <ion-label>Waiting time</ion-label>
+          <span class="value">{{ride.costs.reported_waiting}} mins</span>
 
         </ion-item>
 
@@ -390,6 +399,12 @@
       {{ride.costs['additional_hour']}}) </ion-label>
     <span class="value"
       slot="end">{{(ride.costs['additional_hour_qty'] * ride.costs['additional_hour']) | currency}}</span>
+  </ion-item>
+  <ion-item *ngIf="ride.costs['stops_qty'] > 0" class="detail">
+    <ion-label class="detail-title">Add. Stops ({{ride.costs['stops_qty']}} x
+      {{ride.costs['stops']}}) </ion-label>
+    <span class="value"
+      slot="end">{{(ride.costs['stops_qty'] * ride.costs['stops']) | currency}}</span>
   </ion-item>
   <ion-item *ngIf="ride.costs['child_seat_qty'] > 0" class="detail">
     <ion-label class="detail-title">Child Seat ({{ride.costs['child_seat_qty']}} x {{ride.costs['child_seat']}})

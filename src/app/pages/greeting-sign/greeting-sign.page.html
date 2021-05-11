@@ -1,0 +1,29 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="close" class="close-icon" (click)="dismiss()"></ion-icon>
+    </ion-buttons>
+
+  </ion-toolbar>
+  <!--<ion-toolbar>
+    <ion-segment [(ngModel)]="walletPage" (ionChange)="segmentChanged($event)" color="dark">
+      <ion-segment-button value="cash" color="dark">Cash</ion-segment-button>
+      <ion-segment-button value="discount" color="dark">Discount </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar> -->
+</ion-header>
+<ion-content>
+
+  <div class="sign">
+    <div class="name" [innerHTML]="ride.greeting_notes ? ride.greeting_notes : ride.passenger_name">
+    </div>
+    <div class="link" (click)="copyToClipboard()">
+      {{ride.greeting_link}}
+      <ion-icon name="copy-outline"></ion-icon>
+    </div>
+  </div>
+
+
+</ion-content>
+

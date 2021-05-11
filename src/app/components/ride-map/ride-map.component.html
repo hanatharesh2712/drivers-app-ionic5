@@ -1,1 +1,4 @@
-<div #map id="map"></div> 
+<button class="center-map" *ngIf="showCenterBtn" (click)="centerMap()">
+  <ion-icon name="locate-outline"></ion-icon>
+</button>
+<div #map id="map"></div>

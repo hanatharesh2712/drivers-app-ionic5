@@ -7,8 +7,8 @@
       <h6>3 HOURS RIDE</h6>
     </div>
     <div class="d-flex pu item_box">
-      <ion-icon name="location"></ion-icon>
-      <h6>{{ride.pu_location}}</h6>
+      <ion-icon name="{{ride.pickUp.LocationType == 'AIR' ? 'airplane' : ride.pickUp.LocationType == 'SEA' ? 'boat' : 'location'}}"></ion-icon>
+      <h6>{{ride.pickUp.formatted_address}}</h6>
 
 
     </div>
@@ -17,7 +17,7 @@
         <div class="d-flex item_box">
           <ion-icon name="chevron-forward-circle"></ion-icon>
           <div>
-            <h6>{{waypoint.RIAddr1}}</h6>
+            <h6>{{waypoint.formatted_address}}</h6>
             <div class="route-notes" *ngIf="showNotes">
               {{(waypoint.readMore) ? waypoint.RINotes : waypoint.RINotes | slice:0:200}} <ng-container
                 *ngIf="!waypoint.readMore">...</ng-container>
@@ -42,8 +42,8 @@
 
 
     <div class="d-flex item_box" *ngIf="ride.do_location">
-      <ion-icon name="navigate"></ion-icon>
-      <h6>{{ride.do_location}}</h6>
+      <ion-icon name="{{ride.LocationType == 'AIR' ? 'airplane' : ride.dropOff.LocationType == 'SEA' ? 'boat' : 'navigate'}}"></ion-icon>
+      <h6>{{ride.dropOff.formatted_address}}</h6>
     </div>
 
   </ng-container>

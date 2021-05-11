@@ -219,8 +219,9 @@ ride-detail {
         }
 
         .value {
-          width: 20px;
+          width: 100px;
           text-align: center;
+          color: var(--ion-theme-info-color);
         }
 
         .increase-container {

@@ -32,7 +32,9 @@ import { GeolocationService } from './services/geolocation.service';
 import { AuthHttpInterceptor } from './services/util/http-interceptor';
 import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialog.module';
 import { SMS } from '@ionic-native/sms/ngx';
-
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { GreetingSignPageModule } from './pages/greeting-sign/greeting-sign.module';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -54,12 +56,15 @@ import { SMS } from '@ionic-native/sms/ngx';
     HttpClientModule,
     RideMapDialogModule,
     RatingDialogModule,
-    SettleDialogModule
+    SettleDialogModule,
+    GreetingSignPageModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     CallNumber,
+    ScreenOrientation,
+    Clipboard,
     SMS,
     RouteGuard,
     GoogleMapsAPIWrapper,

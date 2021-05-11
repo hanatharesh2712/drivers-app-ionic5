@@ -16,6 +16,7 @@ export class Ride {
   pu_date?: string;
   pu_time?: string;
   service_type?: string;
+  greeting_link: string;
   ride_status?: string;
   ride_id?: number;
   passenger_name?: string;
@@ -25,7 +26,7 @@ export class Ride {
   occasion?: string;
   pickup_lat?: string;
   pickup_lng?: string;
-  greeting_sign?: string;
+  greeting_sign?: boolean;
   greeting_notes?: string;
   pu_location?: string;
   do_location?: string;

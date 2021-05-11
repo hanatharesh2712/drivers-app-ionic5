@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'addnewvehicle', loadChildren: () => import('@app/pages/add-new-vehicle/add-new-vehicle.module').then(m => m.AddnewvehiclePageModule) },
   { path: 'vehiclemanagement', loadChildren: () => import('@app/pages/vehicle-management/vehicle-management.module').then(m => m.VehiclemanagementPageModule) },
   { path: 'notifications', loadChildren: () => import('@app/pages/notifications/notifications.module').then(m => m.NotificationsPageModule) },
+  { path: 'greeting-sign', loadChildren: () => import('@app/pages/greeting-sign/greeting-sign.module').then(m => m.GreetingSignPageModule) },
   {
     path: 'customerRequest', loadChildren: () => import('@app/pages/customer-request/customer-request.module').then(m => m.CustomerRequestPageModule)
   },

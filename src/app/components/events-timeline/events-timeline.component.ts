@@ -13,6 +13,7 @@ export class EventsTimeLineComponent implements OnInit {
 
   ngOnInit() {
     this.ride.times =this.ride.times.sort(function(a,b){ return new Date(a.time).getTime() - new Date(b.time).getTime();})
+    this.ride.times.splice(this.ride.times.findIndex(e => e.type_id == 5));
 
   }
 

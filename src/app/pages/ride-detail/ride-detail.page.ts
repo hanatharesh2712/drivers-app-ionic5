@@ -19,6 +19,7 @@ import { RideService } from '@app/services/ride/ride.service';
 import { UtilService } from '@app/services/util/util.service';
 import { NavParams, PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { GreetingSignPage } from '../greeting-sign/greeting-sign.page';
 
 @Component({
   selector: 'ride-detail',
@@ -80,13 +81,15 @@ export class RideDetailPage implements OnInit, OnDestroy {
       !this.ride.is_done
     ) {
       this.isRideActive = true;
-      if (this.ride.next_status_code == 'POB') {
+      if (this.ride.next_status_code == 'POB' && this.ride.service_type.toUpperCase() != 'HOURLY') {
         this.initWaitingTime();
-      } else if (this.ride.next_status_code == 'DOC') {
+      }
+      else {
+        this.showTimeCounter = false;
+      }
+      if (this.ride.next_status_code == 'DOC') {
         this.storageInfo.waitStartedDate = null;
         this.updateStorage();
-      } else {
-        this.showTimeCounter = false;
       }
     }
     this.createSettleForm();
@@ -354,6 +357,15 @@ export class RideDetailPage implements OnInit, OnDestroy {
     dialog.present();
   }
 
+  async goToGreetingSign()
+  {
+    const dialog = await this.util.createModal(
+      GreetingSignPage,
+      { ride: this.ride },
+      'greeting-sign-dialog'
+    );
+    dialog.present();
+  }
   ngOnDestroy(): void {
     clearInterval(this.wtInterval);
   }

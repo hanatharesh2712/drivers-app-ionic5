@@ -18,6 +18,7 @@ import { UtilService } from './services/util/util.service';
 import { RideService } from './services/ride/ride.service';
 import { environment } from '@env/environment';
 import { GeolocationService } from './services/geolocation.service';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
   selector: 'app-root',
@@ -69,7 +70,8 @@ export class AppComponent {
     public util: UtilService,
     public rideService: RideService,
     private authService: DrvnAuthenticationService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private screenOrientation: ScreenOrientation
   ) {
     this.initializeApp();
     this.loggedInUser = this.authService.currentUser;
@@ -88,6 +90,7 @@ export class AppComponent {
       this.statusBar.backgroundColorByHexString('#bb9669');
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
       if (!this.geolocationService.started) {
         this.geolocationService.initTracking();
       }
