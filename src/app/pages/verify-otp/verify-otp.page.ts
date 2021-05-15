@@ -35,6 +35,7 @@ export class VerifyOTPPage implements OnInit {
   public otpInput4: any;
   verificationForm: any;
   phone: string;
+  smsBody: string;
   code: any;
   recivedCode: any;
   @ViewChild('ngOtpInput', { static: false}) ngOtpInput: any;
@@ -54,6 +55,7 @@ export class VerifyOTPPage implements OnInit {
 
   ngOnInit() {
     this.phone = this.authService.mobilePhone;
+    this.smsBody = this.authService.smsBody;
     
     if (!this.phone) {
       this.util.goToNew('signin')
@@ -63,7 +65,7 @@ export class VerifyOTPPage implements OnInit {
       () => {
         document.addEventListener('onSMSArrive', (e: any) => {
           var IncomingSMS = e.data;
-          if (IncomingSMS.body.includes('Your Drvn one time password is: ')) {
+          if (IncomingSMS.body.includes(this.smsBody)) {
             this.recivedCode = IncomingSMS.body.slice(-4);
             this.ngOtpInput.setValue(this.recivedCode);
             this.code = this.recivedCode;

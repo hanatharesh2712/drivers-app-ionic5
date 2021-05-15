@@ -17,6 +17,7 @@ export class DrvnAuthenticationService implements OnInit {
   onCurrentUser: Subject<any> = new Subject();
   currentUser: User;
   mobilePhone: any;
+  smsBody: any;
   authToken: any;
 
   constructor(
@@ -113,7 +114,12 @@ export class DrvnAuthenticationService implements OnInit {
 
   sendCode(mobile_phone) {
     this.mobilePhone = mobile_phone;
-    return this.http.get(environment.noLoginUrl + 'da/sendLoginPassword?phone=' + mobile_phone)
+    return this.http.get<any>(environment.noLoginUrl + 'da/sendLoginPassword?phone=' + mobile_phone).pipe(map(response => {
+        if (response) {
+          this.smsBody = response.smsBody;
+        }
+        return response;
+      }))
       .toPromise();
   }
 
