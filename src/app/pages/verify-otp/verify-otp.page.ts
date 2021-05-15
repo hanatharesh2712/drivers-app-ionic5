@@ -10,11 +10,12 @@ import { DrvnAuthenticationService } from './../../services/auth/auth.service';
  */
 
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { UtilService } from '@app/services/util/util.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+declare var SMSReceive: any;
 
 @Component({
   selector: 'app-verify-otp',
@@ -35,7 +36,9 @@ export class VerifyOTPPage implements OnInit {
   verificationForm: any;
   phone: string;
   code: any;
-
+  recivedCode: any;
+  @ViewChild('ngOtpInput', { static: false}) ngOtpInput: any;
+  
   constructor(
     private util: UtilService,
     private menuCtrl: MenuController,
@@ -51,11 +54,25 @@ export class VerifyOTPPage implements OnInit {
 
   ngOnInit() {
     this.phone = this.authService.mobilePhone;
-
+    
     if (!this.phone) {
       this.util.goToNew('signin')
     }
 
+    SMSReceive.startWatch(
+      () => {
+        document.addEventListener('onSMSArrive', (e: any) => {
+          var IncomingSMS = e.data;
+          if (IncomingSMS.body.includes('Your Drvn one time password is: ')) {
+            this.recivedCode = IncomingSMS.body.slice(-4);
+            this.ngOtpInput.setValue(this.recivedCode);
+            this.code = this.recivedCode;
+            this.verification();
+          }
+        });
+      },
+      () => { console.log('watch start failed') }
+    )
 
   }
 
@@ -63,9 +80,12 @@ export class VerifyOTPPage implements OnInit {
     this.code = otp;
   }
 
-
+  setVal(val) {
+    this.ngOtpInput.setValue(val);
+  }
 
   verification() {
+    SMSReceive.stopWatch();
     this.authService.login(this.phone, this.code)
       .then(response => {
         setTimeout(() => {

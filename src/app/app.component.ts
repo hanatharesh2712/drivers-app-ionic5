@@ -94,7 +94,7 @@ export class AppComponent {
       if (!this.geolocationService.started) {
         this.geolocationService.initTracking();
       }
-      this.version = '2.1.6';
+      this.version = '2.1.7';
     });
   }
 
