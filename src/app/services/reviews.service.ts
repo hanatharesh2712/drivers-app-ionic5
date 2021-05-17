@@ -27,12 +27,16 @@ export class ReviewsService {
 
   getScores()
   {
-    this.reviews.forEach(obj => {
-      this.score += obj.driver_rating;
-      this.vehicleScore += obj.vehicle_rating;
-    });
-    this.score = (this.score / this.reviews.length).toFixed(1);
-    this.vehicleScore = (this.vehicleScore / this.reviews.length).toFixed(1);
+    if (this.reviews.length)
+    {
+      this.reviews.forEach(obj => {
+        this.score += obj.driver_rating;
+        this.vehicleScore += obj.vehicle_rating;
+      });
+      this.score = (this.score / this.reviews.length).toFixed(1);
+      this.vehicleScore = (this.vehicleScore / this.reviews.length).toFixed(1);
+    }
+  
   }
 
 

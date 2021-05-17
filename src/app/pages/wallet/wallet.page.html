@@ -21,12 +21,16 @@
       <ion-grid class="cash_Detail">
         <ion-row>
           <ion-col size="12" class="ion-text-center">
-            <h1 class="font_sizeh1"> {{total | currency}}</h1>
-            <p>TOTAL PAID</p>
+            <ion-skeleton-text *ngIf="loading" animated style="width: 160px; height: 80px;"></ion-skeleton-text>
+            <ng-container *ngIf="!loading">
+              <h1 class="font_sizeh1"> {{total | currency}}</h1>
+              <p>TOTAL PAID</p>
+            </ng-container>
+
           </ion-col>
         </ion-row>
       </ion-grid>
-    <!--   <ion-card class="wallet_card" routerLink="/paymentmethod">
+      <!--   <ion-card class="wallet_card" routerLink="/paymentmethod">
         <ion-item class="no_borderbottom card-padding-vertical">
           <ion-avatar style="background: var(--ion-color-warning)" slot="start" class="abs_avatar">
             <ion-img src="assets/img/dollar.png"></ion-img>
@@ -44,27 +48,30 @@
           </ion-label>
         </ion-list-header>
 
-        <ion-item *ngFor="let payment of payments" (click)="payment.expanded = !payment.expanded">
-          <div class="d-flex column  w-100-p">
-            <div class="header d-flex a-center ">
-              <ion-icon name="chevron-forward-outline" class="icon" [ngClass]="{'expanded': payment.expanded}"></ion-icon>
-              <div class="amount_wallet  w-100-p">
-                <div>
-                  <h3 class="ion-text-capitalize date-id">ID #{{payment.check_ref_number ? 'INV' : 'DRVN'}}{{payment.id}} - <span class="date">
-                      {{(payment.due_date ? payment.due_date : payment.date) | dateTime:'MM/dd/yy'}}
-                    </span></h3>
+        <ng-container *ngIf="!loading">
+          <ion-item *ngFor="let payment of payments" (click)="payment.expanded = !payment.expanded">
+            <div class="d-flex column  w-100-p">
+              <div class="header d-flex a-center ">
+                <ion-icon name="chevron-forward-outline" class="icon" [ngClass]="{'expanded': payment.expanded}">
+                </ion-icon>
+                <div class="amount_wallet  w-100-p">
+                  <div>
+                    <h3 class="ion-text-capitalize date-id">ID #{{payment.check_ref_number ? 'INV' :
+                      'DRVN'}}{{payment.id}} - <span class="date">
+                        {{(payment.due_date ? payment.due_date : payment.date) | dateTime:'MM/dd/yy'}}
+                      </span></h3>
                     <div class="type secondary-text">
                       Bank Transfer / ACH
                     </div>
 
 
-                </div>
+                  </div>
 
-                <div>
-                  <h3> {{payment.total | currency}}</h3>
-                </div>
+                  <div>
+                    <h3> {{payment.total | currency}}</h3>
+                  </div>
 
-              </div>
+                </div>
               </div>
               <div class="details" [ngClass]="{'expanded': payment.expanded}">
                 <ion-list class="rides-detail-list">
@@ -74,10 +81,10 @@
                         <div class="ride-info d-flex column">
                           <span class="ride-id">
                             Ride #{{ride.ride_id}} -
-                            <span class="ride-date">{{ride.ride.pickup_datetime | date:	'MM/dd/yy h:mma'}}</span>
+                            <span class="ride-date">{{ride.ride.pickup_datetime | date: 'MM/dd/yy h:mma'}}</span>
                           </span>
                           <span>
-                            {{ride.ride.service_type.name}} -   {{ride.ride.vehicle_type.name}}
+                            {{ride.ride.service_type.name}} - {{ride.ride.vehicle_type.name}}
                           </span>
                         </div>
                         <div>
@@ -92,11 +99,20 @@
 
                 </ion-list>
               </div>
-          </div>
+            </div>
 
 
 
-        </ion-item>
+          </ion-item>
+        </ng-container>
+
+
+        <ng-container *ngIf="loading">
+            <ng-template [ngTemplateOutlet]="skeletonItem"></ng-template>
+            <ng-template [ngTemplateOutlet]="skeletonItem"></ng-template>
+            <ng-template [ngTemplateOutlet]="skeletonItem"></ng-template>
+        </ng-container>
+
       </ion-list>
 
     </div>
@@ -113,3 +129,32 @@
     </div>
   </div>
 </ion-content>
+
+<ng-template #skeletonItem>
+  <ion-item>
+    <div class="d-flex column  w-100-p">
+      <div class="header d-flex a-center ">
+        <ion-icon name="chevron-forward-outline" class="icon"></ion-icon>
+        <div class="amount_wallet  w-100-p">
+          <div>
+            <div>
+              <ion-skeleton-text animated style="width: 200px"></ion-skeleton-text>
+            </div>
+            <div>
+              <ion-skeleton-text animated style="width: 100px"></ion-skeleton-text>
+            </div>
+
+
+          </div>
+
+          <div>
+            <h3>
+              <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text>
+            </h3>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ion-item>
+</ng-template>

@@ -51,19 +51,33 @@ export class LoginPage implements OnInit {
     this.authService
       .sendCode(this.phone)
       .then(
-        res => {
-            if (res)
+        async res => {
+            if (res.status.toUpperCase() == 'SUCCESS')
             {
               this.util.goForward('verify-otp', {phone: this.phone})
               this.clearSpinner();
             }
+            else
+            {
+                this.showError();
+            }
         },
         async err => {
-          const toast = await this.util.createToast('Invalid phone number.', false, 'top');
-          await toast.present();
-          this.clearSpinner();
+          this.showError();
         }
       );
+  }
+
+  async showError()
+  {
+    let alert = await this.util.createAlert('Sign in', true, 'Invalid phone number. Please try again.', {
+      text: 'Ok',
+      role: 'cancel',
+      cssClass: 'secondary',
+      handler: async () => {
+
+      }
+    });
   }
   register() {
     this.util.goToNew('/register');

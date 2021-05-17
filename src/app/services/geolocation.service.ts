@@ -42,6 +42,7 @@ export class GeolocationService {
       //    this.backgroundGeolocation.endTask();
       //  });
       this.setLocation(location, location.time, 'BCK');
+      this.backgroundGeolocation.finish(); 
     });
   this.backgroundGeolocation
     .on(BackgroundGeolocationEvents.authorization)

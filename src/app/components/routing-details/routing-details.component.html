@@ -15,7 +15,7 @@
     <ng-container *ngIf="showStops">
       <ng-container *ngFor="let waypoint of ride.waitsAndStops">
         <div class="d-flex item_box">
-          <ion-icon name="remove-circle-outline"></ion-icon>
+          <ion-icon name="remove-circle"></ion-icon>
           <div>
             <h6>{{waypoint.formatted_address}}</h6>
             <div class="route-notes" *ngIf="showNotes">

@@ -26,7 +26,9 @@
     <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical" >
       <ion-button color="primary" expand="block" class="btnSubmit textBold" (click)="verification()">Verify Now</ion-button>
     </div>
-
+    <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical resend-link" [ngClass]="{'active': secondsRemainingResendCode <= 0}" >
+       <span (click)="resendCode()">Resend code <ng-container *ngIf="secondsRemainingResendCode > 0">({{secondsRemainingResendCode}})</ng-container></span>
+    </div>
   </div>
 
 </ion-content>

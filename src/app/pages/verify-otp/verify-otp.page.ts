@@ -11,10 +11,8 @@ import { DrvnAuthenticationService } from './../../services/auth/auth.service';
 
 
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { UtilService } from '@app/services/util/util.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
 declare var SMSReceive: any;
 
 @Component({
@@ -25,56 +23,56 @@ declare var SMSReceive: any;
 })
 export class VerifyOTPPage implements OnInit {
   public obj = document.getElementById('partitioned');
-  public inputFocus1: boolean;
-  public inputFocus2: boolean;
-  public inputFocus3: boolean;
-  public inputFocus4: boolean;
-  public otpInput1: any;
-  public otpInput2: any;
-  public otpInput3: any;
-  public otpInput4: any;
   verificationForm: any;
   phone: string;
   smsBody: string;
   code: any;
   recivedCode: any;
-  @ViewChild('ngOtpInput', { static: false}) ngOtpInput: any;
-  
+  secondsRemainingResendCode = 60;
+  @ViewChild('ngOtpInput', { static: false }) ngOtpInput: any;
+
   constructor(
     private util: UtilService,
     private menuCtrl: MenuController,
-    private _fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private authService: DrvnAuthenticationService
+    private authService: DrvnAuthenticationService,
+    private platform: Platform
   ) {
     // this.inputFocus1 = true;
-    this.inputFocus2 = true;
     this.menuCtrl.enable(false);
+    setInterval(() => {
+      if (this.secondsRemainingResendCode > 0) {
+        this.secondsRemainingResendCode--;
+      }
+
+    }, 1000)
   }
 
   ngOnInit() {
     this.phone = this.authService.mobilePhone;
     this.smsBody = this.authService.smsBody;
-    
+
     if (!this.phone) {
       this.util.goToNew('signin')
     }
 
-    SMSReceive.startWatch(
-      () => {
-        document.addEventListener('onSMSArrive', (e: any) => {
-          var IncomingSMS = e.data;
-          if (IncomingSMS.body.includes(this.smsBody)) {
-            this.recivedCode = IncomingSMS.body.slice(-4);
-            this.ngOtpInput.setValue(this.recivedCode);
-            this.code = this.recivedCode;
-            this.verification();
-          }
-        });
-      },
-      () => { console.log('watch start failed') }
-    )
+    if (this.platform.is('cordova')) {
+      SMSReceive.startWatch(
+        () => {
+          document.addEventListener('onSMSArrive', (e: any) => {
+            var IncomingSMS = e.data;
+            if (IncomingSMS.body.includes(this.smsBody)) {
+              this.recivedCode = IncomingSMS.body.slice(-4);
+              this.ngOtpInput.setValue(this.recivedCode);
+              this.code = this.recivedCode;
+              this.verification();
+            }
+          });
+        },
+        () => { console.log('watch start failed') }
+      )
+    }
+
+
 
   }
 
@@ -87,7 +85,9 @@ export class VerifyOTPPage implements OnInit {
   }
 
   verification() {
-    SMSReceive.stopWatch();
+    if (this.platform.is('cordova')) {
+      SMSReceive.stopWatch();
+    }
     this.authService.login(this.phone, this.code)
       .then(response => {
         setTimeout(() => {
@@ -109,6 +109,18 @@ export class VerifyOTPPage implements OnInit {
         });
         await alert.present();
       });
+  }
+
+  resendCode() {
+    if (this.secondsRemainingResendCode == 0) {
+      this.authService
+        .sendCode(this.phone)
+        .then(async (response) => {
+          this.secondsRemainingResendCode = 60;
+          const toast = await this.util.createToast('Login code has been sent', true, 'bottom', 5000);
+          toast.present();
+        });
+    }
   }
 
 }

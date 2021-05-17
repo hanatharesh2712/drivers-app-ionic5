@@ -77,6 +77,9 @@ export class AppComponent {
     this.loggedInUser = this.authService.currentUser;
     this.authService.onLogin.subscribe(data => {
       if (data) {
+        if (!this.geolocationService.started) {
+          this.geolocationService.initTracking();
+        }
         this.loggedInUser = data;
       }
     });
@@ -91,9 +94,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-      if (!this.geolocationService.started) {
-        this.geolocationService.initTracking();
-      }
+    
       this.version = '2.1.8';
     });
   }

@@ -25,6 +25,7 @@ export class WalletPage implements OnInit, OnChanges {
   public loggedInuser: Driver;
   payments: any;
   total: any;
+  loading = false;
   constructor(
     private util: UtilService,
     private rideService: RideService,
@@ -38,15 +39,13 @@ export class WalletPage implements OnInit, OnChanges {
   }
 
   async getPayments() {
-    const loader = await this.util.createLoader('Loading payments history ...');
-    await loader.present();
-
+    this.loading = true;
 
     this.paymentsService.getPayments().subscribe((payments) => {
       console.log(payments);
       this.payments = payments;
       this.total = this.paymentsService.total;
-      loader.dismiss();
+      this.loading = false;
     });
   }
 

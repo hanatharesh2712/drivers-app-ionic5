@@ -1,5 +1,4 @@
-import { SettleDialogComponent } from './../../components/settle-dialog/settle-dialog.component';
-import { GeolocationService } from './../../services/geolocation.service';
+
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -11,22 +10,20 @@ import { GeolocationService } from './../../services/geolocation.service';
 
 import {
   Component,
-  ElementRef,
   OnInit,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { MenuController, NavParams, PopoverController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { RideService } from '@app/services/ride/ride.service';
 import { UtilService } from '@app/services/util/util.service';
 import { RideMapComponent } from '@app/components/ride-map/ride-map.component';
 import { Ride } from '@app/models/ride';
 import { NextRideResponse } from '@app/models/rides-wrapper.models';
 import { environment } from '@env/environment';
-import { ChildSeatDialogComponent } from '@app/components/child-seat-dialog/child-seat-dialog.component';
-import { RatingDialogComponent } from '@app/components/rating-dialog/rating-dialog.component';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 import { ReviewsService } from '@app/services/reviews.service';
+import { DrvnAuthenticationService } from '@app/services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -52,13 +49,15 @@ export class HomePage implements OnInit {
   loadingRideBoard: boolean;
   score: any;
   vehicleScore: any;
+  loggedInUser: any;
   constructor(
     private menuCtrl: MenuController,
     private rideService: RideService,
     private util: UtilService,
     private ridesService: RideService,
     private reviewsService: ReviewsService,
-    private insomnia: Insomnia
+    private insomnia: Insomnia,
+    private authService: DrvnAuthenticationService
   ) {}
 
   async ngOnInit() {
@@ -70,7 +69,7 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.menuCtrl.enable(true);
-
+    this.loggedInUser = this.authService.currentUser;
     this.loadingRide = true;
     this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
       this.loadingRide = false;

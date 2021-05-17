@@ -83,4 +83,17 @@ app-verify-otp {
     justify-content: center;
   }
 
+  .resend-link
+  {
+    color: grey;
+    text-align: center;
+    font-size: 1.6rem;
+
+    &.active
+    {
+      color: white;
+      text-decoration: underline;
+    }
+  }
+
 }
