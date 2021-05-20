@@ -126,8 +126,8 @@
       "cordova-plugin-sms-receive": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
