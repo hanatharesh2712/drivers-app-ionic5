@@ -1,0 +1,41 @@
+app-partner-information {
+
+
+
+  ion-card {
+    --background: var(--ion-theme-background);
+    --color: white;
+    padding: 24px 12px;
+
+    h3 {
+      margin-bottom: 12px;
+    }
+
+    h5 {
+      margin-bottom: 36px;
+      font-size: 1.6rem;
+    }
+
+    ion-list {
+      --ion-item-background: black;
+      --ion-item-color: white;
+
+      ion-list-header {
+        padding-inline-start: 0px;
+        color: var(--ion-theme-color);
+      }
+
+      ion-item {
+        --padding-start: 0px;
+      }
+    }
+
+    .authorized-list
+    {
+      margin-top: 24px;
+    }
+  }
+
+
+
+}

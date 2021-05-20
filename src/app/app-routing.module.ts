@@ -44,6 +44,7 @@ const routes: Routes = [
   { path: 'edit-profile', loadChildren: () => import('@app/pages/edit-profile/edit-profile.module').then(m => m.EditProfilePageModule) },
   { path: 'login', loadChildren: () => import('@app/pages/login/login.module').then(m => m.LoginPageModule) },
   { path: 'verify-otp', loadChildren: () => import('@app/pages/verify-otp/verify-otp.module').then(m => m.VerifyOTPPageModule) },
+  { path: 'register', loadChildren: () => import('@app/pages/register/register.module').then(m => m.RegisterModule) },
   { path: 'terms-conditions', loadChildren: () => import('@app/pages/terms-conditions/terms-conditions.module').then(m => m.TermsCondictionsPageModule) },
   { path: 'contact', loadChildren: () => import('@app/pages/contact-us/contact-us.module').then(m => m.ContactUSPageModule) },
   { path: 'send-email', loadChildren: () => import('@app/pages/send-email/send-email.module').then(m => m.SendEmailPageModule) },

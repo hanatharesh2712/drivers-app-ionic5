@@ -141,6 +141,11 @@ dark: #222);
   {
     justify-content: center;
   }
+
+  &.j-between
+  {
+    justify-content: space-between;
+  }
 }
 
 .bg-black

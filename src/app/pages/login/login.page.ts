@@ -79,7 +79,7 @@ export class LoginPage implements OnInit {
       }
     });
   }
-  register() {
-    this.util.goToNew('/register');
+  goToRegister() {
+    this.util.goToNew('/register/mobile-validation');
   }
 }

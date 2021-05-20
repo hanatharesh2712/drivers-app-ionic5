@@ -1,0 +1,25 @@
+<ion-header class="header">
+  <ion-toolbar hideBackButton="true" color="primary">
+
+    <div class="d-flex a-center j-between">
+      <div class="c100 p25 center">
+        <span>{{actualStepIndex + 1}} of {{stepsCount}}</span>
+        <div class="slice">
+          <div class="bar"></div>
+          <div class="fill"></div>
+        </div>
+      </div>
+      <div class='step-info'>
+        <h3>Registration Proccess</h3>
+        <h4 *ngIf="actualStep">{{actualStep.title}}</h4>
+        <h5 *ngIf="nextStep">Next step: email validation</h5>
+      </div>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-router-outlet id="register"></ion-router-outlet>
+</ion-content>
