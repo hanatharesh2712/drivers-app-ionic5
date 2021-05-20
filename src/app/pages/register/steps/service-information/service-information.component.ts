@@ -3,39 +3,31 @@ import { RegistrationService } from '@app/services/registration.service';
 import { UtilService } from '@app/services/util/util.service';
 
 @Component({
-  selector: 'app-email-validation',
-  templateUrl: './email-validation.component.html',
+  selector: 'app-service-information',
+  templateUrl: './service-information.component.html',
 
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./email-validation.component.scss']
+  styleUrls: ['./service-information.component.scss']
 })
-export class EmailValidationComponent implements OnInit {
+export class ServiceInformationComponent implements OnInit {
 
 
   codeSent = false;
   validationSuccess: boolean;
   constructor(private registrationService: RegistrationService) {
-    this.registrationService.setStep(1);
-  }
+    this.registrationService.setStep(2);
+   }
 
   ngOnInit() {
   }
 
-  sendVerificationCode() {
-    this.codeSent = true;
-  }
-
-  verifyCode() {
-    this.validationSuccess = true;
-  }
-
-  nextStep() {
+  nextStep()
+  {
     this.registrationService.next();
   }
 
   back()
   {
-
     this.registrationService.back();
   }
 }

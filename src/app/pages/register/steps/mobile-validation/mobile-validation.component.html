@@ -58,20 +58,20 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons>
-      <ion-button class="back">
+      <ion-button class="back"  (click)="back()">
         <div class="d-flex a-center">
-          <ion-icon name="chevron-back-outline" (click)="back()"></ion-icon>
+          <ion-icon name="chevron-back-outline"></ion-icon>
           BACK
         </div>
-     
-      
+
+
       </ion-button>
       <ion-button fill="solid" class="next" (click)="nextStep()" [disabled]='!validationSuccess'>
         <div class="d-flex a-center">
           <span>NEXT</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
-     
+
       </ion-button>
 
     </ion-buttons>

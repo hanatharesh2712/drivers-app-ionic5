@@ -17,7 +17,7 @@
       <div class="widget next-ride " [ngClass]="{'gradient-border active': nextRide && nextRide.next_status_code}">
         <div class="title">
           <ng-container *ngIf="!loadingRide">
-            Your {{nextRide && nextRide.next_status_code ? 'active' : 'next'}} ride:
+            Your {{nextRide && nextRide.next_status_code ? 'active' : 'next'}} ride
           </ng-container>
           <ion-skeleton-text *ngIf="loadingRide" animated style="width: 150px; height: 20px;"></ion-skeleton-text>
 
@@ -38,7 +38,7 @@
     </ion-item>
     <ion-item class="ion-no-padding"  >
       <div class="widget rides-board " >
-        <div class="title">Your ride board:</div>
+        <div class="title">Your ride board</div>
         <div class="container d-flex" >
           <div class="count-info"  (click)="goTo('rides/offers')"  *ngIf="rides">
             <div class="center-container">
@@ -90,7 +90,7 @@
     </ion-item>
     <ion-item class="ion-no-padding" (click)="goTo('my-reviews')">
       <div class="widget rating ">
-        <div class="title">Your current rating:</div>
+        <div class="title">Your current rating</div>
         <div class="ratings d-flex">
           <div class="rating-stars">
             <ion-badge>
@@ -121,7 +121,7 @@
     </ion-item>
     <ion-item class="ion-no-padding" (click)="goTo('FAQ')">
       <div class="widget faq ">
-          <div class="title">
+          <div class="title faq-title">
             FAQ
           </div>
       </div>

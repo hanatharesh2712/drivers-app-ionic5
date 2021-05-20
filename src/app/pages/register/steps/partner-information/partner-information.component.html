@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-card *ngIf="!codeSent">
+  <ion-card *ngIf="!submitted">
     <h3>Also, we need some information about you...</h3>
 
 
@@ -9,19 +9,25 @@
       </ion-list-header>
       <ion-item>
         <ion-label position="floating">Company Name</ion-label>
-        <ion-input></ion-input>
+        <ion-input placeholder="Enter legal name of your company..."></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Company Structure</ion-label>
-        <ion-input></ion-input>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+          <ion-select-option value="brown">Sole Proprietorship / Individual</ion-select-option>
+          <ion-select-option value="blonde">Limited Liability Company</ion-select-option>
+          <ion-select-option value="black">Corporation</ion-select-option>
+          <ion-select-option value="red">Genral Partnership</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Company Mailing Address</ion-label>
-        <ion-input></ion-input>
+        <ion-input google-place id="txtHome" type="text" class="google-place-input" name="testasd"
+          placeholder="Enter mailing address of your company..."></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Suite / Unit Number</ion-label>
-        <ion-input></ion-input>
+        <ion-input placeholder="Optional"></ion-input>
       </ion-item>
     </ion-list>
 
@@ -31,30 +37,66 @@
       </ion-list-header>
       <ion-item>
         <ion-label position="floating">First Name</ion-label>
-        <ion-input></ion-input>
+        <ion-input placeholder="Enter your first name..."></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Last Name</ion-label>
-        <ion-input></ion-input>
+        <ion-input placeholder="Enter your last name..."></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Email Address</ion-label>
-        <ion-input></ion-input>
+        <ion-input placeholder="Enter your email..." [disabled]="true"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Mobile Number</ion-label>
-        <ion-input></ion-input>
+        <ion-input placeholder="Enter your mobile number.." [disabled]="true"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Password</ion-label>
-        <ion-input></ion-input>
+        <ion-input type="password" placeholder="Minimum 6 characters"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Confirm Password</ion-label>
-        <ion-input></ion-input>
+        <ion-input type="password" placeholder="Minimum 6 characters"></ion-input>
       </ion-item>
     </ion-list>
+      <ion-segment class="driver-segment">
+        <ion-segment-button value="standard">
+          <ion-label>I'm a driver</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hybrid">
+          <ion-label>I'm NOT a driver</ion-label>
+        </ion-segment-button>
+
+      </ion-segment>
+      <ion-item lines="none" class="checkbox-policy">
+        <ion-checkbox ></ion-checkbox>
+        <ion-label>
+          Agree to our privacy policy
+          </ion-label>
+      </ion-item>
+
+
+  </ion-card>
+  <ion-card *ngIf="submitted">
+    <div class="d-flex column a-center success-info">
+      <div class="success-checkmark">
+        <div class="check-icon">
+          <span class="icon-line line-tip"></span>
+          <span class="icon-line line-long"></span>
+          <div class="icon-circle"></div>
+          <div class="icon-fix"></div>
+        </div>
+      </div>
+      <h3 class="success-text">Partner information submitted</h3>
+      <h5 class="secondary-text">
+        You are now registered into our system. If you want to continue this proccess in other moment, next time you can
+        login into our system.
+      </h5>
+    </div>
+
+    <h5 class=' next-text ion-text-center'>Click "Next" to continue with you registration proccess.</h5>
   </ion-card>
 
 </ion-content>
@@ -62,17 +104,17 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons>
-      <ion-button class="back">
+      <ion-button class="back" (click)="back()">
         <div class="d-flex a-center">
-          <ion-icon name="chevron-back-outline" (click)="back()"></ion-icon>
+          <ion-icon name="chevron-back-outline"></ion-icon>
           BACK
         </div>
 
 
       </ion-button>
-      <ion-button fill="solid" class="next" (click)="nextStep()" [disabled]='!validationSuccess'>
+      <ion-button fill="solid" class="next" (click)="nextStep()">
         <div class="d-flex a-center">
-          <span>NEXT</span>
+          <span>{{submitted ? 'NEXT' : 'SUBMIT INFORMATION'}}</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
 

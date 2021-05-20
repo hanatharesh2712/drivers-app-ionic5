@@ -8,78 +8,86 @@
  */
 
 ion-header.header {
-    height: 200px;
+  height: 200px;
 
-    ion-toolbar {
-        height: 200px;
-    }
+  ion-toolbar {
+    height: 200px;
+  }
 }
 
 .loginCard {
-    width: 100%;
+  width: 100%;
 }
 
-.logo
-{
+.logo {
   max-width: 200px;
   margin-bottom: 24px;
 }
+
 .loginContent {
   //  background: url("assets/img/Home.png") no-repeat;
-    background-size: cover !important;
-    background-position: center !important;
-    height: 100%;
-    width: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+  height: 100%;
+  width: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.register-link {
+  color: white;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 ion-card {
   --background: var(--ion-secondary-bg-color);
 }
 
-ion-list
-{
+ion-list {
   padding-top: 8px;
   --ion-item-background: var(--ion-secondary-bg-color);
   --ion-item-color: var(--ion-secondary-bg-color);
   --background: var(--ion-secondary-bg-color);
 }
+
 ion-card-content {
   background: var(--ion-secondary-bg-color);
 }
+
 .cardHeader {
 
-    .headerText {
-        font-size: 26px;
-        font-weight: normal;
-    }
+  .headerText {
+    font-size: 26px;
+    font-weight: normal;
+  }
 }
 
 .inputField {
-    border: 1px solid #eaeaee;
-    border-radius: 10px;
-    font-size: 14px;
-    margin: 15px 0px;
-    padding: 10px !important;
+  border: 1px solid #eaeaee;
+  border-radius: 10px;
+  font-size: 14px;
+  margin: 15px 0px;
+  padding: 10px !important;
 }
 
 .btnSubmit {
-    --border-radius: 7px;
+  --border-radius: 7px;
 }
 
 ion-card {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .footerBottomText {
-    font-size: 16px;
-    padding-top: 15px;
-    letter-spacing: 1px;
+  font-size: 16px;
+  padding-top: 15px;
+  letter-spacing: 1px;
 }
 
 ion-input {

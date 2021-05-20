@@ -11,9 +11,7 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class PartnerInformationComponent implements OnInit {
 
-
-  codeSent = false;
-  validationSuccess: boolean;
+  submitted: boolean;
   constructor(private registrationService: RegistrationService) {
     this.registrationService.setStep(2);
    }
@@ -23,7 +21,7 @@ export class PartnerInformationComponent implements OnInit {
 
   nextStep()
   {
-    this.registrationService.next();
+    this.submitted = !this.submitted;
   }
 
   back()

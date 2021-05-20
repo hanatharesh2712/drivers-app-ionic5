@@ -9,6 +9,7 @@ import { DirectivesModule } from '@app/directives/directives.module';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { EmailValidationComponent } from './steps/email-validation/email-validation.component';
 import { PartnerInformationComponent } from './steps/partner-information/partner-information.component';
+import { ServiceInformationComponent } from './steps/service-information/service-information.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,15 @@ const routes: Routes = [
           }
         ]
       },
-
+      {
+        path: 'service-information',
+        children: [
+          {
+            path: '',
+            component: ServiceInformationComponent,
+          }
+        ]
+      },
     ]
   }
 ];
@@ -60,6 +69,7 @@ const routes: Routes = [
   declarations: [RegisterPageComponent,
     MobileValidationComponent,
     EmailValidationComponent,
-    PartnerInformationComponent]
+    PartnerInformationComponent,
+  ServiceInformationComponent]
 })
 export class RegisterModule { }

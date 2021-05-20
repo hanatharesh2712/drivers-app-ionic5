@@ -25,13 +25,18 @@ export class RegistrationService {
       title: 'Personal Information',
       done: false,
       url: 'register/partner-information'
+    },
+    {
+      title: 'Service Description',
+      done: false,
+      url: 'register/service-information'
     }
   ];
   actualStepIndex: number = 0;
   actualStep;
   onChangeStep = new BehaviorSubject({});
   constructor(private utl: UtilService) {
- 
+
   }
 
 
@@ -50,7 +55,15 @@ export class RegistrationService {
   }
 
   back() {
-    this.setStep(this.actualStepIndex - 1);
-    this.utl.goBack(this.actualStep.url);
+    if (this.actualStepIndex != 0)
+    {
+      this.setStep(this.actualStepIndex - 1);
+      this.utl.goBack(this.actualStep.url);
+    }
+    else
+    {
+      this.utl.goBack('login')
+    }
+
   }
 }
