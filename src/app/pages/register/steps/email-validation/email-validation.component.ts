@@ -11,7 +11,7 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class EmailValidationComponent implements OnInit {
 
-
+  email= '';
   codeSent = false;
   validationSuccess: boolean;
   constructor(private registrationService: RegistrationService) {
