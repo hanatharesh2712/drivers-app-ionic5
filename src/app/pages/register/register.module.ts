@@ -10,7 +10,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { EmailValidationComponent } from './steps/email-validation/email-validation.component';
 import { PartnerInformationComponent } from './steps/partner-information/partner-information.component';
 import { ServiceInformationComponent } from './steps/service-information/service-information.component';
-
+import { IonIntlTelInputModule } from 'ion-intl-tel-input';
 const routes: Routes = [
   {
     path: '',
@@ -64,6 +64,7 @@ const routes: Routes = [
     DirectivesModule,
     NgOtpInputModule,
     IonicModule,
+    IonIntlTelInputModule,
     RouterModule.forChild(routes)
   ],
   declarations: [RegisterPageComponent,

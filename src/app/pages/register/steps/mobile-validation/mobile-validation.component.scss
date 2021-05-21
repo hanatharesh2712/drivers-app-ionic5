@@ -29,6 +29,11 @@ app-mobile-validation {
     font-size: 14px;
     margin: 15px 0px;
     padding: 10px !important;
+
+    .ion-intl-tel-input-number
+    {
+      margin-left: 12px;
+    }
   }
 
   .success-text {

@@ -201,3 +201,20 @@ ion-skeleton-text {
   }
 }
 
+
+.ionic-tel-input-modal
+{
+  margin-top: 0px;
+
+  ion-title
+  {
+    text-align: left;
+    color: white;
+    padding-left: 12px;
+  }
+
+  ion-searchbar
+  {
+    text-align: left;
+  }
+}

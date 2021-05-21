@@ -3,8 +3,18 @@
     <h3>First, we need to validate your mobile number</h3>
     <h5 class='secondary-text'>We will send you a verification code</h5>
 
-    <ion-input appIntegerInput class="placeholder-text inputField ion-padding-start" type="tel"
-      placeholder="Enter mobile phone number" [(ngModel)]="phone" clearInput></ion-input>
+    <ion-intl-tel-input
+    id="phone-number"
+    defaultCountryiso="us"
+    enableAutoCountrySelect="true"
+    name="phone-number"
+    [modalShouldFocusSearchbar]="false"
+    [(ngModel)]="phoneNumber"
+    #phoneNumberControl="ngModel"
+    class="placeholder-text inputField ion-padding-start" >
+  </ion-intl-tel-input>
+
+
 
     <div class="ion-padding-vertical">
       <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit"

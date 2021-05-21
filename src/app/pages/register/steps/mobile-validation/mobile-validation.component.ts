@@ -11,7 +11,7 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class MobileValidationComponent implements OnInit {
 
-
+  phoneNumber = "";
   codeSent = false;
   validationSuccess: boolean;
   constructor(private registrationService: RegistrationService) {
