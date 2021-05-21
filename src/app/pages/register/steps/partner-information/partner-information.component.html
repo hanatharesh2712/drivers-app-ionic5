@@ -45,11 +45,11 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Email Address</ion-label>
-        <ion-input placeholder="Enter your email..." [disabled]="true"></ion-input>
+        <ion-input placeholder="Enter your email..." value="dev@moveo.net" [disabled]="true"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Mobile Number</ion-label>
-        <ion-input placeholder="Enter your mobile number.." [disabled]="true"></ion-input>
+        <ion-input placeholder="Enter your mobile number.." value="3179833835" [disabled]="true"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -112,7 +112,7 @@
 
 
       </ion-button>
-      <ion-button fill="solid" class="next" (click)="nextStep()">
+      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()">
         <div class="d-flex a-center">
           <span>{{submitted ? 'NEXT' : 'SUBMIT INFORMATION'}}</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>

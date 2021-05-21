@@ -2,6 +2,32 @@ app-partner-information {
 
 
 
+  .driver-segment
+  {
+    height: 50px;
+    margin-top: 24px;
+
+    border: 1px solid white;
+    ion-segment-button
+    {
+      margin: 0px;
+      --background-checked: var(--ion-theme-color);
+      --color-checked:  white;
+      --color: white;
+      --indicator-color :  var(--ion-theme-color); /* this solution */
+    }
+  }
+
+  .checkbox-policy
+  {
+    margin-top: 24px;
+
+    ion-checkbox
+    {
+
+    margin-right: 12px;
+    }
+  }
 
 
   .success-info {

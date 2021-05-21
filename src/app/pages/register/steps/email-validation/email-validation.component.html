@@ -3,8 +3,8 @@
     <h3>Now, we need to validate your email</h3>
     <h5 class='secondary-text'>We will send you a verification code</h5>
 
-    <ion-input appIntegerInput class="placeholder-text inputField ion-padding-start" type="tel"
-      placeholder="Enter mobile phone number" [(ngModel)]="phone" clearInput></ion-input>
+    <ion-input appIntegerInput class="placeholder-text inputField ion-padding-start" type="text"
+      placeholder="Enter email" [(ngModel)]="phone" clearInput></ion-input>
 
     <div class="ion-padding-vertical">
       <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit"
@@ -66,7 +66,7 @@
 
 
       </ion-button>
-      <ion-button fill="solid" class="next" (click)="nextStep()" [disabled]='!validationSuccess'>
+      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" [disabled]='!validationSuccess'>
         <div class="d-flex a-center">
           <span>NEXT</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>

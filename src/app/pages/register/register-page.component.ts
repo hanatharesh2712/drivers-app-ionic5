@@ -1,3 +1,4 @@
+import { Platform } from '@ionic/angular';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { RegistrationService } from '@app/services/registration.service';
 
@@ -15,8 +16,12 @@ export class RegisterPageComponent implements OnInit {
   actualStepIndex: any;
   percentageStep: number;
 
-  constructor(private registrationService: RegistrationService) {
+  constructor(private registrationService: RegistrationService, private platform: Platform) {
     this.stepsCount = this.registrationService.steps.length;
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.registrationService.back();
+    });
    }
 
   ngOnInit() {

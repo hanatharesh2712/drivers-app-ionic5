@@ -15,7 +15,7 @@ export class ServiceInformationComponent implements OnInit {
   codeSent = false;
   validationSuccess: boolean;
   constructor(private registrationService: RegistrationService) {
-    this.registrationService.setStep(2);
+    this.registrationService.setStep(3);
    }
 
   ngOnInit() {

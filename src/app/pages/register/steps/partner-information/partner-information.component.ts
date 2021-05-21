@@ -21,7 +21,14 @@ export class PartnerInformationComponent implements OnInit {
 
   nextStep()
   {
-    this.submitted = !this.submitted;
+    if (!this.submitted)
+    {
+      this.submitted = true;
+    }
+    else
+    {
+      this.registrationService.next();
+    }
   }
 
   back()

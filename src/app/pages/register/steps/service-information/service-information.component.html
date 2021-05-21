@@ -5,37 +5,36 @@
     <ion-list>
       <ion-item>
         <ion-label position="floating">MSA</ion-label>
-        <ion-input [disabled]="true"></ion-input>
+        <ion-input [disabled]="true" value="Florida"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Center of Service Area</ion-label>
-        <ion-input [disabled]="true"></ion-input>
+        <ion-input [disabled]="true" value="1200 anastasia avenue"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Primary Radius</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5</ion-select-option>
-          <ion-select-option value="10">10</ion-select-option>
-          <ion-select-option value="20">20</ion-select-option>
-          <ion-select-option value="50">50</ion-select-option>
+          <ion-select-option value="5">5 mil.</ion-select-option>
+          <ion-select-option value="10">10  mil.</ion-select-option>
+          <ion-select-option value="20">20  mil.</ion-select-option>
+          <ion-select-option value="50">50  mil.</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Airports</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL" multiple >
-          <ion-select-option value="5">5</ion-select-option>
-          <ion-select-option value="10">10</ion-select-option>
-          <ion-select-option value="20">20</ion-select-option>
-          <ion-select-option value="50">50</ion-select-option>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" multiple  class="select-full-width" >
+          <ion-select-option value="5">Miami International Airport</ion-select-option>
+          <ion-select-option value="10">Fort Lauderdale Itl</ion-select-option>
+          <ion-select-option value="20">Orlando International Airport</ion-select-option>
+          <ion-select-option value="50">Another Airport</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Cruise Ports</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL" multiple >
-          <ion-select-option value="5">5</ion-select-option>
-          <ion-select-option value="10">10</ion-select-option>
-          <ion-select-option value="20">20</ion-select-option>
-          <ion-select-option value="50">50</ion-select-option>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" multiple class="select-full-width" >
+          <ion-select-option value="5">Miami Cruiseport</ion-select-option>
+          <ion-select-option value="10">Fort Lauderdale Cruiseport</ion-select-option>
+          <ion-select-option value="20">Another Cruiseport</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -55,7 +54,7 @@
 
 
       </ion-button>
-      <ion-button fill="solid" class="next" (click)="nextStep()" [disabled]='!validationSuccess'>
+      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" [disabled]='!validationSuccess'>
         <div class="d-flex a-center">
           <span>NEXT</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
