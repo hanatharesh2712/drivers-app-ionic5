@@ -95,7 +95,7 @@ export class AppComponent {
       this.splashScreen.hide();
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     
-      this.version = '2.1.9';
+      this.version = '2.2.0';
     });
   }
 
