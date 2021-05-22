@@ -35,6 +35,8 @@ import { SMS } from '@ionic-native/sms/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { GreetingSignPageModule } from './pages/greeting-sign/greeting-sign.module';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -65,6 +67,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
     CallNumber,
     ScreenOrientation,
     Clipboard,
+    SmsRetriever,
     SMS,
     RouteGuard,
     GoogleMapsAPIWrapper,

@@ -13,7 +13,7 @@ import { DrvnAuthenticationService } from './../../services/auth/auth.service';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MenuController, Platform } from '@ionic/angular';
 import { UtilService } from '@app/services/util/util.service';
-declare var SMSReceive: any;
+import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
 
 @Component({
   selector: 'app-verify-otp',
@@ -35,7 +35,8 @@ export class VerifyOTPPage implements OnInit {
     private util: UtilService,
     private menuCtrl: MenuController,
     private authService: DrvnAuthenticationService,
-    private platform: Platform
+    private platform: Platform,
+    private smsRetriever: SmsRetriever
   ) {
     // this.inputFocus1 = true;
     this.menuCtrl.enable(false);
@@ -56,7 +57,20 @@ export class VerifyOTPPage implements OnInit {
     }
 
     if (this.platform.is('cordova')) {
-      SMSReceive.startWatch(
+      this.smsRetriever.startWatching()
+        .then((res: any) => {
+          if (res.Message) {
+          var IncomingSMS = res.Message;
+            if (IncomingSMS.body.includes(this.smsBody)) {
+              this.recivedCode = IncomingSMS.body.slice(-4);
+              this.ngOtpInput.setValue(this.recivedCode);
+              this.code = this.recivedCode;
+              this.verification();
+            }
+          }
+        })
+        .catch((error: any) => console.error(error));
+      /*SMSReceive.startWatch(
         () => {
           document.addEventListener('onSMSArrive', (e: any) => {
             var IncomingSMS = e.data;
@@ -69,7 +83,7 @@ export class VerifyOTPPage implements OnInit {
           });
         },
         () => { console.log('watch start failed') }
-      )
+      )*/
     }
 
 
@@ -86,7 +100,7 @@ export class VerifyOTPPage implements OnInit {
 
   verification() {
     if (this.platform.is('cordova')) {
-      SMSReceive.stopWatch();
+      
     }
     this.authService.login(this.phone, this.code)
       .then(response => {
