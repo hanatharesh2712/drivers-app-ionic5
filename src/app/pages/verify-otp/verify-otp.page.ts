@@ -25,6 +25,7 @@ export class VerifyOTPPage implements OnInit {
   public obj = document.getElementById('partitioned');
   verificationForm: any;
   phone: string;
+  hashCode = '';
   smsBody: string;
   code: any;
   recivedCode: any;
@@ -50,6 +51,7 @@ export class VerifyOTPPage implements OnInit {
 
   ngOnInit() {
     this.phone = this.authService.mobilePhone;
+    this.hashCode = this.authService.hashCode;
     this.smsBody = this.authService.smsBody;
 
     if (!this.phone) {
@@ -60,9 +62,10 @@ export class VerifyOTPPage implements OnInit {
       this.smsRetriever.startWatching()
         .then((res: any) => {
           if (res.Message) {
-          var IncomingSMS = res.Message;
-            if (IncomingSMS.body.includes(this.smsBody)) {
-              this.recivedCode = IncomingSMS.body.slice(-4);
+            var IncomingSMS = res.Message;
+            IncomingSMS = IncomingSMS.replace(' '+this.hashCode,'');
+            if (IncomingSMS.includes(this.smsBody)) {
+              this.recivedCode = IncomingSMS.slice(-4);
               this.ngOtpInput.setValue(this.recivedCode);
               this.code = this.recivedCode;
               this.verification();
@@ -128,7 +131,7 @@ export class VerifyOTPPage implements OnInit {
   resendCode() {
     if (this.secondsRemainingResendCode == 0) {
       this.authService
-        .sendCode(this.phone)
+        .sendCode(this.phone,this.hashCode)
         .then(async (response) => {
           this.secondsRemainingResendCode = 60;
           const toast = await this.util.createToast('Login code has been sent', true, 'bottom', 5000);

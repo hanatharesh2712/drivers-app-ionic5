@@ -10,8 +10,9 @@ import { DrvnAuthenticationService } from './../../services/auth/auth.service';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { UtilService } from '@app/services/util/util.service';
+import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
 
 @Component({
   selector: 'app-login',
@@ -22,17 +23,28 @@ export class LoginPage implements OnInit {
   public phone = '';
   public spinner = false;
   public disabled = false;
+  public hashCode = '';
 
   constructor(
     private route: Router,
     private menuCtrl: MenuController,
     private authService: DrvnAuthenticationService,
-    private util: UtilService
+    private util: UtilService,
+    private platform: Platform,
+    private smsRetriever: SmsRetriever
   ) {
     this.menuCtrl.enable(false);
   }
 
   ngOnInit() {
+    if (this.platform.is('cordova')) {
+      this.smsRetriever.getAppHash()
+        .then((res: any) => {
+          this.hashCode = res;
+          console.log(this.hashCode);
+        })
+        .catch((error: any) => console.error(error));
+    }
   }
 
   setSpinner() {
@@ -49,12 +61,12 @@ export class LoginPage implements OnInit {
     this.setSpinner();
 
     this.authService
-      .sendCode(this.phone)
+      .sendCode(this.phone,this.hashCode)
       .then(
         async res => {
             if (res.status.toUpperCase() == 'SUCCESS')
             {
-              this.util.goForward('verify-otp', {phone: this.phone})
+              this.util.goForward('verify-otp', {phone: this.phone, hashCode: this.hashCode})
               this.clearSpinner();
             }
             else
