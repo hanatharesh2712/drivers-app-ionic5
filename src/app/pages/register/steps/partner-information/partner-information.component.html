@@ -13,7 +13,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Company Structure</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+        <ion-select value="null"   [interfaceOptions]="companySelectOptions" okText="SELECT" cancelText="CANCEL">
           <ion-select-option value="brown">Sole Proprietorship / Individual</ion-select-option>
           <ion-select-option value="blonde">Limited Liability Company</ion-select-option>
           <ion-select-option value="black">Corporation</ion-select-option>
@@ -61,11 +61,11 @@
         <ion-input type="password" placeholder="Minimum 6 characters"></ion-input>
       </ion-item>
     </ion-list>
-      <ion-segment class="driver-segment">
-        <ion-segment-button value="standard">
+      <ion-segment class="driver-segment" [(ngModel)]="is_driver">
+        <ion-segment-button [value]="true">
           <ion-label>I'm a driver</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="hybrid">
+        <ion-segment-button [value]="false">
           <ion-label>I'm NOT a driver</ion-label>
         </ion-segment-button>
 

@@ -16,14 +16,7 @@
 
 
 
-    <div class="ion-padding-vertical">
-      <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit"
-        (click)="sendVerificationCode()">SEND ME THE CODE
-        <span *ngIf="spinner">
-          <ion-spinner name="lines"></ion-spinner>
-        </span>
-      </ion-button>
-    </div>
+   
   </ion-card>
 
   <ion-card *ngIf="codeSent && !validationSuccess">
@@ -36,14 +29,7 @@
     </div>
 
 
-    <div class="ion-padding-vertical">
-      <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit" (click)="verifyCode()">VERIFY
-        MY NUMBER
-        <span *ngIf="spinner">
-          <ion-spinner name="lines"></ion-spinner>
-        </span>
-      </ion-button>
-    </div>
+   
   </ion-card>
 
   <ion-card *ngIf="codeSent && validationSuccess">
@@ -76,9 +62,9 @@
 
 
       </ion-button>
-      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()" [disabled]='!validationSuccess'>
+      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()" >
         <div class="d-flex a-center">
-          <span>NEXT</span>
+          <span>{{!codeSent ? 'SEND ME THE CODE' : !validationSuccess ? 'VERIFY MY NUMBER' : 'NEXT'}}</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
 

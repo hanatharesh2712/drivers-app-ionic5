@@ -1,0 +1,21 @@
+app-payment-information {
+
+  .payment-terms
+  {
+    .value
+    {
+      color: var(--ion-theme-color);
+      font-weight: bold;
+    }
+  }
+
+  .payment-info
+  {
+    --border-color: transparent;
+    padding-top: 12px;
+    font-size: 1.4rem;
+    color: grey;
+    text-align: center;
+  }
+  
+}

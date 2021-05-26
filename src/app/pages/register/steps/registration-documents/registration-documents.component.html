@@ -1,0 +1,109 @@
+<ion-content>
+  <ion-card>
+    <h3>We almost done, but we need some documents...</h3>
+
+    <ion-list lines='none'>
+      <ion-list-header>
+        <ion-label>  Company Documents</ion-label>
+      
+      </ion-list-header>
+      <ion-item>
+        <document-item></document-item>
+      </ion-item>
+      <ion-item>
+        <div class='file-uploader'>
+            <div class="name">
+                Driver License
+            </div>
+            <div class="status">
+              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
+            </div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <div class='file-uploader'>
+            <div class="name">
+                Driver License
+            </div>
+            <div class="status">
+              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
+            </div>
+        </div>
+      </ion-item>
+
+
+    </ion-list>
+    <ion-list lines='none' *ngIf="is_driver">
+      <ion-list-header>
+        <ion-label>  Driver Documents</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <div class='file-uploader'>
+            <div class="name">
+                Driver License
+            </div>
+            <div class="status">
+              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
+            </div>
+        </div>
+      </ion-item>
+  
+      <ion-item>
+        <div class='file-uploader'>
+            <div class="name">
+                Driver License
+            </div>
+            <div class="status">
+              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
+            </div>
+        </div>
+      </ion-item>
+
+
+    </ion-list>
+    <ion-list lines='none' *ngIf="is_driver">
+      <ion-list-header>
+        Vehicle Documents
+      </ion-list-header>
+      <ion-item>
+        <div class='file-uploader'>
+            <div class="name">
+              <ion-label>  Driver License</ion-label>
+            </div>
+            <div class="status">
+              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
+            </div>
+        </div>
+      </ion-item>
+  
+    
+
+
+    </ion-list>
+  </ion-card>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button class="back" (click)="back()">
+        <div class="d-flex a-center">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+          BACK
+        </div>
+
+
+      </ion-button>
+      <ion-button fill="solid" class="next" color="primary" (click)="nextStep()">
+        <div class="d-flex a-center">
+          <span>NEXT</span>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+
+      </ion-button>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

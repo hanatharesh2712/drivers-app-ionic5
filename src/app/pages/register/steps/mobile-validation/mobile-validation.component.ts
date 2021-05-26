@@ -31,6 +31,16 @@ export class MobileValidationComponent implements OnInit {
 
   nextStep()
   {
+    if (!this.codeSent)
+    {
+      this.codeSent = true;
+      return;
+    }
+    if (this.codeSent && !this.validationSuccess)
+    {
+      this.validationSuccess = true;
+      return;
+    }
     this.registrationService.next();
   }
 

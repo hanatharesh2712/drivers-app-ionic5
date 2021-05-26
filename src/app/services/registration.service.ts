@@ -4,6 +4,7 @@ import { Review } from '@app/models/review';
 import { environment } from '@env/environment';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
+import { Storage } from '@ionic/storage';
 import { UtilService } from './util/util.service';
 @Injectable({
   providedIn: 'root'
@@ -14,28 +15,58 @@ export class RegistrationService {
     {
       title: 'Mobile Validation',
       done: false,
-      url: 'register/mobile-validation'
+      url: 'register/mobile-validation',
+      section: 'Validation'
     },
     {
       title: 'Email Validation',
       done: false,
-      url: 'register/email-validation'
+      url: 'register/email-validation',
+      section: 'Validation'
     },
     {
       title: 'Personal Information',
       done: false,
-      url: 'register/partner-information'
+      url: 'register/partner-information',
+      section: 'Registration'
     },
     {
       title: 'Service Description',
       done: false,
-      url: 'register/service-information'
+      url: 'register/service-information',
+      section: 'Registration'
+    },
+    {
+      title: 'Vehicle Information',
+      done: false,
+      url: 'register/vehicle-information',
+      section: 'Registration'
+    },
+    {
+      title: 'Required Documents',
+      done: false,
+      url: 'register/documents',
+      section: 'Registration'
+    },
+    {
+      title: 'Agreement',
+      done: false,
+      url: 'register/agreement',
+      section: 'Registration'
+    },
+    {
+      title: 'Payment information',
+      done: false,
+      url: 'register/payment-information',
+       section: 'Registration'
     }
   ];
   actualStepIndex: number = 0;
   actualStep;
   onChangeStep = new BehaviorSubject({});
-  constructor(private utl: UtilService) {
+  storageInfo: any;
+  constructor(private utl: UtilService,
+    private storage: Storage) {
 
   }
 
@@ -65,5 +96,25 @@ export class RegistrationService {
       this.utl.goBack('login')
     }
 
+  }
+
+  initStorageData()
+  {
+    this.storage.set('registration', {}).then((newStorageInfo) => {
+      this.storageInfo = newStorageInfo;
+    });
+    
+  }
+
+  get _storageInfo()
+  {
+    return this.storageInfo;
+  }
+
+  set _storageInfo(value)
+  {
+    this.storage.set('registration', value).then((newStorageInfo) => {
+      this.storageInfo = newStorageInfo;
+    });
   }
 }

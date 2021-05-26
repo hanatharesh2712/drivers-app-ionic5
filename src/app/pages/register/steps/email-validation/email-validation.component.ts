@@ -26,10 +26,21 @@ export class EmailValidationComponent implements OnInit {
   }
 
   verifyCode() {
+    
     this.validationSuccess = true;
   }
 
   nextStep() {
+    if (!this.codeSent)
+    {
+      this.codeSent = true;
+      return;
+    }
+    if (this.codeSent && !this.validationSuccess)
+    {
+      this.validationSuccess = true;
+      return;
+    }
     this.registrationService.next();
   }
 

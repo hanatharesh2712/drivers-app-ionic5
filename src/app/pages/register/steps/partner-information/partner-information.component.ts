@@ -12,27 +12,36 @@ import { UtilService } from '@app/services/util/util.service';
 export class PartnerInformationComponent implements OnInit {
 
   submitted: boolean;
-  constructor(private registrationService: RegistrationService) {
+  is_driver: boolean = true;
+  companySelectOptions = {
+    header: 'Company Structure',
+    message: 'Select the legal form of your company',
+    translucent: true
+  };
+  storage: any;
+  constructor(private registrationService: RegistrationService,
+    private util: UtilService) {
     this.registrationService.setStep(2);
-   }
+  }
 
   ngOnInit() {
+   
   }
 
-  nextStep()
-  {
-    if (!this.submitted)
-    {
+  nextStep() {
+    if (!this.submitted) {
       this.submitted = true;
     }
-    else
-    {
+    else {
+      let storage = this.registrationService._storageInfo;
+      storage.is_driver = this.is_driver;
+      this.registrationService._storageInfo = storage;
       this.registrationService.next();
+      this.submitted = false;
     }
   }
 
-  back()
-  {
+  back() {
     this.registrationService.back();
   }
 }

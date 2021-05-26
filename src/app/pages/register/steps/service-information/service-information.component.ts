@@ -14,6 +14,16 @@ export class ServiceInformationComponent implements OnInit {
 
   codeSent = false;
   validationSuccess: boolean;
+  airportsSelectOptions = {
+    header: 'Airports',
+    message: 'Select airports that you will give service',
+    translucent: true
+  };
+  cruisePortsSelectOptions = {
+    header: 'Cruise Ports',
+    message: 'Select cruise ports that you will give service',
+    translucent: true
+  };
   constructor(private registrationService: RegistrationService) {
     this.registrationService.setStep(3);
    }

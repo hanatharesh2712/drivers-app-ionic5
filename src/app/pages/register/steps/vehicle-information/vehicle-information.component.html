@@ -1,0 +1,166 @@
+<ion-content *ngIf="storage">
+  <ion-card *ngIf="is_driver">
+    <h3>Wich is your main vehicle?</h3>
+   
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Vehicle class</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+          <ion-select-option value="5">5 mil.</ion-select-option>
+          <ion-select-option value="10">10  mil.</ion-select-option>
+          <ion-select-option value="20">20  mil.</ion-select-option>
+          <ion-select-option value="50">50  mil.</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Vehicle</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+          <ion-select-option value="5">5 mil.</ion-select-option>
+          <ion-select-option value="10">10  mil.</ion-select-option>
+          <ion-select-option value="20">20  mil.</ion-select-option>
+          <ion-select-option value="50">50  mil.</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Model/Year</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+          <ion-select-option value="5">5 mil.</ion-select-option>
+          <ion-select-option value="10">10  mil.</ion-select-option>
+          <ion-select-option value="20">20  mil.</ion-select-option>
+          <ion-select-option value="50">50  mil.</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Exterior Color</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+          <ion-select-option value="5">5 mil.</ion-select-option>
+          <ion-select-option value="10">10  mil.</ion-select-option>
+          <ion-select-option value="20">20  mil.</ion-select-option>
+          <ion-select-option value="50">50  mil.</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Interior Color</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+          <ion-select-option value="5">5 mil.</ion-select-option>
+          <ion-select-option value="10">10  mil.</ion-select-option>
+          <ion-select-option value="20">20  mil.</ion-select-option>
+          <ion-select-option value="50">50  mil.</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Passenger Capacity</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+          <ion-select-option value="5">5 mil.</ion-select-option>
+          <ion-select-option value="10">10  mil.</ion-select-option>
+          <ion-select-option value="20">20  mil.</ion-select-option>
+          <ion-select-option value="50">50  mil.</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Luggage Capacity</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+          <ion-select-option value="5">5 mil.</ion-select-option>
+          <ion-select-option value="10">10  mil.</ion-select-option>
+          <ion-select-option value="20">20  mil.</ion-select-option>
+          <ion-select-option value="50">50  mil.</ion-select-option>
+        </ion-select>
+      </ion-item>
+     
+    </ion-list>
+
+  </ion-card>
+
+  <ion-card *ngIf="!is_driver" class="affiliate">
+    <h3>Please tell us how many vehicle do you have?</h3>
+    <ion-list>
+      <ion-item>
+        <div class='d-flex j-between a-center w-100-p'>
+          <div class="vehicle-class-name">
+            Executive Sedan
+           </div>
+  
+           <div class="d-flex a-center increase-container">
+            <ion-icon name="remove-circle-outline" (click)="decrease()"></ion-icon>
+            <span class="value">
+              0
+            </span>
+            <ion-icon name="add-circle-outline" (click)="increase()"></ion-icon>
+          </div>
+        </div>
+        
+      </ion-item>
+      <ion-item>
+        <div class='d-flex j-between a-center w-100-p'>
+          <div class="vehicle-class-name">
+            Executive Sedan
+           </div>
+  
+           <div class="d-flex a-center increase-container">
+            <ion-icon name="remove-circle-outline" (click)="decrease()"></ion-icon>
+            <span class="value">
+             0
+            </span>
+            <ion-icon name="add-circle-outline" (click)="increase()"></ion-icon>
+          </div>
+        </div>
+        
+      </ion-item>
+      <ion-item>
+        <div class='d-flex j-between a-center w-100-p'>
+          <div class="vehicle-class-name">
+            Executive Suv
+           </div>
+  
+           <div class="d-flex a-center increase-container">
+            <ion-icon name="remove-circle-outline" (click)="decrease()"></ion-icon>
+            <span class="value">
+              0
+            </span>
+            <ion-icon name="add-circle-outline" (click)="increase()"></ion-icon>
+          </div>
+        </div>
+        
+      </ion-item>
+      <ion-item>
+        <div class='d-flex j-between a-center w-100-p'>
+          <div class="vehicle-class-name">
+            Executive Van
+           </div>
+  
+           <div class="d-flex a-center increase-container">
+            <ion-icon name="remove-circle-outline" (click)="decrease()"></ion-icon>
+            <span class="value">
+              0
+            </span>
+            <ion-icon name="add-circle-outline" (click)="increase()"></ion-icon>
+          </div>
+        </div>
+        
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button class="back" (click)="back()">
+        <div class="d-flex a-center">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+          BACK
+        </div>
+
+
+      </ion-button>
+      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" >
+        <div class="d-flex a-center">
+          <span>NEXT</span>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+
+      </ion-button>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

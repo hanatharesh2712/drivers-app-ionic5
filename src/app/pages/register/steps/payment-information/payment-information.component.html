@@ -1,0 +1,81 @@
+<ion-content>
+  <ion-card>
+    <h3>The good thing now, how we will pay you...</h3>
+   
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Payment Preference</ion-label>
+            <ion-select value="amex"  okText="SELECT" cancelText="CANCEL" [(ngModel)]="payment_method">
+              <ion-select-option value="amex">American Express</ion-select-option>
+              <ion-select-option value="ach">Bank Transfer / ACH</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Payment Terms</ion-label>
+          <ion-input [disabled]="true" [value]="is_driver || payment_method == 'ach' ? 'Bi-weekly' : 'Weekly' "></ion-input>
+        </ion-item>
+        <ion-item class="payment-info">
+          Rides completed and settled prior to 5:00PM EST Wednesday, will be processed on Friday.
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="payment_method == 'ach'">
+          <ion-list-header>
+            <ion-label> Bank Information</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label position="floating">Bank name</ion-label>
+            <ion-input placeholder="Enter your first name..."></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Account holder's name</ion-label>
+            <ion-input placeholder="Enter your last name..."></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Account Type</ion-label>
+            <ion-select   okText="SELECT" cancelText="CANCEL">
+              <ion-select-option value="amex">Business Checking</ion-select-option>
+              <ion-select-option value="ach">Business Saving </ion-select-option>
+              <ion-select-option value="amex">Personal Checking</ion-select-option>
+              <ion-select-option value="ach">Personal Saving </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Routing Number (9 digits)</ion-label>
+            <ion-input placeholder="Enter your routing number.."></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Acc. Number (6-17 digits)</ion-label>
+            <ion-input placeholder="Enter your account number.."  ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Re-enter Acc. Number</ion-label>
+            <ion-input placeholder="Re-Enter your account number.."  ></ion-input>
+          </ion-item>
+      </ion-list>
+    </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+  
+    <ion-buttons>
+      <ion-button class="back" (click)="back()">
+        <div class="d-flex a-center">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+          BACK
+        </div>
+
+
+      </ion-button>
+      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()">
+        <div class="d-flex a-center">
+          <span>NEXT</span>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+
+      </ion-button>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -18,7 +18,7 @@ export class RegisterPageComponent implements OnInit {
 
   constructor(private registrationService: RegistrationService, private platform: Platform) {
     this.stepsCount = this.registrationService.steps.length;
-
+    this.registrationService.initStorageData();
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.registrationService.back();
     });
@@ -26,11 +26,16 @@ export class RegisterPageComponent implements OnInit {
 
   ngOnInit() {
     this.registrationService.onChangeStep.subscribe(() => {
-      this.stepsCount = this.registrationService.steps.length;
+      if (!this.registrationService.actualStep)
+      {
+        return;
+      }
       this.actualStep = this.registrationService.actualStep;
+      let sectionSteps = this.registrationService.steps.filter(e => e.section == this.actualStep.section);
+      this.stepsCount = sectionSteps.length;
       this.nextStep = this.registrationService.steps[this.registrationService.actualStepIndex + 1];
-      this.actualStepIndex = this.registrationService.actualStepIndex;
-      this.percentageStep = Math.trunc((100 / this.registrationService.steps.length) * (this.actualStepIndex + 1));
+      this.actualStepIndex = sectionSteps.findIndex(e => e.title == this.actualStep.title);
+      this.percentageStep = Math.trunc((100 / sectionSteps.length) * (this.actualStepIndex + 1));
     })
   }
 

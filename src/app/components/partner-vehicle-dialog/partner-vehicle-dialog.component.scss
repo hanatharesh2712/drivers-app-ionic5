@@ -1,0 +1,57 @@
+.partner-vehicle-dialog {
+  margin-top: 0px;
+  --height: 400px;
+  padding: 0px 12px;
+  //  padding: 30% 12px;
+}
+
+app-partner-vehicle-dialog {
+  ion-header {
+    text-align: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.2);
+
+    .subtitle {
+      margin: 12px 0px;
+      font-size: 1.5rem;
+    }
+  }
+
+  ion-select
+  {
+      width: 100%;
+      border-bottom: 1px solid #8080805e;
+      margin-bottom: 12px;
+  }
+  ion-content {
+    --background: white;
+    --padding-top: 36px;
+    --padding-bottom: 24px;
+  }
+
+  ion-footer
+  {
+      ion-button
+      {
+        margin: 0px;
+      }
+  }
+
+  .increase-container {
+    display: flex;
+    margin-top: 24px;
+    justify-content: center;
+
+    ion-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .value {
+      font-size: 5rem;
+      margin: 0px 24px;
+    }
+  }
+
+
+}

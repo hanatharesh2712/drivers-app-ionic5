@@ -1,0 +1,39 @@
+app-vehicle-information {
+
+    .affiliate
+    {
+        ion-item
+        {
+            margin-bottom: 12px;
+            .vehicle-class-name
+            {
+                color: var(--ion-theme-color-lighter);
+                font-size: 1.6rem;
+
+                &.active
+                {
+                    color: var(--ion-theme-color);
+                }
+            }
+            .increase-container {
+                display: flex;
+                justify-content: center;
+            
+                ion-icon {
+                  width: 30px;
+                  height: 30px;
+                }
+            
+                .value {
+                  font-size: 2.5rem;
+                  margin: 0px 12px;
+                }
+              }
+            
+        
+        
+        }
+    }
+    
+ 
+}

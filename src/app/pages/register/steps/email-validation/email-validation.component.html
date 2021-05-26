@@ -6,14 +6,7 @@
     <ion-input appIntegerInput class="placeholder-text inputField ion-padding-start" type="email"
       placeholder="Enter email" [(ngModel)]="email" clearInput></ion-input>
 
-    <div class="ion-padding-vertical">
-      <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit"
-        (click)="sendVerificationCode()">SEND ME THE EMAIL
-        <span *ngIf="spinner">
-          <ion-spinner name="lines"></ion-spinner>
-        </span>
-      </ion-button>
-    </div>
+    
   </ion-card>
 
   <ion-card *ngIf="codeSent && !validationSuccess">
@@ -26,14 +19,7 @@
     </div>
 
 
-    <div class="ion-padding-vertical">
-      <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit" (click)="verifyCode()">VERIFY
-        MY EMAIL
-        <span *ngIf="spinner">
-          <ion-spinner name="lines"></ion-spinner>
-        </span>
-      </ion-button>
-    </div>
+   
   </ion-card>
 
   <ion-card *ngIf="codeSent && validationSuccess">
@@ -66,9 +52,9 @@
 
 
       </ion-button>
-      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" [disabled]='!validationSuccess'>
+      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()">
         <div class="d-flex a-center">
-          <span>NEXT</span>
+          <span>{{!codeSent ? 'SEND ME THE EMAIL' : !validationSuccess ? 'VERIFY MY EMAIL' : 'NEXT'}}</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
 

@@ -1,0 +1,36 @@
+<div class="ion-page">
+  <ion-header>
+    <h2>Add Vehicle Class</h2>
+
+    <div class="subtitle">Select your vehicle class and count</div>
+  </ion-header>
+
+  <ion-content>
+    <ion-item lines='none'>
+      <ion-select value="null"  placeholder='Select vehicle class' okText="SELECT"
+        cancelText="CANCEL">
+        <ion-select-option value="brown">Executive Sedan</ion-select-option>
+        <ion-select-option value="blonde">Executive SUV</ion-select-option>
+        <ion-select-option value="black">Van</ion-select-option>
+        <ion-select-option value="red">Minibus</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div lines='none' class="increase-container">
+      <div class="d-flex a-center">
+        <ion-icon name="remove-circle-outline"></ion-icon>
+        <span class="value">
+          1
+        </span>
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </div>
+    </div>
+
+  </ion-content>
+  <ion-footer>
+    <ion-button expand="full" fill="solid" size="large" color="primary" class="send-btn"
+      >
+      ADD VEHICLE CLASS
+    </ion-button>
+  </ion-footer>
+
+</div>

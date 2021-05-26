@@ -1,0 +1,21 @@
+:host {
+
+  .content {
+    color: white;
+    font-size: 1.6rem;
+    padding: 24px;
+    text-align: justify;
+
+  }
+
+  .checkbox
+  {
+    padding-left: 24px;
+    --background: var(--ion-secondary-bg-color);
+
+    ion-checkbox
+    {
+      margin-right: 12px;
+    }
+  }
+}

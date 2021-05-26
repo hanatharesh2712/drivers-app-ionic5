@@ -11,6 +11,13 @@ import { EmailValidationComponent } from './steps/email-validation/email-validat
 import { PartnerInformationComponent } from './steps/partner-information/partner-information.component';
 import { ServiceInformationComponent } from './steps/service-information/service-information.component';
 import { IonIntlTelInputModule } from 'ion-intl-tel-input';
+import { VehicleInformationComponent } from './steps/vehicle-information/vehicle-information.component';
+import { PartnerVehicleDialogModule } from '@app/components/partner-vehicle-dialog/partner-vehicle-dialog.module';
+import { IonicStorageModule } from '@ionic/storage';
+import { RegistrationDocumentsComponent } from './steps/registration-documents/registration-documents.component';
+import { DocumentItemModule } from '@app/components/document-item/document-item.module';
+import { RegistrationAgreementComponent } from './steps/registration-agreement/registration-agreement.component';
+import { PaymentInformationComponent } from './steps/payment-information/payment-information.component';
 const routes: Routes = [
   {
     path: '',
@@ -52,6 +59,42 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'vehicle-information',
+        children: [
+          {
+            path: '',
+            component: VehicleInformationComponent,
+          }
+        ]
+      },
+      {
+        path: 'documents',
+        children: [
+          {
+            path: '',
+            component: RegistrationDocumentsComponent,
+          }
+        ]
+      },
+      {
+        path: 'agreement',
+        children: [
+          {
+            path: '',
+            component: RegistrationAgreementComponent,
+          }
+        ]
+      },
+      {
+        path: 'payment-information',
+        children: [
+          {
+            path: '',
+            component: PaymentInformationComponent,
+          }
+        ]
+      },
     ]
   }
 ];
@@ -64,13 +107,20 @@ const routes: Routes = [
     DirectivesModule,
     NgOtpInputModule,
     IonicModule,
+    DocumentItemModule,
     IonIntlTelInputModule,
+    PartnerVehicleDialogModule,
     RouterModule.forChild(routes)
   ],
   declarations: [RegisterPageComponent,
     MobileValidationComponent,
     EmailValidationComponent,
     PartnerInformationComponent,
-  ServiceInformationComponent]
+    ServiceInformationComponent,
+    
+    RegistrationDocumentsComponent,
+    RegistrationAgreementComponent,
+    PaymentInformationComponent,
+    VehicleInformationComponent]
 })
 export class RegisterModule { }
