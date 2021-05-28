@@ -197,7 +197,12 @@ ion-skeleton-text {
 
   .alert-wrapper
   {
-    --min-width: 90%
+    --min-width: 90%;
+    .sc-ion-alert-md
+    {
+      max-height: 270px !important;
+    }
+  
   }
 }
 

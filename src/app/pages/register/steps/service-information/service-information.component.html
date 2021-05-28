@@ -1,25 +1,17 @@
 <ion-content>
   <ion-card >
-    <h3>Let us know where you wanna give service...</h3>
+    <h3>Tell us more about your services...</h3>
 
     <ion-list>
       <ion-item>
-        <ion-label position="floating">MSA</ion-label>
+        <ion-label position="floating">Metropolitan Service Area</ion-label>
         <ion-input [disabled]="true" value="Florida"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Center of Service Area</ion-label>
         <ion-input [disabled]="true" value="1200 anastasia avenue"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">Primary Radius</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5 mil.</ion-select-option>
-          <ion-select-option value="10">10  mil.</ion-select-option>
-          <ion-select-option value="20">20  mil.</ion-select-option>
-          <ion-select-option value="50">50  mil.</ion-select-option>
-        </ion-select>
-      </ion-item>
+   
       <ion-item>
         <ion-label position="floating">Airports</ion-label>
         <ion-select value="null" okText="SELECT" [interfaceOptions]="airportsSelectOptions"  cancelText="CANCEL" multiple  class="select-full-width" >
@@ -38,8 +30,8 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Optional Services</ion-label>
-        <ion-select value="null" okText="SELECT"   cancelText="CANCEL" multiple class="select-full-width" >
+        <ion-label position="floating">Additional Services</ion-label>
+        <ion-select value="null" okText="SELECT"  [interfaceOptions]="additionalServicesOption"  cancelText="CANCEL" multiple class="select-full-width" >
           <ion-select-option value="5">Childseats</ion-select-option>
           <ion-select-option value="5">Greeter</ion-select-option>
           <ion-select-option value="5">Tour Guide</ion-select-option>

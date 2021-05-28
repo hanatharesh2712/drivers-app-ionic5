@@ -14,6 +14,7 @@ export class MobileValidationComponent implements OnInit {
   phoneNumber = "";
   codeSent = false;
   validationSuccess: boolean;
+  secondsRemainingResendCode: number = 60;
   constructor(private registrationService: RegistrationService) {
     this.registrationService.setStep(0);
    }
@@ -34,6 +35,12 @@ export class MobileValidationComponent implements OnInit {
     if (!this.codeSent)
     {
       this.codeSent = true;
+      setInterval(() => {
+        if (this.secondsRemainingResendCode > 0) {
+          this.secondsRemainingResendCode--;
+        }
+  
+      }, 1000)
       return;
     }
     if (this.codeSent && !this.validationSuccess)

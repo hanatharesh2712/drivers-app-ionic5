@@ -33,7 +33,7 @@ export class RegisterPageComponent implements OnInit {
       this.actualStep = this.registrationService.actualStep;
       let sectionSteps = this.registrationService.steps.filter(e => e.section == this.actualStep.section);
       this.stepsCount = sectionSteps.length;
-      this.nextStep = this.registrationService.steps[this.registrationService.actualStepIndex + 1];
+      this.nextStep = sectionSteps[this.registrationService.actualStepIndex + 1];
       this.actualStepIndex = sectionSteps.findIndex(e => e.title == this.actualStep.title);
       this.percentageStep = Math.trunc((100 / sectionSteps.length) * (this.actualStepIndex + 1));
     })

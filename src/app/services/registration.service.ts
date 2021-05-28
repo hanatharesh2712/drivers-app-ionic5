@@ -13,19 +13,19 @@ import { UtilService } from './util/util.service';
 export class RegistrationService {
   steps = [
     {
-      title: 'Mobile Validation',
+      title: 'Mobile Verification',
       done: false,
       url: 'register/mobile-validation',
-      section: 'Validation'
+      section: 'Verification Proccess'
     },
     {
-      title: 'Email Validation',
+      title: 'Email Verification',
       done: false,
       url: 'register/email-validation',
-      section: 'Validation'
+      section: 'Verification Proccess'
     },
     {
-      title: 'Personal Information',
+      title: 'Company Information',
       done: false,
       url: 'register/partner-information',
       section: 'Registration'
@@ -55,7 +55,7 @@ export class RegistrationService {
       section: 'Registration'
     },
     {
-      title: 'Payment information',
+      title: 'Payment Payment Preference',
       done: false,
       url: 'register/payment-information',
        section: 'Registration'

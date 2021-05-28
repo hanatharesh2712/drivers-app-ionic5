@@ -18,9 +18,16 @@ app-partner-information {
     }
   }
 
-  .checkbox-policy
+  .terms
   {
+    display: flex;
+    flex-direction: column;
     margin-top: 24px;
+
+    >div
+    {
+      margin-bottom: 4px;
+    }
 
     ion-checkbox
     {

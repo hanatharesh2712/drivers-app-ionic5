@@ -1,38 +1,41 @@
 <ion-content>
   <ion-card *ngIf="!codeSent">
     <h3>First, we need to validate your mobile number</h3>
-    <h5 class='secondary-text'>We will send you a verification code</h5>
+    <h5 class='secondary-text'>We will send you a text message with a one-time four digit code.
+      <br>
+      Standard message and data rates may apply.
+    </h5>
 
-    <ion-intl-tel-input
-    id="phone-number"
-    defaultCountryiso="us"
-    enableAutoCountrySelect="true"
-    name="phone-number"
-    [modalShouldFocusSearchbar]="false"
-    [(ngModel)]="phoneNumber"
-    #phoneNumberControl="ngModel"
-    class="placeholder-text inputField ion-padding-start" >
-  </ion-intl-tel-input>
+    <ion-intl-tel-input id="phone-number" defaultCountryiso="us" enableAutoCountrySelect="true" name="phone-number"
+      [modalShouldFocusSearchbar]="false" [(ngModel)]="phoneNumber" #phoneNumberControl="ngModel"
+      class="placeholder-text inputField ion-padding-start">
+    </ion-intl-tel-input>
 
 
 
-   
+
   </ion-card>
 
-  <ion-card *ngIf="codeSent && !validationSuccess">
+  <ion-card *ngIf="codeSent && !validationSuccess" class="otp">
     <h3>Verification Code</h3>
-    <h5 class='secondary-text'>Enter code we've sent on given number</h5>
+    <h5 class='secondary-text'>Enter your one-time four digit code.
+      <br>Code will be valid for 15 minutes.
+    </h5>
 
     <div class="otp-container ion-padding-vertical ion-text-center">
       <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" [config]="{length:4, allowNumbersOnly: true}">
       </ng-otp-input>
     </div>
 
+    <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical resend-link" [ngClass]="{'active': secondsRemainingResendCode <= 0}" >
+      <span (click)="resendCode()">Resend code <ng-container *ngIf="secondsRemainingResendCode > 0">({{secondsRemainingResendCode}})</ng-container></span>
+   </div>
 
-   
+
+
   </ion-card>
 
-  <ion-card *ngIf="codeSent && validationSuccess">
+  <ion-card *ngIf="codeSent && validationSuccess" class="check">
     <div class="d-flex column a-center">
       <div class="success-checkmark">
         <div class="check-icon">
@@ -42,10 +45,10 @@
           <div class="icon-fix"></div>
         </div>
       </div>
-      <h3 class="success-text">Mobile validation success!</h3>
+      <h3 class="success-text">One step closer, mobile verification success!</h3>
     </div>
 
-    <h5 class=' next-text ion-text-center'>Click "Next" to continue with you registration proccess.</h5>
+    <h5 class=' next-text ion-text-center'>Click "Next" and continue with the verificationproccess.</h5>
 
   </ion-card>
 
@@ -54,7 +57,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons>
-      <ion-button class="back"  (click)="back()">
+      <ion-button class="back" (click)="back()">
         <div class="d-flex a-center">
           <ion-icon name="chevron-back-outline"></ion-icon>
           BACK
@@ -62,9 +65,9 @@
 
 
       </ion-button>
-      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()" >
+      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()">
         <div class="d-flex a-center">
-          <span>{{!codeSent ? 'SEND ME THE CODE' : !validationSuccess ? 'VERIFY MY NUMBER' : 'NEXT'}}</span>
+          <span>{{!codeSent ? 'SEND ME THE TEXT' : !validationSuccess ? 'VERIFY MY NUMBER' : 'NEXT'}}</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
 

@@ -12,10 +12,10 @@ import { UtilService } from '@app/services/util/util.service';
 export class PartnerInformationComponent implements OnInit {
 
   submitted: boolean;
-  is_driver: boolean = true;
+  is_driver = 'true';
   companySelectOptions = {
     header: 'Company Structure',
-    message: 'Select the legal form of your company',
+    message: 'Select the legal business entity of your company (US companies only)',
     translucent: true
   };
   storage: any;
@@ -29,16 +29,11 @@ export class PartnerInformationComponent implements OnInit {
   }
 
   nextStep() {
-    if (!this.submitted) {
-      this.submitted = true;
-    }
-    else {
-      let storage = this.registrationService._storageInfo;
-      storage.is_driver = this.is_driver;
-      this.registrationService._storageInfo = storage;
-      this.registrationService.next();
-      this.submitted = false;
-    }
+    let storage = this.registrationService._storageInfo;
+    storage.is_driver = this.is_driver;
+    this.registrationService._storageInfo = storage;
+    this.registrationService.next();
+    this.submitted = false;
   }
 
   back() {

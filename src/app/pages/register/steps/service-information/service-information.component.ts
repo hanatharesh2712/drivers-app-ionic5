@@ -16,12 +16,17 @@ export class ServiceInformationComponent implements OnInit {
   validationSuccess: boolean;
   airportsSelectOptions = {
     header: 'Airports',
-    message: 'Select airports that you will give service',
+    message: 'Select airports where you are able to provide service',
     translucent: true
   };
   cruisePortsSelectOptions = {
     header: 'Cruise Ports',
-    message: 'Select cruise ports that you will give service',
+    message: 'Select airports where you are able to provide service',
+    translucent: true
+  };
+  additionalServicesOption  = {
+    header: 'Additional Services',
+    message: 'Select all that apply',
     translucent: true
   };
   constructor(private registrationService: RegistrationService) {

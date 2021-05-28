@@ -2,20 +2,7 @@ app-mobile-validation {
 
 
 
-  ion-card {
-    --background: var(--ion-theme-background);
-    --color: white;
-    padding: 24px 12px;
-
-    h3 {
-      margin-bottom: 12px;
-    }
-
-    h5 {
-      margin-bottom: 36px;
-      font-size: 1.6rem;
-    }
-  }
+  
 
   .otp-input {
     width: 50px !important;
@@ -37,9 +24,16 @@ app-mobile-validation {
   }
 
   .success-text {
-    color: var(--ion-theme-color)
+    text-align: center;
+ 
   }
 
+
+  .resend-link
+  {
+    text-align: center;
+    font-size: 1.6rem;
+  }
 
 
 

@@ -14,6 +14,7 @@ export class EmailValidationComponent implements OnInit {
   email= '';
   codeSent = false;
   validationSuccess: boolean;
+  secondsRemainingResendCode: number = 60;
   constructor(private registrationService: RegistrationService) {
     this.registrationService.setStep(1);
   }
@@ -34,6 +35,12 @@ export class EmailValidationComponent implements OnInit {
     if (!this.codeSent)
     {
       this.codeSent = true;
+      setInterval(() => {
+        if (this.secondsRemainingResendCode > 0) {
+          this.secondsRemainingResendCode--;
+        }
+  
+      }, 1000)
       return;
     }
     if (this.codeSent && !this.validationSuccess)

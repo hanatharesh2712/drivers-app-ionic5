@@ -1,10 +1,10 @@
 <ion-content *ngIf="storage">
   <ion-card *ngIf="is_driver">
-    <h3>Wich is your main vehicle?</h3>
+    <h3>Tell us more about the vehicle you own...</h3>
    
     <ion-list>
       <ion-item>
-        <ion-label position="floating">Vehicle class</ion-label>
+        <ion-label position="floating">Vehicle Class</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL">
           <ion-select-option value="5">5 mil.</ion-select-option>
           <ion-select-option value="10">10  mil.</ion-select-option>
@@ -13,7 +13,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Vehicle</ion-label>
+        <ion-label position="floating">Make/Model</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL">
           <ion-select-option value="5">5 mil.</ion-select-option>
           <ion-select-option value="10">10  mil.</ion-select-option>
@@ -22,7 +22,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Model/Year</ion-label>
+        <ion-label position="floating">Vehicle Year</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL">
           <ion-select-option value="5">5 mil.</ion-select-option>
           <ion-select-option value="10">10  mil.</ion-select-option>
@@ -67,12 +67,17 @@
         </ion-select>
       </ion-item>
      
+     
     </ion-list>
-
+    <div class="next-text">
+      <p class="secondary-text">
+        Next, you will be required to upload documents for this vehicle
+      </p>
+    </div>
   </ion-card>
 
   <ion-card *ngIf="!is_driver" class="affiliate">
-    <h3>Please tell us how many vehicle do you have?</h3>
+    <h3>Tell us more about the vehicles you own...</h3>
     <ion-list>
       <ion-item>
         <div class='d-flex j-between a-center w-100-p'>
