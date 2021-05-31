@@ -74,6 +74,10 @@ export class EmailValidationComponent implements OnInit {
     )
   }
 
+  onOtpChange(otp) {
+    this.otpcode = otp;
+  }
+  
   resendCode()
   {
     if (this.secondsRemainingResendCode <= 0)

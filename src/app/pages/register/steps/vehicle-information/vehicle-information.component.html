@@ -39,16 +39,17 @@
       -->
       <ion-item>
         <ion-label position="floating">Passenger Capacity</ion-label>
-        <ion-range min="1" max="16" step="1" snaps="true" ticks="true" pin="true" color="secondary"></ion-range>
+        <ion-range min="1" max="16" step="1" snaps="true" ticks="true" pin="true" color="secondary">
+          <ion-label slot="start">1</ion-label>
+          <ion-label slot="end">16</ion-label>
+        </ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Luggage Capacity</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5 mil.</ion-select-option>
-          <ion-select-option value="10">10  mil.</ion-select-option>
-          <ion-select-option value="20">20  mil.</ion-select-option>
-          <ion-select-option value="50">50  mil.</ion-select-option>
-        </ion-select>
+        <ion-range min="1" max="8" step="1" snaps="true" ticks="true" pin="true" color="secondary">
+          <ion-label slot="start">1</ion-label>
+          <ion-label slot="end">8</ion-label>
+        </ion-range>
       </ion-item>
      
      
