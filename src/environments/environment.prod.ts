@@ -21,6 +21,7 @@ export const environment = {
     measurementId: 'G-S12H8PS6ZK'
   },
   appUrl: 'https://dispatch-api.moveo.net/api/drivers/',
+  partnersAppUrl: 'https://dispatch-api.moveo.net/api/partners/',
   loginUrl: 'https://dispatch-api.moveo.net/oauth/token',
   storageUrl: 'https://dispatch-api.moveo.net/storage/',
   noLoginUrl: 'https://dispatch-api.moveo.net/',

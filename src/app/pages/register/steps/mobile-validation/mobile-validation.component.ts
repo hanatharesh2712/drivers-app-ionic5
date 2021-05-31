@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { RegistrationAPIService } from '@app/services/registration-api.service';
 import { RegistrationService } from '@app/services/registration.service';
 import { UtilService } from '@app/services/util/util.service';
 
@@ -11,13 +12,19 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class MobileValidationComponent implements OnInit {
 
-  phoneNumber = "";
+  phoneNumber;
   codeSent = false;
   validationSuccess: boolean;
   secondsRemainingResendCode: number = 60;
-  constructor(private registrationService: RegistrationService) {
+  @ViewChild('warning', { static: false }) warning: any;
+  code: any;
+  otpcode: any = '';
+  resendInterval: any;
+  constructor(private registrationService: RegistrationService,
+    private registrationAPIService: RegistrationAPIService,
+    private util: UtilService) {
     this.registrationService.setStep(0);
-   }
+  }
 
   ngOnInit() {
   }
@@ -26,33 +33,80 @@ export class MobileValidationComponent implements OnInit {
     this.codeSent = true;
   }
 
-  verifyCode() {
-    this.validationSuccess = true;
-  }
 
-  nextStep()
-  {
-    if (!this.codeSent)
-    {
-      this.codeSent = true;
-      setInterval(() => {
-        if (this.secondsRemainingResendCode > 0) {
-          this.secondsRemainingResendCode--;
+  sendCode() {
+    this.registrationAPIService.sendRegistrationPhoneCode(this.replaceSymbols()).then(
+      async (response: any) => {
+        if (response.status.toUpperCase() == 'SUCCESS') {
+          this.code = response.code;
+          this.codeSent = true;
+          window.clearInterval(this.resendInterval);
+          this.resendInterval = setInterval(() => {
+            if (this.secondsRemainingResendCode > 0) {
+              this.secondsRemainingResendCode--;
+            }
+
+          }, 1000)
         }
-  
-      }, 1000)
-      return;
-    }
-    if (this.codeSent && !this.validationSuccess)
-    {
-      this.validationSuccess = true;
-      return;
-    }
-    this.registrationService.next();
+        else {
+          let alert = await this.util.createAlert('Mobile Verification', true, response.message, {
+            text: 'Ok',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: async () => {
+
+            }
+          });
+          alert.present();
+        }
+
+      }
+    )
   }
 
-  back()
-  {
+  resendCode() {
+    if (this.secondsRemainingResendCode <= 0) {
+      this.sendCode();
+      this.secondsRemainingResendCode = 60;
+    }
+  }
+
+  async verify() {
+    if (this.code == this.otpcode) {
+      this.validationSuccess = true;
+    }
+    else {
+      let alert = await this.util.createAlert('Mobile Verification', true, 'Invalid code. Try again.', {
+        text: 'Ok',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: async () => {
+
+        }
+      });
+      alert.present();
+    }
+  }
+  nextStep() {
+    let storage = this.registrationService._storageInfo;
+    storage.dialCode = this.phoneNumber.dialCode;
+    this.registrationService._storageInfo = storage;
+    this.registrationService.next();
+
+  }
+
+  replaceSymbols() {
+    if (this.phoneNumber.dialCode == '+1') {
+      this.phoneNumber.internationalNumber = this.phoneNumber.internationalNumber.replace('+1', '')
+    }
+    return this.phoneNumber.internationalNumber.replace(/\s/g, "").replace(/-/g, '');
+  }
+
+  onOtpChange(otp) {
+    this.otpcode = otp;
+  }
+
+  back() {
     this.registrationService.back();
   }
 }

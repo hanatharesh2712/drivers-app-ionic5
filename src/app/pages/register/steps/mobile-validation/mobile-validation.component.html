@@ -7,11 +7,22 @@
     </h5>
 
     <ion-intl-tel-input id="phone-number" defaultCountryiso="us" enableAutoCountrySelect="true" name="phone-number"
-      [modalShouldFocusSearchbar]="false" [(ngModel)]="phoneNumber" #phoneNumberControl="ngModel"
+      [modalShouldFocusSearchbar]="false" [(ngModel)]="phoneNumber" #phoneNumberControl="ngModel" ionIntlTelInputValid
       class="placeholder-text inputField ion-padding-start">
     </ion-intl-tel-input>
 
 
+
+
+
+    <div *ngIf="phoneNumberControl.invalid && phoneNumberControl.touched" #warning>
+      <ion-text color="danger" *ngIf="phoneNumberControl.errors.required">
+        <p class="ion-no-margin"><sub>Phone is required.</sub></p>
+      </ion-text>
+      <ion-text color="danger" *ngIf="phoneNumberControl.errors.phone">
+        <p class="ion-no-margin"><sub>Phone number is not valid.</sub></p>
+      </ion-text>
+    </div>
 
 
   </ion-card>
@@ -23,13 +34,15 @@
     </h5>
 
     <div class="otp-container ion-padding-vertical ion-text-center">
-      <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" [config]="{length:4, allowNumbersOnly: true}">
+      <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" (onInputChange)="onOtpChange($event)"  [config]="{length:4, allowNumbersOnly: true}">
       </ng-otp-input>
     </div>
 
-    <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical resend-link" [ngClass]="{'active': secondsRemainingResendCode <= 0}" >
-      <span (click)="resendCode()">Resend code <ng-container *ngIf="secondsRemainingResendCode > 0">({{secondsRemainingResendCode}})</ng-container></span>
-   </div>
+    <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical resend-link"
+      [ngClass]="{'active': secondsRemainingResendCode <= 0}">
+      <span (click)="resendCode()">Resend code <ng-container *ngIf="secondsRemainingResendCode > 0">
+          ({{secondsRemainingResendCode}})</ng-container></span>
+    </div>
 
 
 
@@ -65,13 +78,28 @@
 
 
       </ion-button>
-      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()">
+      <ion-button fill="solid" color="primary" class="next" (click)="sendCode()" [disabled]='!phoneNumber || warning' *ngIf="!codeSent">
         <div class="d-flex a-center">
-          <span>{{!codeSent ? 'SEND ME THE TEXT' : !validationSuccess ? 'VERIFY MY NUMBER' : 'NEXT'}}</span>
+          <span>SEND ME THE TEXT</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
 
       </ion-button>
+      <ion-button fill="solid" color="primary" class="next" (click)="verify()" [disabled]='!otpcode || otpcode.length < 4' *ngIf="codeSent && !validationSuccess">
+        <div class="d-flex a-center">
+          <span>VERIFY MY NUMBER</span>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+
+      </ion-button>
+      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()"  *ngIf="validationSuccess">
+        <div class="d-flex a-center">
+          <span>VERIFY MY NUMBER</span>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+
+      </ion-button>
+
 
     </ion-buttons>
   </ion-toolbar>

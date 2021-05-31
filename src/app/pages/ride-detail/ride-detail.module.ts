@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteGuard } from '@app/services/util/route.guard';
 import { RoutingDetailsModule } from '@app/components/routing-details/routing-details.module';
-import { PipesModule } from '@app/pipes/pipes/pipes.module';
+import { PipesModule } from '@app/pipes/pipes.module';
 import { SettleDialogModule } from '@app/components/settle-dialog/settle-dialog.module';
 import { EventsTimelineModule } from '@app/components/events-timeline/events-timeline.module';
 import { RidePricingPopoverModule } from '@app/components/ride-pricing-popover/ride-pricing-popover.module';

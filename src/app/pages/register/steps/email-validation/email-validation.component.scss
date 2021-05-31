@@ -28,8 +28,15 @@ app-email-validation {
 
   .resend-link
   {
+    color: grey;
     text-align: center;
     font-size: 1.6rem;
+
+    &.active
+    {
+      color: white;
+      text-decoration: underline;
+    }
   }
 
 

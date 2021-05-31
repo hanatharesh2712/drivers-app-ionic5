@@ -6,6 +6,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { Storage } from '@ionic/storage';
 import { UtilService } from './util/util.service';
+import { AbstractControl } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
@@ -55,7 +56,7 @@ export class RegistrationService {
       section: 'Registration'
     },
     {
-      title: 'Payment Payment Preference',
+      title: 'Payment Preference',
       done: false,
       url: 'register/payment-information',
        section: 'Registration'
@@ -117,4 +118,42 @@ export class RegistrationService {
       this.storageInfo = newStorageInfo;
     });
   }
+
+  regexMatcher(c: AbstractControl): { [key: string]: boolean } | null {
+    const password = c.value;
+    let minLength = false;
+    let uppercase = false;
+    let symbol = false;
+    let atLeastOneError = false;
+
+    if (c.pristine) {
+        return null;
+    }
+
+    if (!/^.{7,}$/.test(password)) {
+        minLength = true;
+        atLeastOneError = true;
+    }
+
+    if (!/[A-Z][a-z]/.test(password)) {
+        uppercase = true;
+        atLeastOneError = true;
+    }
+
+    if (!/[$-/:-?{-~!"@^_`\[\]]/.test(password)) {
+        symbol = true;
+        atLeastOneError = true;
+    }
+
+    if (atLeastOneError) {
+        return {
+            'minLength': minLength,
+            'upperCase': uppercase,
+            'symbol': symbol,
+        };
+    }
+    return null;
+
+}
+
 }

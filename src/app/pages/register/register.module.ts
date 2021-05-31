@@ -4,7 +4,7 @@ import { RegisterPageComponent } from './register-page.component';
 import { IonicModule } from '@ionic/angular';
 import { MobileValidationComponent } from './steps/mobile-validation/mobile-validation.component';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '@app/directives/directives.module';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { EmailValidationComponent } from './steps/email-validation/email-validation.component';
@@ -18,6 +18,8 @@ import { RegistrationDocumentsComponent } from './steps/registration-documents/r
 import { DocumentItemModule } from '@app/components/document-item/document-item.module';
 import { RegistrationAgreementComponent } from './steps/registration-agreement/registration-agreement.component';
 import { PaymentInformationComponent } from './steps/payment-information/payment-information.component';
+import { VehicleService } from '@app/services/vehicle.service';
+import { PipesModule } from '@app/pipes/pipes.module';
 const routes: Routes = [
   {
     path: '',
@@ -65,6 +67,9 @@ const routes: Routes = [
           {
             path: '',
             component: VehicleInformationComponent,
+          //  resolve: {
+         //     data: VehicleService
+          //  }
           }
         ]
       },
@@ -105,9 +110,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     DirectivesModule,
+    ReactiveFormsModule,
     NgOtpInputModule,
     IonicModule,
     DocumentItemModule,
+    PipesModule,
     IonIntlTelInputModule,
     PartnerVehicleDialogModule,
     RouterModule.forChild(routes)
@@ -117,7 +124,7 @@ const routes: Routes = [
     EmailValidationComponent,
     PartnerInformationComponent,
     ServiceInformationComponent,
-    
+
     RegistrationDocumentsComponent,
     RegistrationAgreementComponent,
     PaymentInformationComponent,

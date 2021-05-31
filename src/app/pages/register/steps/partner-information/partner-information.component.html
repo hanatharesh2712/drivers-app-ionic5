@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-card *ngIf="!submitted">
+  <ion-card *ngIf="!submitted" [formGroup]="partnerForm">
     <h3>Welcome, let's set up your company profile...</h3>
 
 
@@ -9,11 +9,12 @@
       </ion-list-header>
       <ion-item>
         <ion-label position="floating">Company Name</ion-label>
-        <ion-input placeholder="Enter legal name of your company..."></ion-input>
+        <ion-input placeholder="Enter legal name of your company..." formControlName="company_name"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="isUsa"> 
         <ion-label position="floating">Company Structure (US companies only)</ion-label>
-        <ion-select value="null"   [interfaceOptions]="companySelectOptions" okText="SELECT" cancelText="CANCEL" class="select-full-width">
+        <ion-select value="null"   [interfaceOptions]="companySelectOptions" okText="SELECT" cancelText="CANCEL" class="select-full-width"
+        formControlName="company_structure">
           <ion-select-option value="brown">Sole Proprietorship</ion-select-option>
           <ion-select-option value="blonde">LLC. (Limited Liability Company)</ion-select-option>
           <ion-select-option value="black">Co. (Company)</ion-select-option>
@@ -27,12 +28,12 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Company Registered Address</ion-label>
-        <ion-input google-place id="txtHome" type="text" class="google-place-input" name="testasd"
+        <ion-input google-place id="txtHome" type="text" class="google-place-input" (onSelect)='addressChanged($event)' name="testasd"
           placeholder="Enter mailing address of your company..."></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">Suite / Unit Number</ion-label>
-        <ion-input placeholder="Optional"></ion-input>
+      <ion-item >
+        <ion-label position="floating">Suite / Unit Number (Optional)</ion-label>
+        <ion-input placeholder="Optional"  formControlName="address_details"> </ion-input>
       </ion-item>
     </ion-list>
 
@@ -41,25 +42,16 @@
         <ion-label>Authorized Representative</ion-label>
       </ion-list-header>
       <ion-item>
-        <ion-label position="floating">First Name</ion-label>
-        <ion-input placeholder="Enter your first name..."></ion-input>
+        <ion-label position="floating" >First Name</ion-label>
+        <ion-input placeholder="Enter your first name..." formControlName="first_name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Last Name</ion-label>
-        <ion-input placeholder="Enter your last name..."></ion-input>
+        <ion-input placeholder="Enter your last name..." formControlName="last_name"></ion-input>
       </ion-item>
  
-
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" placeholder="Minimum 6 characters"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Confirm Password</ion-label>
-        <ion-input type="password" placeholder="Minimum 6 characters"></ion-input>
-      </ion-item>
     </ion-list>
-      <ion-segment class="driver-segment" [(ngModel)]="is_driver">
+      <ion-segment class="driver-segment" formControlName="is_driver">
         <ion-segment-button value="true">
           <ion-label>I'm a driver</ion-label>
         </ion-segment-button>
@@ -97,7 +89,7 @@
 
 
       </ion-button>
-      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()">
+      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" [disabled]='partnerForm.invalid'>
         <div class="d-flex a-center">
           <span>NEXT</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>

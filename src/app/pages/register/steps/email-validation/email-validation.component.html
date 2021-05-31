@@ -1,12 +1,12 @@
 <ion-content>
-  <ion-card *ngIf="!codeSent">
+  <ion-card *ngIf="!codeSent" [formGroup]="emailForm">
     <h3>Now, we need to validate your email</h3>
     <h5 class='secondary-text'>We will send you an email with a one-time four digit code.
       <br>
       Hang tight, this may take a few minutes.  
     </h5>
 
-    <ion-input appIntegerInput class="placeholder-text inputField ion-padding-start" type="email"
+    <ion-input formControlName="email" class="placeholder-text inputField ion-padding-start" type="email"
       placeholder="Enter email" [(ngModel)]="email" clearInput></ion-input>
 
     
@@ -60,13 +60,32 @@
 
 
       </ion-button>
-      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()">
-        <div class="d-flex a-center">
-          <span>{{!codeSent ? 'SEND ME THE EMAIL' : !validationSuccess ? 'VERIFY MY EMAIL' : 'NEXT'}}</span>
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </div>
+   
 
-      </ion-button>
+        <ion-button fill="solid" color="primary" class="next" (click)="sendCode()" [disabled]='emailForm.invalid' *ngIf="!codeSent && !validationSuccess">
+          <div class="d-flex a-center">
+            <span>SEND ME THE EMAIL</span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+  
+        </ion-button>
+        <ion-button fill="solid" color="primary" class="next" (click)="verify()" [disabled]='!otpcode || otpcode.length < 4' *ngIf="codeSent && !validationSuccess">
+          <div class="d-flex a-center">
+            <span>VERIFY MY EMAIL</span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+  
+        </ion-button>
+
+        <ion-button fill="solid" color="primary" class="next" (click)="nextStep()"  *ngIf="validationSuccess">
+          <div class="d-flex a-center">
+            <span>VERIFY MY NUMBER</span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </div>
+  
+        </ion-button>
+
+  
 
     </ion-buttons>
   </ion-toolbar>

@@ -3,59 +3,43 @@
     <h3>Tell us more about the vehicle you own...</h3>
    
     <ion-list>
-      <ion-item>
+    <!--  <ion-item>
         <ion-label position="floating">Vehicle Class</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5 mil.</ion-select-option>
-          <ion-select-option value="10">10  mil.</ion-select-option>
-          <ion-select-option value="20">20  mil.</ion-select-option>
-          <ion-select-option value="50">50  mil.</ion-select-option>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" (ionChange)='changeVehicleType($event.value, true)'>
+          <ion-select-option [value]="type.id"   *ngFor="let type of vehicleTypes">    {{type.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Make/Model</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5 mil.</ion-select-option>
-          <ion-select-option value="10">10  mil.</ion-select-option>
-          <ion-select-option value="20">20  mil.</ion-select-option>
-          <ion-select-option value="50">50  mil.</ion-select-option>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" >
+          <ion-select-option [value]="make.name" *ngFor="let make of filteredMakesByType">  {{make.name}}</ion-select-option>
+       
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Vehicle Year</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5 mil.</ion-select-option>
-          <ion-select-option value="10">10  mil.</ion-select-option>
-          <ion-select-option value="20">20  mil.</ion-select-option>
-          <ion-select-option value="50">50  mil.</ion-select-option>
+          <ion-select-option   [value]="y" *ngFor="let y of years | reverse">{{y}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Exterior Color</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5 mil.</ion-select-option>
-          <ion-select-option value="10">10  mil.</ion-select-option>
-          <ion-select-option value="20">20  mil.</ion-select-option>
-          <ion-select-option value="50">50  mil.</ion-select-option>
+          <ion-select-option *ngFor="let color of vehicleExteriorColors" [value]="color.id">{{color.name}}</ion-select-option>
+       
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Interior Color</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5 mil.</ion-select-option>
-          <ion-select-option value="10">10  mil.</ion-select-option>
-          <ion-select-option value="20">20  mil.</ion-select-option>
-          <ion-select-option value="50">50  mil.</ion-select-option>
+          <ion-select-option *ngFor="let color of vehicleInteriorColors" [value]="color.id">{{color.name}}</ion-select-option>
+       
         </ion-select>
       </ion-item>
+      -->
       <ion-item>
         <ion-label position="floating">Passenger Capacity</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
-          <ion-select-option value="5">5 mil.</ion-select-option>
-          <ion-select-option value="10">10  mil.</ion-select-option>
-          <ion-select-option value="20">20  mil.</ion-select-option>
-          <ion-select-option value="50">50  mil.</ion-select-option>
-        </ion-select>
+        <ion-range min="1" max="16" step="1" snaps="true" ticks="true" pin="true" color="secondary"></ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Luggage Capacity</ion-label>

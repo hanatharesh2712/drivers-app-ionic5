@@ -16,7 +16,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { WalletPage } from './wallet.page';
-import { PipesModule } from '@app/pipes/pipes/pipes.module';
+import { PipesModule } from '@app/pipes/pipes.module';
 
 const routes: Routes = [
   {
