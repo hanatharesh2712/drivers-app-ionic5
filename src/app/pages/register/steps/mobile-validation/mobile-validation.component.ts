@@ -88,9 +88,8 @@ export class MobileValidationComponent implements OnInit {
     }
   }
   nextStep() {
-    let storage = this.registrationService._storageInfo;
-    storage.dialCode = this.phoneNumber.dialCode;
-    this.registrationService._storageInfo = storage;
+    this.registrationService.dialCode = this.phoneNumber.dialCode;
+    this.registrationService.mobile_phone = this.replaceSymbols();
     this.registrationService.next();
 
   }

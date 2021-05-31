@@ -77,7 +77,7 @@ export class EmailValidationComponent implements OnInit {
   onOtpChange(otp) {
     this.otpcode = otp;
   }
-  
+
   resendCode()
   {
     if (this.secondsRemainingResendCode <= 0)
@@ -108,6 +108,7 @@ export class EmailValidationComponent implements OnInit {
 
   nextStep()
   {
+    this.registrationService.partner_email = this.emailForm.get('email').value;
     this.registrationService.next();
   
   }

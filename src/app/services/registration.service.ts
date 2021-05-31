@@ -66,6 +66,10 @@ export class RegistrationService {
   actualStep;
   onChangeStep = new BehaviorSubject({});
   storageInfo: any;
+  dialCode: any;
+  mobile_phone: any;
+  partner_email: any;
+  is_driver: string;
   constructor(private utl: UtilService,
     private storage: Storage) {
 

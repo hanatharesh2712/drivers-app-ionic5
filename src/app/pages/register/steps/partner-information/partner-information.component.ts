@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RegistrationAPIService } from '@app/services/registration-api.service';
 import { RegistrationService } from '@app/services/registration.service';
 import { UtilService } from '@app/services/util/util.service';
 
@@ -23,6 +24,7 @@ export class PartnerInformationComponent implements OnInit {
   isUsa: boolean;
   partnerForm: FormGroup;
   constructor(private registrationService: RegistrationService,
+    private registrationAPIService: RegistrationAPIService,
     private util: UtilService,
     private _fb: FormBuilder) {
     this.registrationService.setStep(2);
@@ -30,34 +32,49 @@ export class PartnerInformationComponent implements OnInit {
   }
 
   ngOnInit() {
-    let storage = this.registrationService._storageInfo;
-    if (this.storage)
+    
+    if (this.registrationService.mobile_phone)
     {
-      this.isUsa = storage.dialCode == '+1';
+      this.isUsa = this.registrationService.dialCode == '+1';
+      this.partnerForm = this._fb.group(
+        {
+          company_name: ['', Validators.required],
+          company_structure: ['', this.isUsa ? Validators.required : null],
+          address: ['', Validators.required],
+          address_details: '',
+          partner_email: this.registrationService.partner_email,
+          mobile_phone: this.registrationService.mobile_phone,
+          address_lat: ['', Validators.required],
+          address_lng: ['', Validators.required],
+          address_city: ['', Validators.required],
+          address_state: ['', Validators.required],
+          address_country: ['', Validators.required],
+          is_driver: ['true', Validators.required],
+          first_name: ['', Validators.required],
+          last_name: ['', Validators.required]
+        }
+      )
     }
-    this.partnerForm = this._fb.group(
-      {
-        company_name: ['', Validators.required],
-        company_structure: ['', this.isUsa ? Validators.required : null],
-        address: ['', Validators.required],
-        address_details: '',
-        address_lat: ['', Validators.required],
-        address_lng: ['', Validators.required],
-        address_city: ['', Validators.required],
-        address_state: ['', Validators.required],
-        address_country: ['', Validators.required],
-        is_driver: ['true', Validators.required],
-        first_name: ['', Validators.required],
-        last_name: ['', Validators.required]
-      }
-    )
+    else
+    {
+      this.util.goForward('register/mobile-validation');
+      return;
+    }
+  
   }
 
   nextStep() {
-    let storage = this.registrationService._storageInfo;
-    storage.is_driver = this.is_driver;
-    this.registrationService._storageInfo = storage;
-    this.registrationService.next();
+    this.registrationService.is_driver = this.is_driver;
+
+    this.registrationAPIService.submitPartnerInformation(this.partnerForm.getRawValue()).then(
+      (response: any) =>
+      {
+        if (response.status.toUpperCase() == 'SUCCESS')
+        {
+          this.registrationService.next();
+        }
+      }
+    )
     this.submitted = false;
   }
 

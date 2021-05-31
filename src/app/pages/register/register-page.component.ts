@@ -18,7 +18,6 @@ export class RegisterPageComponent implements OnInit {
 
   constructor(private registrationService: RegistrationService, private platform: Platform) {
     this.stepsCount = this.registrationService.steps.length;
-    this.registrationService.initStorageData();
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.registrationService.back();
     });

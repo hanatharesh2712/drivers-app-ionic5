@@ -31,4 +31,11 @@ export class RegistrationAPIService {
     })).toPromise();
   }
 
+
+  submitPartnerInformation(data)
+  {
+    return this.http.get<any[]>(environment.noLoginUrl + 'da/registerPartner', data).pipe(map(response => {
+      return response
+    })).toPromise();
+  }
 }
