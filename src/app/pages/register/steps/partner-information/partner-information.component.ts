@@ -17,7 +17,7 @@ export class PartnerInformationComponent implements OnInit {
   is_driver = 'true';
   companySelectOptions = {
     header: 'Company Structure',
-    message: 'Select the legal business entity of your company (US companies only)',
+    message: 'Select the legal business entity of your company',
     translucent: true
   };
   storage: any;
@@ -46,6 +46,7 @@ export class PartnerInformationComponent implements OnInit {
           mobile_phone: this.registrationService.mobile_phone,
           address_lat: ['', Validators.required],
           address_lng: ['', Validators.required],
+          address_county: ['', Validators.required],
           address_city: ['', Validators.required],
           address_state: ['', Validators.required],
           address_country: ['', Validators.required],

@@ -50,6 +50,9 @@ export class GooglePlacesDirective implements OnInit {
         location_obj['address_country'] = item['long_name']
       } else if (item['types'].indexOf("postal_code") > -1) {
         location_obj['postal_code'] = item['short_name']
+      } else if (item['types'].indexOf("administrative_area_level_2") > -1)
+      {
+        location_obj['address_county'] = item['long_name']
       }
 
     }

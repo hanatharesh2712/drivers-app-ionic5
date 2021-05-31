@@ -12,7 +12,7 @@
         <ion-input placeholder="Enter legal name of your company..." formControlName="company_name"></ion-input>
       </ion-item>
       <ion-item *ngIf="isUsa"> 
-        <ion-label position="floating">Company Structure (US companies only)</ion-label>
+        <ion-label position="floating">Company Structure</ion-label>
         <ion-select value="null"   [interfaceOptions]="companySelectOptions" okText="SELECT" cancelText="CANCEL" class="select-full-width"
         formControlName="company_structure">
           <ion-select-option value="brown">Sole Proprietorship</ion-select-option>
