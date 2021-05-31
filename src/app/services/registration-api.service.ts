@@ -34,7 +34,7 @@ export class RegistrationAPIService {
 
   submitPartnerInformation(data)
   {
-    return this.http.get<any[]>(environment.noLoginUrl + 'da/registerPartner', data).pipe(map(response => {
+    return this.http.post<any[]>(environment.noLoginUrl + 'da/registerPartner', data).pipe(map(response => {
       return response
     })).toPromise();
   }
