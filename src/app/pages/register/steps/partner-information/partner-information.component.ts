@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DrvnAuthenticationService } from '@app/services/auth/auth.service';
 import { RegistrationAPIService } from '@app/services/registration-api.service';
 import { RegistrationService } from '@app/services/registration.service';
 import { UtilService } from '@app/services/util/util.service';
@@ -26,15 +27,15 @@ export class PartnerInformationComponent implements OnInit {
   constructor(private registrationService: RegistrationService,
     private registrationAPIService: RegistrationAPIService,
     private util: UtilService,
-    private _fb: FormBuilder) {
+    private _fb: FormBuilder,
+    private authService: DrvnAuthenticationService) {
     this.registrationService.setStep(2);
-   
+
   }
 
   ngOnInit() {
-    
-    if (this.registrationService.mobile_phone)
-    {
+
+    if (this.registrationService.mobile_phone) {
       this.isUsa = this.registrationService.dialCode == '+1';
       this.partnerForm = this._fb.group(
         {
@@ -56,23 +57,25 @@ export class PartnerInformationComponent implements OnInit {
         }
       )
     }
-    else
-    {
+    else {
       this.util.goForward('register/mobile-validation');
       return;
     }
-  
+
   }
 
   nextStep() {
     this.registrationService.is_driver = this.is_driver;
 
     this.registrationAPIService.submitPartnerInformation(this.partnerForm.getRawValue()).then(
-      (response: any) =>
-      {
-        if (response.status.toUpperCase() == 'SUCCESS')
-        {
-          this.registrationService.next();
+      (response: any) => {
+        if (response.status.toUpperCase() == 'SUCCESS') {
+          this.authService.login(this.registrationService.mobile_phone, response.randomPass)
+            .then(response => {
+              setTimeout(() => {
+                this.registrationService.next();
+              }, 500);
+            })
         }
       }
     )
@@ -83,13 +86,11 @@ export class PartnerInformationComponent implements OnInit {
     this.registrationService.back();
   }
 
-  addressChanged(location)
-  {
+  addressChanged(location) {
     Object.keys(location).forEach(field => {
-        if (this.partnerForm.get(field))
-        {
-          this.partnerForm.get(field).setValue(location[field]);
-        }
+      if (this.partnerForm.get(field)) {
+        this.partnerForm.get(field).setValue(location[field]);
+      }
     });
     console.log(this.partnerForm.getRawValue())
   }

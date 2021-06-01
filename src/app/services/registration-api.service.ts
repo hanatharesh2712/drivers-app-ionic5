@@ -38,4 +38,10 @@ export class RegistrationAPIService {
       return response
     })).toPromise();
   }
+
+  getRegistrationData() {
+    return this.http.get<any[]>(environment.noLoginUrl + 'da/getRegistrationData').pipe(map(response => {
+      return response
+    })).toPromise();
+  }
 }

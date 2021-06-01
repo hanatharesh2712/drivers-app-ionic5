@@ -17,7 +17,6 @@ export class MobileValidationComponent implements OnInit {
   validationSuccess: boolean;
   secondsRemainingResendCode: number = 60;
   @ViewChild('warning', { static: false }) warning: any;
-  code: any;
   otpcode: any = '';
   resendInterval: any;
   constructor(private registrationService: RegistrationService,
@@ -29,17 +28,13 @@ export class MobileValidationComponent implements OnInit {
   ngOnInit() {
   }
 
-  sendVerificationCode() {
-    this.codeSent = true;
-  }
-
 
   sendCode() {
     this.registrationAPIService.sendRegistrationPhoneCode(this.replaceSymbols()).then(
       async (response: any) => {
         if (response.status.toUpperCase() == 'SUCCESS') {
-          this.code = response.code;
-          this.codeSent = true;
+          this.codeSent = response.code;
+          alert(this.codeSent);
           window.clearInterval(this.resendInterval);
           this.resendInterval = setInterval(() => {
             if (this.secondsRemainingResendCode > 0) {
@@ -72,7 +67,7 @@ export class MobileValidationComponent implements OnInit {
   }
 
   async verify() {
-    if (this.code == this.otpcode) {
+    if (this.codeSent == this.otpcode) {
       this.validationSuccess = true;
     }
     else {
@@ -106,6 +101,11 @@ export class MobileValidationComponent implements OnInit {
   }
 
   back() {
+    if (this.codeSent)
+    {
+      this.codeSent = null;
+      return;
+    }
     this.registrationService.back();
   }
 }

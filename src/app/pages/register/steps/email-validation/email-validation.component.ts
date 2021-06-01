@@ -16,7 +16,6 @@ export class EmailValidationComponent implements OnInit {
   codeSent = false;
   validationSuccess: boolean;
   secondsRemainingResendCode: number = 60;
-  code: any;
   resendInterval: any;
   otpcode: any;
   emailForm: FormGroup;
@@ -35,10 +34,6 @@ export class EmailValidationComponent implements OnInit {
   ngOnInit() {
   }
 
-  sendVerificationCode() {
-    this.codeSent = true;
-  }
-
     
   sendCode()
   {
@@ -47,8 +42,8 @@ export class EmailValidationComponent implements OnInit {
       {
         if (response.status.toUpperCase() == 'SUCCESS')
         {
-          this.code = response.code;
-          this.codeSent = true;
+          this.codeSent = response.code;
+          alert(this.codeSent);
           window.clearInterval(this.resendInterval);
           this.resendInterval = setInterval(() => {
             if (this.secondsRemainingResendCode > 0) {
@@ -88,7 +83,7 @@ export class EmailValidationComponent implements OnInit {
   }
 
   async verify() {
-    if (this.code == this.otpcode)
+    if (this.codeSent == this.otpcode)
     {
       this.validationSuccess = true;
     }
@@ -115,6 +110,11 @@ export class EmailValidationComponent implements OnInit {
 
   back()
   {
+    if (this.codeSent)
+    {
+      this.codeSent = null;
+      return;
+    }
 
     this.registrationService.back();
   }

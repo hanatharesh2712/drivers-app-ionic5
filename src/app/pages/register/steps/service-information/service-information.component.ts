@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { RegistrationAPIService } from '@app/services/registration-api.service';
 import { RegistrationService } from '@app/services/registration.service';
 import { UtilService } from '@app/services/util/util.service';
 
@@ -29,11 +30,15 @@ export class ServiceInformationComponent implements OnInit {
     message: 'Select all that apply',
     translucent: true
   };
-  constructor(private registrationService: RegistrationService) {
+  constructor(private registrationService: RegistrationService,
+    private registrationAPIService: RegistrationAPIService) {
     this.registrationService.setStep(3);
    }
 
   ngOnInit() {
+    this.registrationAPIService.getRegistrationData().then(response => {
+
+    })
   }
 
   nextStep()
