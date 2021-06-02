@@ -1,12 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Review } from '@app/models/review';
 import { environment } from '@env/environment';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
-import { Storage } from '@ionic/storage';
-import { UtilService } from './util/util.service';
-import { AbstractControl } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
@@ -40,7 +35,29 @@ export class RegistrationAPIService {
   }
 
   getRegistrationData() {
-    return this.http.get<any[]>(environment.noLoginUrl + 'da/getRegistrationData').pipe(map(response => {
+    return this.http.get<any[]>(environment.appUrl + 'getRegistrationData').pipe(map(response => {
+      return response
+    })).toPromise();
+  }
+
+
+  savePartnerExtraData(data)
+  {
+    return this.http.post<any[]>(environment.appUrl + 'savePartnerExtraData', data).pipe(map(response => {
+      return response
+    })).toPromise();
+  }
+
+  savePartnerVehicleData(data)
+  {
+    return this.http.post<any[]>(environment.appUrl + 'savePartnerVehiclesInformation', data).pipe(map(response => {
+      return response
+    })).toPromise();
+  }
+
+  savePartnerBankInformation(data)
+  {
+    return this.http.post<any[]>(environment.appUrl + 'savePartnerBankInformation', data).pipe(map(response => {
       return response
     })).toPromise();
   }

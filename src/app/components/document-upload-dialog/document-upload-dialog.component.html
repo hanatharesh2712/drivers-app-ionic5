@@ -1,0 +1,36 @@
+<div class="ion-page">
+  <ion-header>
+    <h2>Florida Driver License</h2>
+
+    <div class="subtitle">Insert your document description here...</div>
+  </ion-header>
+
+  <ion-content>
+    <ion-item lines='none'>
+        <div class="file-upload-container">
+          <img src="{{documentUrl}}" class="huge m-0" [alt]=""  *ngIf="documentUrl" />
+          <div class="overlay" [ngClass]="{'allways': !documentUrl}"
+              fxLayout="column" fxLayoutAlign="center center" (click)="fileInput.click()">
+
+              <span>
+                <ion-icon src="assets/custom-ion-icons/add_photo.svg"></ion-icon>
+                  <span>Upload image </span>
+              </span>
+
+          </div>
+        </div>
+        <input style="display: none" type="file" (change)="uploadFile($event)" #fileInput />
+    </ion-item>
+    <ion-item lines='none' class="datetime-container">
+        <ion-label>Expiration Date:</ion-label>
+        <ion-datetime  #myPicker (ionChange)="updateMyDate(myPicker.value)"></ion-datetime>
+    </ion-item>
+
+  </ion-content>
+  <ion-footer>
+    <ion-button expand="full" fill="solid" size="large" color="primary" class="send-btn" [disabled]="!documentUrl || !expirationDate || uploading" (click)="confirmUpload()">
+      <img src="assets/utils/loading.gif" class="loading-gif" *ngIf="uploading"> {{!uploading ? "UPLOAD FILE" : 'UPLOADING'}}
+    </ion-button>
+  </ion-footer>
+
+</div>

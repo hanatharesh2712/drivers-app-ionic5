@@ -1,5 +1,7 @@
+import { UtilService } from './../../services/util/util.service';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
+import { DocumentUploadDialogComponent } from '../document-upload-dialog/document-upload-dialog.component';
 
 @Component({
   selector: 'document-item',
@@ -9,25 +11,31 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class DocumentItemComponent implements OnInit {
   uploading: boolean;
-  @ViewChild('fileInput', { static: true }) fileInput;
   submitted = false;
 
-  constructor(public actionSheetController: ActionSheetController) { }
+  constructor(public actionSheetController: ActionSheetController,
+    private util: UtilService) { }
 
   ngOnInit() {
   }
 
 
   async presentActionSheet() {
-    let buttons: any[] = [];
-    if (this.submitted) {
-      buttons.push({
-        text: 'Download Document',
-        icon: 'Download',
-        handler: () => {
-          console.log('Play clicked');
-        }
-      },
+    if (!this.submitted) {
+      this.openFileUploadDialog();
+      return;
+    }
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Florida Driver License',
+      cssClass: 'document-sheet',
+      buttons: [
+        {
+          text: 'Download Document',
+          icon: 'Download',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        },
         {
           text: 'Remove Document',
           role: 'destructive',
@@ -36,25 +44,7 @@ export class DocumentItemComponent implements OnInit {
             this.submitted = false;
           }
         }
-
-      )
-    }
-    else {
-      buttons.push(
-        {
-          text: 'Upload Document',
-          role: 'destructive',
-          icon: 'cloud-upload-outline',
-          handler: () => {
-            this.fileInput.nativeElement.click();
-          }
-        })
-    }
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Florida Driver License',
-      cssClass: 'document-sheet',
-      buttons: [
-        ...buttons, {
+        , {
           text: 'Cancel',
           icon: 'close',
           role: 'cancel',
@@ -70,6 +60,18 @@ export class DocumentItemComponent implements OnInit {
   }
 
 
+  async openFileUploadDialog() {
+    const modal = await this.util.createModal(DocumentUploadDialogComponent,
+      {}, 'document-upload-dialog');
+    modal.present();
+    modal.onDidDismiss().then(response =>
+      {
+        if (response.data)
+        {
+          this.submitted = true;
+        }
+      })
+  }
 
   uploadFile(event): void {
     this.uploading = true;
@@ -102,7 +104,7 @@ export class DocumentItemComponent implements OnInit {
 
         //      if (response) {
         //          this.uploading = false;
-        //       
+        //
         //          this.document.file_path = response.document.file_path;
         //          this.snackBar.open("Your document has been submitted.", 'OK', {
         //              verticalPosition: 'top',

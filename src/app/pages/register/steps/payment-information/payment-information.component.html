@@ -1,55 +1,65 @@
 <ion-content>
-  <ion-card>
+  <ion-card [formGroup]="bankInfoForm">
     <h3>Time to control the way you get paid...</h3>
-   
+   {{bankInfoForm.getRawValue() | json}}
       <ion-list>
         <ion-item>
           <ion-label position="floating">Payment Preference</ion-label>
-            <ion-select value="amex"  okText="SELECT" cancelText="CANCEL" [(ngModel)]="payment_method">
-              <ion-select-option value="amex">American Express</ion-select-option>
-              <ion-select-option value="ach">Bank Transfer / ACH</ion-select-option>
+            <ion-select value="amex"  okText="SELECT" cancelText="CANCEL" formControlName="payment_method_id">
+              <ion-select-option [value]="5">American Express</ion-select-option>
+              <ion-select-option [value]="7">Bank Transfer / ACH</ion-select-option>
             </ion-select>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Payment Terms</ion-label>
-          <ion-input [disabled]="true" [value]="is_driver || payment_method == 'ach' ? 'Bi-weekly' : 'Weekly' "></ion-input>
+          <ion-input [disabled]="true" [value]="is_driver || bankInfoForm.get('payment_method_id').value == '7' ? 'Bi-weekly' : 'Weekly' "></ion-input>
         </ion-item>
         <ion-item class="payment-info">
           Rides completed and settled prior to 5:00PM EST Wednesday, will be processed on Friday.
         </ion-item>
       </ion-list>
-      <ion-list *ngIf="payment_method == 'ach'">
+      <ion-list *ngIf="bankInfoForm.get('payment_method_id').value == '7'">
           <ion-list-header>
             <ion-label> Bank Information</ion-label>
           </ion-list-header>
           <ion-item>
             <ion-label position="floating">Bank name</ion-label>
-            <ion-input placeholder="Enter your first name..."></ion-input>
+            <ion-input placeholder="Enter your bank name..." formControlName="bank_name"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Account holder's name</ion-label>
-            <ion-input placeholder="Enter your last name..."></ion-input>
+            <ion-input placeholder="Enter account holder's name..." formControlName="account_holder_name"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Account Type</ion-label>
-            <ion-select   okText="SELECT" cancelText="CANCEL">
-              <ion-select-option value="amex">Business Checking</ion-select-option>
-              <ion-select-option value="ach">Business Saving </ion-select-option>
-              <ion-select-option value="amex">Personal Checking</ion-select-option>
-              <ion-select-option value="ach">Personal Saving </ion-select-option>
+            <ion-select   okText="SELECT" cancelText="CANCEL" [(ngModel)]="bankAccountType"  [compareWith]="compareBankAccountType"
+            [ngModelOptions]="{standalone: true}"    (ionChange)="changeBankAccountType($event.detail.value)">
+              <ion-select-option [value]="'business_checking'">
+                Business Checking
+            </ion-select-option>
+            <ion-select-option [value]="'business_saving'">
+                Business Saving
+            </ion-select-option>
+            <ion-select-option [value]="'personal_checking'">
+                Personal Checking
+            </ion-select-option>
+            <ion-select-option [value]="'personal_saving'">
+                Personal Saving
+            </ion-select-option>
+
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Routing Number (9 digits)</ion-label>
-            <ion-input placeholder="Enter your routing number.."></ion-input>
+            <ion-label position="floating" >Routing Number (9 digits)</ion-label>
+            <ion-input placeholder="Enter your routing number..."  formControlName="routing_number"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Acc. Number (6-17 digits)</ion-label>
-            <ion-input placeholder="Enter your account number.."  ></ion-input>
+            <ion-input placeholder="Enter your account number..."  formControlName="account_number" ></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Re-enter Acc. Number</ion-label>
-            <ion-input placeholder="Re-Enter your account number.."  ></ion-input>
+            <ion-input placeholder="Re-Enter your account number..."  formControlName="re_account_number" ></ion-input>
           </ion-item>
       </ion-list>
     </ion-card>
@@ -58,7 +68,7 @@
 
 <ion-footer>
   <ion-toolbar>
-  
+
     <ion-buttons>
       <ion-button class="back" (click)="back()">
         <div class="d-flex a-center">

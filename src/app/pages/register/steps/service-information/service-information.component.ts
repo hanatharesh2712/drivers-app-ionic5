@@ -1,8 +1,19 @@
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { DrvnAuthenticationService } from './../../../../services/auth/auth.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { RegistrationAPIService } from '@app/services/registration-api.service';
 import { RegistrationService } from '@app/services/registration.service';
-import { UtilService } from '@app/services/util/util.service';
 
+export function atLeastOneValidator(control: FormControl) {
+  if (control.value.length > 0) {
+    return null;
+  }
+  else {
+    return {
+      atLeastOne: true
+    }
+  }
+}
 @Component({
   selector: 'app-service-information',
   templateUrl: './service-information.component.html',
@@ -25,29 +36,47 @@ export class ServiceInformationComponent implements OnInit {
     message: 'Select airports where you are able to provide service',
     translucent: true
   };
-  additionalServicesOption  = {
+  additionalServicesOption = {
     header: 'Additional Services',
     message: 'Select all that apply',
     translucent: true
   };
-  constructor(private registrationService: RegistrationService,
-    private registrationAPIService: RegistrationAPIService) {
+  data: unknown;
+  loggedInUser: any;
+  servicesForm: FormGroup;
+  constructor(
+    private registrationService: RegistrationService,
+    private registrationAPIService: RegistrationAPIService,
+    private authService: DrvnAuthenticationService,
+    private _fb: FormBuilder) {
     this.registrationService.setStep(3);
-   }
+    this.servicesForm = this._fb.group(
+      {
+        airports: this._fb.control([], atLeastOneValidator),
+        seaports: this._fb.control([], atLeastOneValidator),
+        options: this._fb.control([]),
+      }
+    )
+  }
 
   ngOnInit() {
-    this.registrationAPIService.getRegistrationData().then(response => {
-
+    this.loggedInUser = this.authService.currentUser;
+    this.registrationService.getRegistrationData().then(response => {
+      this.data = response;
     })
   }
 
-  nextStep()
-  {
-    this.registrationService.next();
+  nextStep() {
+    this.registrationService.savePartnerExtraData(this.servicesForm.getRawValue());
+
   }
 
-  back()
-  {
+
+
+  back() {
     this.registrationService.back();
   }
+
+
+
 }

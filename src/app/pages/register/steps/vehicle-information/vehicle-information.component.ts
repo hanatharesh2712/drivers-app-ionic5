@@ -1,9 +1,11 @@
+import { DrvnAuthenticationService } from './../../../../services/auth/auth.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PartnerVehicleDialogComponent } from '@app/components/partner-vehicle-dialog/partner-vehicle-dialog.component';
 import { PartnerVehicleDialogModule } from '@app/components/partner-vehicle-dialog/partner-vehicle-dialog.module';
 import { RegistrationService } from '@app/services/registration.service';
 import { UtilService } from '@app/services/util/util.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-vehicle-information',
@@ -24,30 +26,45 @@ export class VehicleInformationComponent implements OnInit {
   vehicleTypes: any;
   vehicleExteriorColors: any;
   filteredMakesByType: any;
-  years = this.range( (new Date().getFullYear() - 20), new Date().getFullYear());
-  maxPax: any;
-  maxLug: any;
+  years = this.range((new Date().getFullYear() - 20), new Date().getFullYear());
+  maxPax = 4;
+  maxLug = 6;
+  loggedInUser: any;
+  data: any;
+  vehicleForm: any;
 
   constructor(private registrationService: RegistrationService,
     private util: UtilService,
-    private _route: ActivatedRoute) {
+    private authService: DrvnAuthenticationService,
+    private _fb: FormBuilder) {
     this.registrationService.setStep(4);
   }
 
   ngOnInit() {
     this.storage = this.registrationService._storageInfo;
     this.is_driver = true;
-   // const _data = this._route.snapshot.data.data;
-   // this.vehicleTypes = _data.vehicle_types;
-  //  this.vehicleMakesByType = this.filteredMakesByType = _data.vehicleMakesByType;
-   // this.vehicleInteriorColors = _data.vehicle_colors.filter(e => e.is_interior);
-  //  this.vehicleExteriorColors = _data.vehicle_colors.filter(e => e.is_exterior);
+    this.loggedInUser = this.authService.currentUser;
+    this.registrationService.getRegistrationData().then(response => {
+      this.data = response;
+      this.vehicleTypes = this.data.partnerVehicleTypes;
+      this.vehicleMakesByType = this.filteredMakesByType = this.data.partnerVehicleMakeModels;
+      this.vehicleInteriorColors = this.data.vehicleColors.filter(e => e.is_interior);
+      this.vehicleExteriorColors = this.data.vehicleColors.filter(e => e.is_exterior);
+    })
+    this.vehicleForm = this._fb.group({
+      make: ['', Validators.required],
+      year: ['', Validators.required],
+      passenger_count: ['', Validators.required],
+      luggage_count: ['', Validators.required],
+      partner_vehicle_type_id: ['', Validators.required],
+      exterior_color_id: ['', Validators.required],
+      interior_color_id: ['', Validators.required], });
 
 
   }
 
   nextStep() {
-    this.registrationService.next();
+    this.registrationService.savePartnerVehicleData(this.vehicleForm.getRawValue());
   }
 
   back() {
@@ -72,13 +89,13 @@ export class VehicleInformationComponent implements OnInit {
   changeVehicleType(vehicleTypeId, clearMake = false) {
     const vehicleType = this.vehicleTypes.find(e => e.id == vehicleTypeId);
     if (vehicleType) {
-        this.years = this.range((new Date().getFullYear(), 0) - vehicleType.years_old, new Date().getFullYear());
-        this.filteredMakesByType = this.vehicleMakesByType.filter(e => e.partner_vehicle_type_id == vehicleType.id);
-        this.maxPax = vehicleType.max_pax;
-        this.maxLug = vehicleType.max_lug;
-       
+      this.years = this.range(new Date().getFullYear() - vehicleType.years_old, new Date().getFullYear());
+      this.filteredMakesByType = this.vehicleMakesByType.filter(e => e.partner_vehicle_type_id == vehicleType.id);
+      this.maxPax = vehicleType.max_pax;
+      this.maxLug = vehicleType.max_lug;
+
 
     }
-}
+  }
 
 }

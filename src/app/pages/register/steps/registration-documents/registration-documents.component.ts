@@ -12,10 +12,7 @@ import { UtilService } from '@app/services/util/util.service';
   styleUrls: ['./registration-documents.component.scss']
 })
 export class RegistrationDocumentsComponent implements OnInit {
-  storage: any;
   is_driver: boolean;
-
-
 
   constructor(private registrationService: RegistrationService,
     private util: UtilService) {
@@ -23,15 +20,7 @@ export class RegistrationDocumentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storage = this.registrationService._storageInfo;
-
-    if (!this.storage) {
-
-      this.util.goForward('register/mobile-validation');
-      return;
-    }
-    this.is_driver = (this.storage.is_driver === 'true')
-
+    this.is_driver = true;
   }
 
   nextStep() {
@@ -42,9 +31,5 @@ export class RegistrationDocumentsComponent implements OnInit {
     this.registrationService.back();
   }
 
-  async addVehicleClass() {
-    const modal = await this.util.createModal(PartnerVehicleDialogComponent,
-      {}, 'partner-vehicle-dialog');
-    modal.present();
-  }
+
 }

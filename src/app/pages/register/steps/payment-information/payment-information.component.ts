@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from '@app/services/registration.service';
 import { UtilService } from '@app/services/util/util.service';
 
@@ -16,30 +17,95 @@ export class PaymentInformationComponent implements OnInit {
   payment_method = 'amex';
   storage: any;
   is_driver: boolean;
+  bankAccountType = null;
+  bankInfoForm: any;
   constructor(private registrationService: RegistrationService,
-    private util:UtilService) {
+    private util: UtilService,
+    private _fb: FormBuilder) {
     this.registrationService.setStep(7);
-   }
+  }
 
   ngOnInit() {
-    this.storage = this.registrationService._storageInfo;
-    if (!this.storage) {
 
-      this.util.goForward('register/mobile-validation');
-      return;
+    this.is_driver = true;
+    this.bankInfoForm = this._fb.group({
+      bank_name: [
+        "",
+        Validators.required,
+      ],
+      account_holder_name: [
+        "",
+        Validators.required,
+      ],
+      account_number: [
+        "",
+        [Validators.required, Validators.minLength(6), Validators.maxLength(17)],
+      ],
+      re_account_number: [
+        "",
+        Validators.required,
+      ],
+      routing_number: [
+        "",
+        [Validators.required, Validators.minLength(9), Validators.maxLength(9)],
+      ],
+      payment_method_id: [
+        "",
+        Validators.required,
+      ],
+      is_personal: [
+        "",
+        Validators.required,
+      ],
+      is_saving: [
+        "",
+        Validators.required,
+      ],
+    }, { validator: this.accNumberValidator });
+  }
+
+  accNumberValidator(frm: FormGroup) {
+    if (frm.controls['re_account_number'].value === frm.controls['account_number'].value) {
+      frm.controls['re_account_number'].setErrors(null);
+      return null;
     }
-    this.is_driver = (this.storage.is_driver ? this.storage.is_driver === 'true' : true)
+    else {
+      frm.controls['re_account_number'].setErrors({ 'mismatch': true });
+      return { 'mismatch': true }
+    };
   }
 
- 
-  nextStep()
-  {
-    
-    this.registrationService.next();
+  changeBankAccountType(value) {
+    let val = [];
+    switch (value) {
+      case "business_checking":
+        val = [0, 0];
+        break;
+      case "business_saving":
+        val = [0, 1];
+        break;
+      case "personal_checking":
+        val = [1, 0];
+        break;
+      case "personal_saving":
+        val = [1, 1];
+        break;
+
+      default:
+        break;
+    }
+
+    this.bankInfoForm.get("is_personal").setValue(val[0]);
+    this.bankInfoForm.get("is_saving").setValue(val[1]);
   }
 
-  back()
-  {
+
+
+  nextStep() {
+    this.registrationService.savePartnerBankInformation(this.bankInfoForm.getRawValue());
+  }
+
+  back() {
     this.registrationService.back();
   }
 }

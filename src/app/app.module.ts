@@ -1,3 +1,4 @@
+import { DocumentUploadDialogModule } from './components/document-upload-dialog/document-upload-dialog.module';
 import { SettleDialogModule } from '@app/components/settle-dialog/settle-dialog.module';
 import { RatingDialogModule } from './components/rating-dialog/rating-dialog.module';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
@@ -59,7 +60,8 @@ import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
     RideMapDialogModule,
     RatingDialogModule,
     SettleDialogModule,
-    GreetingSignPageModule
+    GreetingSignPageModule,
+    DocumentUploadDialogModule
   ],
   providers: [
     StatusBar,

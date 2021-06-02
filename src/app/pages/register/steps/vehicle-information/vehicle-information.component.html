@@ -1,58 +1,58 @@
-<ion-content *ngIf="storage">
-  <ion-card *ngIf="is_driver">
+<ion-content>
+  <ion-card *ngIf="is_driver" [formGroup]="vehicleForm">
     <h3>Tell us more about the vehicle you own...</h3>
-   
+
     <ion-list>
-    <!--  <ion-item>
+      <ion-item>
         <ion-label position="floating">Vehicle Class</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL" (ionChange)='changeVehicleType($event.value, true)'>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" (ionChange)='changeVehicleType($event.detail.value, true)' formControlName="partner_vehicle_type_id">
           <ion-select-option [value]="type.id"   *ngFor="let type of vehicleTypes">    {{type.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Make/Model</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL" >
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="make" >
           <ion-select-option [value]="make.name" *ngFor="let make of filteredMakesByType">  {{make.name}}</ion-select-option>
-       
+
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Vehicle Year</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL"  formControlName="year">
           <ion-select-option   [value]="y" *ngFor="let y of years | reverse">{{y}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Exterior Color</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="exterior_color_id">
           <ion-select-option *ngFor="let color of vehicleExteriorColors" [value]="color.id">{{color.name}}</ion-select-option>
-       
+
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Interior Color</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL">
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="interior_color_id">
           <ion-select-option *ngFor="let color of vehicleInteriorColors" [value]="color.id">{{color.name}}</ion-select-option>
-       
+
         </ion-select>
       </ion-item>
-      -->
+
       <ion-item>
         <ion-label position="floating">Passenger Capacity</ion-label>
-        <ion-range min="1" max="16" step="1" snaps="true" ticks="true" pin="true" color="secondary">
+        <ion-range min="1" [max]="maxPax" step="1" snaps="true" ticks="true" pin="true" color="secondary" formControlName="passenger_count">
           <ion-label slot="start">1</ion-label>
-          <ion-label slot="end">16</ion-label>
+          <ion-label slot="end">{{maxPax}}</ion-label>
         </ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Luggage Capacity</ion-label>
-        <ion-range min="1" max="8" step="1" snaps="true" ticks="true" pin="true" color="secondary">
+        <ion-range min="1" [max]="maxLug" step="1" snaps="true" ticks="true" pin="true" color="secondary" formControlName="luggage_count">
           <ion-label slot="start">1</ion-label>
-          <ion-label slot="end">8</ion-label>
+          <ion-label slot="end">{{maxLug}}</ion-label>
         </ion-range>
       </ion-item>
-     
-     
+
+
     </ion-list>
     <div class="next-text">
       <p class="secondary-text">
@@ -69,7 +69,7 @@
           <div class="vehicle-class-name">
             Executive Sedan
            </div>
-  
+
            <div class="d-flex a-center increase-container">
             <ion-icon name="remove-circle-outline" (click)="decrease()"></ion-icon>
             <span class="value">
@@ -78,14 +78,14 @@
             <ion-icon name="add-circle-outline" (click)="increase()"></ion-icon>
           </div>
         </div>
-        
+
       </ion-item>
       <ion-item>
         <div class='d-flex j-between a-center w-100-p'>
           <div class="vehicle-class-name">
             Executive Sedan
            </div>
-  
+
            <div class="d-flex a-center increase-container">
             <ion-icon name="remove-circle-outline" (click)="decrease()"></ion-icon>
             <span class="value">
@@ -94,14 +94,14 @@
             <ion-icon name="add-circle-outline" (click)="increase()"></ion-icon>
           </div>
         </div>
-        
+
       </ion-item>
       <ion-item>
         <div class='d-flex j-between a-center w-100-p'>
           <div class="vehicle-class-name">
             Executive Suv
            </div>
-  
+
            <div class="d-flex a-center increase-container">
             <ion-icon name="remove-circle-outline" (click)="decrease()"></ion-icon>
             <span class="value">
@@ -110,14 +110,14 @@
             <ion-icon name="add-circle-outline" (click)="increase()"></ion-icon>
           </div>
         </div>
-        
+
       </ion-item>
       <ion-item>
         <div class='d-flex j-between a-center w-100-p'>
           <div class="vehicle-class-name">
             Executive Van
            </div>
-  
+
            <div class="d-flex a-center increase-container">
             <ion-icon name="remove-circle-outline" (click)="decrease()"></ion-icon>
             <span class="value">
@@ -126,7 +126,7 @@
             <ion-icon name="add-circle-outline" (click)="increase()"></ion-icon>
           </div>
         </div>
-        
+
       </ion-item>
     </ion-list>
   </ion-card>

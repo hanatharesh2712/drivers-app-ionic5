@@ -1,3 +1,4 @@
+import { RegistrationAPIService } from '@app/services/registration-api.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Review } from '@app/models/review';
@@ -59,7 +60,7 @@ export class RegistrationService {
       title: 'Payment Preference',
       done: false,
       url: 'register/payment-information',
-       section: 'Registration'
+      section: 'Registration'
     }
   ];
   actualStepIndex: number = 0;
@@ -70,54 +71,66 @@ export class RegistrationService {
   mobile_phone: any;
   partner_email: any;
   is_driver: string;
-  constructor(private utl: UtilService,
-    private storage: Storage) {
+  registrationData;
+  constructor(
+    private util: UtilService,
+    private storage: Storage,
+    private registrationAPIService: RegistrationAPIService) {
 
   }
 
 
-  setStep(index)
-  {
+  setStep(index) {
     this.actualStepIndex = index;
     this.actualStep = this.steps[this.actualStepIndex];
     this.onChangeStep.next(this.actualStep);
   }
 
+  getRegistrationData() {
+    return new Promise((resolve, reject) => {
+      if (this.registrationData) {
+        resolve(this.registrationData);
+      }
+      else {
+        this.registrationAPIService.getRegistrationData().then(response => {
+          this.registrationData = response;
+          resolve(response);
+        })
+      }
+
+    })
+
+  }
 
   next() {
     this.actualStep.done = true;
     this.setStep(this.actualStepIndex + 1);
-    this.utl.goForward(this.actualStep.url);
+    this.util.goForward(this.actualStep.url);
   }
 
   back() {
-    if (this.actualStepIndex != 0)
-    {
+    if (this.actualStepIndex != 0) {
       this.setStep(this.actualStepIndex - 1);
-      this.utl.goBack(this.actualStep.url);
+      this.util.goBack(this.actualStep.url);
     }
-    else
-    {
-      this.utl.goBack('login')
+    else {
+      this.util.goBack('login')
     }
 
   }
 
-  initStorageData()
-  {
+  initStorageData() {
     this.storage.set('registration', {}).then((newStorageInfo) => {
       this.storageInfo = newStorageInfo;
     });
-    
+
   }
 
-  get _storageInfo()
-  {
+  get _storageInfo() {
     return this.storageInfo;
   }
 
-  set _storageInfo(value)
-  {
+  set _storageInfo(value) {
     this.storage.set('registration', value).then((newStorageInfo) => {
       this.storageInfo = newStorageInfo;
     });
@@ -131,33 +144,98 @@ export class RegistrationService {
     let atLeastOneError = false;
 
     if (c.pristine) {
-        return null;
+      return null;
     }
 
     if (!/^.{7,}$/.test(password)) {
-        minLength = true;
-        atLeastOneError = true;
+      minLength = true;
+      atLeastOneError = true;
     }
 
     if (!/[A-Z][a-z]/.test(password)) {
-        uppercase = true;
-        atLeastOneError = true;
+      uppercase = true;
+      atLeastOneError = true;
     }
 
     if (!/[$-/:-?{-~!"@^_`\[\]]/.test(password)) {
-        symbol = true;
-        atLeastOneError = true;
+      symbol = true;
+      atLeastOneError = true;
     }
 
     if (atLeastOneError) {
-        return {
-            'minLength': minLength,
-            'upperCase': uppercase,
-            'symbol': symbol,
-        };
+      return {
+        'minLength': minLength,
+        'upperCase': uppercase,
+        'symbol': symbol,
+      };
     }
     return null;
 
-}
+  }
+
+  savePartnerExtraData(data)
+  {
+    this.registrationAPIService.savePartnerExtraData(data).then((response: any) => {
+      if (response.status.toUpperCase() == 'SUCCESS') {
+        this.next();
+      }
+      else
+      {
+        this.showError("There was an error trying to save the information. Please try again.");
+      }
+    }, error =>
+    {
+      this.showError("There was an error trying to save the information. Please try again.");
+    })
+  }
+
+
+  savePartnerVehicleData(data)
+  {
+    this.registrationAPIService.savePartnerVehicleData(data).then((response: any) => {
+      if (response.status.toUpperCase() == 'SUCCESS') {
+        this.next();
+      }
+      else
+      {
+        this.showError("There was an error trying to save vehicle information. Please try again.");
+      }
+    }, error =>
+    {
+      this.showError("There was an error trying to save vehicle information. Please try again.");
+    })
+  }
+
+
+
+  savePartnerBankInformation(data)
+  {
+    this.registrationAPIService.savePartnerBankInformation(data).then((response: any) => {
+      if (response.status.toUpperCase() == 'SUCCESS') {
+        // this.next();
+      }
+      else
+      {
+        this.showError("There was an error trying to save payment information. Please try again.");
+      }
+    }, error =>
+    {
+      this.showError("There was an error trying to save payment information. Please try again.");
+    })
+  }
+
+
+  async showError(text)
+  {
+    let alert = await this.util.createAlert('Registration', true, text, {
+      text: 'Ok',
+      role: 'cancel',
+      cssClass: 'secondary',
+      handler: async () => {
+
+      }
+    });
+    alert.present();
+  }
 
 }

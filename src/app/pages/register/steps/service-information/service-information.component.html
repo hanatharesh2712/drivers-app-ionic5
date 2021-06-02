@@ -1,44 +1,34 @@
-<ion-content>
-  <ion-card >
+<ion-content *ngIf="data" >
+  <ion-card [formGroup]="servicesForm">
     <h3>Tell us more about your services...</h3>
+    {{servicesForm.getRawValue() | json}}
 
     <ion-list>
       <ion-item>
         <ion-label position="floating">Metropolitan Service Area</ion-label>
-        <ion-input [disabled]="true" value="Florida"></ion-input>
+        <ion-input [disabled]="true" value="{{data.market.msa.name}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Center of Service Area</ion-label>
-        <ion-input [disabled]="true" value="1200 anastasia avenue"></ion-input>
+        <ion-input [disabled]="true" value="{{loggedInUser.partner.address}}"></ion-input>
       </ion-item>
-   
+
       <ion-item>
         <ion-label position="floating">Airports</ion-label>
-        <ion-select value="null" okText="SELECT" [interfaceOptions]="airportsSelectOptions"  cancelText="CANCEL" multiple  class="select-full-width" >
-          <ion-select-option value="5">Mia <br>Miami International Airport</ion-select-option>
-          <ion-select-option value="10">Fort Lauderdale Itl</ion-select-option>
-          <ion-select-option value="20">Orlando International Airport</ion-select-option>
-          <ion-select-option value="50">Another Airport</ion-select-option>
+        <ion-select value="null" okText="SELECT" formControlName="airports" [interfaceOptions]="airportsSelectOptions"  cancelText="CANCEL" multiple  class="select-full-width" >
+          <ion-select-option [value]="airport.id" *ngFor="let airport of data.market.airports" >{{airport.airport.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Cruise Ports</ion-label>
-        <ion-select value="null" okText="SELECT" [interfaceOptions]="cruisePortsSelectOptions"  cancelText="CANCEL" multiple class="select-full-width" >
-          <ion-select-option value="5">Miami Cruiseport</ion-select-option>
-          <ion-select-option value="10">Fort Lauderdale Cruiseport</ion-select-option>
-          <ion-select-option value="20">Another Cruiseport</ion-select-option>
+        <ion-select value="null" okText="SELECT" formControlName="seaports" [interfaceOptions]="cruisePortsSelectOptions"  cancelText="CANCEL" multiple class="select-full-width" >
+          <ion-select-option [value]="seaport.id" *ngFor="let seaport of data.market.seaports" >{{seaport.seaport.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Additional Services</ion-label>
-        <ion-select value="null" okText="SELECT"  [interfaceOptions]="additionalServicesOption"  cancelText="CANCEL" multiple class="select-full-width" >
-          <ion-select-option value="5">Childseats</ion-select-option>
-          <ion-select-option value="5">Greeter</ion-select-option>
-          <ion-select-option value="5">Tour Guide</ion-select-option>
-          <ion-select-option value="5">Armored Vehicles</ion-select-option>
-          <ion-select-option value="5">Electric Vehicles</ion-select-option>
-          <ion-select-option value="5">Wheelchair Accessible Vehicles</ion-select-option>
-          <ion-select-option value="5">Party Style Vehicle</ion-select-option>
+        <ion-label position="floating">Additional Services (optional)</ion-label>
+        <ion-select value="null" okText="SELECT"  formControlName="options" [interfaceOptions]="additionalServicesOption"  cancelText="CANCEL" multiple  >
+          <ion-select-option [value]="option.id" *ngFor="let option of data.partnerOptionTypes" >{{option.name}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -58,7 +48,7 @@
 
 
       </ion-button>
-      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()">
+      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" [disabled]="servicesForm.invalid">
         <div class="d-flex a-center">
           <span>NEXT</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
