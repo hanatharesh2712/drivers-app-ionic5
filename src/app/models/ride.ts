@@ -32,6 +32,8 @@ export class Ride {
   do_location?: string;
   vehicle_type?: string;
   spot_time?: string;
+  spot_datetime?: string;
+  nice_spot_datetime?: string;
   notes?: string;
   settled_by_driver?: string;
   additional_passengers?: string;
@@ -43,6 +45,9 @@ export class Ride {
   next_status_button_color: string;
   next_status_button_text: string;
   pu_datetime: string;
+  nice_pu_datetime: string;
+  nice_spot_time: string;
+  waitsAndStops = [];
   cost_total;
   settle_deadline: number;
   times: RideTime[];

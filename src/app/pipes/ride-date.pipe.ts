@@ -1,10 +1,10 @@
 import { DatePipe } from "@angular/common";
 import { Pipe, PipeTransform } from "@angular/core";
-
+import parse from 'date-fns/parse'
 @Pipe({
   name: 'niceDateFormatPipe',
 })
-export class niceDateFormatPipe implements PipeTransform {
+export class NiceDateFormatPipe implements PipeTransform {
 
   constructor(public datePipe: DatePipe) {
   }
@@ -12,8 +12,8 @@ export class niceDateFormatPipe implements PipeTransform {
 
   transform(value: string) {
 
-     let date = new Date(value);
-     let day = 'hola';
+     let date = parse(value, 'MM/dd/yyyy HH:mm:ss', new Date());
+     let day = '';
      if (this.isToday(date))
      {
        day = 'Today';

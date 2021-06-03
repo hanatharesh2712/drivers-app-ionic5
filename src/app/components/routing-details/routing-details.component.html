@@ -4,7 +4,7 @@
 
     <div class="d-flex item_box hourly-time" *ngIf="ride.service_type.toUpperCase() == 'HOURLY'">
       <ion-icon name="time" class="time-icon"></ion-icon>
-      <h6>Est. Duration: 3 Hours</h6>
+      <h6>Est. Duration: {{ride.duration}} Hours</h6>
     </div>
     <div class="d-flex pu item_box">
       <ion-icon name="{{ride.pickUp.LocationType == 'AIR' ? 'airplane' : ride.pickUp.LocationType == 'SEA' ? 'boat' : 'location'}}"></ion-icon>

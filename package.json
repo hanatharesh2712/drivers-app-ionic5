@@ -46,6 +46,7 @@
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "core-js": "^2.5.4",
+    "date-fns": "^2.22.1",
     "flag-icon-css": "^3.5.0",
     "google-libphonenumber": "^3.2.21",
     "ion-intl-tel-input": "^1.0.3",

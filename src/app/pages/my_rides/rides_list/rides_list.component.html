@@ -17,12 +17,14 @@
       ACCEPTED RIDES <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
     </h4>
     <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
+    <p class="empty-text" *ngIf="!activeRide && !rides.length">No ride offer available.</p>
   </ng-container>
   <ng-container *ngIf="type == 'offers'">
     <h4 class="tab-title ">
       RIDE OFFERS <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
     </h4>
     <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
+    <p class="empty-text" *ngIf="!rides.length">You don't have any ride accepted yet.</p>
   </ng-container>
 
   <ng-container *ngIf="type == 'done' && rides">
@@ -38,6 +40,9 @@
       </h4>
       <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides['closed'], hideDetails: true}"></ng-container>
     </ng-container>
+
+    <p class="empty-text" *ngIf="!rides['closed'].length && !rides['open'].length">You don't have any ride completed yet.
+    </p>
 
   </ng-container>
 
@@ -128,13 +133,14 @@
   <div class="d-flex column w-100-p" (click)="viewRide(ride.ride_id)">
     <div class="item_header  d-flex">
       <div class="profile_details">
-        <h3 class="d-flex" [ngClass]="{'active': isActive}"> {{ride.pu_datetime | niceDateFormatPipe }} <span
+        <h3 class="d-flex" [ngClass]="{'active': isActive}"> {{ride.nice_pu_datetime }} <span
             class="end">
             #{{ride.ride_id}}</span></h3>
         <h4 class="d-flex">{{ride.service_type | uppercase}} | {{ride.vehicle_type  | uppercase}}</h4>
       </div>
     </div>
-    <routing-details [ride]="ride" [showNotes]="false" [showStops]="false" [showStopsCount]="true" *ngIf="!hideDetails" ></routing-details>
+    <routing-details [ride]="ride" [showNotes]="false" [showStops]="false" [showStopsCount]="true" *ngIf="!hideDetails">
+    </routing-details>
 
   </div>
 </ng-template>

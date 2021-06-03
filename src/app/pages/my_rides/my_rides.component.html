@@ -40,7 +40,7 @@
       <ion-tab-button  tab="accepted" (click)="changeTab('accepted')">
         <ion-icon src="assets/custom-ion-icons/task_alt.svg" class="icon drvn-icon"></ion-icon>
         <ion-label class="letter-spacing">ACCEPTED</ion-label>
-        <ion-badge>{{ridesAccepted.length}}</ion-badge>
+        <ion-badge>{{ridesAccepted.length + (rideActive ? 1 : 0)}}</ion-badge>
       </ion-tab-button>
 
       <ion-tab-button  tab="completed" (click)="changeTab('done')" >

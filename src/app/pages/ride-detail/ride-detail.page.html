@@ -29,10 +29,10 @@
         <div class="d-flex column">
           <div class="d-flex a-center">
             <ion-icon name="calendar"></ion-icon>
-            {{ride.pu_datetime | niceDateFormatPipe }}
+            {{ride.nice_pu_datetime  }}
           </div>
-          <div class="spot-time a-center d-flex">
-            Spot time at 11:30PM
+          <div class="spot-time a-center d-flex" *ngIf="ride.spot_time" >
+            Spot time at {{ride.spot_datetime | dateTime:'hh:mmaaaa'}}
 
           </div>
 
