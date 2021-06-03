@@ -16,13 +16,13 @@
       <ion-item>
         <ion-label position="floating">Airports</ion-label>
         <ion-select value="null" okText="SELECT" formControlName="airports" [interfaceOptions]="airportsSelectOptions"  cancelText="CANCEL" multiple  class="select-full-width" >
-          <ion-select-option [value]="airport.id" *ngFor="let airport of data.market.airports" >{{airport.airport.name}}</ion-select-option>
+          <ion-select-option [value]="airport.airport_id" *ngFor="let airport of data.market.airports" >{{airport.airport.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Cruise Ports</ion-label>
         <ion-select value="null" okText="SELECT" formControlName="seaports" [interfaceOptions]="cruisePortsSelectOptions"  cancelText="CANCEL" multiple class="select-full-width" >
-          <ion-select-option [value]="seaport.id" *ngFor="let seaport of data.market.seaports" >{{seaport.seaport.name}}</ion-select-option>
+          <ion-select-option [value]="seaport.seaport_id" *ngFor="let seaport of data.market.seaports" >{{seaport.seaport.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
