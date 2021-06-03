@@ -9,6 +9,9 @@
 
 app-home {
 
+  ion-menu-button {
+    color: white;
+  }
 
   ion-content {
     ion-list {
@@ -23,6 +26,7 @@ app-home {
       flex-direction: column;
       align-items: flex-start;
       color: white;
+      font-weight: bold;
     }
 
     ion-item {
@@ -41,17 +45,26 @@ app-home {
       .title {
         font-size: 1.8rem;
         font-weight: bold;
-        margin-bottom: 12px;
+        margin-bottom: 18px;
         text-transform: uppercase;
         color: #bb9669;
         letter-spacing: 1px;
 
-        &.faq-title
-        {
+        &.faq-title {
           color: white !important;
         }
-      }
 
+
+      }
+      .faq-subtitle {
+        font-size: 1.2rem;
+        color: white;
+        letter-spacing: 1px;
+        /* text-transform: uppercase; */
+        padding-left: 6px;
+        position: relative;
+        top: 6px;
+      }
       .go-icon {
         position: absolute;
         top: 50%;
@@ -65,16 +78,11 @@ app-home {
 
     .next-ride {
 
-      background: linear-gradient(
-        90deg
-         , #252525 0%, #4a889c);
+      background: linear-gradient(90deg, #252525 0%, #4a889c);
 
 
-      &.active
-      {
-        background: linear-gradient(
-        90deg
-        , #000000a6 0%, #c79f0c);
+      &.active {
+        background: linear-gradient(90deg, #000000a6 0%, #c79f0c);
       }
 
 
@@ -89,8 +97,6 @@ app-home {
         font-size: 1.6rem;
         margin-bottom: 4px;
         font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
       }
 
       .type {
@@ -111,47 +117,52 @@ app-home {
 
 
       .rating-stars {
-        margin: 8px 0px 20px;
-        margin-right: 24px;
         align-items: center;
-        text-align: center;
-
-        ion-badge {
-          padding: 0;
-          background-color: transparent;
-          text-align: center;
+        margin: 8px 0px 20px;
+        width: 33%;
+        padding: 4px;
+        display: flex;
+        .center-container {
           display: flex;
-    align-items: center;
-          font-weight: 400;
-          width: 88px;
-          height: 38px;
-          font-size: 2.2rem;
-          line-height: 38px;
+          align-items: center;
+          flex-direction: column;
 
-          ion-icon {
-            font-size: 2.3rem;
-            color: #35eb44;
-            vertical-align: middle;
-            position: relative;
-            top: -2px;
+          ion-badge {
+            padding: 0;
+            background-color: transparent;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+            height: 38px;
+            font-size: 2.2rem;
+            line-height: 38px;
+
+            ion-icon {
+              font-size: 2.3rem;
+              color: #35eb44;
+              vertical-align: middle;
+              position: relative;
+              margin-left: 4px;
+              top: -2px;
+            }
+
+            .text {
+              display: inline-block;
+              font-size: 3.5rem;
+              color: white;
+            }
           }
 
-          .text {
-            display: inline-block;
-            margin: 0px 5px;
-            font-size: 3.5rem;
-            color: white;
+          .people {
+            display: block;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin-top: 5px;
           }
         }
 
-        .people {
-          margin: 0 10px;
-          display: block;
-          text-transform: uppercase;
-          font-size: 1.2rem;
-          letter-spacing: 1px;
-          margin-top: 5px;
-        }
       }
 
       .go-icon {
@@ -165,31 +176,29 @@ app-home {
 
       .container {
         display: flex;
-        margin-top: 30px;
 
         .count-info {
           width: 33%;
           padding: 4px;
-          margin-right: 12px;
+          margin: 8px 0px 20px;
           display: flex;
+
           .center-container {
             display: flex;
             align-items: center;
             flex-direction: column;
 
-            .value
-            {
-              font-size: 2.3rem;
+            .value {
+              font-size: 3.5rem;
               margin-bottom: 4px;
 
-              ion-icon
-              {
+              ion-icon {
+                font-size: 2.5rem;
                 margin-left: 8px;
               }
             }
 
-            .text
-            {
+            .text {
               text-transform: uppercase;
               font-size: 1.2rem;
               letter-spacing: 1px;
@@ -213,14 +222,13 @@ app-home {
         z-index: -1;
         width: calc(100% + var(--border-width) * 2);
         height: calc(100% + var(--border-width) * 2);
-        background: linear-gradient(
-          60deg,
-          black,
-          #585858,
-          var(--ion-theme-color),
-          #7a6803,
+        background: linear-gradient(60deg,
+            black,
+            #585858,
+            var(--ion-theme-color),
+            #7a6803,
 
-        );
+          );
         background-size: 300% 300%;
         background-position: 0 50%;
         animation: moveGradient 4s alternate infinite;
@@ -234,12 +242,11 @@ app-home {
     }
 
 
-    .faq
-    {
+    .faq {
       background-image: url('assets/imgs/faq-bg.png');
       background-size: 100% 100%;
 
-      .title{
+      .title {
         font-size: 6rem;
         position: relative;
         top: 30px;

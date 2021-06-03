@@ -24,7 +24,7 @@
   <ion-list class=" ion-no-margin ion-margin-top" class="info-list" lines="full">
     <!---Phone Number--->
     <ion-list-header>
-      Partner ID # {{loggedInUser.id}}
+      {{loggedInUser.partner.company_name}}
     </ion-list-header>
 
 
@@ -35,7 +35,10 @@
 
     <ion-item  class="detailsItems"  *ngIf="loggedInUser.mobile_phone">
       <h6 slot="start" class="ion-no-margin">Mobile Number</h6>
-      <ion-text color="dark" slot="end">{{loggedInUser.mobile_phone}}</ion-text>
+      <ion-text color="dark" slot="end">
+        {{(loggedInUser.mobile_phone | slice:0:1) === '+' ? loggedInUser.mobile_phone :
+        (loggedInUser.mobile_phone | mask: '(000) 000-0000')}}
+      </ion-text>
     </ion-item>
 
     <ion-item  class="detailsItems"  *ngIf="loggedInUser.email">
@@ -43,9 +46,9 @@
       <ion-text color="dark" slot="end">{{loggedInUser.email}}</ion-text>
     </ion-item>
 
-    <ion-item  class="detailsItems"  *ngIf="loggedInUser.partner && loggedInUser.partner.company_name">
-      <h6 slot="start" class="ion-no-margin">Company</h6>
-      <ion-text color="dark" slot="end">{{loggedInUser.partner.company_name}}</ion-text>
+    <ion-item  class="detailsItems">
+      <h6 slot="start" class="ion-no-margin">    ID #</h6>
+      <ion-text color="dark" slot="end"> {{loggedInUser.id}}</ion-text>
     </ion-item>
 
     <ion-item lclass="detailsItems" *ngIf="loggedInUser.partner && loggedInUser.partner.address">

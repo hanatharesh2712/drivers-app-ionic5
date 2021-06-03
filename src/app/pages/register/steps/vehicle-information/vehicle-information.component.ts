@@ -41,9 +41,9 @@ export class VehicleInformationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storage = this.registrationService._storageInfo;
-    this.is_driver = true;
+
     this.loggedInUser = this.authService.currentUser;
+    this.is_driver = this.loggedInUser.partner_type != 3 ;
     this.registrationService.getRegistrationData().then(response => {
       this.data = response;
       this.vehicleTypes = this.data.partnerVehicleTypes;

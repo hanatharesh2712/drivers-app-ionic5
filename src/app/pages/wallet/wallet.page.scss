@@ -68,6 +68,7 @@ ion-item.no_borderbottom {
   {
      color: white;
      margin-top: 12px;
+     font-weight: bold;
      margin-bottom: 24px;
   }
 
@@ -135,6 +136,11 @@ ion-item.no_borderbottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+
+    .type
+    {
+      font-size: 1rem;
     }
     ion-label
     {

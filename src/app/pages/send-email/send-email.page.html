@@ -11,19 +11,21 @@
 
   <ion-list lines="full">
     <ion-list-header>
-      <div class="contact-title">Write us</div>
+      <div class="contact-title">Send us a message</div>
       <div class="contact-subtitle">
-        Describe us your issue
+        Response Time: 24-48 hours
       </div>
     </ion-list-header>
     <form>
       <ion-item>
         <ion-label>Type</ion-label>
-        <ion-select value="reservations" okText="SELECT" cancelText="CANCEL" interface="action-sheet" [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
+        <ion-select  okText="SELECT" cancelText="CANCEL" interface="action-sheet" [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
           name="type">
-          <ion-select-option value="billing">Chauffeur Support</ion-select-option>
-          <ion-select-option value="operations">Billing Questions</ion-select-option>
-          <ion-select-option value="Technical Help">Technical Help</ion-select-option>
+          <ion-select-option value="ride">Ride Support</ion-select-option>
+          <ion-select-option value="billing">Billing Questions</ion-select-option>
+          <ion-select-option value="chauffeur">Chauffeur Support</ion-select-option>
+          <ion-select-option value="technical">Technical Support</ion-select-option>
+          <ion-select-option value="general">General Feedback</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>

@@ -56,12 +56,13 @@ export class RideService {
           if (activeIndex != -1) {
             this.activeRide = response.rides.splice(activeIndex, 1)[0];
           }
-
           this.rides['offers'] = response.rides.filter((ride) => ride.is_offer);
           this.rides['accepted'] = response.rides.filter(
             (ride) => !ride.is_offer && !ride.is_done
           );
           this.rides['done'] = response.rides.filter((ride) => ride.is_done);
+          this.rides['done']['open'] = response.rides.filter((ride) => ride.canSettle);
+          this.rides['done']['closed'] = response.rides.filter((ride) => !ride.canSettle);
           this.onDidRidesLoaded.next(this.rides);
           return this.rides;
         })
@@ -294,6 +295,30 @@ export class RideService {
       (e) => e.RIType == 'WT' || e.RIType == 'ST'
     );
     ride.pu_datetime = ride.pu_date + ' ' + ride.pu_time;
+    this.checkIfCanSettle(ride);
 
+  }
+
+  checkIfCanSettle(ride)
+  {
+
+    if (ride.is_done) {
+      const endDate = ride.times.find(e => e.type_id == 1);
+      if (endDate)
+      {
+        const hoursSinceDropoff=   Math.abs(
+          new Date().getTime() - new Date(endDate.time).getTime()
+        ) /
+          36e5 ;
+        if (hoursSinceDropoff
+        <
+         ride.settle_deadline
+        ) {
+          ride.canSettle = true;
+        //  ride.settleRemainingHours = this.ride.settle_deadline - hoursSinceDropoff;
+        }
+      }
+
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { DrvnAuthenticationService } from './../../../../services/auth/auth.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PartnerVehicleDialogComponent } from '@app/components/partner-vehicle-dialog/partner-vehicle-dialog.component';
 import { PartnerVehicleDialogModule } from '@app/components/partner-vehicle-dialog/partner-vehicle-dialog.module';
@@ -13,14 +14,16 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class RegistrationDocumentsComponent implements OnInit {
   is_driver: boolean;
+  loggedInUser: any;
 
   constructor(private registrationService: RegistrationService,
-    private util: UtilService) {
+    private authService: DrvnAuthenticationService) {
     this.registrationService.setStep(5);
   }
 
   ngOnInit() {
-    this.is_driver = true;
+    this.loggedInUser = this.authService.currentUser;
+    this.is_driver = this.loggedInUser.partner_type != 3 ;
   }
 
   nextStep() {

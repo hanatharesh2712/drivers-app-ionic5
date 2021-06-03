@@ -26,7 +26,7 @@
       margin: 0 auto;
 
       margin-bottom: 16px;
-      box-shadow: #656565 0px 0px 10px;
+      box-shadow: #656565 0px 0px 2px;
       .item_header {
 
         padding: 12px 20px;
@@ -50,6 +50,12 @@
             letter-spacing: .7px;
             margin-bottom: 5px;
             color: white;
+
+            &.active
+
+            {
+              color: green;
+            }
 
             .end {
               color: var(--ion-theme-color);

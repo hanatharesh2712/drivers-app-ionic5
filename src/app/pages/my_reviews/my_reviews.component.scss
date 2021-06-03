@@ -149,9 +149,9 @@ page-my-reviews {
 
           h3 {
             margin: 0;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 500;
-            letter-spacing: .7px;
+            margin-bottom: 4px;
             color: var(--ion-theme-color);
 
 
@@ -167,9 +167,10 @@ page-my-reviews {
 
           h4 {
             color: var(--ion-theme-info-color);
-            ;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-weight: 500;
-            font-size: 1.2rem;
+            font-size: 1rem;
           }
         }
       }

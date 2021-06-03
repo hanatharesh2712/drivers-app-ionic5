@@ -42,22 +42,22 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">
-        {{isRideActive ? 'Passenger Information' : 'Pax Count / Luggage Count'}}
+        Passenger Information
       </ion-label>
       <div class="content">
         <div class="d-flex column">
           <div class="pax-info d-flex">
-            <div class="sub-content" *ngIf="isRideActive">
+            <div class="sub-content" *ngIf="(!ride.is_offer && !ride.is_done)">
               <ion-icon name="person" class="icon drvn-icon"></ion-icon>
               {{ride.passenger_name}} <ng-container *ngIf="ride.passenger_count > 1"> (+ {{ride.passenger_count - 1}})
               </ng-container>
             </div>
-            <div class="sub-content" *ngIf="!isRideActive">
+            <div class="sub-content" *ngIf="ride.is_offer || ride.is_done">
               <ion-icon name="people" class="icon drvn-icon"></ion-icon> {{ride.passenger_count}}
               Passenger{{ride.passenger_count > 1 ? 's' : ''}}
 
             </div>
-            <div class="sub-content">
+            <div class="sub-content" *ngIf="ride.luggage_count > 0" >
               <ion-icon src="assets/custom-ion-icons/luggage.svg" class="icon drvn-icon" color="primary"></ion-icon>
               {{ride.luggage_count}}
               Bag{{ride.luggage_count > 1 ? 's' : ''}}
@@ -97,7 +97,7 @@
         </li>
         <li *ngIf="ride.child_seats.length">
           <div>
-            <ion-icon src="assets/custom-ion-icons/care.svg"></ion-icon> Child seat Required
+            <ion-icon src="assets/custom-ion-icons/care.svg"></ion-icon> Child Seat
             <ul class="child-seat-types">
               <li *ngFor="let childSeat of ride.child_seats">
                 {{ childSeat.count + 'x ' + childSeat.type }}
@@ -124,7 +124,7 @@
         <span>
           Routing Information</span>
 
-        <ion-badge color="primary" slot="end" class="view-map-span" (click)="openRoutingMap($event)">
+        <ion-badge color="primary" slot="end" class="view-map-span" (click)="openRoutingMap($event)" *ngIf="!ride.is_done" >
           <ion-icon name="map-outline"></ion-icon>
           VIEW MAP
         </ion-badge>
@@ -140,7 +140,7 @@
       <events-timeline [ride]="ride"></events-timeline>
 
     </ion-item>
-    <ion-item *ngIf="ride.is_done" class="pricing-section">
+    <ion-item *ngIf="!ride.is_offer && ride.cost_total > 0" class="pricing-section">
       <ion-label position="stacked">
         PRICING INFORMATION
       </ion-label>
@@ -233,80 +233,83 @@
 
 </div>
 -->
-<ion-fab class="options-menu" *ngIf="ride  && !ride.is_done  && !ride.is_offer">
-  <ion-fab-button>
-    <ion-icon name="ellipsis-vertical"></ion-icon>
-  </ion-fab-button>
-  <ion-fab-list side="top">
+
+
+<ng-container *ngIf="ride">
+  <ion-fab class="options-menu active" *ngIf="isRideAccepted">
     <ion-fab-button (click)="callSuport()">
       <div class="text-container">
         <ion-icon src="assets/custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
-        CALL DRVN
+        CONTACT SUPPORT
       </div>
 
     </ion-fab-button>
-    <ion-fab-button *ngIf="canGiveBackRide">
+   <!--<ion-fab-button *ngIf="canGiveBackRide">
       <div class="text-container">
         <ion-icon name="arrow-undo-circle-outline"></ion-icon>
         GIVE BACK RIDE
       </div>
 
+    </ion-fab-button>-->
+  </ion-fab>
+  <ion-fab class="options-menu" *ngIf="isRideActive">
+    <ion-fab-button>
+      <ion-icon name="ellipsis-vertical"></ion-icon>
     </ion-fab-button>
-    <ng-container *ngIf="isRideActive">
-      <ion-fab-button (click)="sendSMS()">
+    <ion-fab-list side="top">
 
-        <div class="text-container">
-          <ion-icon name="chatbox-ellipses-outline"></ion-icon>
-          TEXT PASSENGER
-        </div>
+        <ion-fab-button (click)="sendSMS()">
 
-      </ion-fab-button>
-      <ion-fab-button (click)="callPassenger()">
-
-        <div class="text-container">
-          <ion-icon name="call-outline"></ion-icon>
-          CALL PASSENGER
-        </div>
-
-      </ion-fab-button>
-
-      <ion-fab-button class="counter-btn counter " *ngIf="showTimeCounter">
-        <div class="d-flex column button draw" [style.backgroundPosition]="'-' + gracePeriodPercentage + 'px'"
-          [ngClass]="{'starting-wt-time': !isOnGracePeriod}">
-          <ng-container *ngIf="isOnGracePeriod || (!isOnGracePeriod && storageInfo.waitStartedDate)">
-            {{minutesSinceOnLocation}} : {{secondsSinceOnLocation}}
-            <span class="subtitle">
-              {{isOnGracePeriod ? 'GRACE PERIOD' : 'WAITING TIME'}}
-            </span>
-          </ng-container>
-          <div *ngIf="!isOnGracePeriod && !storageInfo.waitStartedDate" class="start-wt-btn" (click)="startWTTime()">
-            START WAIT TIME
+          <div class="text-container">
+            <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+            TEXT PASSENGER
           </div>
 
-        </div>
-      </ion-fab-button>
-      <ion-fab-button (click)="requestConfirmStop()"
-        *ngIf="ride.next_status_code == 'DON' && !storageInfo.confirmedStop">
+        </ion-fab-button>
+        <ion-fab-button (click)="callPassenger()">
 
-        <div class="text-container">
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          {{storageInfo.requestedStop ? 'CONFIRM STOP' : 'REQUEST STOP'}}
-        </div>
+          <div class="text-container">
+            <ion-icon name="call-outline"></ion-icon>
+            CALL PASSENGER
+          </div>
 
-      </ion-fab-button>
-      <ion-fab-button *ngIf="ride.greeting_sign" (click)="goToGreetingSign()">
+        </ion-fab-button>
 
-        <div class="text-container">
-          <ion-icon src="assets/custom-ion-icons/subtitles.svg" class="icon drvn-icon"></ion-icon>
-          GREETING SIGN
-        </div>
+        <ion-fab-button class="counter-btn counter " *ngIf="showTimeCounter">
+          <div class="d-flex column button draw" [style.backgroundPosition]="'-' + gracePeriodPercentage + 'px'"
+            [ngClass]="{'starting-wt-time': !isOnGracePeriod}">
+            <ng-container *ngIf="isOnGracePeriod || (!isOnGracePeriod && storageInfo.waitStartedDate)">
+              {{minutesSinceOnLocation}} : {{secondsSinceOnLocation}}
+              <span class="subtitle">
+                {{isOnGracePeriod ? 'GRACE PERIOD' : 'WAITING TIME'}}
+              </span>
+            </ng-container>
+            <div *ngIf="!isOnGracePeriod && !storageInfo.waitStartedDate" class="start-wt-btn" (click)="startWTTime()">
+              START WAIT TIME
+            </div>
 
-      </ion-fab-button>
-    </ng-container>
+          </div>
+        </ion-fab-button>
+        <ion-fab-button (click)="requestConfirmStop()"
+          *ngIf="ride.next_status_code == 'DON' && !storageInfo.confirmedStop">
 
-  </ion-fab-list>
-</ion-fab>
-<ng-container *ngIf="ride">
+          <div class="text-container">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+            {{storageInfo.requestedStop ? 'CONFIRM STOP' : 'REQUEST STOP'}}
+          </div>
+
+        </ion-fab-button>
+        <ion-fab-button *ngIf="ride.greeting_sign" (click)="goToGreetingSign()">
+
+          <div class="text-container">
+            <ion-icon src="assets/custom-ion-icons/subtitles.svg" class="icon drvn-icon"></ion-icon>
+            GREETING SIGN
+          </div>
+
+        </ion-fab-button>
+
+    </ion-fab-list>
+  </ion-fab>
   <ion-footer *ngIf="ride.is_offer && !isRideActive">
     <ion-toolbar class="offer-footer" [ngClass]="{'active': showingPricing}">
 
@@ -321,32 +324,35 @@
         </ng-container>
 
       </ion-buttons>
-      <ion-text class="offer-price">
-        {{ride.cost_total | currency}} <ion-icon name="chevron-down-circle-outline" class="expand-icon"
-          (click)="showingPricing = !showingPricing">
-        </ion-icon>
-      </ion-text>
-      <ion-list class="pricing-details-list">
-        <ion-list-header>
-          <ion-label class="list-title">
-            Price Details:
-          </ion-label>
-        </ion-list-header>
-        <ng-container *ngTemplateOutlet="costsList; context: {ride: ride}"></ng-container>
+      <ng-container *ngIf="ride.cost_total > 0">
+        <ion-text class="offer-price"  >
+          {{ride.cost_total | currency}} <ion-icon name="chevron-down-circle-outline" class="expand-icon"
+            (click)="showingPricing = !showingPricing">
+          </ion-icon>
+        </ion-text>
+        <ion-list class="pricing-details-list">
+          <ion-list-header>
+            <ion-label class="list-title">
+              Price Details:
+            </ion-label>
+          </ion-list-header>
+          <ng-container *ngTemplateOutlet="costsList; context: {ride: ride}"></ng-container>
 
-      </ion-list>
+        </ion-list>
+      </ng-container>
+
     </ion-toolbar>
   </ion-footer>
-  <ion-footer *ngIf="ride.is_done && !isRideActive && canSettle">
+  <ion-footer *ngIf="ride.canSettle">
     <ion-toolbar class="settle-footer">
       <div class="settle-text" *ngIf="ride.is_done">
-        You have {{settleRemainingHours}} hour{{settleRemainingHours > 1 ? 's' : ''}} left to settle this ride.
+        You have {{ride.settle_deadline}}hrs to report expenses and settle this ride.
       </div>
       <ion-list lines="full" class="settle-list" [formGroup]="settleForm" *ngIf="settleForm"
         [ngClass]="{'active': settlingRide}">
         <ion-item>
           <ion-label>Tolls ($)</ion-label>
-          <ion-input type="number" formControlName="tolls" placeholder="$0.00" slot="end"></ion-input>
+          <ion-input type="number" #tollsInput formControlName="tolls" placeholder="$0.00" slot="end"></ion-input>
 
         </ion-item>
         <ion-item>
@@ -354,7 +360,7 @@
           <ion-input type="number" formControlName="parking" placeholder="$0.00" slot="end"></ion-input>
 
         </ion-item>
-        <ion-item *ngIf="ride.service_type != 'Hourly'">
+        <ion-item *ngIf="ride.service_type != 'Hourly' && ride.costs.reported_waiting > 0">
           <ion-label>Waiting time (mins)</ion-label>
           <span class="value">{{ride.costs.reported_waiting}}</span>
 
@@ -375,7 +381,7 @@
       </ion-list>
       <ion-buttons>
 
-        <ion-button fill="solid" class="accept-btn" (click)="settlingRide = true" *ngIf="!settlingRide">
+        <ion-button fill="solid" class="accept-btn" (click)="openSettle()" *ngIf="!settlingRide">
           SETTLE RIDE
         </ion-button>
         <ion-button fill="solid" class="accept-btn" (click)="setSettle()" *ngIf="settlingRide"

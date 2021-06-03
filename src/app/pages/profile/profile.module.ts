@@ -1,3 +1,4 @@
+import { NgxMaskModule } from 'ngx-mask';
 
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
@@ -29,6 +30,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxMaskModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ProfilePage]

@@ -1,5 +1,15 @@
 
+
+.ride-rating-modal {
+  margin-top: 0px;
+  //  padding: 30% 12px;
+}
+
 app-rating-dialog {
+  .close-icon
+  {
+    font-size: 3rem;
+  }
   ion-content {
     padding-top: 48px;
   }

@@ -39,19 +39,16 @@
 
       <ion-item>
         <ion-label position="floating">Passenger Capacity</ion-label>
-        <ion-range min="1" [max]="maxPax" step="1" snaps="true" ticks="true" pin="true" color="secondary" formControlName="passenger_count">
-          <ion-label slot="start">1</ion-label>
-          <ion-label slot="end">{{maxPax}}</ion-label>
-        </ion-range>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="passenger_count">
+          <ion-select-option [value]="i + 1" *ngFor="let item of [].constructor(this.maxPax); let i = index" >{{i + 1}}  Passenger{{i > 0 ? 's' : ''}}</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Luggage Capacity</ion-label>
-        <ion-range min="1" [max]="maxLug" step="1" snaps="true" ticks="true" pin="true" color="secondary" formControlName="luggage_count">
-          <ion-label slot="start">1</ion-label>
-          <ion-label slot="end">{{maxLug}}</ion-label>
-        </ion-range>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="luggage_count">
+          <ion-select-option [value]="i + 1" *ngFor="let item of [].constructor(this.maxLug); let i = index" >{{i + 1}}  Bag{{i > 0 ? 's' : ''}}</ion-select-option>
+        </ion-select>
       </ion-item>
-
 
     </ion-list>
     <div class="next-text">

@@ -1,9 +1,9 @@
 <div class="ion-page">
-  <ion-header translucent color="secondary">
-    <ion-toolbar color="secondary">
-      <ion-title>Rate your Ride</ion-title>
+  <ion-header translucent color="primary">
+    <ion-toolbar color="primary">
+      <ion-title class="uppercase letter-spacing">Rate your Ride</ion-title>
       <ion-buttons slot="end">
-        <ion-button (click)="dismiss()">Close</ion-button>
+        <ion-icon name="close-outline" class="close-icon" (click)="dismiss()"></ion-icon>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -17,9 +17,9 @@
         </ion-rating>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Give us some feedback about your passenger.</ion-label>
-        <ion-textarea [placeholder]="'Enter more information about how your ride with ' + ride.passenger_name + ' was...'" rows="6" formControlName="comments"
-        > </ion-textarea>
+        <ion-label position="floating">Give us some feedback...</ion-label>
+        <ion-textarea placeholder="Enter more information about how your ride was..." rows="6" formControlName="comments"  disabled=false>
+        </ion-textarea>
       </ion-item>
 
     </ion-list>
@@ -28,7 +28,7 @@
 
     <ion-footer>
       <ion-button expand="full" fill="solid" size="large" (click)="sendRating()" color="primary" class="send-btn" [disabled]="ratingForm.invalid">
-        SEND RATING
+       SUBMIT
       </ion-button>
     </ion-footer>
 </div>

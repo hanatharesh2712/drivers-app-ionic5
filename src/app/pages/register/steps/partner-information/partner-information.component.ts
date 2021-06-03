@@ -45,6 +45,7 @@ export class PartnerInformationComponent implements OnInit {
           address_details: '',
           partner_email: this.registrationService.partner_email,
           mobile_phone: this.registrationService.mobile_phone,
+          mobile_phone_area_code: this.registrationService.dialCode,
           address_lat: ['', Validators.required],
           address_lng: ['', Validators.required],
           address_county: ['', Validators.required],

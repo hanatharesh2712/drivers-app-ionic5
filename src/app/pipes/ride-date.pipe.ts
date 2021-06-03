@@ -22,6 +22,10 @@ export class niceDateFormatPipe implements PipeTransform {
      {
        day = 'Tomorrow';
      }
+     else if (this.isYesterday(date))
+     {
+       day = 'Yesterday';
+     }
      else {
       day = this.datePipe.transform(date, 'EEEE');
      };
@@ -42,5 +46,13 @@ export class niceDateFormatPipe implements PipeTransform {
     return someDate.getDate() == tomorrow.getDate() &&
       someDate.getMonth() == tomorrow.getMonth() &&
       someDate.getFullYear() == tomorrow.getFullYear()
+  }
+
+  isYesterday = (someDate) => {
+    const today = new Date()
+    const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+    return someDate.getDate() == yesterday.getDate() &&
+      someDate.getMonth() == yesterday.getMonth() &&
+      someDate.getFullYear() == yesterday.getFullYear()
   }
 }

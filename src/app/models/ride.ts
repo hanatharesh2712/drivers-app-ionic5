@@ -46,6 +46,7 @@ export class Ride {
   cost_total;
   settle_deadline: number;
   times: RideTime[];
+  canSettle: Boolean;
   costs;
   constructor(obj?) {
       Object.assign(this, ...obj);

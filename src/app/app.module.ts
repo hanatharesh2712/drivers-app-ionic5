@@ -37,6 +37,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { GreetingSignPageModule } from './pages/greeting-sign/greeting-sign.module';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [AppComponent],
@@ -56,6 +57,7 @@ import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
     }),
     AgmDirectionModule,
     AppRoutingModule,
+    NgxMaskModule.forRoot(),
     HttpClientModule,
     RideMapDialogModule,
     RatingDialogModule,

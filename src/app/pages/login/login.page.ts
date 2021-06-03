@@ -24,6 +24,7 @@ export class LoginPage implements OnInit {
   public spinner = false;
   public disabled = false;
   public hashCode = '';
+  mobile_mask: string;
 
   constructor(
     private route: Router,
@@ -94,4 +95,18 @@ export class LoginPage implements OnInit {
   goToRegister() {
     this.util.goToNew('/register/mobile-validation');
   }
+
+  onMobileChange(value): void {
+    if (value === '') {
+        this.mobile_mask = '';
+    }
+    else {
+        if (value.charAt(0) === '+' && this.mobile_mask !== '') {
+            this.mobile_mask = '';
+        }
+        else if (isFinite(value.charAt(0)) && this.mobile_mask !== '(000) 000-0000') {
+            this.mobile_mask = '(000) 000-0000';
+        }
+    }
+}
 }

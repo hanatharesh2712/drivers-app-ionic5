@@ -99,9 +99,15 @@ app-register {
   }
 
 
-  
 
 
+  .error
+  {
+    color: #ff0000d4;
+    font-size: 1.2rem;
+    display: none;
+
+  }
   ion-footer {
 
     ion-toolbar {

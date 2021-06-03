@@ -53,7 +53,7 @@
           <img src="assets/imgs/img_passenger.png" class="crop_img">
           </div> -->
           <div class="profile_details">
-            <div class="d-flex"><h3>{{ review.ride.passenger_last_name }}, {{ review.ride.passenger_first_name }}</h3>
+            <div class="d-flex"><h3>Ride # {{review.ride.ride_number}} - {{ review.created_at | dateTime:'MM/dd/yy hh:mmaaaa' }}</h3>
                 <div class="pax-rating-container">
                   <div class="car-rating rating">
                     <ion-icon name="car"></ion-icon>
@@ -68,7 +68,7 @@
 
                 </div>
             </div>
-            <h4 class="d-flex">Ride # {{review.ride.ride_number}} - {{ review.created_at | dateTime:'medium' }}</h4>
+            <h4 class="d-flex">{{review.ride.service_type.name}} | {{review.ride.vehicle_type.name}}</h4>
           </div>
         </div>
         <p class="comment">{{ review.comments }}</p>

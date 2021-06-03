@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar >
     <ion-buttons slot="start">
 
       <ion-menu-button></ion-menu-button>
@@ -17,15 +17,15 @@
       <div class="widget next-ride " [ngClass]="{'gradient-border active': nextRide && nextRide.next_status_code}">
         <div class="title">
           <ng-container *ngIf="!loadingRide">
-            Your {{nextRide && nextRide.next_status_code ? 'active' : 'next'}} ride
+            {{nextRide && nextRide.next_status_code ? 'active' : 'next'}} ride
           </ng-container>
           <ion-skeleton-text *ngIf="loadingRide" animated style="width: 150px; height: 20px;"></ion-skeleton-text>
 
         </div>
         <ng-container  *ngIf="!loadingRide && nextRide">
           <div class="ride_id">#{{nextRide.ride_id}}</div>
-          <div class="date">   {{nextRide.pu_datetime | niceDateFormatPipe }}</div>
-          <div class="type">{{nextRide.service_type}} - {{nextRide.vehicle_type}}</div>
+          <div class="date uppercase letter-spacing">   {{nextRide.pu_datetime | niceDateFormatPipe }}</div>
+          <div class="type  uppercase letter-spacing">{{nextRide.service_type}} | {{nextRide.vehicle_type}}</div>
         </ng-container>
         <ng-container  *ngIf="loadingRide">
           <div class="ride_id">  <ion-skeleton-text *ngIf="loadingRide" animated style="width: 50px"></ion-skeleton-text></div>
@@ -38,7 +38,7 @@
     </ion-item>
     <ion-item class="ion-no-padding"  >
       <div class="widget rides-board " >
-        <div class="title">Your ride board</div>
+        <div class="title">Ride board</div>
         <div class="container d-flex" >
           <div class="count-info"  (click)="goTo('rides/offers')"  *ngIf="rides">
             <div class="center-container">
@@ -90,9 +90,10 @@
     </ion-item>
     <ion-item class="ion-no-padding" (click)="goTo('my-reviews')">
       <div class="widget rating ">
-        <div class="title">Your current rating</div>
+        <div class="title">Quality rating</div>
         <div class="ratings d-flex">
           <div class="rating-stars">
+            <div class="center-container">
             <ion-badge>
               <span class="text">{{score}}</span>
               <ion-skeleton-text *ngIf="!score" animated style="width: 100%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
@@ -101,9 +102,10 @@
             <span class="people">
               Chauffeur
             </span>
-
+            </div>
           </div>
           <div class="rating-stars">
+            <div class="center-container">
             <ion-badge>
               <span class="text">{{vehicleScore}}</span>
               <ion-skeleton-text *ngIf="!vehicleScore" animated style="width: 100%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
@@ -112,7 +114,7 @@
             <span class="people">
               Vehicle
             </span>
-
+          </div>
           </div>
         </div>
 
@@ -124,6 +126,9 @@
           <div class="title faq-title">
             FAQ
           </div>
+          <span class="faq-subtitle">
+            Frequently Asked Questions
+          </span>
       </div>
     </ion-item>
   </ion-list>

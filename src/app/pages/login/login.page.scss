@@ -17,6 +17,7 @@ ion-header.header {
 
 .loginCard {
   width: 100%;
+  min-height: 200px;
 }
 
 .logo {
@@ -71,9 +72,13 @@ ion-card-content {
 .inputField {
   border: 1px solid #eaeaee;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 1.5rem;
   margin: 15px 0px;
-  padding: 10px !important;
+  width: 100%;
+  height: 55px;
+  background: transparent;
+  color: white;
+  margin-right: 6px;
 }
 
 .btnSubmit {

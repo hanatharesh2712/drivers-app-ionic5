@@ -13,6 +13,7 @@ ride-detail {
 
   ion-content {
     --background: var(--ion-secondary-bg-color);
+    --padding-bottom: 80px;
   }
 
   .ride-info {
@@ -109,7 +110,7 @@ ride-detail {
 
     }
 
-  
+
 
     .requirements-list {
       padding-inline-start: 12px;
@@ -143,8 +144,7 @@ ride-detail {
 
 
 
-      ion-list
-      {
+      ion-list {
         width: 100%;
 
         ion-item {
@@ -156,6 +156,7 @@ ride-detail {
 
 
         }
+
         .ride-total {
           color: white !important;
           text-transform: uppercase;
@@ -230,6 +231,7 @@ ride-detail {
 
         ion-input {
           max-width: 60px;
+          margin: 0px;
         }
 
         .value {
@@ -578,6 +580,7 @@ ride-detail {
   ion-fab.options-menu {
 
 
+
     position: absolute;
     left: 12px;
     bottom: 32px;
@@ -618,6 +621,21 @@ ride-detail {
 
 
     }
+
+    &.active {
+      width: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      ion-fab-button {
+        width: 100%;
+
+        ion-icon
+        {
+          margin-right: 12px;
+        }
+      }
+    }
+
   }
 
 

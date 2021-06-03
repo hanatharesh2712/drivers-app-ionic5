@@ -75,9 +75,7 @@ ion-app.ion-page {
     font-family: "Google Sans", sans-serif;
 }
 
-ion-title {
-    margin-right: 32px !important;
-}
+
 ion-content {
     --background: black ;
 }
@@ -103,10 +101,24 @@ ion-toolbar
   {
     color: black;
     padding: 0px;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  ion-menu-button, ion-back-button
+  {
+    --color: black !important;
   }
 }
 h3 {
     font-weight: bold !important;
+}
+
+.scroll-content {
+  padding-bottom: 0 !important;
 }
 
 .uppercase
@@ -139,8 +151,19 @@ h3 {
     position: relative;
     height: 52px;
     background: transparent;
-    color: #1589fd !important;
+    color: var(--ion-theme-color) !important;
     font-size: 20px !important;
+
+    &.action-sheet-selected
+    {
+      background: var(--ion-theme-color)  !important;
+      color: white !important;
+    }
+}
+.select-action-sheet
+{
+  --background: var(--ion-secondary-bg-color);
+
 }
 
 .action-sheet-button-inner.sc-ion-action-sheet-md {
@@ -202,7 +225,7 @@ ion-skeleton-text {
     {
       max-height: 270px !important;
     }
-  
+
   }
 }
 

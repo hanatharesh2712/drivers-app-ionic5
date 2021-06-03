@@ -38,7 +38,6 @@ export class RideDetailPage implements OnInit, OnDestroy {
   canSettle: boolean = false;
   showingMap = false;
   isMapLoaded = false;
-  @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
   loading: boolean;
   showTimeCounter: boolean;
   gracePeriodMins = 1;
@@ -53,6 +52,12 @@ export class RideDetailPage implements OnInit, OnDestroy {
   isDone: boolean;
   canGiveBackRide = false;
   settleRemainingHours: number;
+  isRideAccepted: boolean;
+
+  @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
+  @ViewChild('tollsInput', { static: false}) tollsInput ;
+
+
   constructor(
     private rideService: RideService,
     private util: UtilService,
@@ -78,15 +83,22 @@ export class RideDetailPage implements OnInit, OnDestroy {
     this.ride = ride;
     this.initStorageData();
     if (
-      this.ride.next_status_code &&
       !this.ride.is_offer &&
       !this.ride.is_done
     ) {
-      this.isRideActive = true;
+      if (this.ride.next_status_code)
+      {
+        this.isRideActive = true;
+      }
+      else
+      {
+        this.isRideAccepted = true;
+      }
+
       this.initWaitingTime();
     } else {
       this.calculateCanGiveBackRide();
-      this.checkIfCanSettle();
+   //   this.checkIfCanSettle();
     }
     this.createSettleForm();
   }
@@ -114,9 +126,9 @@ export class RideDetailPage implements OnInit, OnDestroy {
       });
   }
 
-  checkIfCanSettle()
+  calculateCanGiveBackRide()
   {
-    if (this.ride.is_offer)
+    if (this.isRideAccepted)
     {
       if (
         Math.abs(
@@ -130,7 +142,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
     }
   }
 
-  calculateCanGiveBackRide()
+  checkIfCanSettle()
   {
 
     if (this.ride.is_done) {
@@ -188,8 +200,11 @@ export class RideDetailPage implements OnInit, OnDestroy {
     });
   }
 
-  async openSettle() {
+  openSettle() {
     this.settlingRide = true;
+    setTimeout(() => {
+        this.tollsInput.setFocus();
+    }, 500);
   }
 
   rejectRide() {
@@ -405,7 +420,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
     const dialog = await this.util.createModal(
       RatingDialogComponent,
       { ride: this.ride },
-      'rating-modal'
+      'ride-rating-modal'
     );
     dialog.present();
   }

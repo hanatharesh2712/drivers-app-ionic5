@@ -1,3 +1,4 @@
+import { DrvnAuthenticationService } from './../../../../services/auth/auth.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from '@app/services/registration.service';
@@ -19,15 +20,19 @@ export class PaymentInformationComponent implements OnInit {
   is_driver: boolean;
   bankAccountType = null;
   bankInfoForm: any;
+  isUsa: boolean;
+  loggedInUser: any;
   constructor(private registrationService: RegistrationService,
     private util: UtilService,
+    private authService: DrvnAuthenticationService,
     private _fb: FormBuilder) {
     this.registrationService.setStep(7);
   }
 
   ngOnInit() {
-
-    this.is_driver = true;
+    this.loggedInUser = this.authService.currentUser;
+    this.isUsa = this.loggedInUser.mobile_phone_area_code == '+1';
+    this.is_driver = this.loggedInUser.partner_type != 3 ;
     this.bankInfoForm = this._fb.group({
       bank_name: [
         "",
@@ -50,7 +55,7 @@ export class PaymentInformationComponent implements OnInit {
         [Validators.required, Validators.minLength(9), Validators.maxLength(9)],
       ],
       payment_method_id: [
-        "",
+        {value: 5, disabled: !this.isUsa},
         Validators.required,
       ],
       is_personal: [

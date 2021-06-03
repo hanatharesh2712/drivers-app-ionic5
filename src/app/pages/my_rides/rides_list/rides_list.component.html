@@ -1,40 +1,62 @@
 <ion-content>
 
-  <ng-container *ngIf="type == 'accepted' && activeRide">
-    <h4 class="tab-title active">
-      ACTIVE RIDE
+  <ng-container *ngIf="type == 'accepted'">
+    <ng-container *ngIf="activeRide">
+      <h4 class="tab-title active">
+        ACTIVE RIDE
+      </h4>
+      <ion-list class="list" lines="none" *ngIf="!loading">
+        <ion-item>
+          <ng-container *ngTemplateOutlet="rideItem; context: {ride: activeRide,  is_active: true}"></ng-container>
+        </ion-item>
+
+
+      </ion-list>
+    </ng-container>
+    <h4 class="tab-title">
+      ACCEPTED RIDES <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
     </h4>
-    <ion-list class="list" lines="none" *ngIf="!loading">
-      <ion-item>
-        <ng-container *ngTemplateOutlet="rideItem; context: {ride: activeRide}"></ng-container>
-      </ion-item>
+    <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="type == 'offers'">
+    <h4 class="tab-title ">
+      RIDE OFFERS <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
+    </h4>
+    <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
+  </ng-container>
 
+  <ng-container *ngIf="type == 'done' && rides">
+    <ng-container *ngIf="rides['open'].length">
+      <h4 class="tab-title ">
+        OPEN RIDES <span class="rides-count" *ngIf="rides">({{rides && rides['open'].length}})</span>
+      </h4>
+      <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides['open']}"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="rides['closed'].length">
+      <h4 class="tab-title ">
+        CLOSED RIDES <span class="rides-count" *ngIf="rides">({{rides && rides['closed'].length}})</span>
+      </h4>
+      <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides['closed'], hideDetails: true}"></ng-container>
+    </ng-container>
 
-    </ion-list>
   </ng-container>
 
 
-  <h4 class="tab-title">
-    {{type == 'offers' ? 'RIDES OFFERS' : type == 'accepted' ? 'RIDES ACCEPTED' : 'RIDES COMPLETED' }} <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
-  </h4>
-  <ion-list class="list" lines="none" *ngIf="!loading">
-    <ion-item *ngFor="let ride of rides" class="item" >
-      <ng-container *ngTemplateOutlet="rideItem; context: {ride: ride}"></ng-container>
-
-
-    </ion-item>
-
-  </ion-list>
 
   <ion-list class="list" lines="none" *ngIf="loading">
-    <ion-item class="item" >
+    <ion-item class="item">
       <div class="d-flex column w-100-p">
         <div class="item_header  d-flex">
           <div class="profile_details">
 
-            <h3 class="d-flex">  <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text> <span class="end">
-              <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text></span></h3>
-            <h4 class="d-flex"> <ion-skeleton-text animated style="width: 200px"></ion-skeleton-text></h4>
+            <h3 class="d-flex">
+              <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text> <span class="end">
+                <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text>
+              </span>
+            </h3>
+            <h4 class="d-flex">
+              <ion-skeleton-text animated style="width: 200px"></ion-skeleton-text>
+            </h4>
           </div>
         </div>
         <routing-details [skeleton]="true"></routing-details>
@@ -42,13 +64,17 @@
       </div>
 
     </ion-item>
-    <ion-item class="item" >
+    <ion-item class="item">
       <div class="d-flex column w-100-p">
         <div class="item_header  d-flex">
           <div class="profile_details">
 
-            <h3 class="d-flex">  <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text></h3>
-            <h4 class="d-flex"> <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text></h4>
+            <h3 class="d-flex">
+              <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>
+            </h3>
+            <h4 class="d-flex">
+              <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text>
+            </h4>
           </div>
         </div>
         <routing-details [skeleton]="true"></routing-details>
@@ -57,13 +83,17 @@
 
     </ion-item>
 
-    <ion-item class="item" >
+    <ion-item class="item">
       <div class="d-flex column w-100-p">
         <div class="item_header  d-flex">
           <div class="profile_details">
 
-            <h3 class="d-flex">  <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text></h3>
-            <h4 class="d-flex"> <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text></h4>
+            <h3 class="d-flex">
+              <ion-skeleton-text animated style="width: 80px"></ion-skeleton-text>
+            </h3>
+            <h4 class="d-flex">
+              <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text>
+            </h4>
           </div>
         </div>
         <routing-details [skeleton]="true"></routing-details>
@@ -76,23 +106,35 @@
   </ion-list>
 
 
- <!-- <div *ngIf="rides && rides.length == 0 && loaded" class="empty-text-container">
+  <!-- <div *ngIf="rides && rides.length == 0 && loaded" class="empty-text-container">
     You don't have any {{type == 'offers' ? 'ride offer' : type == 'accepted' ? 'accepted ride' : 'completed ride'}} yet.
   </div>-->
 
 </ion-content>
 
 
-<ng-template #rideItem let-ride="ride">
+<ng-template #ridesList let-rides="rides" let-hideDetails="hideDetails">
+  <ion-list class="list" lines="none" *ngIf="!loading">
+    <ion-item *ngFor="let ride of rides" class="item">
+      <ng-container *ngTemplateOutlet="rideItem; context: {ride: ride, hideDetails: hideDetails}"></ng-container>
+
+
+    </ion-item>
+
+  </ion-list>
+</ng-template>
+
+<ng-template #rideItem let-ride="ride" let-isActive="is_active" let-hideDetails="hideDetails">
   <div class="d-flex column w-100-p" (click)="viewRide(ride.ride_id)">
     <div class="item_header  d-flex">
       <div class="profile_details">
-        <h3 class="d-flex"> {{ride.pu_datetime | niceDateFormatPipe }} <span class="end">
+        <h3 class="d-flex" [ngClass]="{'active': isActive}"> {{ride.pu_datetime | niceDateFormatPipe }} <span
+            class="end">
             #{{ride.ride_id}}</span></h3>
         <h4 class="d-flex">{{ride.service_type | uppercase}} | {{ride.vehicle_type  | uppercase}}</h4>
       </div>
     </div>
-    <routing-details [ride]="ride" [showNotes]="false" [showStops]="false" [showStopsCount]="true"></routing-details>
+    <routing-details [ride]="ride" [showNotes]="false" [showStops]="false" [showStopsCount]="true" *ngIf="!hideDetails" ></routing-details>
 
   </div>
 </ng-template>

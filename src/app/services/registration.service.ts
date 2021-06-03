@@ -8,6 +8,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { Storage } from '@ionic/storage';
 import { UtilService } from './util/util.service';
 import { AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,13 +19,13 @@ export class RegistrationService {
       title: 'Mobile Verification',
       done: false,
       url: 'register/mobile-validation',
-      section: 'Verification Proccess'
+      section: 'Registration'
     },
     {
       title: 'Email Verification',
       done: false,
       url: 'register/email-validation',
-      section: 'Verification Proccess'
+      section: 'Registration'
     },
     {
       title: 'Company Information',
@@ -36,31 +37,31 @@ export class RegistrationService {
       title: 'Service Description',
       done: false,
       url: 'register/service-information',
-      section: 'Registration'
+      section: 'Validation'
     },
     {
       title: 'Vehicle Information',
       done: false,
       url: 'register/vehicle-information',
-      section: 'Registration'
+      section: 'Validation'
     },
     {
       title: 'Required Documents',
       done: false,
       url: 'register/documents',
-      section: 'Registration'
+      section: 'Validation'
     },
     {
       title: 'Agreement',
       done: false,
       url: 'register/agreement',
-      section: 'Registration'
+      section: 'Validation'
     },
     {
       title: 'Payment Preference',
       done: false,
       url: 'register/payment-information',
-      section: 'Registration'
+      section: 'Validation'
     }
   ];
   actualStepIndex: number = 0;
@@ -75,7 +76,8 @@ export class RegistrationService {
   constructor(
     private util: UtilService,
     private storage: Storage,
-    private registrationAPIService: RegistrationAPIService) {
+    private registrationAPIService: RegistrationAPIService,
+    private router: Router) {
 
   }
 
@@ -212,7 +214,7 @@ export class RegistrationService {
   {
     this.registrationAPIService.savePartnerBankInformation(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
-        // this.next();
+         this.router.navigate(["home"]);
       }
       else
       {
