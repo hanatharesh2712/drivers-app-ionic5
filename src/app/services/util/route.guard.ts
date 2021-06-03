@@ -3,6 +3,7 @@ import { DrvnAuthenticationService } from '@app/services/auth/auth.service';
 import { Injectable, NgModule } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, RouterModule } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { User } from '@app/models/user';
 
 
 @NgModule({
@@ -12,7 +13,7 @@ import { Storage } from '@ionic/storage';
 })
 
 export class RouteGuard implements CanActivate {
-  loggedInUser: import("d:/webserver/drivers-app-ionic5/src/app/models/user").User;
+  loggedInUser: User;
 
   constructor(private router: Router,
     private storage: Storage,
