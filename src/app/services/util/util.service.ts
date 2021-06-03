@@ -21,7 +21,6 @@ import {
 } from '@ionic/angular';
 import { UUID } from 'angular2-uuid';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { environment } from '@env/environment';
 import { SMS } from '@ionic-native/sms/ngx';
@@ -39,7 +38,6 @@ export class UtilService {
     private actionSheetCtrl: ActionSheetController,
     private statusBar: StatusBar,
     private route: Router,
-    private geolocation: Geolocation,
     private callNumber: CallNumber,
     private navCtrl: NavController,
     private sms: SMS
@@ -147,9 +145,6 @@ export class UtilService {
   async getGooglePlaceAutoCompleteList(searchText, geolocation, country) {
     const service = new window['google'].maps.places.AutocompleteService();
     let pred;
-    // var circle = new google.maps.Circle(
-    //     {center: geolocation, radius: 10000});
-    // autocomplete.setBounds(circle.getBounds());
     await new Promise((resolve, reject) => {
       service.getPlacePredictions(
         {

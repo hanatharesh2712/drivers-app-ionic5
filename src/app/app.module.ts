@@ -27,8 +27,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { AgmDirectionModule } from 'agm-direction';
 import { DrvnAuthenticationService } from './services/auth/auth.service';
-import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GeolocationService } from './services/geolocation.service';
 import { AuthHttpInterceptor } from './services/util/http-interceptor';
 import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialog.module';
@@ -74,8 +72,6 @@ import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
     RouteGuard,
     GoogleMapsAPIWrapper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Geolocation,
-    BackgroundGeolocation,
     DrvnAuthenticationService,
     GeolocationService,
     Insomnia,

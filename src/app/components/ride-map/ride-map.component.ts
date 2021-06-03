@@ -15,12 +15,6 @@ import {
 } from '@angular/core';
 import { Location } from '@app/models/location';
 import { Subject } from 'rxjs';
-import {
-  Geolocation,
-  GeolocationOptions,
-  Geoposition,
-  PositionError,
-} from '@ionic-native/geolocation/ngx';
 import { GeolocationService } from '@app/services/geolocation.service';
 declare var google;
 import { Ride } from '../../models/ride';
@@ -58,7 +52,6 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
 
   constructor(
     private geolocationService: GeolocationService,
-    private geolocation: Geolocation
   ) {}
 
 
@@ -94,7 +87,7 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
   }
 
   watchDriverPosition() {
-    const watch = this.geolocation.watchPosition({
+    /*const watch = this.geolocation.watchPosition({
       enableHighAccuracy: true,
       timeout: 5000,
       maximumAge: 1000,
@@ -104,10 +97,10 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
         this.setLocation(data);
         this.driverPosition.next(this.currentPosition);
       }
-    });
+    });*/
   }
 
-  setLocation(data: Geoposition | PositionError) {
+  /*setLocation(data: Geoposition | PositionError) {
     if ((data as Geoposition).coords != undefined) {
       const pos = data as Geoposition;
       this.currentPosition = {
@@ -121,7 +114,7 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
         app_version: 'TBD',
       };
     }
-  }
+  }*/
 
   updateDriverMarkerPosition(currentPos: Location) {
     if (!currentPos) {
