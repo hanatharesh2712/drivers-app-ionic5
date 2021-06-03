@@ -22,23 +22,24 @@ export class GeolocationService {
   initTracking() {
     if (this.platform.is('cordova')) {
       //this.initGettingPosition();
-      this.driver_id = this.authService.currentUser.id;
     }
   }
 
   sendDriverLocation() {
-    console.log('LOCATION SENT');
-    this.http
-      .post<Location>(
-        environment.appUrl + 'setLocation' + `?driver_id=${this.driver_id}`,
-        this.location
-      )
-      .toPromise()
-      .then((resp) => {
-        console.log(resp);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (this.driver_id) {
+      console.log('LOCATION SENT');
+      this.http
+        .post<Location>(
+          environment.appUrl + 'setLocation' + `?driver_id=${this.driver_id}`,
+          this.location
+        )
+        .toPromise()
+        .then((resp) => {
+          console.log(resp);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 }
