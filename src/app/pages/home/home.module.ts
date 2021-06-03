@@ -21,7 +21,6 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction'
 import { HomePage } from './home.page';
 import { SettleDialogModule } from '@app/components/settle-dialog/settle-dialog.module';
-import { RatingDialogModule } from '@app/components/rating-dialog/rating-dialog.module';
 import { PipesModule } from '@app/pipes/pipes.module';
 import { RoutingDetailsModule } from '@app/components/routing-details/routing-details.module';
 

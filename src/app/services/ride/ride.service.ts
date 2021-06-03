@@ -32,7 +32,6 @@ export class RideService {
   constructor(
     private http: HttpClient,
     private util: UtilService,
-    private ridesService: RideService,
     private authService: DrvnAuthenticationService,
     private geolocationService: GeolocationService
   ) {}
@@ -149,8 +148,7 @@ export class RideService {
         {
           text: 'Confirm',
           handler: () => {
-            this.ridesService
-              .sendChangeStatus('RJCT', ride.ride_id)
+            this.sendChangeStatus('RJCT', ride.ride_id)
               .subscribe(async (response) => {
                 this.parseRideResponse(response.ride);
                 const toast = await this.util.createToast(

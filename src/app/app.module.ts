@@ -1,6 +1,5 @@
 import { DocumentUploadDialogModule } from './components/document-upload-dialog/document-upload-dialog.module';
 import { SettleDialogModule } from '@app/components/settle-dialog/settle-dialog.module';
-import { RatingDialogModule } from './components/rating-dialog/rating-dialog.module';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 import { RouteGuard } from './services/util/route.guard';
 /**
@@ -56,7 +55,6 @@ import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
     AppRoutingModule,
     HttpClientModule,
     RideMapDialogModule,
-    RatingDialogModule,
     SettleDialogModule,
     GreetingSignPageModule,
     DocumentUploadDialogModule

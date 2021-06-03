@@ -25,7 +25,7 @@ export class LoginPage implements OnInit {
   public disabled = false;
   public hashCode = '';
 
-  constructor(
+  constructor (
     private route: Router,
     private menuCtrl: MenuController,
     private authService: DrvnAuthenticationService,
