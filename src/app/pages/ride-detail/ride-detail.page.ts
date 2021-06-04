@@ -230,8 +230,9 @@ export class RideDetailPage implements OnInit, OnDestroy {
         if (response) {
           this.initRide(response);
         } else {
-          this.isDone = true;
+          this.ride.is_done = true;
           this.openRating();
+
         }
       });
   }
@@ -398,6 +399,10 @@ export class RideDetailPage implements OnInit, OnDestroy {
       'ride-rating-modal'
     );
     dialog.present();
+    dialog.onDidDismiss().then(() =>
+    {
+      this.util.goToNew('/rides/completed')
+    })
   }
 
   async goToGreetingSign() {

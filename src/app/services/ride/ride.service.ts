@@ -42,6 +42,7 @@ export class RideService {
 
   getRides() {
     this.rides = [];
+    this.activeRide = null;
     let driver_id = this.authService.currentUser.id;
     return this.http
       .get<RidesWrapper>(
