@@ -36,15 +36,17 @@
     <config-file parent="NSPhotoLibraryAddUsageDescription" target="*-Info.plist">
         <string>need photo library access to save pictures there</string>
     </config-file>
-    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
-        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
-    </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="mx.ferreyra.callnumber" spec="0.0.2" />
     <plugin name="call-number" spec="^1.0.1" />
     <platform name="android">
+        <preference name="AndroidXEnabled" value="true" />
+        <config-file parent="/manifest/application" target="app/src/main/AndroidManifest.xml">
+            <service android:foregroundServiceType="location" android:name="com.transistorsoft.locationmanager.service.TrackingService" />
+            <service android:foregroundServiceType="location" android:name="com.transistorsoft.locationmanager.service.LocationRequestService" />
+        </config-file>
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
@@ -59,6 +61,18 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
+        <config-file parent="NSLocationAlwaysAndWhenInUseUsageDescription" target="*-Info.plist">
+            <string>[CHANGEME] Background location tracking is required for our app so we can...</string>
+        </config-file>
+        <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
+            <string>[CHANGEME pre-iOS11.  No longer used with iOS 12] Background location tracking is required for our app so we can...</string>
+        </config-file>
+        <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
+            <string>[CHANGEME] Background location tracking is required for our app so we can...</string>
+        </config-file>
+        <config-file parent="NSMotionUsageDescription" target="*-Info.plist">
+            <string>[CHANGEME] Device motion updates help determine when the device is stationary so the app can save power by turning off location-updates</string>
+        </config-file>
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
         <icon height="20" src="resources/ios/icon/icon-20.png" width="20" />

@@ -13,7 +13,7 @@
   </ion-refresher>
   <ion-list lines="none">
     <ion-list-header>
-      <div class="dashboard-title">Welcome, <br>
+      <div (click)="onClickGetCurrentPosition()" class="dashboard-title">Welcome, <br>
     <ng-container *ngIf="loggedInUser">{{loggedInUser.first_name}}</ng-container>  </div>
     </ion-list-header>
     <ion-item class="ion-no-padding" (click)="goTo('ride/' + nextRide.ride_id)" *ngIf="loadingRide || nextRide">

@@ -76,13 +76,14 @@ export class AppComponent {
     this.loggedInUser = this.authService.currentUser;
     this.authService.onLogin.subscribe(data => {
       if (data) {
-        if (!this.geolocationService.started) {
-          this.geolocationService.initTracking();
-        }
         this.loggedInUser = data;
+        this.geolocationService.initTracking();
       }
     });
 
+    if (this.loggedInUser) {
+      this.geolocationService.initTracking();
+    }
 
   }
 

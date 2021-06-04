@@ -1,70 +1,25 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Location } from '@app/models/location';
-import { environment } from '@env/environment';
-import {
-  Coordinates,
-  Geolocation,
-  GeolocationOptions,
-  Geoposition,
-  PositionError,
-} from '@ionic-native/geolocation/ngx';
+
+
 import { Platform } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { DrvnAuthenticationService } from './auth/auth.service';
-import {
-  BackgroundGeolocation,
-  BackgroundGeolocationConfig,
-  BackgroundGeolocationEvents,
-  BackgroundGeolocationResponse,
-} from '@ionic-native/background-geolocation/ngx';
-import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Location as LocationDrvn } from '@app/models/location';
+import { environment } from '@env/environment';
+import BackgroundGeolocation from 'cordova-background-geolocation-lt';
+
+
 @Injectable()
 export class GeolocationService {
-  options: GeolocationOptions;
-  currentPos: Geoposition;
-  driverPosition: Subject<Location> = new Subject();
-  location: Location;
+  driverPosition: Subject<LocationDrvn> = new Subject();
+  location: LocationDrvn;
   driver_id: number;
-  public started: boolean;
   constructor(
     private http: HttpClient,
-    private geolocation: Geolocation,
     private authService: DrvnAuthenticationService,
     private platform: Platform,
-    private backgroundGeolocation: BackgroundGeolocation
   ) {
-    this.backgroundGeolocation
-    .on(BackgroundGeolocationEvents.location)
-    .subscribe((location: BackgroundGeolocationResponse) => {
-      //  this.backgroundGeolocation.startTask().then(() =>
-      //  {
-      //    this.setLocation(location, location.time, 'BCK');
-      //    this.backgroundGeolocation.endTask();
-      //  });
-      this.setLocation(location, location.time, 'BCK');
-      this.backgroundGeolocation.finish();
-    });
-  this.backgroundGeolocation
-    .on(BackgroundGeolocationEvents.authorization)
-    .subscribe((status: any) => {
-      console.log(
-        '[INFO] BackgroundGeolocation authorization status: ' + status
-      );
-      if (status !== 1) {
-        // we need to set delay or otherwise alert may not be shown
-        setTimeout(function () {
-          const showSettings = confirm(
-            'App requires location tracking permission. Would you like to open app settings?'
-          );
-          if (showSettings) {
-            this.backgroundGeolocation.showAppSettings();
-          }
-        }, 1000);
-      } else {
-      //  this.initFrontGeoposition();
-      }
-    });
   }
 
   initTracking() {
@@ -74,94 +29,86 @@ export class GeolocationService {
     }
   }
 
-  initGettingPosition() {
-    this.backgroundGeolocation
-      .configure({
-        desiredAccuracy: 10,
-        stationaryRadius: 1,
-        distanceFilter: 5,
-        interval: 500,
-        notificationTitle: 'drvn chauffeur app',
-        notificationText: 'Ready to receive new rides',
-        startForeground: true,
-        notificationsEnabled: false,
-        startOnBoot: true,
-        debug: false, //  enable this hear sounds for background-geolocation life-cycle.
-        stopOnTerminate: true, // enable this to clear background location settings when the app terminates
-      })
-      .then(() => {
+  configureBackgroundGeolocation() {
+    // 1.  Listen to events.
+    BackgroundGeolocation.onLocation(location => {
+      console.log('[location] - ', location);
+      this.location = {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+        acu: location.coords.accuracy,
+        alt: location.coords.altitude,
+        speed: location.coords.speed,
+        date: new Date(location.timestamp),
+        provider: 'GPS',
+        app_version: 'BCKP',
+      };
+      this.sendDriverLocation();
+    });
 
-      });
-    this.start();
-    this.initFrontGeoposition();
-    this.started = true;
-  }
+    BackgroundGeolocation.onMotionChange(event => {
+      console.log('[motionchange] - ', event.isMoving, event.location);
+    });
 
-  start() {
-    this.backgroundGeolocation.start();
-  }
-  stop() {
-    this.backgroundGeolocation.stop();
-  }
+    BackgroundGeolocation.onHttp(response => {
+      console.log('[http] - ', response.success, response.status, response.responseText);
+    });
 
-  async initFrontGeoposition() {
-    const loc: any = await this.getCurrentLocation();
-    this.setLocation(loc.coords, loc.timestamp, 'TBD');
-    const watch = this.geolocation.watchPosition();
-    watch.subscribe((data: Geoposition) => {
-      this.setLocation(data.coords, data.timestamp, 'TBD');
+    BackgroundGeolocation.onProviderChange(event => {
+      console.log('[providerchange] - ', event.enabled, event.status, event.gps);
+    });
+
+    // 2.  Configure the plugin with #ready
+    BackgroundGeolocation.ready({
+      reset: true,
+      debug: false,
+      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+      distanceFilter: 10,
+      stopOnTerminate: false,
+      startOnBoot: true
+    }, (state) => {
+      console.log('[ready] BackgroundGeolocation is ready to use');
+      if (!state.enabled) {
+        // 3.  Start tracking.
+        BackgroundGeolocation.start().then(()=>{
+          BackgroundGeolocation.changePace(true);
+          console.log('All done!');
+          this.getCurrentLocation();
+        });
+      } else {
+        BackgroundGeolocation.changePace(true);
+        console.log('All done!');
+        this.getCurrentLocation();
+      }
     });
   }
 
-
-  getCurrentLocation()
-  {
-    return new Promise((resolve, reject) =>
-    {
-      this.geolocation.getCurrentPosition()
-      .then((resp: Geoposition) => {
-        resolve(resp);
-      })
-      .catch((error) => {
-        console.log('Error getting location', error);
-      });
-    })
+  initGettingPosition() {
+    this.configureBackgroundGeolocation();
   }
 
-  setLocation(data: BackgroundGeolocationResponse | Coordinates, time, type) {
-    if (
-      !this.location ||
-      data.longitude != this.location.lng ||
-      data.latitude != this.location.lng
-    ) {
-      this.location = {
-        lat: data.latitude,
-        lng: data.longitude,
-        acu: data.accuracy,
-        alt: data.altitude,
-        speed: data.speed,
-        date: moment(time),
-        provider: 'GPS',
-        app_version: type,
-      };
-      this.driverPosition.next(this.location);
-      this.sendDriverLocation();
-    }
+  getCurrentLocation() {
+    BackgroundGeolocation.getCurrentPosition({}, (location) => {
+      console.log('- getCurrentPosition success: ', location);
+    });
   }
 
   sendDriverLocation() {
     console.log('LOCATION SENT');
-    this.http
-      .post<Location>(
-        environment.appUrl + 'setLocation' + `?driver_id=${this.driver_id}`,
-        this.location
-      )
-      .toPromise()
-      .then((resp) => {
-        console.log(resp);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (this.driver_id) {
+      this.http
+        .post<LocationDrvn>(
+          environment.appUrl + 'setLocation' + `?driver_id=${this.driver_id}`,
+          this.location
+        )
+        .toPromise()
+        .then((resp) => {
+          console.log(resp);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 }

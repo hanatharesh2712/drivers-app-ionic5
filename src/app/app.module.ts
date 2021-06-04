@@ -30,17 +30,14 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { AgmDirectionModule } from 'agm-direction';
 import { DrvnAuthenticationService } from './services/auth/auth.service';
-import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { GeolocationService } from './services/geolocation.service';
 import { AuthHttpInterceptor } from './services/util/http-interceptor';
 import { RideMapDialogModule } from './components/ride-map-dialog/ride-map-dialog.module';
 import { SMS } from '@ionic-native/sms/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { GreetingSignPageModule } from './pages/greeting-sign/greeting-sign.module';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
-import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
 import { NgxMaskModule } from 'ngx-mask';
+import { GeolocationService } from './services/geolocation.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -75,13 +72,10 @@ import { NgxMaskModule } from 'ngx-mask';
     CallNumber,
     ScreenOrientation,
     Clipboard,
-    SmsRetriever,
     SMS,
     RouteGuard,
     GoogleMapsAPIWrapper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Geolocation,
-    BackgroundGeolocation,
     NiceDateFormatPipe,
     DatePipe,
     DrvnAuthenticationService,
