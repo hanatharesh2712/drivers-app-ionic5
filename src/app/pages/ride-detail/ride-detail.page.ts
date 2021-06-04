@@ -17,7 +17,7 @@ import { Ride } from '@app/models/ride';
 import { RideService } from '@app/services/ride/ride.service';
 import { UtilService } from '@app/services/util/util.service';
 import { environment } from '@env/environment';
-import { NavParams, PopoverController } from '@ionic/angular';
+import { IonFab, NavParams, PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
 import { Moment } from 'moment';
@@ -57,7 +57,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
 
   @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
   @ViewChild('tollsInput', { static: false }) tollsInput;
-
+  @ViewChild('fabMenu', { static: false }) fabMenu: IonFab;
 
   constructor(
     private rideService: RideService,
@@ -227,6 +227,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
     this.rideService
       .changeStatus(this.ride, secondsOnWaiting)
       .then((response: Ride) => {
+        this.fabMenu.close();
         if (response) {
           this.initRide(response);
         } else {
