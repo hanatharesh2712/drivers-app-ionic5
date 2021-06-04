@@ -46,6 +46,8 @@
     "ion-intl-tel-input": "^1.0.3",
     "ionic-rating": "^2.0.0",
     "ionic-selectable": "4.6.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "mx.ferreyra.callnumber": "0.0.2",
     "ng-otp-input": "^1.7.1",
     "ng-packagr": "^5.3.0",

@@ -212,11 +212,13 @@ app-home {
     .gradient-border {
       margin: 6px 3px;
       margin-top: 12px;
+      --border-width: 1px;
       color: white;
 
       &::after {
         position: absolute;
         content: "";
+        border-radius: 20px;
         top: calc(-1 * var(--border-width));
         left: calc(-1 * var(--border-width));
         z-index: -1;

@@ -19,6 +19,8 @@ import { UtilService } from '@app/services/util/util.service';
 import { environment } from '@env/environment';
 import { NavParams, PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 import { GreetingSignPage } from '../greeting-sign/greeting-sign.page';
 
 @Component({
@@ -40,7 +42,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   loading: boolean;
   showTimeCounter: boolean;
   gracePeriodMins = 1;
-  timeOnLocationSet: Date;
+  timeOnLocationSet: Date | Moment;
   minutesSinceOnLocation: string;
   secondsSinceOnLocation: string;
   isOnGracePeriod: boolean;
@@ -54,7 +56,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   isRideAccepted: boolean;
 
   @ViewChild(RideMapComponent, { static: false }) rideMap: RideMapComponent;
-  @ViewChild('tollsInput', { static: false}) tollsInput ;
+  @ViewChild('tollsInput', { static: false }) tollsInput;
 
 
   constructor(
@@ -64,7 +66,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
     private popoverController: PopoverController,
     private fb: FormBuilder,
     private storage: Storage
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -84,19 +86,17 @@ export class RideDetailPage implements OnInit, OnDestroy {
       !this.ride.is_offer &&
       !this.ride.is_done
     ) {
-      if (this.ride.next_status_code)
-      {
+      if (this.ride.next_status_code) {
         this.isRideActive = true;
       }
-      else
-      {
+      else {
         this.isRideAccepted = true;
       }
 
       this.initWaitingTime();
     } else {
       this.calculateCanGiveBackRide();
-   //   this.checkIfCanSettle();
+      //   this.checkIfCanSettle();
     }
     this.createSettleForm();
   }
@@ -124,15 +124,11 @@ export class RideDetailPage implements OnInit, OnDestroy {
       });
   }
 
-  calculateCanGiveBackRide()
-  {
-    if (this.isRideAccepted)
-    {
+  calculateCanGiveBackRide() {
+    if (this.isRideAccepted) {
       if (
-        Math.abs(
-          new Date(this.ride.pu_datetime).getTime() - new Date().getTime()
-        ) /
-          36e5 >
+
+        moment(this.ride.pu_datetime).diff(moment(), 'hours') >
         environment.giveBackHoursLimit
       ) {
         this.canGiveBackRide = true;
@@ -140,28 +136,6 @@ export class RideDetailPage implements OnInit, OnDestroy {
     }
   }
 
-  checkIfCanSettle()
-  {
-
-    if (this.ride.is_done) {
-      const endDate = this.ride.times.find(e => e.type_id == 1);
-      if (endDate)
-      {
-        const hoursSinceDropoff=   Math.abs(
-          new Date().getTime() - new Date(endDate.time).getTime()
-        ) /
-          36e5 ;
-        if (hoursSinceDropoff
-        <
-         this.ride.settle_deadline
-        ) {
-          this.canSettle = true;
-          this.settleRemainingHours = this.ride.settle_deadline - hoursSinceDropoff;
-        }
-      }
-
-    }
-  }
 
   createSettleForm() {
     this.settleForm = this.fb.group({
@@ -201,7 +175,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   openSettle() {
     this.settlingRide = true;
     setTimeout(() => {
-        this.tollsInput.setFocus();
+      this.tollsInput.setFocus();
     }, 500);
   }
 
@@ -281,8 +255,8 @@ export class RideDetailPage implements OnInit, OnDestroy {
     this.showingMap = !this.showingMap;
   }
 
-  callSuport() {
-    this.util.callSuport();
+  goToContact() {
+    this.util.goForward('/contact');
   }
 
   sendSMS() {
@@ -300,7 +274,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
       this.ride.service_type.toUpperCase() != 'HOURLY'
     ) {
       this.showTimeCounter = true;
-      this.timeOnLocationSet = new Date(
+      this.timeOnLocationSet = moment(
         this.ride.times.find((e) => e.type_id == 3).time
       );
       this.wtInterval = setInterval(() => {
@@ -316,56 +290,59 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   stopWaitingTime() {
-    const now = new Date();
-    this.storageInfo.waitEndDate = now.getTime();
+    const now = moment();
+    this.storageInfo.waitEndDate = now.valueOf();
     this.updateStorage();
     return Math.abs(
-      (now.getTime() - new Date(this.storageInfo.waitStartedDate).getTime()) /
-        1000
+      (this.storageInfo.waitEndDate - moment(this.storageInfo.waitStartedDate).valueOf()) /
+      1000
     );
   }
 
   calculateTimerValue() {
     if (this.timeOnLocationSet) {
-      let difInDates =
-        new Date(
-          new Date(this.timeOnLocationSet).getTime() +
-            this.gracePeriodMins * 60000
-        ).getTime() - new Date().getTime();
-      let secondsRemainingGracePeriod = difInDates / 1000;
+
+      let secondsRemainingGracePeriod = moment(this.timeOnLocationSet).add(this.gracePeriodMins, 'minutes').diff(moment(), 'seconds');
       if (secondsRemainingGracePeriod < 0) {
         this.isOnGracePeriod = false;
-        if (this.storageInfo.waitStartedDate) {
-          difInDates =
-            new Date().getTime() -
-            new Date(this.storageInfo.waitStartedDate).getTime();
-            secondsRemainingGracePeriod = Math.abs(difInDates / 1000);
-          this.minutesSinceOnLocation = this.pad(
-            Math.trunc(secondsRemainingGracePeriod / 60),
-            2
-          );
-          this.secondsSinceOnLocation = this.pad(
-            Math.trunc(secondsRemainingGracePeriod % 60),
-            2
-          );
-        }
+          this.calculateWaitTimeDuration();
       } else {
-        this.isOnGracePeriod = true;
-        this.gracePeriodPercentage = (
-          ((((this.gracePeriodMins - secondsRemainingGracePeriod / 60) * 100) /
-            this.gracePeriodMins) *
-            175) /
-          100
-        ).toFixed(2);
-        secondsRemainingGracePeriod = Math.abs(secondsRemainingGracePeriod);
-        this.minutesSinceOnLocation = this.pad(Math.trunc(secondsRemainingGracePeriod / 60), 2);
-        this.secondsSinceOnLocation = this.pad(Math.trunc(secondsRemainingGracePeriod % 60), 2);
+        this.calculateGracePeriodDuration(secondsRemainingGracePeriod);
       }
     }
   }
 
+  calculateWaitTimeDuration()
+  {
+    if (this.storageInfo.waitStartedDate) {
+      let secondsSinceWaitTimeStarted = moment().diff(moment(this.storageInfo.waitStartedDate), 'seconds')
+      this.minutesSinceOnLocation = this.pad(
+        Math.trunc(secondsSinceWaitTimeStarted / 60),
+        2
+      );
+      this.secondsSinceOnLocation = this.pad(
+        Math.trunc(secondsSinceWaitTimeStarted % 60),
+        2
+      );
+    }
+  }
+
+  calculateGracePeriodDuration(secondsRemainingGracePeriod)
+  {
+    this.isOnGracePeriod = true;
+    this.gracePeriodPercentage = (
+      ((((this.gracePeriodMins - secondsRemainingGracePeriod / 60) * 100) /
+        this.gracePeriodMins) *
+        175) /
+      100
+    ).toFixed(2);
+    secondsRemainingGracePeriod = Math.abs(secondsRemainingGracePeriod);
+    this.minutesSinceOnLocation = this.pad(Math.trunc(secondsRemainingGracePeriod / 60), 2);
+    this.secondsSinceOnLocation = this.pad(Math.trunc(secondsRemainingGracePeriod % 60), 2);
+  }
+
   startWTTime() {
-    this.storageInfo.waitStartedDate = new Date().getTime();
+    this.storageInfo.waitStartedDate = moment().valueOf();
     this.updateStorage();
   }
   pad(num, size) {
@@ -382,7 +359,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
         'Are you on the stop location?',
         {
           text: 'Not yet',
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: 'Yes, confirm',
@@ -412,7 +389,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
     }
   }
 
-  async confirmStop() {}
+  async confirmStop() { }
 
   async openRating() {
     const dialog = await this.util.createModal(

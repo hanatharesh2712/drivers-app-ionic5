@@ -5,7 +5,10 @@
       <ion-card-content   class="ion-padding-top ion-no-padding ">
         <ion-list>
           <ion-item lines="none">
-            <input appIntegerInput [mask]='mobile_mask' class="placeholder-text inputField ion-padding-start"  (input)="onMobileChange($event.target.value)"
+            <span class="help-text secondary-text">We will send you a text message with a one-time <br>four digit verification code  </span>
+          </ion-item>
+          <ion-item lines="none">
+            <input appIntegerInput type="tel" [mask]='mobile_mask' class="placeholder-text inputField ion-padding-start"  (input)="onMobileChange($event.target.value)"
             placeholder="Enter Mobile Number"  [(ngModel)]="phone">
 
           </ion-item>

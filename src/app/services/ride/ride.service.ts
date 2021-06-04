@@ -22,6 +22,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { DrvnAuthenticationService } from '../auth/auth.service';
 import { Ride } from '@app/models/ride';
 import { GeolocationService } from '../geolocation.service';
+import { NiceDateFormatPipe } from '@app/pipes/ride-date.pipe';
+import * as moment from 'moment';
 @Injectable({
   providedIn: 'root',
 })
@@ -34,7 +36,8 @@ export class RideService {
     private util: UtilService,
     private ridesService: RideService,
     private authService: DrvnAuthenticationService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private niceDateFormatPipe: NiceDateFormatPipe
   ) {}
 
   getRides() {
@@ -61,8 +64,8 @@ export class RideService {
             (ride) => !ride.is_offer && !ride.is_done
           );
           this.rides['done'] = response.rides.filter((ride) => ride.is_done);
-          this.rides['done']['open'] = response.rides.filter((ride) => ride.canSettle);
-          this.rides['done']['closed'] = response.rides.filter((ride) => !ride.canSettle);
+          this.rides['done']['open'] = response.rides.filter((ride) => ride.is_done && ride.canSettle);
+          this.rides['done']['closed'] = response.rides.filter((ride) => ride.is_done && !ride.canSettle);
           this.onDidRidesLoaded.next(this.rides);
           return this.rides;
         })
@@ -95,12 +98,19 @@ export class RideService {
     let title = '';
     let text = '';
     if (ride.child_seats) {
-      title = 'Child Seat Required!';
-      text = 'This ride requires <br>';
-      ride.child_seats.forEach((cseat) => {
-        text += cseat.count + ' x ' + cseat.type + '<br>';
-      });
-      text += `<b>Are you sure you want to accept this ride?</b>`;
+      title = 'You accept Ride for: ';
+      text = ride.nice_spot_datetime + ' (Spot Time) <br>';
+      if (ride.child_seats.length)
+      {
+        text += '<br><b>This ride requires:</b> <br>';
+        ride.child_seats.forEach((cseat) => {
+          text += cseat.count + ' x ' + cseat.type + '<br>';
+        });
+      }
+      if (ride.handicap)
+      {
+        text += "Handicap"
+      }
     }
     return new Promise(async (resolve, reject) => {
       let alert = await this.util.createAlert(
@@ -284,7 +294,7 @@ export class RideService {
       );
   }
 
-  parseRideResponse(ride) {
+  parseRideResponse(ride: Ride) {
     if (!ride) {
       return;
     }
@@ -295,6 +305,17 @@ export class RideService {
       (e) => e.RIType == 'WT' || e.RIType == 'ST'
     );
     ride.pu_datetime = ride.pu_date + ' ' + ride.pu_time;
+    ride.nice_pu_datetime = this.niceDateFormatPipe.transform(ride.pu_datetime);
+    if (parseInt(ride.pu_time.replace(/:/g, '')) > parseInt(ride.spot_time.replace(/:/g, '')))
+    {
+      ride.spot_datetime = ride.pu_date + ' ' + ride.spot_time;
+    }
+    else
+    {
+      let date = moment(ride.pu_datetime).add('1', 'days');
+      ride.spot_datetime = (date.month) + '/' + date.day + '/' + date.year + ' ' + ride.spot_time;
+    }
+    ride.nice_spot_datetime = this.niceDateFormatPipe.transform(ride.spot_datetime);
     this.checkIfCanSettle(ride);
 
   }
@@ -306,10 +327,7 @@ export class RideService {
       const endDate = ride.times.find(e => e.type_id == 1);
       if (endDate)
       {
-        const hoursSinceDropoff=   Math.abs(
-          new Date().getTime() - new Date(endDate.time).getTime()
-        ) /
-          36e5 ;
+        const hoursSinceDropoff = moment.duration((moment(endDate.time).diff(moment()))).asHours();
         if (hoursSinceDropoff
         <
          ride.settle_deadline

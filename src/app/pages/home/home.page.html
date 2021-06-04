@@ -24,7 +24,7 @@
         </div>
         <ng-container  *ngIf="!loadingRide && nextRide">
           <div class="ride_id">#{{nextRide.ride_id}}</div>
-          <div class="date uppercase letter-spacing">   {{nextRide.pu_datetime | niceDateFormatPipe }}</div>
+          <div class="date uppercase letter-spacing">   {{nextRide.nice_pu_datetime }}</div>
           <div class="type  uppercase letter-spacing">{{nextRide.service_type}} | {{nextRide.vehicle_type}}</div>
         </ng-container>
         <ng-container  *ngIf="loadingRide">
@@ -58,7 +58,7 @@
           <div class="count-info"  (click)="goTo('rides/accepted')" *ngIf="rides">
             <div class="center-container" >
               <div  class="d-flex a-center j-center value">
-                <span>{{rides['accepted'].length + (nextRide ? 1 : 0)}}</span>
+                <span>{{rides['accepted'].length + (nextRide && nextRide.next_status_code ? 1 : 0)}}</span>
                 <ion-icon src="assets/custom-ion-icons/task_alt.svg" class="icon drvn-icon"></ion-icon>
               </div>
               <span class="text">

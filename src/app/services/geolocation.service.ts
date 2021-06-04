@@ -20,7 +20,6 @@ export class GeolocationService {
     private authService: DrvnAuthenticationService,
     private platform: Platform,
   ) {
-
   }
 
   initTracking() {

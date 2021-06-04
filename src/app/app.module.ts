@@ -1,3 +1,6 @@
+import { DatePipe } from '@angular/common';
+import { NiceDateFormatPipe } from './pipes/ride-date.pipe';
+import { DirectivesModule } from './directives/directives.module';
 import { DocumentUploadDialogModule } from './components/document-upload-dialog/document-upload-dialog.module';
 import { SettleDialogModule } from '@app/components/settle-dialog/settle-dialog.module';
 import { RatingDialogModule } from './components/rating-dialog/rating-dialog.module';
@@ -35,6 +38,7 @@ import { GreetingSignPageModule } from './pages/greeting-sign/greeting-sign.modu
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { NgxMaskModule } from 'ngx-mask';
 import { GeolocationService } from './services/geolocation.service';
+import BackgroundGeolocation from 'cordova-background-geolocation-lt';
 
 @NgModule({
   declarations: [AppComponent],
@@ -59,6 +63,7 @@ import { GeolocationService } from './services/geolocation.service';
     RideMapDialogModule,
     RatingDialogModule,
     SettleDialogModule,
+    DirectivesModule,
     GreetingSignPageModule,
     DocumentUploadDialogModule
   ],
@@ -72,6 +77,9 @@ import { GeolocationService } from './services/geolocation.service';
     RouteGuard,
     GoogleMapsAPIWrapper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    BackgroundGeolocation,
+    NiceDateFormatPipe,
+    DatePipe,
     DrvnAuthenticationService,
     GeolocationService,
     Insomnia,

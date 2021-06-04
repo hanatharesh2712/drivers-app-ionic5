@@ -19,6 +19,7 @@ export class MyRidesPageComponent  {
   ridesOffers: Ride[] = [];
   ridesAccepted: Ride[] = [];
   ridesDone: Ride[] = [];
+  rideActive: Ride;
   constructor(private ridesService: RideService, private authService: DrvnAuthenticationService,
     private util: UtilService,
     private router: Router) {
@@ -45,6 +46,7 @@ export class MyRidesPageComponent  {
     this.ridesOffers = res['offers'];
     this.ridesAccepted =  res['accepted'];
     this.ridesDone = res['completed'];
+    this.rideActive = this.ridesService.activeRide;
   };
 
 
