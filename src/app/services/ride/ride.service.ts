@@ -23,9 +23,7 @@ import { DrvnAuthenticationService } from '../auth/auth.service';
 import { Ride } from '@app/models/ride';
 import { GeolocationService } from '../geolocation.service';
 import { NiceDateFormatPipe } from '@app/pipes/ride-date.pipe';
-import parse from 'date-fns/parse'
-import addDays from 'date-fns/addDays';
-import differenceInHours from 'date-fns/differenceInHours';
+import * as moment from 'moment';
 @Injectable({
   providedIn: 'root',
 })
@@ -314,8 +312,8 @@ export class RideService {
     }
     else
     {
-      let date = addDays(parse(ride.pu_datetime, 'MM/dd/yyyy HH:mm:ss', new Date()), 1);
-      ride.spot_datetime = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + ride.spot_time;
+      let date = moment(ride.pu_datetime).add('1', 'days');
+      ride.spot_datetime = (date.month) + '/' + date.day + '/' + date.year + ' ' + ride.spot_time;
     }
     ride.nice_spot_datetime = this.niceDateFormatPipe.transform(ride.spot_datetime);
     this.checkIfCanSettle(ride);
@@ -329,7 +327,7 @@ export class RideService {
       const endDate = ride.times.find(e => e.type_id == 1);
       if (endDate)
       {
-        const hoursSinceDropoff = differenceInHours(new Date(), new Date(endDate.time))
+        const hoursSinceDropoff = moment.duration((moment(endDate.time).diff(moment()))).asHours();
         if (hoursSinceDropoff
         <
          ride.settle_deadline

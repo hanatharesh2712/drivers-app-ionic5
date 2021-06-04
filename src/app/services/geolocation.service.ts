@@ -18,6 +18,7 @@ import {
   BackgroundGeolocationEvents,
   BackgroundGeolocationResponse,
 } from '@ionic-native/background-geolocation/ngx';
+import * as moment from 'moment';
 @Injectable()
 export class GeolocationService {
   options: GeolocationOptions;
@@ -42,7 +43,7 @@ export class GeolocationService {
       //    this.backgroundGeolocation.endTask();
       //  });
       this.setLocation(location, location.time, 'BCK');
-      this.backgroundGeolocation.finish(); 
+      this.backgroundGeolocation.finish();
     });
   this.backgroundGeolocation
     .on(BackgroundGeolocationEvents.authorization)
@@ -139,7 +140,7 @@ export class GeolocationService {
         acu: data.accuracy,
         alt: data.altitude,
         speed: data.speed,
-        date: new Date(time),
+        date: moment(time),
         provider: 'GPS',
         app_version: type,
       };

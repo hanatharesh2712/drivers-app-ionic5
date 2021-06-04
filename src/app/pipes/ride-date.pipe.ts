@@ -1,18 +1,23 @@
 import { DatePipe } from "@angular/common";
 import { Pipe, PipeTransform } from "@angular/core";
-import parse from 'date-fns/parse'
+import * as moment from 'moment';
 @Pipe({
   name: 'niceDateFormatPipe',
 })
 export class NiceDateFormatPipe implements PipeTransform {
-
+  REFERENCE = moment(); // fixed just for testing, use moment();
+  TODAY = this.REFERENCE.clone().startOf('day');
+  YESTERDAY = this.REFERENCE.clone().subtract(1, 'days').startOf('day');
+  TOMORROW = this.REFERENCE.clone().add(1, 'days').startOf('day');
+  A_WEEK_OLD = this.REFERENCE.clone().subtract(7, 'days').startOf('day')
   constructor(public datePipe: DatePipe) {
+;
   }
 
 
   transform(value: string) {
 
-     let date = parse(value, 'MM/dd/yyyy HH:mm:ss', new Date());
+     let date = moment(value);
      let day = '';
      if (this.isToday(date))
      {
@@ -33,26 +38,15 @@ export class NiceDateFormatPipe implements PipeTransform {
 
   }
 
-  isToday = (someDate) => {
-    const today = new Date()
-    return someDate.getDate() == today.getDate() &&
-      someDate.getMonth() == today.getMonth() &&
-      someDate.getFullYear() == today.getFullYear()
+  isToday = (momentDate) => {
+    return momentDate.isSame(this.TODAY, 'd');
   }
 
   isTomorrow = (someDate) => {
-    const today = new Date()
-    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-    return someDate.getDate() == tomorrow.getDate() &&
-      someDate.getMonth() == tomorrow.getMonth() &&
-      someDate.getFullYear() == tomorrow.getFullYear()
+    return someDate.isSame(this.TOMORROW, 'd');
   }
 
   isYesterday = (someDate) => {
-    const today = new Date()
-    const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
-    return someDate.getDate() == yesterday.getDate() &&
-      someDate.getMonth() == yesterday.getMonth() &&
-      someDate.getFullYear() == yesterday.getFullYear()
+    return someDate.isSame(this.YESTERDAY, 'd');
   }
 }

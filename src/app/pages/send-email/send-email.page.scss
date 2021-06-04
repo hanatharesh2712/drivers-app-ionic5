@@ -11,6 +11,10 @@
 app-send-email {
 
 
+    ion-back-button
+    {
+      --color: white !important;
+    }
   .descText {
     text-overflow: ellipsis;
     overflow: hidden;

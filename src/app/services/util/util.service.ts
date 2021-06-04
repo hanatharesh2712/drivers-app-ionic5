@@ -248,4 +248,6 @@ export class UtilService {
   changeStatusBarColor() {
     this.statusBar.backgroundColorByHexString('#000');
   }
+
+
 }

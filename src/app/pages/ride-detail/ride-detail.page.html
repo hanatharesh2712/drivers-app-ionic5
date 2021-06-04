@@ -237,10 +237,10 @@
 
 <ng-container *ngIf="ride">
   <ion-fab class="options-menu active" *ngIf="isRideAccepted">
-    <ion-fab-button (click)="callSuport()">
+    <ion-fab-button (click)="goToContact()">
       <div class="text-container">
         <ion-icon src="assets/custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
-        CONTACT SUPPORT
+         SUPPORT
       </div>
 
     </ion-fab-button>
@@ -257,7 +257,13 @@
       <ion-icon name="ellipsis-vertical"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
+      <ion-fab-button (click)="goToContact()">
+        <div class="text-container">
+          <ion-icon src="assets/custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
+          CONTACT SUPPORT
+        </div>
 
+      </ion-fab-button>
         <ion-fab-button (click)="sendSMS()">
 
           <div class="text-container">
