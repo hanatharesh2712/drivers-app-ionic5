@@ -61,8 +61,7 @@ export class AppComponent {
   ];
   public loggedInUser: User;
   storageUrl: string = environment.storageUrl;
-  version: string;
-
+  version = '2.2.5';
   constructor(
     public platform: Platform,
     public splashScreen: SplashScreen,
@@ -94,7 +93,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-      this.version = '2.2.4';
+
     });
   }
 
