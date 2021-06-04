@@ -24,6 +24,7 @@ import { environment } from '@env/environment';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 import { ReviewsService } from '@app/services/reviews.service';
 import { DrvnAuthenticationService } from '@app/services/auth/auth.service';
+import { GeolocationService } from '@app/services/geolocation.service';
 
 @Component({
   selector: 'app-home',
@@ -57,7 +58,8 @@ export class HomePage implements OnInit {
     private ridesService: RideService,
     private reviewsService: ReviewsService,
     private insomnia: Insomnia,
-    private authService: DrvnAuthenticationService
+    private authService: DrvnAuthenticationService,
+    private geolocationService: GeolocationService
   ) {}
 
   async ngOnInit() {
@@ -65,6 +67,10 @@ export class HomePage implements OnInit {
       () => console.log('success'),
       () => console.log('error')
     );
+  }
+
+  onClickGetCurrentPosition() {
+    this.geolocationService.getCurrentLocation();
   }
 
   ionViewDidEnter() {

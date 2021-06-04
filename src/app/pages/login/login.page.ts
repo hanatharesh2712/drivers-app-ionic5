@@ -12,7 +12,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, Platform } from '@ionic/angular';
 import { UtilService } from '@app/services/util/util.service';
-import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
 
 @Component({
   selector: 'app-login',
@@ -32,19 +31,18 @@ export class LoginPage implements OnInit {
     private authService: DrvnAuthenticationService,
     private util: UtilService,
     private platform: Platform,
-    private smsRetriever: SmsRetriever
   ) {
     this.menuCtrl.enable(false);
   }
 
   ngOnInit() {
     if (this.platform.is('cordova')) {
-      this.smsRetriever.getAppHash()
+      /*this.smsRetriever.getAppHash()
         .then((res: any) => {
           this.hashCode = res;
           console.log(this.hashCode);
         })
-        .catch((error: any) => console.error(error));
+        .catch((error: any) => console.error(error));*/
     }
   }
 
