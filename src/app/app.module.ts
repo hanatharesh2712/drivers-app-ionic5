@@ -38,7 +38,6 @@ import { GreetingSignPageModule } from './pages/greeting-sign/greeting-sign.modu
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { NgxMaskModule } from 'ngx-mask';
 import { GeolocationService } from './services/geolocation.service';
-import BackgroundGeolocation from 'cordova-background-geolocation-lt';
 
 @NgModule({
   declarations: [AppComponent],
@@ -77,7 +76,6 @@ import BackgroundGeolocation from 'cordova-background-geolocation-lt';
     RouteGuard,
     GoogleMapsAPIWrapper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    BackgroundGeolocation,
     NiceDateFormatPipe,
     DatePipe,
     DrvnAuthenticationService,
