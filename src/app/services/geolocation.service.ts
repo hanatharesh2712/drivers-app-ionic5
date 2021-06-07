@@ -98,7 +98,7 @@ export class GeolocationService {
       }
       else
       {
-        let alert = await this.util.createAlert('Allow Location Access', false, 'Please allow us to use your GPS location to give you a better experience', {
+        let alert = await this.util.createAlert('Allow Location Access', false, 'drvn app collect location data to identify time-sensitive nearby demand and send new ride offers, even when the app is closed or not in use.', {
           text: 'Ok',
           role: 'cancel',
           cssClass: 'secondary',
