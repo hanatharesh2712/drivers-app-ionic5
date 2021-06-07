@@ -44,6 +44,9 @@
     <platform name="android">
         <preference name="AndroidXEnabled" value="true" />
         <config-file parent="/manifest/application" target="app/src/main/AndroidManifest.xml">
+            <meta-data
+              android:name="com.transistorsoft.locationmanager.license_key"
+              android:value="b508d3c791f38b3b2b344433641c1085f98fcbe880c3566eca262e57b10aed6e" />
             <service android:foregroundServiceType="location" android:name="com.transistorsoft.locationmanager.service.TrackingService" />
             <service android:foregroundServiceType="location" android:name="com.transistorsoft.locationmanager.service.LocationRequestService" />
         </config-file>

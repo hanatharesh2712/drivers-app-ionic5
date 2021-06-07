@@ -95,6 +95,8 @@ export class HomePage implements OnInit {
         this.vehicleScore = this.reviewsService.vehicleScore;
       },
     );
+
+    this.geolocationService.getCurrentLocation();
     //  }
   }
 
