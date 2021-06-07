@@ -90,7 +90,7 @@ export class VerifyOTPPage implements OnInit {
       .then(response => {
         setTimeout(() => {
           this.util.goToNew('/home');
-        }, 500);
+        }, 1000);
 
       }).catch(async (err) => {
         let error_msg = 'An error ocurred, try again later.';
