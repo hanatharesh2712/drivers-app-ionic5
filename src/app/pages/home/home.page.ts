@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
@@ -59,7 +60,8 @@ export class HomePage implements OnInit {
     private reviewsService: ReviewsService,
     private insomnia: Insomnia,
     private authService: DrvnAuthenticationService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private storage: Storage
   ) {}
 
   async ngOnInit() {
@@ -104,7 +106,11 @@ export class HomePage implements OnInit {
         this.vehicleScore = this.reviewsService.vehicleScore;
       },
     );
-    this.geolocationService.getCurrentLocation();
+    this.storage.get('gps-dialog').then(async (gpsDialogShowed) => {
+      if (gpsDialogShowed)
+      {
+        this.geolocationService.getCurrentLocation();
+      }})
   }
 
 

@@ -223,7 +223,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   async changeStatus() {
-   // this.geolocationService.getCurrentLocation();
+    this.geolocationService.getCurrentLocation();
     let secondsOnWaiting;
     if (this.ride.next_status_code == 'POB') {
       secondsOnWaiting = this.stopWaitingTime();
