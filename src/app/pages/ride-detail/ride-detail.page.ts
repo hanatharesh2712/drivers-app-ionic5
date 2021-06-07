@@ -43,8 +43,8 @@ export class RideDetailPage implements OnInit, OnDestroy {
   showTimeCounter: boolean;
   gracePeriodMins = 1;
   timeOnLocationSet: Date | Moment;
-  minutesSinceOnLocation: string;
-  secondsSinceOnLocation: string;
+  minutesCounter: string;
+  secondsCounter: string;
   isOnGracePeriod: boolean;
   gracePeriodPercentage: any;
   wtInterval: any;
@@ -93,7 +93,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
         this.isRideAccepted = true;
       }
 
-      this.initWaitingTime();
+      this.initCheckingForPuTimeToInitWaitingTime();
     } else {
       this.calculateCanGiveBackRide();
       //   this.checkIfCanSettle();
@@ -127,7 +127,6 @@ export class RideDetailPage implements OnInit, OnDestroy {
   calculateCanGiveBackRide() {
     if (this.isRideAccepted) {
       if (
-
         moment(this.ride.pu_datetime).diff(moment(), 'hours') >
         environment.giveBackHoursLimit
       ) {
@@ -135,7 +134,6 @@ export class RideDetailPage implements OnInit, OnDestroy {
       }
     }
   }
-
 
   createSettleForm() {
     this.settleForm = this.fb.group({
@@ -164,6 +162,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
       this.loading = false;
     });
   }
+
   acceptRide() {
     this.rideService.acceptRide(this.ride).then((response) => {
       if (response) {
@@ -172,19 +171,20 @@ export class RideDetailPage implements OnInit, OnDestroy {
     });
   }
 
-  openSettle() {
-    this.settlingRide = true;
-    setTimeout(() => {
-      this.tollsInput.setFocus();
-    }, 500);
-  }
-
   rejectRide() {
     this.rideService.rejectRide(this.ride).then((response) => {
       if (response) {
         this.util.goBack('rides');
       }
     });
+  }
+
+
+  openSettle() {
+    this.settlingRide = true;
+    setTimeout(() => {
+      this.tollsInput.setFocus();
+    }, 500);
   }
 
   async doRefresh(refresher) {
@@ -269,19 +269,33 @@ export class RideDetailPage implements OnInit, OnDestroy {
     this.util.call(this.ride.passenger_number);
   }
 
-  initWaitingTime() {
+  initCheckingForPuTimeToInitWaitingTime() {
+    let checkingPuTimeInterval = setInterval(() => {
+      if (moment().isSameOrAfter(moment(this.ride.pickup_datetime)))
+      {
+        this.initWaitingTime();
+        clearInterval(checkingPuTimeInterval);
+      }
 
+    }, 1000);
+  }
+  initWaitingTime() {
     if (
       this.ride.next_status_code == 'POB' &&
       this.ride.service_type.toUpperCase() != 'HOURLY'
     ) {
-      this.showTimeCounter = true;
-      this.timeOnLocationSet = moment(
+
+      let timeOnLocationSet = moment(
         this.ride.times.find((e) => e.type_id == 3).time
       );
-      this.wtInterval = setInterval(() => {
-        this.calculateTimerValue();
-      }, 1000);
+      if (moment(timeOnLocationSet).isBefore(moment(this.ride.pickup_datetime)))
+      {
+        this.showTimeCounter = true;
+        this.wtInterval = setInterval(() => {
+          this.calculateTimerValue();
+        }, 1000);
+      }
+
     } else {
       if (this.ride.next_status_code == 'DOC') {
         this.storageInfo.waitStartedDate = null;
@@ -292,8 +306,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   stopWaitingTime() {
-    const now = moment();
-    this.storageInfo.waitEndDate = now.valueOf();
+    this.storageInfo.waitEndDate = moment().valueOf();
     this.updateStorage();
     return Math.abs(
       (this.storageInfo.waitEndDate - moment(this.storageInfo.waitStartedDate).valueOf()) /
@@ -302,12 +315,12 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   calculateTimerValue() {
-    if (this.timeOnLocationSet) {
+    if (this.showTimeCounter) {
 
-      let secondsRemainingGracePeriod = moment(this.timeOnLocationSet).add(this.gracePeriodMins, 'minutes').diff(moment(), 'seconds');
+      let secondsRemainingGracePeriod = moment(this.ride.pickup_datetime).add(this.gracePeriodMins, 'minutes').diff(moment(), 'seconds');
       if (secondsRemainingGracePeriod < 0) {
         this.isOnGracePeriod = false;
-          this.calculateWaitTimeDuration();
+        this.calculateWaitTimeDuration();
       } else {
         this.calculateGracePeriodDuration(secondsRemainingGracePeriod);
       }
@@ -318,11 +331,11 @@ export class RideDetailPage implements OnInit, OnDestroy {
   {
     if (this.storageInfo.waitStartedDate) {
       let secondsSinceWaitTimeStarted = moment().diff(moment(this.storageInfo.waitStartedDate), 'seconds')
-      this.minutesSinceOnLocation = this.pad(
+      this.minutesCounter = this.pad(
         Math.trunc(secondsSinceWaitTimeStarted / 60),
         2
       );
-      this.secondsSinceOnLocation = this.pad(
+      this.secondsCounter = this.pad(
         Math.trunc(secondsSinceWaitTimeStarted % 60),
         2
       );
@@ -339,14 +352,15 @@ export class RideDetailPage implements OnInit, OnDestroy {
       100
     ).toFixed(2);
     secondsRemainingGracePeriod = Math.abs(secondsRemainingGracePeriod);
-    this.minutesSinceOnLocation = this.pad(Math.trunc(secondsRemainingGracePeriod / 60), 2);
-    this.secondsSinceOnLocation = this.pad(Math.trunc(secondsRemainingGracePeriod % 60), 2);
+    this.minutesCounter = this.pad(Math.trunc(secondsRemainingGracePeriod / 60), 2);
+    this.secondsCounter = this.pad(Math.trunc(secondsRemainingGracePeriod % 60), 2);
   }
 
   startWTTime() {
     this.storageInfo.waitStartedDate = moment().valueOf();
     this.updateStorage();
   }
+
   pad(num, size) {
     num = num.toString();
     while (num.length < size) num = '0' + num;
@@ -390,8 +404,6 @@ export class RideDetailPage implements OnInit, OnDestroy {
       alert.present();
     }
   }
-
-  async confirmStop() { }
 
   async openRating() {
     const dialog = await this.util.createModal(

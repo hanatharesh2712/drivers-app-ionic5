@@ -340,4 +340,5 @@ export class RideService {
 
     }
   }
+
 }
