@@ -76,6 +76,12 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.menuCtrl.enable(true);
     this.loggedInUser = this.authService.currentUser;
+    this.loadInfo();
+    //  }
+  }
+
+  loadInfo(refresher = null)
+  {
     this.loadingRide = true;
     this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
       this.loadingRide = false;
@@ -88,6 +94,9 @@ export class HomePage implements OnInit {
     });
     this.ridesService.getRides().subscribe(rides => {
       this.rides = rides;
+      if (refresher) {
+        refresher.target.complete();
+      }
     })
     this.reviewsService.getPaxReviews().subscribe(
       res => {
@@ -95,9 +104,7 @@ export class HomePage implements OnInit {
         this.vehicleScore = this.reviewsService.vehicleScore;
       },
     );
-
     this.geolocationService.getCurrentLocation();
-    //  }
   }
 
 

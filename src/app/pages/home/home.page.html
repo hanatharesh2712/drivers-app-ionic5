@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="loadInfo($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list lines="none">
     <ion-list-header>
       <div (click)="onClickGetCurrentPosition()" class="dashboard-title">Welcome, <br>

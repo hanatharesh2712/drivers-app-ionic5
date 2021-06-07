@@ -61,7 +61,7 @@ export class AppComponent {
   ];
   public loggedInUser: User;
   storageUrl: string = environment.storageUrl;
-  version = '2.2.5';
+  version = '2.2.6';
   constructor(
     public platform: Platform,
     public splashScreen: SplashScreen,
