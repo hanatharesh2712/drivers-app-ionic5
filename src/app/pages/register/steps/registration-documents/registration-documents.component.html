@@ -5,31 +5,14 @@
     <ion-list lines='none'>
       <ion-list-header>
         <ion-label>  Company Documents</ion-label>
-      
+
       </ion-list-header>
-      <ion-item>
-        <document-item></document-item>
-      </ion-item>
-      <ion-item>
-        <div class='file-uploader'>
-            <div class="name">
-                Driver License
-            </div>
-            <div class="status">
-              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
-            </div>
-        </div>
-      </ion-item>
-      <ion-item>
-        <div class='file-uploader'>
-            <div class="name">
-                Driver License
-            </div>
-            <div class="status">
-              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
-            </div>
-        </div>
-      </ion-item>
+      <ng-container *ngFor="let doc of docs" >
+        <ion-item *ngIf="doc.partner_document_type == 1" >
+          <document-item  [document]="doc"></document-item>
+        </ion-item>
+      </ng-container>
+
 
 
     </ion-list>
@@ -37,27 +20,11 @@
       <ion-list-header>
         <ion-label>  Driver Documents</ion-label>
       </ion-list-header>
-      <ion-item>
-        <div class='file-uploader'>
-            <div class="name">
-                Driver License
-            </div>
-            <div class="status">
-              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
-            </div>
-        </div>
-      </ion-item>
-  
-      <ion-item>
-        <div class='file-uploader'>
-            <div class="name">
-                Driver License
-            </div>
-            <div class="status">
-              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
-            </div>
-        </div>
-      </ion-item>
+      <ng-container *ngFor="let doc of docs" >
+        <ion-item *ngIf="doc.partner_document_type == 2" >
+          <document-item  [document]="doc"></document-item>
+        </ion-item>
+      </ng-container>
 
 
     </ion-list>
@@ -65,18 +32,12 @@
       <ion-list-header>
         Vehicle Documents
       </ion-list-header>
-      <ion-item>
-        <div class='file-uploader'>
-            <div class="name">
-              <ion-label>  Driver License</ion-label>
-            </div>
-            <div class="status">
-              <ion-icon src="assets/custom-ion-icons/file_upload.svg"></ion-icon>
-            </div>
-        </div>
-      </ion-item>
-  
-    
+      <ng-container *ngFor="let doc of docs" >
+        <ion-item  *ngIf="doc.partner_document_type == 3" >
+          <document-item [document]="doc"></document-item>
+        </ion-item>
+      </ng-container>
+
 
 
     </ion-list>

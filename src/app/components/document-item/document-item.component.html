@@ -1,6 +1,6 @@
 <div class='file-uploader' (click)="presentActionSheet()" [ngClass]="{'submitted': submitted}">
   <div class="name">
-      Driver License
+      {{document.partner_document_type.document_name}}
   </div>
   <div class="status">
     <ion-icon src="assets/custom-ion-icons/file_upload.svg" *ngIf="!uploading && !submitted"></ion-icon>

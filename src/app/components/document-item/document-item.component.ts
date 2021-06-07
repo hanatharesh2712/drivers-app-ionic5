@@ -1,7 +1,8 @@
 import { UtilService } from './../../services/util/util.service';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { DocumentUploadDialogComponent } from '../document-upload-dialog/document-upload-dialog.component';
+import { Document } from '@app/models/document';
 
 @Component({
   selector: 'document-item',
@@ -12,7 +13,7 @@ import { DocumentUploadDialogComponent } from '../document-upload-dialog/documen
 export class DocumentItemComponent implements OnInit {
   uploading: boolean;
   submitted = false;
-
+  @Input() document: Document;
   constructor(public actionSheetController: ActionSheetController,
     private util: UtilService) { }
 

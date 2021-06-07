@@ -6,6 +6,7 @@ export interface User {
   email: string;
   partner;
   id: number;
+  partner_type;
 }
 
 

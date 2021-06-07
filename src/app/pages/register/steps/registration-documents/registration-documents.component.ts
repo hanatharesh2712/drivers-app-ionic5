@@ -4,6 +4,8 @@ import { PartnerVehicleDialogComponent } from '@app/components/partner-vehicle-d
 import { PartnerVehicleDialogModule } from '@app/components/partner-vehicle-dialog/partner-vehicle-dialog.module';
 import { RegistrationService } from '@app/services/registration.service';
 import { UtilService } from '@app/services/util/util.service';
+import { DocumentsService } from '@app/services/documents.service';
+import { User } from '@app/models/user';
 
 @Component({
   selector: 'app-registration-documents',
@@ -14,16 +16,21 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class RegistrationDocumentsComponent implements OnInit {
   is_driver: boolean;
-  loggedInUser: any;
+  loggedInUser: User;
+  docs: any[];
 
   constructor(private registrationService: RegistrationService,
-    private authService: DrvnAuthenticationService) {
+    private authService: DrvnAuthenticationService,
+    private docService: DocumentsService) {
     this.registrationService.setStep(5);
+    this.docService.getDocuments().then(response => {
+      this.docs = response;
+    })
   }
 
   ngOnInit() {
     this.loggedInUser = this.authService.currentUser;
-    this.is_driver = this.loggedInUser.partner_type != 3 ;
+    this.is_driver = this.loggedInUser.partner_type != 3;
   }
 
   nextStep() {

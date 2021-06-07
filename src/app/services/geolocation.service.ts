@@ -1,3 +1,4 @@
+import { UtilService } from '@app/services/util/util.service';
 
 
 import { Platform } from '@ionic/angular';
@@ -8,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { Location as LocationDrvn } from '@app/models/location';
 import { environment } from '@env/environment';
 import BackgroundGeolocation from 'cordova-background-geolocation-lt';
+import { Storage } from '@ionic/storage';
 
 
 @Injectable()
@@ -19,10 +21,13 @@ export class GeolocationService {
     private http: HttpClient,
     private authService: DrvnAuthenticationService,
     private platform: Platform,
+    private util: UtilService,
+    private storage: Storage
   ) {
   }
 
   initTracking() {
+
     if (this.platform.is('cordova')) {
       this.initGettingPosition();
       this.driver_id = this.authService.currentUser.id;
@@ -30,6 +35,7 @@ export class GeolocationService {
   }
 
   configureBackgroundGeolocation() {
+
     // 1.  Listen to events.
     BackgroundGeolocation.onLocation(location => {
       console.log('[location] - ', location);
@@ -66,7 +72,7 @@ export class GeolocationService {
       desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
       distanceFilter: 10,
       stopOnTerminate: false,
-      startOnBoot: true
+      startOnBoot: true,
     }, (state) => {
       console.log('[ready] BackgroundGeolocation is ready to use');
       if (!state.enabled) {
@@ -85,7 +91,25 @@ export class GeolocationService {
   }
 
   initGettingPosition() {
-    this.configureBackgroundGeolocation();
+    this.storage.get('gps-dialog').then(async (gpsDialogShowed) => {
+      if (gpsDialogShowed)
+      {
+        this.configureBackgroundGeolocation();
+      }
+      else
+      {
+        let alert = await this.util.createAlert('Allow Location Access', false, 'Please allow us to use your GPS location to give you a better experience', {
+          text: 'Ok',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: async () => {
+              this.storage.set('gps-dialog', true);
+              this.configureBackgroundGeolocation();
+          }
+        })
+        alert.present();
+      }})
+
   }
 
   getCurrentLocation() {
