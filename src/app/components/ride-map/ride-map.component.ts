@@ -123,17 +123,21 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
     if (this.map) {
       this.markers = [];
       this.ride.routing.forEach((route) => {
-        this.markers.push(
-          new google.maps.Marker({
-            map: this.map,
-            icon: {
-              url: `assets/imgs/${route.RIType.toLowerCase()}.png`,
-              anchor: new google.maps.Point(25, 50),
-              scaledSize: new google.maps.Size(50, 50),
-            },
-            position: new google.maps.LatLng(route.RILat, route.RILng),
-          })
-        );
+        if (route.RILat &&  route.RILng)
+        {
+          this.markers.push(
+            new google.maps.Marker({
+              map: this.map,
+              icon: {
+                url: `assets/imgs/${route.RIType.toLowerCase()}.png`,
+                anchor: new google.maps.Point(25, 50),
+                scaledSize: new google.maps.Size(50, 50),
+              },
+              position: new google.maps.LatLng(route.RILat, route.RILng),
+            })
+          );
+        }
+
       });
       this.fitBoundsAndCenter();
       this.setDirections();
@@ -156,7 +160,7 @@ export class RideMapComponent implements OnChanges, AfterViewInit {
         this.map.fitBounds(this.bounds);
         const listener = google.maps.event.addListener(this.map, 'idle', () => {
           if (quantity == 1) {
-            this.map.setZoom(11);
+            this.map.setZoom(12);
 
             google.maps.event.removeListener(listener);
           }

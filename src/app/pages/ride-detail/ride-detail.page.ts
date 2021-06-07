@@ -223,8 +223,8 @@ export class RideDetailPage implements OnInit, OnDestroy {
   }
 
   async changeStatus() {
-    this.geolocationService.getCurrentLocation();
-    let secondsOnWaiting = null;
+   // this.geolocationService.getCurrentLocation();
+    let secondsOnWaiting;
     if (this.ride.next_status_code == 'POB') {
       secondsOnWaiting = this.stopWaitingTime();
     }
@@ -232,6 +232,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
       .changeStatus(this.ride, secondsOnWaiting)
       .then((response: Ride) => {
         this.fabMenu.close();
+        clearInterval(this.wtInterval);
         if (response) {
           this.initRide(response);
         } else {
@@ -275,7 +276,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
 
   initCheckingForPuTimeToInitWaitingTime() {
     let checkingPuTimeInterval = setInterval(() => {
-      if (moment().isSameOrAfter(moment(this.ride.pickup_datetime)))
+      if (moment().isSameOrAfter(moment(this.ride.pu_datetime)))
       {
         this.initWaitingTime();
         clearInterval(checkingPuTimeInterval);
@@ -288,11 +289,10 @@ export class RideDetailPage implements OnInit, OnDestroy {
       this.ride.next_status_code == 'POB' &&
       this.ride.service_type.toUpperCase() != 'HOURLY'
     ) {
-
       let timeOnLocationSet = moment(
         this.ride.times.find((e) => e.type_id == 3).time
       );
-      if (moment(timeOnLocationSet).isBefore(moment(this.ride.pickup_datetime)))
+      if (moment(timeOnLocationSet).isBefore(moment(this.ride.pu_datetime)))
       {
         this.showTimeCounter = true;
         this.wtInterval = setInterval(() => {
@@ -321,7 +321,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
   calculateTimerValue() {
     if (this.showTimeCounter) {
 
-      let secondsRemainingGracePeriod = moment(this.ride.pickup_datetime).add(this.gracePeriodMins, 'minutes').diff(moment(), 'seconds');
+      let secondsRemainingGracePeriod = moment(this.ride.pu_datetime).add(this.gracePeriodMins, 'minutes').diff(moment(), 'seconds');
       if (secondsRemainingGracePeriod < 0) {
         this.isOnGracePeriod = false;
         this.calculateWaitTimeDuration();

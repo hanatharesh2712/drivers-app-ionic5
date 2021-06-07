@@ -243,7 +243,7 @@ export class RideService {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => {},
+          handler: () => {  reject(null);},
         },
         {
           text: 'Confirm',
@@ -314,7 +314,7 @@ export class RideService {
     else
     {
       let date = moment(ride.pu_datetime).add('1', 'days');
-      ride.spot_datetime = (date.month) + '/' + date.day + '/' + date.year + ' ' + ride.spot_time;
+      ride.spot_datetime = (date.month()) + '/' + date.day() + '/' + date.year() + ' ' + ride.spot_time;
     }
     ride.nice_spot_datetime = this.niceDateFormatPipe.transform(ride.spot_datetime);
     this.checkIfCanSettle(ride);

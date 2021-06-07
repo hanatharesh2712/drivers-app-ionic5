@@ -240,7 +240,7 @@
     <ion-fab-button (click)="goToContact()">
       <div class="text-container">
         <ion-icon src="assets/custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
-         SUPPORT
+         CONTACT SUPPORT
       </div>
 
     </ion-fab-button>
@@ -260,7 +260,7 @@
       <ion-fab-button (click)="goToContact()">
         <div class="text-container">
           <ion-icon src="assets/custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
-          CONTACT SUPPORT
+          SUPPORT
         </div>
 
       </ion-fab-button>
@@ -285,7 +285,7 @@
           <div class="d-flex column button draw" [style.backgroundPosition]="'-' + gracePeriodPercentage + 'px'"
             [ngClass]="{'starting-wt-time': !isOnGracePeriod}">
             <ng-container *ngIf="isOnGracePeriod || (!isOnGracePeriod && storageInfo.waitStartedDate)">
-              {{minutesSinceOnLocation}} : {{secondsSinceOnLocation}}
+              {{minutesCounter}} : {{secondsCounter}}
               <span class="subtitle">
                 {{isOnGracePeriod ? 'GRACE PERIOD' : 'WAITING TIME'}}
               </span>

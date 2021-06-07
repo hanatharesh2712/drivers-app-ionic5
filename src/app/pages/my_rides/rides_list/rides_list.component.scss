@@ -88,6 +88,11 @@
     color: var(--ion-theme-info-color) !important;
   }
 
+  .offer-text
+  {
+   font-size: 1.4rem;
+   padding-left: 12px;
+  }
   ion-skeleton-text {
     --background-rgb: 255, 255, 255;
   }
@@ -97,7 +102,7 @@
   }
 
   .tab-title {
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: white;
     padding-left: 12px;
     font-size: 2rem;

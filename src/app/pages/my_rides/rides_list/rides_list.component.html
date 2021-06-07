@@ -3,7 +3,7 @@
   <ng-container *ngIf="type == 'accepted'">
     <ng-container *ngIf="activeRide">
       <h4 class="tab-title active">
-        ACTIVE RIDE
+       Active Ride
       </h4>
       <ion-list class="list" lines="none" *ngIf="!loading">
         <ion-item>
@@ -14,15 +14,18 @@
       </ion-list>
     </ng-container>
     <h4 class="tab-title">
-      ACCEPTED RIDES <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
+      Accepted Rides <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
     </h4>
     <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
     <p class="empty-text" *ngIf="!activeRide && !rides && !loading">No ride offer available.</p>
   </ng-container>
   <ng-container *ngIf="type == 'offers'">
     <h4 class="tab-title ">
-      RIDE OFFERS <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
+     Ride Offers <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
     </h4>
+    <span class="secondary-text offer-text" *ngIf="rides.length" >
+      Note, this offer is in a timed queue and may not be available when you return
+    </span>
     <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
     <p class="empty-text" *ngIf="!rides.length && !loading">You don't have any ride accepted yet.</p>
   </ng-container>
@@ -30,13 +33,13 @@
   <ng-container *ngIf="type == 'done' && rides">
     <ng-container *ngIf="rides['open'].length">
       <h4 class="tab-title ">
-        OPEN RIDES <span class="rides-count" *ngIf="rides">({{rides && rides['open'].length}})</span>
+        Open Rides <span class="rides-count" *ngIf="rides">({{rides && rides['open'].length}})</span>
       </h4>
       <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides['open']}"></ng-container>
     </ng-container>
     <ng-container *ngIf="rides['closed'].length">
       <h4 class="tab-title ">
-        CLOSED RIDES <span class="rides-count" *ngIf="rides">({{rides && rides['closed'].length}})</span>
+        Closed Rides <span class="rides-count" *ngIf="rides">({{rides && rides['closed'].length}})</span>
       </h4>
       <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides['closed'], hideDetails: true}"></ng-container>
     </ng-container>
