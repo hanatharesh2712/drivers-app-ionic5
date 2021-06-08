@@ -71,7 +71,6 @@ export class DocumentItemComponent implements OnInit {
         }]
     });
     await actionSheet.present();
-
     const { role } = await actionSheet.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   }
@@ -103,7 +102,6 @@ export class DocumentItemComponent implements OnInit {
         role: 'cancel',
         cssClass: 'secondary',
         handler: async () => {
-
         }
       });
       alert.present();

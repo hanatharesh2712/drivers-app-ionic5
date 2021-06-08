@@ -1,3 +1,4 @@
+import { DocumentsService } from '@app/services/documents.service';
 
 import { DrvnAuthenticationService } from '@app/services/auth/auth.service';
 import { Injectable, NgModule } from '@angular/core';
@@ -17,7 +18,8 @@ export class RouteGuard implements CanActivate {
 
   constructor(private router: Router,
     private storage: Storage,
-    private authService: DrvnAuthenticationService) { }
+    private authService: DrvnAuthenticationService,
+    private documentsService: DocumentsService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return this.storage.get('accessInfo').then(response => {
@@ -29,11 +31,17 @@ export class RouteGuard implements CanActivate {
           this.router.navigate(['/register/service-information']);
           return false;
         }
+        if (this.documentsService.needDocuments)
+        {
+          this.router.navigate(['/register/documents']);
+          return false;
+        }
         if (!this.loggedInUser.partner.payment_method_id)
         {
           this.router.navigate(['/register/agreement']);
           return false;
         }
+
         return true;
       }
       else {

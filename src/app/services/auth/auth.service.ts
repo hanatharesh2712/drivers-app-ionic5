@@ -1,3 +1,4 @@
+import { DocumentsService } from '@app/services/documents.service';
 import { Inject, Injectable, PLATFORM_ID, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators";
@@ -24,7 +25,8 @@ export class DrvnAuthenticationService implements OnInit {
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: any,
-    private storage: Storage
+    private storage: Storage,
+    private documentsService: DocumentsService
   ) {
     this.currentToken = this.authTokenStale;
   }
@@ -36,24 +38,25 @@ export class DrvnAuthenticationService implements OnInit {
 
   initUser() {
     return new Promise((resolve, reject) => {
-    this.getAuthToken().then(token => {
-      if (token)
-      {
-        this.authToken = JSON.parse(token).access_token;
-        this.getCurrentDriverInfo().then(response =>
-          {
-            resolve(response);
+      this.getAuthToken().then(token => {
+        if (token) {
+          this.authToken = JSON.parse(token).access_token;
+          this.getCurrentDriverInfo().then(response => {
+            this.documentsService.getDocuments().then(response => {
+              resolve(response);
+            })
+
 
           });
-      }
-      else
-      {
-        resolve(null);
+        }
+        else {
+          resolve(null);
 
-      }
-    }, error => {
-      resolve(null)
-    })})
+        }
+      }, error => {
+        resolve(null)
+      })
+    })
   }
 
   getCurrentDriverInfo() {
@@ -113,15 +116,15 @@ export class DrvnAuthenticationService implements OnInit {
   }
 
 
-  sendCode(mobile_phone,hash_code) {
+  sendCode(mobile_phone, hash_code) {
     this.mobilePhone = mobile_phone;
     this.hashCode = hash_code;
     return this.http.get<any>(environment.noLoginUrl + 'da/sendLoginPassword?phone=' + mobile_phone + '&hashCode=' + hash_code).pipe(map(response => {
-        if (response) {
-          this.smsBody = response.smsBody;
-        }
-        return response;
-      }))
+      if (response) {
+        this.smsBody = response.smsBody;
+      }
+      return response;
+    }))
       .toPromise();
   }
 

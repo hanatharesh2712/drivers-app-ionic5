@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 
 export class DocumentsService {
 
+  needDocuments = false;
   constructor(private http: HttpClient) {
 
   }
@@ -33,7 +34,9 @@ export class DocumentsService {
           element.document = existingDocument.document;
           element.submitted = true;
         }
+
       });
+      this.needDocuments = response.documentTypes.some(e => e.partner_document_type.required == 1 && ((e.partner_document_type.has_file && !e.submitted) || (!e.partner_document_type.has_file && !e.document.answer)));
       return response
     })).toPromise();
   }
