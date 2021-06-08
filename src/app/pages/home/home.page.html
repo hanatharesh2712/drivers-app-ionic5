@@ -43,10 +43,10 @@
       <div class="widget rides-board " >
         <div class="title">Ride board</div>
         <div class="container d-flex" >
-          <div class="count-info"  (click)="goTo('rides/offers')"  *ngIf="rides">
+          <div class="count-info"  (click)="goTo('rides/offers')"  *ngIf="!loadingRideBoard">
             <div class="center-container">
               <div  class="d-flex a-center  j-center value">
-                <span>{{rides['offers'].length}}</span>
+                <span>{{rides['offers'] ? rides['offers'].length : 0}}</span>
                 <ion-icon src="assets/custom-ion-icons/local_offer.svg" class="icon drvn-icon"></ion-icon>
               </div>
               <span class="text">
@@ -55,13 +55,13 @@
             </div>
 
           </div>
-          <ion-skeleton-text *ngIf="!rides" animated style="width: 33%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
+          <ion-skeleton-text *ngIf="loadingRideBoard" animated style="width: 33%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
 
 
-          <div class="count-info"  (click)="goTo('rides/accepted')" *ngIf="rides">
+          <div class="count-info"  (click)="goTo('rides/accepted')" *ngIf="!loadingRideBoard">
             <div class="center-container" >
               <div  class="d-flex a-center j-center value">
-                <span>{{rides['accepted'].length + (nextRide && nextRide.next_status_code ? 1 : 0)}}</span>
+                <span>{{rides['accepted'] ? (rides['accepted'].length + (nextRide && nextRide.next_status_code ? 1 : 0)) : 0}}</span>
                 <ion-icon src="assets/custom-ion-icons/task_alt.svg" class="icon drvn-icon"></ion-icon>
               </div>
               <span class="text">
@@ -72,11 +72,11 @@
 
 
           </div>
-          <ion-skeleton-text *ngIf="!rides" animated style="width: 33%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
-          <div class="count-info" (click)="goTo('rides/completed')"  *ngIf="rides">
+          <ion-skeleton-text *ngIf="loadingRideBoard" animated style="width: 33%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
+          <div class="count-info" (click)="goTo('rides/completed')"  *ngIf="!loadingRideBoard">
             <div class="center-container">
               <div class="d-flex a-center  j-center value">
-                <span>{{rides['done'].length}}</span>
+                <span>{{rides['done'] ? rides['done'].length : 0}}</span>
                 <ion-icon src="assets/custom-ion-icons/account_balance_wallet.svg" class="icon drvn-icon"></ion-icon>
               </div>
               <span class="text">
@@ -85,7 +85,7 @@
             </div>
 
           </div>
-          <ion-skeleton-text *ngIf="!rides" animated style="width: 33%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
+          <ion-skeleton-text *ngIf="loadingRideBoard" animated style="width: 33%; height: 50px;     margin-right: 12px;"></ion-skeleton-text>
         </div>
 
 

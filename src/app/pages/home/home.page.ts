@@ -46,7 +46,7 @@ export class HomePage implements OnInit {
   infoExpanded: boolean;
   isDone: boolean;
   nextRide: Ride;
-  rides: Ride[];
+  rides: Ride[] = [];
   loadingRide: boolean;
   loadingRideBoard: boolean;
   score: any;
@@ -94,8 +94,10 @@ export class HomePage implements OnInit {
     {
       this.loadingRide = false;
     });
+    this.loadingRideBoard = true;
     this.ridesService.getRides().subscribe(rides => {
       this.rides = rides;
+      this.loadingRideBoard = false;
       if (refresher) {
         refresher.target.complete();
       }
