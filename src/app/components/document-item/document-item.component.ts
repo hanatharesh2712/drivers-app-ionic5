@@ -112,7 +112,7 @@ export class DocumentItemComponent implements OnInit {
 
   answerChanged(answer)
   {
-    this.uploadFile({ document_type_id:  this.document.partner_document_type_id, answer: answer, entity_id: this.document.entity_id});
+    this.uploadFile({ document_type_id:  this.document.partner_document_type_id, answer: answer, entity_id: this.document.entity_id, id: this.document.id});
   }
 
 
