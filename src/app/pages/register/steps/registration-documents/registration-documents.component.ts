@@ -18,17 +18,27 @@ export class RegistrationDocumentsComponent implements OnInit {
   is_driver: boolean;
   loggedInUser: User;
   docs: any[];
+  disableButton = false;
 
-  constructor(private registrationService: RegistrationService,
+  constructor(
+    private registrationService: RegistrationService,
     private authService: DrvnAuthenticationService,
     private docService: DocumentsService) {
     this.registrationService.setStep(5);
-    this.docService.getDocuments().then(response => {
-      this.docs = response;
+    this.docService.getDocuments().then((response: any) => {
+      this.docs = response.documentTypes.filter(e => e.partner_document_type.required == 1);
+      this.docs.forEach(element => {
+        if (element.partner_document_type.type == 3)
+        {
+          element.entity_id = this.loggedInUser.partner.vehicles[0].id;
+        }
+      });
+      this.checkValidation();
     })
   }
 
   ngOnInit() {
+
     this.loggedInUser = this.authService.currentUser;
     this.is_driver = this.loggedInUser.partner_type != 3;
   }
@@ -41,5 +51,14 @@ export class RegistrationDocumentsComponent implements OnInit {
     this.registrationService.back();
   }
 
+  documentStatusChanged(doc)
+  {
+    this.checkValidation();
+  }
+
+  checkValidation()
+  {
+    this.disableButton =  this.docs.some(e => (e.partner_document_type.has_file && !e.submitted) || (!e.partner_document_type.has_file && !e.document.answer));
+  }
 
 }

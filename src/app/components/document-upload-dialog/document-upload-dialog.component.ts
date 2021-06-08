@@ -16,6 +16,7 @@ export class DocumentUploadDialogComponent implements OnInit {
   fileChanged = new Subject();
   expirationDate;
   uploading: boolean;
+  data;
   constructor(private cdRef: ChangeDetectorRef,
     private elRef: ElementRef,
     private modalController: ModalController) { }
@@ -33,40 +34,13 @@ export class DocumentUploadDialogComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        const data = {
+        this.data = {
           id: '',
           file_path: reader.result,
           file_ext: extension
         };
         this.documentUrl = reader.result.toString();
         this.fileChanged.next();
-
-        // this.driverForm.controls['avatar_url'].markAsDirty();
-        // need to run CD since file load runs outside of zone
-        //  this.cdRef.detectChanges();
-        // this.documentService._documentUploaded.next(data);
-        // this.document.status = 'submitted';
-        //  this.document.file_path = reader.result;
-
-        //  this.documentService.uploadDocument(data).then((response: any) => {
-
-        //      if (response) {
-        //          this.uploading = false;
-        //
-        //          this.document.file_path = response.document.file_path;
-        //          this.snackBar.open("Your document has been submitted.", 'OK', {
-        //              verticalPosition: 'top',
-        //              duration: 3000
-        //          });
-        //      }
-        //  }, error => {
-        //      this.snackBar.open("There was a problem when we tried to save the file. Please try again.", 'OK', {
-        //          verticalPosition: 'top',
-        //          panelClass: 'error-snackbar',
-        //          duration: 3000
-        //      });
-        //      this.uploading = false;
-        //  });
       };
     }
   }
@@ -81,7 +55,7 @@ export class DocumentUploadDialogComponent implements OnInit {
     this.uploading = true;
     setTimeout(() => {
       this.uploading = false;
-      this.modalController.dismiss(true);
+      this.modalController.dismiss({...this.data, expiration_date: this.expirationDate});
     }, 3000);
 
   }

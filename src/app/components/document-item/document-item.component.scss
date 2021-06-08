@@ -2,28 +2,24 @@
   ion-icon {
     margin-right: 12px !important;
   }
-  
-  .action-sheet-title
-  {
-      background: var(--ion-theme-color);
-      color: black;
-      text-align: center;
+
+  .action-sheet-title {
+    background: var(--ion-theme-color);
+    color: black;
+    text-align: center;
   }
 
-  .action-sheet-group
-  {
-      background: var(--ion-secondary-bg-color);
-      padding-top: 0px !important;
+  .action-sheet-group {
+    background: var(--ion-secondary-bg-color);
+    padding-top: 0px !important;
   }
 
-  .action-sheet-button
-  {
+  .action-sheet-button {
+    color: var(--ion-theme-color) !important;
+
+    ion-icon {
       color: var(--ion-theme-color) !important;
-    
-      ion-icon
-      {
-        color: var(--ion-theme-color) !important;
-      }
+    }
   }
 
 }
@@ -45,30 +41,34 @@ document-item {
 
     ion-icon {
       font-size: 3rem;
-      color: var(--ion-theme-info-color);
+      color: white;
     }
 
-
-    &.submitted {
-      border: 2px solid green;
-
-      .name {
-        color: green;
-      }
-    }
 
 
     .submitted-icon {
-      color: green !important;
+      color: var(--ion-theme-color);
       width: 40px;
       height: 40px;
     }
 
     .loading-gif {
+      min-width: 30px;
       width: 30px;
     }
 
+
+
   }
 
-
+  ion-segment {
+    border: 1px solid grey;
+    max-width: 80px;
+    height: 40px;
+    ion-segment-button {
+      min-width: 30px;
+      color: white;
+      --indicator-color: var(--ion-theme-color);
+    }
+  }
 }

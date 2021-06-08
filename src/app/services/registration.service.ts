@@ -1,3 +1,4 @@
+import { DrvnAuthenticationService } from '@app/services/auth/auth.service';
 import { RegistrationAPIService } from '@app/services/registration-api.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -77,7 +78,8 @@ export class RegistrationService {
     private util: UtilService,
     private storage: Storage,
     private registrationAPIService: RegistrationAPIService,
-    private router: Router) {
+    private router: Router,
+    private authService: DrvnAuthenticationService) {
 
   }
 
@@ -196,7 +198,12 @@ export class RegistrationService {
   {
     this.registrationAPIService.savePartnerVehicleData(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
-        this.next();
+        this.authService.getCurrentDriverInfo().then(response =>
+          {
+            this.next();
+
+          });
+
       }
       else
       {
