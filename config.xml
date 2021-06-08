@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.moveo.drvnchauffeurs" version="2.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.moveo.drvnchauffeurs" version="2.3.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Drvn</name>
     <description>Drvn's chauffeurs App.</description>
     <author email="dev@moveo.net" href="https://drvn.com">Moveo</author>
@@ -63,16 +63,16 @@
     </platform>
     <platform name="ios">
         <config-file parent="NSLocationAlwaysAndWhenInUseUsageDescription" target="*-Info.plist">
-            <string>[CHANGEME] Background location tracking is required for our app so we can...</string>
+            <string>This app uses location data to provide time-sensitive ride offers based on your current location, and to accurately calculate payment during your ride.</string>
         </config-file>
         <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
-            <string>[CHANGEME pre-iOS11.  No longer used with iOS 12] Background location tracking is required for our app so we can...</string>
+            <string>This app uses location data to provide time-sensitive ride offers based on your current location, and to accurately calculate payment during your ride.</string>
         </config-file>
         <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
-            <string>[CHANGEME] Background location tracking is required for our app so we can...</string>
+            <string>This app uses location data to provide time-sensitive ride offers based on your current location, and to accurately calculate payment during your ride.</string>
         </config-file>
         <config-file parent="NSMotionUsageDescription" target="*-Info.plist">
-            <string>[CHANGEME] Device motion updates help determine when the device is stationary so the app can save power by turning off location-updates</string>
+            <string>Device motion updates help determine when the device is stationary so the app can save power by turning off location-updates.</string>
         </config-file>
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />

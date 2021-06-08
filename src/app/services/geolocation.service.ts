@@ -74,9 +74,9 @@ export class GeolocationService {
       stopOnTerminate: false,
       startOnBoot: true,
       backgroundPermissionRationale: {
-        title: "Allow {applicationName} to access this device's location even when closed or not in use.",
-        message: "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
-        positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
+        title: "Allow {applicationName} to access the device's location at all times.",
+        message: "This app uses location data to provide time-sensitive ride offers based on your current location, and to accurately calculate payment during your ride.",
+        positiveAction: 'Allow all the time',
         negativeAction: 'Cancel'
       },
     }, (state) => {
