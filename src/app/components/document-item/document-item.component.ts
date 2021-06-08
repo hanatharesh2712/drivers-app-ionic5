@@ -82,7 +82,7 @@ export class DocumentItemComponent implements OnInit {
     modal.present();
     modal.onDidDismiss().then(response => {
       if (response.data) {
-        this.uploadFile({...response.data, partner_document_type_id:  this.document.partner_document_type_id, entity_id: this.document.entity_id});
+        this.uploadFile({...response.data, document_type_id:  this.document.partner_document_type_id, entity_id: this.document.entity_id});
       }
     })
   }
@@ -112,7 +112,7 @@ export class DocumentItemComponent implements OnInit {
 
   answerChanged(answer)
   {
-    this.uploadFile({ partner_document_type_id:  this.document.partner_document_type_id, answer: answer, entity_id: this.document.entity_id});
+    this.uploadFile({ document_type_id:  this.document.partner_document_type_id, answer: answer, entity_id: this.document.entity_id});
   }
 
 

@@ -42,7 +42,7 @@ export class DocumentsService {
   uploadDocument(data) {
     return new Promise((resolve, reject) => {
       this.http
-        .post(environment.appUrl + 'saveDocument', data)
+        .post(environment.appUrl + 'savePartnerDocument', data)
         .subscribe((response: any) => {
           resolve(response);
         },
@@ -53,10 +53,10 @@ export class DocumentsService {
 
 
 
-  removeDocument(document_id) {
+  removeDocument(id) {
     return new Promise((resolve, reject) => {
       this.http
-        .post(environment.appUrl + 'removeDocument', { document_id })
+        .post(environment.appUrl + 'removePartnerDocument', { id })
         .subscribe((response: any) => {
           resolve(response);
         },
