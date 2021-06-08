@@ -104,7 +104,7 @@ export class GeolocationService {
       }
       else
       {
-        let alert = await this.util.createAlert('Allow Location Access', false, 'drvn app collect location data to identify time-sensitive nearby demand and send new ride offers, even when the app is closed or not in use.', {
+        let alert = await this.util.createAlert('Allow Location Access', false, 'drvn app uses location data to provide time-sensitive ride offers based on your current location, and to accurately calculate payment during your ride.', {
           text: 'Ok',
           role: 'cancel',
           cssClass: 'secondary',
