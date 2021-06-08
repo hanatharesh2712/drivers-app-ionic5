@@ -1,11 +1,19 @@
-export interface Document {
+export interface PartnerDocument {
   id: number;
   market_id: number;
   partner_document_type: PartnerDocumentType;
   partner_document_type_id: number;
+  document: Document,
+  submitted: boolean;
+  entity_id: number;
 
 }
 
+export interface Document
+{
+  id?;
+  file_path?;
+}
 
 export interface PartnerDocumentType {
   id: number;

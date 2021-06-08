@@ -1,26 +1,18 @@
 app-registration-documents {
 
+
+  .name
+  {
+    font-size: 1.4rem;
+    margin-right: 18px;
+  }
+
+
   ion-list-header
   {
     margin-bottom: 24px;
   }
-  .file-uploader
-  {
-    height: 80px;
-    border: 1px solid grey;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 12px;
-    color: var(--ion-theme-info-color);
 
-    ion-icon
-    {
-      font-size: 3rem;
-      color: var(--ion-theme-info-color);
-    }
-  }
-    
- 
+
+
 }

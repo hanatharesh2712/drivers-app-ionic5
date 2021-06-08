@@ -1,8 +1,9 @@
+import { DocumentsService } from '@app/services/documents.service';
+import { PartnerDocument } from './../../models/document';
 import { UtilService } from './../../services/util/util.service';
-import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { DocumentUploadDialogComponent } from '../document-upload-dialog/document-upload-dialog.component';
-import { Document } from '@app/models/document';
 
 @Component({
   selector: 'document-item',
@@ -12,17 +13,26 @@ import { Document } from '@app/models/document';
 })
 export class DocumentItemComponent implements OnInit {
   uploading: boolean;
-  submitted = false;
-  @Input() document: Document;
-  constructor(public actionSheetController: ActionSheetController,
-    private util: UtilService) { }
+  @Input() document: PartnerDocument;
+  @Output() onDocumentStatusChanged = new EventEmitter();
+  constructor(
+    public actionSheetController: ActionSheetController,
+    private util: UtilService,
+    private documentService: DocumentsService) { }
 
   ngOnInit() {
+    if (!this.document.document)
+    {
+      this.document.document = {};
+    }
   }
 
 
   async presentActionSheet() {
-    if (!this.submitted) {
+    if (!this.document.partner_document_type.has_file) {
+      return;
+    }
+    if (!this.document.submitted) {
       this.openFileUploadDialog();
       return;
     }
@@ -34,7 +44,7 @@ export class DocumentItemComponent implements OnInit {
           text: 'Download Document',
           icon: 'Download',
           handler: () => {
-            console.log('Play clicked');
+            window.open(this.document.document.file_path);
           }
         },
         {
@@ -42,7 +52,12 @@ export class DocumentItemComponent implements OnInit {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            this.submitted = false;
+            this.documentService.removeDocument(this.document.document.id).then(response =>
+            {
+              this.document.document = null;
+              this.document.submitted = false;
+              this.onDocumentStatusChanged.next(this.document);
+            });
           }
         }
         , {
@@ -65,64 +80,42 @@ export class DocumentItemComponent implements OnInit {
     const modal = await this.util.createModal(DocumentUploadDialogComponent,
       {}, 'document-upload-dialog');
     modal.present();
-    modal.onDidDismiss().then(response =>
-      {
-        if (response.data)
-        {
-          this.submitted = true;
-        }
-      })
+    modal.onDidDismiss().then(response => {
+      if (response.data) {
+        this.uploadFile({...response.data, partner_document_type_id:  this.document.partner_document_type_id, entity_id: this.document.entity_id});
+      }
+    })
   }
 
-  uploadFile(event): void {
+  uploadFile(data): void {
     this.uploading = true;
-    const reader = new FileReader();
+    this.documentService.uploadDocument(data).then((response: any) => {
+      if (response) {
+        this.uploading = false;
+        this.document.document = response.document;
+        this.document.submitted = true;
+        this.onDocumentStatusChanged.next();
+      }
+    },async (error) => {
+      let alert = await this.util.createAlert(this.document.partner_document_type.document_name, true, "There was an error trying to"  + (data.answer ? 'save your answer' : "upload your document")  + ". Please try again.", {
+        text: 'Ok',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: async () => {
 
-    if (event.target.files && event.target.files.length) {
-      const extension = '.' + event.target.files[0].name.split('.').pop().toLowerCase();
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        const data = {
-          id: '',
-          file_path: reader.result,
-          file_ext: extension
-        };
-        // this.avatarUrl = reader.result.toString();
-        // this.driverForm.controls['avatar_url'].markAsDirty();
-        // need to run CD since file load runs outside of zone
-        //  this.cdRef.detectChanges();
-        // this.documentService._documentUploaded.next(data);
-        // this.document.status = 'submitted';
-        //  this.document.file_path = reader.result;
-        setTimeout(() => {
-          this.uploading = false;
-          this.submitted = true;
-        }, 3000);
-
-        //  this.documentService.uploadDocument(data).then((response: any) => {
-
-        //      if (response) {
-        //          this.uploading = false;
-        //
-        //          this.document.file_path = response.document.file_path;
-        //          this.snackBar.open("Your document has been submitted.", 'OK', {
-        //              verticalPosition: 'top',
-        //              duration: 3000
-        //          });
-        //      }
-        //  }, error => {
-        //      this.snackBar.open("There was a problem when we tried to save the file. Please try again.", 'OK', {
-        //          verticalPosition: 'top',
-        //          panelClass: 'error-snackbar',
-        //          duration: 3000
-        //      });
-        //      this.uploading = false;
-        //  });
-      };
-    }
+        }
+      });
+      alert.present();
+      this.uploading = false;
+    });
   }
+
+  answerChanged(answer)
+  {
+    this.uploadFile({ partner_document_type_id:  this.document.partner_document_type_id, answer: answer, entity_id: this.document.entity_id});
+  }
+
+
 
 
 }
