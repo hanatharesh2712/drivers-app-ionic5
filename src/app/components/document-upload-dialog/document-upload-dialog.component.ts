@@ -52,11 +52,6 @@ export class DocumentUploadDialogComponent implements OnInit {
   }
 
   confirmUpload() {
-    this.uploading = true;
-    setTimeout(() => {
-      this.uploading = false;
-      this.modalController.dismiss({...this.data, expiration_date: this.expirationDate});
-    }, 3000);
-
+    this.modalController.dismiss({...this.data, expiration_date: this.expirationDate});
   }
 }

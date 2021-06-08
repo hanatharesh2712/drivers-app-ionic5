@@ -4,7 +4,7 @@ import { UtilService } from './../../services/util/util.service';
 import { Component, Input, OnInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { DocumentUploadDialogComponent } from '../document-upload-dialog/document-upload-dialog.component';
-
+import { environment } from '@env/environment';
 @Component({
   selector: 'document-item',
   templateUrl: './document-item.component.html',
@@ -14,6 +14,7 @@ import { DocumentUploadDialogComponent } from '../document-upload-dialog/documen
 export class DocumentItemComponent implements OnInit {
   uploading: boolean;
   @Input() document: PartnerDocument;
+  environment = environment;
   @Output() onDocumentStatusChanged = new EventEmitter();
   constructor(
     public actionSheetController: ActionSheetController,
@@ -44,7 +45,7 @@ export class DocumentItemComponent implements OnInit {
           text: 'Download Document',
           icon: 'Download',
           handler: () => {
-            window.open(this.document.document.file_path);
+            window.open(this.environment.storageUrl + this.document.document.file_path);
           }
         },
         {
@@ -92,7 +93,7 @@ export class DocumentItemComponent implements OnInit {
     this.documentService.uploadDocument(data).then((response: any) => {
       if (response) {
         this.uploading = false;
-        this.document.document = response.document;
+        this.document.document = response.document.document;
         this.document.submitted = true;
         this.onDocumentStatusChanged.next();
       }

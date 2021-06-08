@@ -31,7 +31,7 @@ export class DocumentsService {
         let existingDocument = col.find(e => e.document.document_type_id == element.partner_document_type.id);
         if (existingDocument) {
           element.document = existingDocument.document;
-          //   element.submitted = true;
+          element.submitted = true;
         }
       });
       return response
