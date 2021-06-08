@@ -73,6 +73,12 @@ export class GeolocationService {
       distanceFilter: 10,
       stopOnTerminate: false,
       startOnBoot: true,
+      backgroundPermissionRationale: {
+        title: "Allow {applicationName} to access this device's location even when closed or not in use.",
+        message: "This app collects location data to enable recording your trips to work and calculate distance-travelled.",
+        positiveAction: 'Change to "{backgroundPermissionOptionLabel}"',
+        negativeAction: 'Cancel'
+      },
     }, (state) => {
       console.log('[ready] BackgroundGeolocation is ready to use');
       if (!state.enabled) {
