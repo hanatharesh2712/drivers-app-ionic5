@@ -1,3 +1,4 @@
+import { RouteGuard } from '@app/services/util/route.guard';
 import { NgxMaskModule } from 'ngx-mask';
 
 /**
@@ -21,7 +22,8 @@ import { ProfilePage } from './profile.page';
 const routes: Routes = [
   {
     path: '',
-    component: ProfilePage
+    component: ProfilePage,
+    canActivate: [RouteGuard]
   }
 ];
 

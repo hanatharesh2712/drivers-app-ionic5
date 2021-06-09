@@ -236,7 +236,7 @@
 
 
 <ng-container *ngIf="ride">
-  <ion-fab class="options-menu active" *ngIf="isRideAccepted">
+  <ion-fab class="options-menu active" *ngIf="isRideAccepted"  vertical="bottom" horizontal="start" slot="fixed" edge>
     <ion-fab-button (click)="goToContact()">
       <div class="text-container">
         <ion-icon src="assets/custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
@@ -252,7 +252,7 @@
 
     </ion-fab-button>-->
   </ion-fab>
-  <ion-fab class="options-menu" *ngIf="isRideActive" #fabMenu>
+  <ion-fab class="options-menu" *ngIf="isRideActive" #fabMenu vertical="bottom" horizontal="start" slot="fixed" edge>
     <ion-fab-button>
       <ion-icon name="ellipsis-vertical"></ion-icon>
     </ion-fab-button>
@@ -358,22 +358,22 @@
         [ngClass]="{'active': settlingRide}">
         <ion-item>
           <ion-label>Tolls ($)</ion-label>
-          <ion-input type="number" #tollsInput formControlName="tolls" placeholder="$0.00" slot="end"></ion-input>
+          <input  name="tolls" currencyMask #tollsInput formControlName="tolls"  [value]="null"   [options]="{ prefix: '$ ', thousands: ',', decimal: '.', nullable : true }" placeholder="$0.00" >
 
         </ion-item>
         <ion-item>
           <ion-label>Parking ($)</ion-label>
-          <ion-input type="number" formControlName="parking" placeholder="$0.00" slot="end"></ion-input>
+          <input  name="parking" currencyMask  formControlName="parking" [value]="null"    [options]="{ prefix: '$ ', thousands: ',', decimal: '.', nullable : true }"  placeholder="$0.00">
 
         </ion-item>
         <ion-item *ngIf="ride.service_type != 'Hourly' && ride.costs.reported_waiting > 0">
           <ion-label>Waiting time (mins)</ion-label>
-          <span class="value">{{ride.costs.reported_waiting}}</span>
+          <span class="value">{{ride.costs.reported_waiting | number:'1.0-0'}}</span>
 
         </ion-item>
         <ion-item *ngIf="ride.costs.reported_stops  > 0">
           <ion-label>Additional Stops</ion-label>
-          <span class="value">{{ride.costs.reported_stops}}</span>
+          <span class="value">{{ride.costs.reported_stops | number:'1.0-0'}}</span>
 
         </ion-item>
         <ion-item *ngIf="ride.costs.reported_stops > 0">
@@ -435,17 +435,17 @@
   </ion-item>
   <ion-item *ngIf="ride.costs['additional_hour_qty'] > 0" class="detail">
     <ion-label class="detail-title">Add. Hour ({{ride.costs['additional_hour_qty']}} x
-      {{ride.costs['additional_hour']}}) </ion-label>
+      ${{ride.costs['additional_hour']}}) </ion-label>
     <span class="value"
       slot="end">{{(ride.costs['additional_hour_qty'] * ride.costs['additional_hour']) | currency}}</span>
   </ion-item>
   <ion-item *ngIf="ride.costs['stops_qty'] > 0" class="detail">
     <ion-label class="detail-title">Add. Stops ({{ride.costs['stops_qty']}} x
-      {{ride.costs['stops']}}) </ion-label>
+      ${{ride.costs['stops']}}) </ion-label>
     <span class="value" slot="end">{{(ride.costs['stops_qty'] * ride.costs['stops']) | currency}}</span>
   </ion-item>
   <ion-item *ngIf="ride.costs['child_seat_qty'] > 0" class="detail">
-    <ion-label class="detail-title">Child Seat ({{ride.costs['child_seat_qty']}} x {{ride.costs['child_seat']}})
+    <ion-label class="detail-title">Child Seat ({{ride.costs['child_seat_qty']}} x ${{ride.costs['child_seat']}})
     </ion-label>
     <span class="value" slot="end">{{(ride.costs['child_seat_qty'] * ride.costs['child_seat']) | currency}}</span>
   </ion-item>

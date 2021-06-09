@@ -1,3 +1,4 @@
+import { RouteGuard } from '@app/services/util/route.guard';
 /**
  * Ionic 5 Taxi Booking Complete App (https://store.enappd.com/product/taxi-booking-complete-dashboard)
  *
@@ -20,7 +21,8 @@ import { ContactUsPage } from './contact-us.page';
 const routes: Routes = [
   {
     path: '',
-    component: ContactUsPage
+    component: ContactUsPage,
+    canActivate: [RouteGuard]
   }
 ];
 

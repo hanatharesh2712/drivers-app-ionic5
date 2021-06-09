@@ -58,7 +58,7 @@ export class RegistrationDocumentsComponent implements OnInit {
 
   checkValidation()
   {
-    this.disableButton =  this.docs.some(e => (e.partner_document_type.has_file && !e.submitted) || (!e.partner_document_type.has_file && !e.document.answer));
+    this.disableButton =  this.docService.cheeckNeededDocument(this.docs);
   }
 
 }

@@ -72,6 +72,7 @@ export class DrvnAuthenticationService implements OnInit {
   }
 
   login(phone, password) {
+    this.logout();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Accept: 'application/json'

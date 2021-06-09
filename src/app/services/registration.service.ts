@@ -181,7 +181,7 @@ export class RegistrationService {
   {
     this.registrationAPIService.savePartnerExtraData(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
-        this.util.goToNew('home')
+        this.updateProfileAndNext();
       }
       else
       {
@@ -225,7 +225,7 @@ export class RegistrationService {
   {
     this.registrationAPIService.savePartnerBankInformation(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
-        this.updateProfileAndNext();
+        this.util.goToNew('home');
       }
       else
       {

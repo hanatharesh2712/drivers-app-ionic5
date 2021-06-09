@@ -9,9 +9,7 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class RegistrationAgreementComponent implements OnInit {
 
-  phoneNumber = "";
-  codeSent = false;
-  validationSuccess: boolean;
+  accepted = false;
   constructor(private registrationService: RegistrationService) {
     this.registrationService.setStep(6);
    }
@@ -19,10 +17,10 @@ export class RegistrationAgreementComponent implements OnInit {
   ngOnInit() {
   }
 
- 
+
   nextStep()
   {
-    
+
     this.registrationService.next();
   }
 

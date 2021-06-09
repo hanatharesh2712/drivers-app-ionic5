@@ -52,6 +52,7 @@ export class HomePage implements OnInit {
   score: any;
   vehicleScore: any;
   loggedInUser: any;
+  loadingReviews = false;
   constructor(
     private menuCtrl: MenuController,
     private rideService: RideService,
@@ -84,30 +85,9 @@ export class HomePage implements OnInit {
 
   loadInfo(refresher = null)
   {
-    this.loadingRide = true;
-    this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
-      this.loadingRide = false;
-      if (response.ride) {
-        this.nextRide = response.ride;
-      }
-    }, error =>
-    {
-      this.loadingRide = false;
-    });
-    this.loadingRideBoard = true;
-    this.ridesService.getRides().subscribe(rides => {
-      this.rides = rides;
-      this.loadingRideBoard = false;
-      if (refresher) {
-        refresher.target.complete();
-      }
-    })
-    this.reviewsService.getPaxReviews().subscribe(
-      res => {
-        this.score = this.reviewsService.score;
-        this.vehicleScore = this.reviewsService.vehicleScore;
-      },
-    );
+    this.getRideInfo();
+    this.getBoardInfo(refresher);
+    this.getRatingInfo();
     this.storage.get('gps-dialog').then(async (gpsDialogShowed) => {
       if (gpsDialogShowed)
       {
@@ -115,6 +95,40 @@ export class HomePage implements OnInit {
       }})
   }
 
+
+  private getRatingInfo() {
+    this.loadingReviews = true;
+    this.reviewsService.getPaxReviews().subscribe(
+      res => {
+        this.score = this.reviewsService.score;
+        this.vehicleScore = this.reviewsService.vehicleScore;
+        this.loadingReviews = false;
+      }
+    );
+  }
+
+  private getBoardInfo(refresher: any) {
+    this.loadingRideBoard = true;
+    this.ridesService.getRides().subscribe(rides => {
+      this.rides = rides;
+      this.loadingRideBoard = false;
+      if (refresher) {
+        refresher.target.complete();
+      }
+    });
+  }
+
+  private getRideInfo() {
+    this.loadingRide = true;
+    this.ridesService.getNextRide().subscribe((response: NextRideResponse) => {
+      this.loadingRide = false;
+      if (response.ride) {
+        this.nextRide = response.ride;
+      }
+    }, error => {
+      this.loadingRide = false;
+    });
+  }
 
   ionViewWillLeave() {}
 

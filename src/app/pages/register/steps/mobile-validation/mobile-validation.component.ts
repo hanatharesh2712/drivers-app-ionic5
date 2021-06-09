@@ -85,7 +85,9 @@ export class MobileValidationComponent implements OnInit {
   nextStep() {
     this.registrationService.dialCode = this.phoneNumber.dialCode;
     this.registrationService.mobile_phone = this.replaceSymbols();
-    this.registrationService.next();
+    setTimeout(() => {
+      this.registrationService.next();
+    }, 500);
 
   }
 

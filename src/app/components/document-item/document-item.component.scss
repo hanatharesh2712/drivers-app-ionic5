@@ -30,6 +30,7 @@ document-item {
   {
     font-size: 1.4rem;
     margin-right: 18px;
+    color: white;
   }
 
 
@@ -73,6 +74,7 @@ document-item {
     ion-segment-button {
       min-width: 30px;
       color: white;
+      min-height: 30px;
       --indicator-color: var(--ion-theme-color);
     }
   }

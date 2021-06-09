@@ -84,6 +84,9 @@ ion-card-content {
   background: transparent;
   color: white;
   margin-right: 6px;
+  &:focus{
+    outline: none;
+}
 }
 
 .btnSubmit {

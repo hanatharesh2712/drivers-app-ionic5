@@ -210,7 +210,7 @@ ride-detail {
       min-height: 90px;
 
       padding: 12px;
-      transition: .7s ease all;
+      transition: all 0.7s ease;
 
 
 
@@ -220,22 +220,31 @@ ride-detail {
         --ion-item-background: black;
         --ion-item-color: white;
         max-height: 0px;
+        height: 0px;
         transition: all 1s ease;
 
         &.active {
           max-height: 350px;
-
+          height: 100%;
           margin-bottom: 12px;
         }
 
-        ion-input {
-          max-width: 60px;
+        input {
+          max-width: 80px;
           margin: 0px;
+          font-size: 1.6rem;
+          background-color: transparent;
+          border: none;
+
+          &:focus{
+            outline: none;
+        }
         }
 
         .value {
-          width: 60px;
-          text-align: center;
+          width: 80px;
+          font-size: 1.6rem;
+          text-align: right;
           color: var(--ion-theme-info-color);
         }
 
@@ -251,6 +260,7 @@ ride-detail {
       .settle-text {
         color: var(--ion-theme-info-color);
         text-align: center;
+        margin-bottom: 12px;
         font-size: 1.4rem;
       }
 
@@ -574,15 +584,16 @@ ride-detail {
     }
   }
 
+  .fab-vertical-bottom {
+    bottom: 32px !important;
+}
 
 
   ion-fab.options-menu {
 
 
 
-    position: absolute;
-    left: 12px;
-    bottom: 32px;
+
 
     ion-fab-button {
       --color: white;

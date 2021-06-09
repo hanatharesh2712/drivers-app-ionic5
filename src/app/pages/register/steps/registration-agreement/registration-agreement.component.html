@@ -328,7 +328,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-item lines="none" class="checkbox">
-      <ion-checkbox ></ion-checkbox>
+      <ion-checkbox [(ngModel)]="accepted" ></ion-checkbox>
       <ion-label>
         I read and accept drvn agreement
         </ion-label>
@@ -342,7 +342,7 @@
 
 
       </ion-button>
-      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()">
+      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()" [disabled]="!accepted">
         <div class="d-flex a-center">
           <span>NEXT</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>

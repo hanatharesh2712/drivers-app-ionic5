@@ -1,3 +1,4 @@
+import { DirectivesModule } from '@app/directives/directives.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RideDetailPage } from './ride-detail.page';
@@ -12,7 +13,7 @@ import { RidePricingPopoverModule } from '@app/components/ride-pricing-popover/r
 import { ReactiveFormsModule } from '@angular/forms';
 import { RideMapDialogModule } from '@app/components/ride-map-dialog/ride-map-dialog.module';
 import { RideMapModule } from '@app/components/ride-map/ride-map.module';
-
+import { NgxCurrencyModule } from "ngx-currency";
 const routes: Routes = [
   {
     path: ':ride_id',
@@ -29,11 +30,13 @@ const routes: Routes = [
     RideMapDialogModule,
     ReactiveFormsModule,
     RideMapModule,
+    NgxCurrencyModule,
     RouterModule.forChild(routes),
     RoutingDetailsModule,
     EventsTimelineModule,
     RidePricingPopoverModule,
-    SettleDialogModule
+    SettleDialogModule,
+    DirectivesModule
   ],
   declarations: [RideDetailPage],
 })

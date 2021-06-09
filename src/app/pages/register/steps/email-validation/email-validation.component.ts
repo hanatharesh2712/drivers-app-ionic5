@@ -34,11 +34,11 @@ export class EmailValidationComponent implements OnInit {
   ngOnInit() {
   }
 
-    
+
   sendCode()
   {
     this.registrationAPIService.sendRegistrationEmailCode(this.emailForm.get('email').value).then(
-      async (response : any) => 
+      async (response : any) =>
       {
         if (response.status.toUpperCase() == 'SUCCESS')
         {
@@ -49,7 +49,7 @@ export class EmailValidationComponent implements OnInit {
             if (this.secondsRemainingResendCode > 0) {
               this.secondsRemainingResendCode--;
             }
-      
+
           }, 1000)
         }
         else
@@ -59,12 +59,12 @@ export class EmailValidationComponent implements OnInit {
             role: 'cancel',
             cssClass: 'secondary',
             handler: async () => {
-      
+
             }
           });
-          alert.present();    
+          alert.present();
         }
-       
+
       }
     )
   }
@@ -94,18 +94,21 @@ export class EmailValidationComponent implements OnInit {
         role: 'cancel',
         cssClass: 'secondary',
         handler: async () => {
-  
+
         }
       });
-      alert.present();    
+      alert.present();
     }
   }
 
   nextStep()
   {
     this.registrationService.partner_email = this.emailForm.get('email').value;
-    this.registrationService.next();
-  
+    setTimeout(() => {
+      this.registrationService.next();
+    }, 500);
+
+
   }
 
   back()

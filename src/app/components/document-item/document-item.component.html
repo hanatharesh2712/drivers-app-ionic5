@@ -10,7 +10,7 @@
   </div>
 
   <div class="status" *ngIf="!document.partner_document_type.has_file" >
-    <ion-segment (ionChange)="answerChanged($event.detail.value)" [(ngModel)]="document.document.answer">
+    <ion-segment (ionChange)="answerChanged($event.detail.value)" [(ngModel)]="document.document.answer" [disabled]="uploading">
       <ion-segment-button value="0" color="dark">No</ion-segment-button>
       <ion-segment-button value="1" color="dark">Yes </ion-segment-button>
     </ion-segment>
