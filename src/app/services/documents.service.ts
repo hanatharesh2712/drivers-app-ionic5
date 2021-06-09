@@ -36,7 +36,7 @@ export class DocumentsService {
         }
 
       });
-      this.needDocuments = response.documentTypes.some(e => e.partner_document_type.required == 1 && ((e.partner_document_type.has_file && !e.submitted) || (!e.partner_document_type.has_file && !e.document.answer)));
+      this.needDocuments = response.documentTypes.some(e => e.partner_document_type.required == 1 && ((e.partner_document_type.has_file && !e.submitted) || (!e.partner_document_type.has_file && (!e.document! || !e.document.answer))));
       return response
     })).toPromise();
   }

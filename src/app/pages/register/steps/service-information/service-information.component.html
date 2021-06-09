@@ -1,12 +1,11 @@
 <ion-content *ngIf="data" >
   <ion-card [formGroup]="servicesForm">
     <h3>Tell us more about your services...</h3>
-    {{servicesForm.getRawValue() | json}}
 
     <ion-list>
       <ion-item>
         <ion-label position="floating">Metropolitan Service Area</ion-label>
-        <ion-input [disabled]="true" value="{{data.market.msa.name}}"></ion-input>
+        <ion-input [disabled]="true" value="{{data.market.msa ? data.market.msa.name : ''}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Center of Service Area</ion-label>
@@ -35,19 +34,13 @@
 
   </ion-card>
 
+
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-buttons>
-      <ion-button class="back" (click)="back()">
-        <div class="d-flex a-center">
-          <ion-icon name="chevron-back-outline"></ion-icon>
-          BACK
-        </div>
 
-
-      </ion-button>
       <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" [disabled]="servicesForm.invalid">
         <div class="d-flex a-center">
           <span>NEXT</span>

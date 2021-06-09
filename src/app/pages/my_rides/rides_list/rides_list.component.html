@@ -23,9 +23,9 @@
     <h4 class="tab-title ">
      Ride Offers <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
     </h4>
-    <span class="secondary-text offer-text" *ngIf="rides.length" >
+    <div class="secondary-text offer-text" *ngIf="rides.length" >
       Note, this offer is in a timed queue and may not be available when you return
-    </span>
+    </div>
     <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
     <p class="empty-text" *ngIf="!rides.length && !loading">You don't have any ride accepted yet.</p>
   </ng-container>

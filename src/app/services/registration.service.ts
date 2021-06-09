@@ -181,7 +181,7 @@ export class RegistrationService {
   {
     this.registrationAPIService.savePartnerExtraData(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
-        this.next();
+        this.util.goToNew('home')
       }
       else
       {
@@ -198,11 +198,7 @@ export class RegistrationService {
   {
     this.registrationAPIService.savePartnerVehicleData(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
-        this.authService.getCurrentDriverInfo().then(response =>
-          {
-            this.next();
-
-          });
+        this.updateProfileAndNext();
 
       }
       else
@@ -215,13 +211,21 @@ export class RegistrationService {
     })
   }
 
+  updateProfileAndNext()
+  {
+    this.authService.getCurrentDriverInfo().then(response =>
+      {
+        this.next();
+
+      });
+  }
 
 
   savePartnerBankInformation(data)
   {
     this.registrationAPIService.savePartnerBankInformation(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
-         this.router.navigate(["home"]);
+        this.updateProfileAndNext();
       }
       else
       {
