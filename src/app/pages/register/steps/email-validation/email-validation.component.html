@@ -3,20 +3,20 @@
     <h3>Now, we need to validate your email</h3>
     <h5 class='secondary-text'>We will send you an email with a one-time four digit code.
       <br>
-      Hang tight, this may take a few minutes.  
+      Hang tight, this may take a few minutes.
     </h5>
 
     <ion-input formControlName="email" class="placeholder-text inputField ion-padding-start" type="email"
       placeholder="Enter email" [(ngModel)]="email" clearInput></ion-input>
 
-    
+
   </ion-card>
 
   <ion-card *ngIf="codeSent && !validationSuccess">
     <h3>Verification Code</h3>
     <h5 class='secondary-text'>Enter your one-time four digit code.
       <br>
-      This code will be valid for 15 minutes 
+      This code will be valid for 15 minutes
     </h5>
 
     <div class="otp-container ion-padding-vertical ion-text-center">
@@ -25,27 +25,11 @@
     </div>
 
     <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical resend-link" [ngClass]="{'active': secondsRemainingResendCode <= 0}" >
-      <span (click)="resendCode()">Resend code <ng-container *ngIf="secondsRemainingResendCode > 0">({{secondsRemainingResendCode}})</ng-container></span>
+      <span (click)="resendCode()">Resend Code <ng-container *ngIf="secondsRemainingResendCode > 0">({{secondsRemainingResendCode}})</ng-container></span>
    </div>
-   
-  </ion-card>
-
-  <ion-card *ngIf="codeSent && validationSuccess" class="check">
-    <div class="d-flex column a-center">
-      <div class="success-checkmark">
-        <div class="check-icon">
-          <span class="icon-line line-tip"></span>
-          <span class="icon-line line-long"></span>
-          <div class="icon-circle"></div>
-          <div class="icon-fix"></div>
-        </div>
-      </div>
-      <h3 class="success-text">One step closer, you have completed our verification proccess</h3>
-    </div>
-
-    <h5 class=' next-text ion-text-center'>Next, you will start your registration process...</h5>
 
   </ion-card>
+
 
 </ion-content>
 
@@ -60,21 +44,21 @@
 
 
       </ion-button>
-   
+
 
         <ion-button fill="solid" color="primary" class="next" (click)="sendCode()" [disabled]='emailForm.invalid' *ngIf="!codeSent && !validationSuccess">
           <div class="d-flex a-center">
             <span>SEND ME THE EMAIL</span>
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </div>
-  
+
         </ion-button>
         <ion-button fill="solid" color="primary" class="next" (click)="verify()" [disabled]='!otpcode || otpcode.length < 4' *ngIf="codeSent && !validationSuccess">
           <div class="d-flex a-center">
             <span>VERIFY MY EMAIL</span>
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </div>
-  
+
         </ion-button>
 
         <ion-button fill="solid" color="primary" class="next" (click)="nextStep()"  *ngIf="validationSuccess">
@@ -82,10 +66,10 @@
             <span>NEXT</span>
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </div>
-  
+
         </ion-button>
 
-  
+
 
     </ion-buttons>
   </ion-toolbar>

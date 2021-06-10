@@ -12,9 +12,6 @@ import { UtilService } from '@app/services/util/util.service';
 })
 export class PaymentInformationComponent implements OnInit {
 
-  phoneNumber = "";
-  codeSent = false;
-  validationSuccess: boolean;
   payment_method = 'amex';
   storage: any;
   is_driver: boolean;
@@ -22,16 +19,17 @@ export class PaymentInformationComponent implements OnInit {
   bankInfoForm: any;
   isUsa: boolean;
   loggedInUser: any;
+  submitted = false;
   constructor(private registrationService: RegistrationService,
     private util: UtilService,
     private authService: DrvnAuthenticationService,
     private _fb: FormBuilder) {
-    this.registrationService.setStep(7);
+    this.registrationService.setStep(6);
   }
 
   ngOnInit() {
     this.loggedInUser = this.authService.currentUser;
-    this.isUsa = this.loggedInUser.mobile_phone_area_code == '+1';
+    this.isUsa = this.loggedInUser.partner.mobile_phone_area_code == '+1';
     this.is_driver = this.loggedInUser.partner_type != 3 ;
     this.bankInfoForm = this._fb.group({
       bank_name: [
@@ -106,8 +104,15 @@ export class PaymentInformationComponent implements OnInit {
 
 
 
+  save() {
+    this.registrationService.savePartnerBankInformation(this.bankInfoForm.getRawValue()).then(response =>
+      {
+        this.submitted = true;
+      });
+  }
+
   nextStep() {
-    this.registrationService.savePartnerBankInformation(this.bankInfoForm.getRawValue());
+    this.util.goToNew('home');
   }
 
   back() {

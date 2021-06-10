@@ -23,15 +23,16 @@ export class VehicleInformationComponent implements OnInit {
   is_driver: boolean;
   vehicleInteriorColors: any;
   vehicleMakesByType: any;
-  vehicleTypes: any;
-  vehicleExteriorColors: any;
-  filteredMakesByType: any;
+  vehicleTypes: any[] = [];
+  vehicleExteriorColors: any[] = [];
+  filteredMakesByType: any[] = [];
   years = this.range((new Date().getFullYear() - 20), new Date().getFullYear());
   maxPax = 4;
   maxLug = 6;
   loggedInUser: any;
   data: any;
   vehicleForm: any;
+  vehicleTypesGroup: any[] = [];
 
   constructor(private registrationService: RegistrationService,
     private util: UtilService,
@@ -43,10 +44,11 @@ export class VehicleInformationComponent implements OnInit {
   ngOnInit() {
 
     this.loggedInUser = this.authService.currentUser;
-    this.is_driver = this.loggedInUser.partner_type != 3 ;
+    this.is_driver = this.loggedInUser.partner_type != 3;
     this.registrationService.getRegistrationData().then(response => {
       this.data = response;
       this.vehicleTypes = this.data.partnerVehicleTypes;
+      this.vehicleTypesGroup = this.data.partnerVehicleTypeGroups;
       this.vehicleMakesByType = this.filteredMakesByType = this.data.partnerVehicleMakeModels;
       this.vehicleInteriorColors = this.data.vehicleColors.filter(e => e.is_interior);
       this.vehicleExteriorColors = this.data.vehicleColors.filter(e => e.is_exterior);
@@ -58,7 +60,8 @@ export class VehicleInformationComponent implements OnInit {
       luggage_count: ['', Validators.required],
       partner_vehicle_type_id: ['', Validators.required],
       exterior_color_id: ['', Validators.required],
-      interior_color_id: ['', Validators.required], });
+      interior_color_id: ['', Validators.required],
+    });
 
 
   }
@@ -86,16 +89,29 @@ export class VehicleInformationComponent implements OnInit {
   }
 
 
-  changeVehicleType(vehicleTypeId, clearMake = false) {
-    const vehicleType = this.vehicleTypes.find(e => e.id == vehicleTypeId);
-    if (vehicleType) {
-      this.years = this.range(new Date().getFullYear() - vehicleType.years_old, new Date().getFullYear());
-      this.filteredMakesByType = this.vehicleMakesByType.filter(e => e.partner_vehicle_type_id == vehicleType.id);
-      this.maxPax = vehicleType.max_pax;
-      this.maxLug = vehicleType.max_lug;
+  changeVehicleType(vehicleTypeId) {
+    const vehicleTypesOfGroupId = this.vehicleTypes.filter(e => e.partner_vehicle_type_group_id == vehicleTypeId).map(e => e.id);
+    this.filteredMakesByType = this.vehicleMakesByType.filter(e => vehicleTypesOfGroupId.indexOf(e.partner_vehicle_type_id) !== -1);
+  }
 
+  changeModel(vehicleModelName) {
+    const vehicleModel = this.vehicleMakesByType.find(e => e.name == vehicleModelName);
+    if (
+      vehicleModel
+    ) {
+      const vehicleType = this.vehicleTypes.find(e => e.id === vehicleModel.partner_vehicle_type_id);
+      this.vehicleForm.get('partner_vehicle_type_id').setValue(vehicleModel.partner_vehicle_type_id);
+      if (vehicleType) {
+        this.years = this.range(new Date().getFullYear() - vehicleType.years_old, new Date().getFullYear());
+        this.maxPax = vehicleType.max_pax;
+        this.maxLug = vehicleType.max_lug;
+      }
 
     }
+    else {
+      this.vehicleForm.get('partner_vehicle_type_id').setValue(null);
+    }
+
   }
 
 }

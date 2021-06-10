@@ -1,46 +1,54 @@
 <ion-content>
   <ion-card>
-    <h3>We almost done, but we need some documents...</h3>
+    <h3>Almost there, lets get you and your company verified...</h3>
+    <div class="secondary-text">
+      Here is a list of preliminary uploads and questions we need at the moment to verify you as a partner.
+    </div>
+    <ion-list lines='none' *ngIf="is_driver">
+      <ion-list-header>
+        <ion-label>Driver</ion-label>
+      </ion-list-header>
+      <ng-container *ngFor="let doc of docsTypes" >
+        <ion-item *ngIf="doc.type == 2" >
+          <document-item  [documentType]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
+        </ion-item>
+      </ng-container>
 
+
+    </ion-list>
+
+
+    <ion-list lines='none' *ngIf="is_driver">
+      <ion-list-header>
+        Vehicle
+      </ion-list-header>
+      <ng-container *ngFor="let doc of docsTypes" >
+        <ion-item  *ngIf="doc.type == 3" >
+          <document-item [documentType]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
+        </ion-item>
+      </ng-container>
+
+
+
+    </ion-list>
     <ion-list lines='none'>
       <ion-list-header>
-        <ion-label>  Company Documents</ion-label>
+        <ion-label>Company</ion-label>
 
       </ion-list-header>
-      <ng-container *ngFor="let doc of docs" >
-        <ion-item *ngIf="doc.partner_document_type.type == 1" >
-          <document-item  [document]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
+      <ng-container *ngFor="let doc of docsTypes" >
+        <ion-item *ngIf="doc.type == 1" >
+          <document-item  [documentType]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
         </ion-item>
       </ng-container>
 
 
 
     </ion-list>
-    <ion-list lines='none' *ngIf="is_driver">
-      <ion-list-header>
-        <ion-label>  Driver Documents</ion-label>
-      </ion-list-header>
-      <ng-container *ngFor="let doc of docs" >
-        <ion-item *ngIf="doc.partner_document_type.type == 2" >
-          <document-item  [document]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
-        </ion-item>
-      </ng-container>
-
-
-    </ion-list>
-    <ion-list lines='none' *ngIf="is_driver">
-      <ion-list-header>
-        Vehicle Documents
-      </ion-list-header>
-      <ng-container *ngFor="let doc of docs" >
-        <ion-item  *ngIf="doc.partner_document_type.type == 3" >
-          <document-item [document]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
-        </ion-item>
-      </ng-container>
-
-
-
-    </ion-list>
+    <div class="secondary-text end-text">
+      Need more time? <br>
+      No worries, you can always log in with your mobile number at a later time to finalize your registration.
+    </div>
   </ion-card>
 
 

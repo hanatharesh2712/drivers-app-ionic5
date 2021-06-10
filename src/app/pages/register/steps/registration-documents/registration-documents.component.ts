@@ -17,7 +17,7 @@ import { User } from '@app/models/user';
 export class RegistrationDocumentsComponent implements OnInit {
   is_driver: boolean;
   loggedInUser: User;
-  docs: any[];
+  docsTypes: any[];
   disableButton = false;
 
   constructor(
@@ -26,11 +26,11 @@ export class RegistrationDocumentsComponent implements OnInit {
     private docService: DocumentsService) {
     this.registrationService.setStep(5);
     this.docService.getDocuments().then((response: any) => {
-      this.docs = response.documentTypes.filter(e => e.partner_document_type.required == 1);
-      this.docs.forEach(element => {
-        if (element.partner_document_type.type == 3)
+      this.docsTypes = response.filter(e => e.required == 1);
+      this.docsTypes.forEach(element => {
+        if (element.type == 3)
         {
-          element.entity_id = this.loggedInUser.partner.vehicles[0].id;
+          element.entity_id = this.loggedInUser.partner.vehicles[0] ? this.loggedInUser.partner.vehicles[0].id : null;
         }
       });
       this.checkValidation();
@@ -44,6 +44,7 @@ export class RegistrationDocumentsComponent implements OnInit {
   }
 
   nextStep() {
+    this.docService.needDocuments = false;
     this.registrationService.next();
   }
 
@@ -58,7 +59,7 @@ export class RegistrationDocumentsComponent implements OnInit {
 
   checkValidation()
   {
-    this.disableButton =  this.docService.cheeckNeededDocument(this.docs);
+    this.disableButton =  this.docService.cheeckNeededDocument(this.docsTypes);
   }
 
 }

@@ -1,5 +1,8 @@
 app-payment-information {
-
+  .finish-card
+  {
+    text-align: center;
+  }
   .payment-terms
   {
     .value
@@ -9,12 +12,23 @@ app-payment-information {
     }
   }
 
+  .success-text
+  {
+    color: var(--ion-theme-color);
+  }
+
   .payment-info
   {
     --border-color: transparent;
     padding-top: 12px;
     font-size: 1.4rem;
     color: grey;
+  }
+
+
+  .quote
+  {
+    text-align: center;
   }
 
 }

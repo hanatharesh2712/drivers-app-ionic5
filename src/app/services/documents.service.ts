@@ -27,23 +27,24 @@ export class DocumentsService {
 
   getDocuments() {
     return this.http.get<any[]>(environment.appUrl + 'getDocuments').pipe(map((response: any) => {
-      response.documentTypes.forEach(element => {
-        let col = element.partner_document_type.type == 1 ? response.partnerDocuments : element.partner_document_type.type == 2 ? response.driverDocuments : response.vehicleDocuments;
-        let existingDocument = col.find(e => e.document.document_type_id == element.partner_document_type.id);
+      let documentTypes = [...response.documentTypes.map(e=> e.partner_document_type), ...response.generalDocumentTypes ] ;
+      documentTypes.forEach(element => {
+        let col = element.type == 1 ? response.partnerDocuments : element.type == 2 ? response.driverDocuments : response.vehicleDocuments;
+        let existingDocument = col.find(e => e.document.document_type_id == element.id);
         if (existingDocument) {
           element.document = existingDocument.document;
           element.submitted = true;
         }
 
       });
-      this.needDocuments =this.cheeckNeededDocument(response.documentTypes);
-      return response
+      this.needDocuments =this.cheeckNeededDocument(documentTypes);
+      return documentTypes
     })).toPromise();
   }
 
   cheeckNeededDocument(doc)
   {
-    return doc.some(e => e.partner_document_type.required == 1 && ((e.partner_document_type.has_file && !e.submitted) || (!e.partner_document_type.has_file && (!e.document! || !e.document.answer))))
+    return doc.some(e => e.required == 1 && ((e.has_file && !e.submitted) || (!e.has_file && (!e.document! || !e.document.answer))))
   }
 
 

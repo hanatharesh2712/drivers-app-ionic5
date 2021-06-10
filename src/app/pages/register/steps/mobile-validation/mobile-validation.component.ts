@@ -69,6 +69,11 @@ export class MobileValidationComponent implements OnInit {
   async verify() {
     if (this.codeSent == this.otpcode) {
       this.validationSuccess = true;
+      this.registrationService.dialCode = this.phoneNumber.dialCode;
+      this.registrationService.mobile_phone = this.replaceSymbols();
+      setTimeout(() => {
+        this.registrationService.next();
+      }, 500);
     }
     else {
       let alert = await this.util.createAlert('Mobile Verification', true, 'Invalid code. Try again.', {
@@ -82,14 +87,7 @@ export class MobileValidationComponent implements OnInit {
       alert.present();
     }
   }
-  nextStep() {
-    this.registrationService.dialCode = this.phoneNumber.dialCode;
-    this.registrationService.mobile_phone = this.replaceSymbols();
-    setTimeout(() => {
-      this.registrationService.next();
-    }, 500);
 
-  }
 
   replaceSymbols() {
     if (this.phoneNumber.dialCode == '+1') {

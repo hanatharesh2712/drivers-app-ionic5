@@ -86,6 +86,10 @@ export class EmailValidationComponent implements OnInit {
     if (this.codeSent == this.otpcode)
     {
       this.validationSuccess = true;
+      this.registrationService.partner_email = this.emailForm.get('email').value;
+      setTimeout(() => {
+        this.registrationService.next();
+      }, 500);
     }
     else
     {
@@ -101,15 +105,6 @@ export class EmailValidationComponent implements OnInit {
     }
   }
 
-  nextStep()
-  {
-    this.registrationService.partner_email = this.emailForm.get('email').value;
-    setTimeout(() => {
-      this.registrationService.next();
-    }, 500);
-
-
-  }
 
   back()
   {

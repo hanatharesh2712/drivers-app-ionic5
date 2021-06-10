@@ -20,49 +20,42 @@ export class RegistrationService {
       title: 'Mobile Verification',
       done: false,
       url: 'register/mobile-validation',
-      section: 'Registration'
     },
     {
       title: 'Email Verification',
       done: false,
-      url: 'register/email-validation',
-      section: 'Registration'
+      url: 'register/email-validation'
     },
     {
       title: 'Company Information',
       done: false,
       url: 'register/partner-information',
-      section: 'Registration'
     },
     {
       title: 'Service Description',
       done: false,
       url: 'register/service-information',
-      section: 'Validation'
     },
     {
       title: 'Vehicle Information',
       done: false,
       url: 'register/vehicle-information',
-      section: 'Validation'
     },
     {
       title: 'Required Documents',
       done: false,
-      url: 'register/documents',
-      section: 'Validation'
+      url: 'register/documents'
     },
-    {
-      title: 'Agreement',
-      done: false,
-      url: 'register/agreement',
-      section: 'Validation'
-    },
+    //  {
+    //    title: 'Agreement',
+    //    done: false,
+    //    url: 'register/agreement',
+    //    section: 'Validation'
+    //  },
     {
       title: 'Payment Preference',
       done: false,
-      url: 'register/payment-information',
-      section: 'Validation'
+      url: 'register/payment-information'
     }
   ];
   actualStepIndex: number = 0;
@@ -98,7 +91,14 @@ export class RegistrationService {
       else {
         this.registrationAPIService.getRegistrationData().then(response => {
           this.registrationData = response;
-          resolve(response);
+          this.registrationData.market.airports = this.registrationData.market.airports.map(e => e.airport);
+          this.sortAlphabetically(this.registrationData.market.airports);
+          this.registrationData.market.seaports = this.registrationData.market.seaports.map(e => e.seaport);
+          this.sortAlphabetically(this.registrationData.market.seaports);
+          this.registrationData.partnerOptionTypes = this.registrationData.partnerOptionTypes.sort(function (a, b) { return a.order - b.order });
+          this.sortAlphabetically(this.registrationData.partnerVehicleMakeModels);
+          this.sortAlphabetically(this.registrationData.partnerVehicleTypeGroups);
+          resolve(this.registrationData);
         })
       }
 
@@ -122,6 +122,16 @@ export class RegistrationService {
     }
 
   }
+
+  sortAlphabetically(objArray) {
+    objArray.sort(function (a, b) {
+      var textA = a.name.toUpperCase();
+      var textB = b.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+  }
+
+
 
   initStorageData() {
     this.storage.set('registration', {}).then((newStorageInfo) => {
@@ -177,69 +187,62 @@ export class RegistrationService {
 
   }
 
-  savePartnerExtraData(data)
-  {
+  savePartnerExtraData(data) {
     this.registrationAPIService.savePartnerExtraData(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
         this.updateProfileAndNext();
       }
-      else
-      {
+      else {
         this.showError("There was an error trying to save the information. Please try again.");
       }
-    }, error =>
-    {
+    }, error => {
       this.showError("There was an error trying to save the information. Please try again.");
     })
   }
 
 
-  savePartnerVehicleData(data)
-  {
+  savePartnerVehicleData(data) {
     this.registrationAPIService.savePartnerVehicleData(data).then((response: any) => {
       if (response.status.toUpperCase() == 'SUCCESS') {
         this.updateProfileAndNext();
 
       }
-      else
-      {
+      else {
         this.showError("There was an error trying to save vehicle information. Please try again.");
       }
-    }, error =>
-    {
+    }, error => {
       this.showError("There was an error trying to save vehicle information. Please try again.");
     })
   }
 
-  updateProfileAndNext()
-  {
-    this.authService.getCurrentDriverInfo().then(response =>
-      {
-        this.next();
+  updateProfileAndNext() {
+    this.authService.getCurrentDriverInfo().then(response => {
+      this.next();
 
-      });
+    });
   }
 
 
-  savePartnerBankInformation(data)
-  {
-    this.registrationAPIService.savePartnerBankInformation(data).then((response: any) => {
-      if (response.status.toUpperCase() == 'SUCCESS') {
-        this.util.goToNew('home');
-      }
-      else
-      {
+  savePartnerBankInformation(data) {
+    return new Promise((resolve, reject) => {
+      this.registrationAPIService.savePartnerBankInformation(data).then((response: any) => {
+        if (response.status.toUpperCase() == 'SUCCESS') {
+          resolve(true);
+        }
+        else {
+          this.showError("There was an error trying to save payment information. Please try again.");
+          reject(null);
+        }
+      }, error => {
         this.showError("There was an error trying to save payment information. Please try again.");
-      }
-    }, error =>
-    {
-      this.showError("There was an error trying to save payment information. Please try again.");
+        reject(null);
+      })
     })
+
   }
 
 
-  async showError(text)
-  {
+  async showError(text) {
     let alert = await this.util.createAlert('Registration', true, text, {
       text: 'Ok',
       role: 'cancel',

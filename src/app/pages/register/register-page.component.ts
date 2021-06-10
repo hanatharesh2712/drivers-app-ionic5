@@ -30,11 +30,10 @@ export class RegisterPageComponent implements OnInit {
         return;
       }
       this.actualStep = this.registrationService.actualStep;
-      let sectionSteps = this.registrationService.steps.filter(e => e.section == this.actualStep.section);
-      this.stepsCount = sectionSteps.length;
-      this.actualStepIndex = sectionSteps.findIndex(e => e.title == this.actualStep.title);
-      this.nextStep = sectionSteps[this.actualStepIndex + 1];
-      this.percentageStep = Math.trunc((100 / sectionSteps.length) * (this.actualStepIndex + 1));
+      this.stepsCount = this.registrationService.steps.length;
+      this.actualStepIndex = this.registrationService.steps.findIndex(e => e.title == this.actualStep.title);
+      this.nextStep = this.registrationService.steps[this.actualStepIndex + 1];
+      this.percentageStep = Math.trunc((100 / this.registrationService.steps.length) * (this.actualStepIndex + 1));
     })
   }
 

@@ -1,13 +1,4 @@
-export interface PartnerDocument {
-  id: number;
-  market_id: number;
-  partner_document_type: PartnerDocumentType;
-  partner_document_type_id: number;
-  document: Document,
-  submitted: boolean;
-  entity_id: number;
 
-}
 
 export interface Document
 {
@@ -35,4 +26,7 @@ export interface PartnerDocumentType {
   updated_at: Date;
   created_at: Date;
   deleted_at: Date;
+  submitted;
+  document?;
+  entity_id?;
 }

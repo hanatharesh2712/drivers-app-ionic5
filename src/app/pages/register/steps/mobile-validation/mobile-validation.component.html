@@ -40,7 +40,7 @@
 
     <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical resend-link"
       [ngClass]="{'active': secondsRemainingResendCode <= 0}">
-      <span (click)="resendCode()">Resend code <ng-container *ngIf="secondsRemainingResendCode > 0">
+      <span (click)="resendCode()">Resend Code <ng-container *ngIf="secondsRemainingResendCode > 0">
           ({{secondsRemainingResendCode}})</ng-container></span>
     </div>
 
@@ -48,22 +48,7 @@
 
   </ion-card>
 
-  <ion-card *ngIf="codeSent && validationSuccess" class="check">
-    <div class="d-flex column a-center">
-      <div class="success-checkmark">
-        <div class="check-icon">
-          <span class="icon-line line-tip"></span>
-          <span class="icon-line line-long"></span>
-          <div class="icon-circle"></div>
-          <div class="icon-fix"></div>
-        </div>
-      </div>
-      <h3 class="success-text">One step closer, mobile verification success!</h3>
-    </div>
 
-    <h5 class=' next-text ion-text-center'>Click "Next" and continue with the verificationproccess.</h5>
-
-  </ion-card>
 
 </ion-content>
 
@@ -92,14 +77,6 @@
         </div>
 
       </ion-button>
-      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()"  *ngIf="validationSuccess">
-        <div class="d-flex a-center">
-          <span>NEXT</span>
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </div>
-
-      </ion-button>
-
 
     </ion-buttons>
   </ion-toolbar>

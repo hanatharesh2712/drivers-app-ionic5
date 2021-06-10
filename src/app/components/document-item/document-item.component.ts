@@ -1,5 +1,5 @@
 import { DocumentsService } from '@app/services/documents.service';
-import { PartnerDocument } from './../../models/document';
+import { PartnerDocumentType } from './../../models/document';
 import { UtilService } from './../../services/util/util.service';
 import { Component, Input, OnInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
@@ -13,7 +13,7 @@ import { environment } from '@env/environment';
 })
 export class DocumentItemComponent implements OnInit {
   uploading: boolean;
-  @Input() document: PartnerDocument;
+  @Input() documentType: PartnerDocumentType;
   environment = environment;
   @Output() onDocumentStatusChanged = new EventEmitter();
   constructor(
@@ -22,18 +22,18 @@ export class DocumentItemComponent implements OnInit {
     private documentService: DocumentsService) { }
 
   ngOnInit() {
-    if (!this.document.document)
+    if (!this.documentType.document)
     {
-      this.document.document = {};
+      this.documentType.document = {};
     }
   }
 
 
   async presentActionSheet() {
-    if (!this.document.partner_document_type.has_file) {
+    if (!this.documentType.has_file) {
       return;
     }
-    if (!this.document.submitted) {
+    if (!this.documentType.submitted) {
       this.openFileUploadDialog();
       return;
     }
@@ -45,7 +45,7 @@ export class DocumentItemComponent implements OnInit {
           text: 'Download Document',
           icon: 'Download',
           handler: () => {
-            window.open(this.environment.storageUrl + this.document.document.file_path);
+            window.open(this.environment.storageUrl + this.documentType.document.file_path);
           }
         },
         {
@@ -53,11 +53,11 @@ export class DocumentItemComponent implements OnInit {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            this.documentService.removeDocument(this.document.document.id).then(response =>
+            this.documentService.removeDocument(this.documentType.document.id).then(response =>
             {
-              this.document.document = null;
-              this.document.submitted = false;
-              this.onDocumentStatusChanged.next(this.document);
+              this.documentType.document = null;
+              this.documentType.submitted = false;
+              this.onDocumentStatusChanged.next(this.documentType);
             });
           }
         }
@@ -82,7 +82,7 @@ export class DocumentItemComponent implements OnInit {
     modal.present();
     modal.onDidDismiss().then(response => {
       if (response.data) {
-        this.uploadFile({...response.data, document_type_id:  this.document.partner_document_type_id, entity_id: this.document.entity_id});
+        this.uploadFile({...response.data, document_type_id:  this.documentType.id, entity_id: this.documentType.entity_id});
       }
     })
   }
@@ -92,12 +92,12 @@ export class DocumentItemComponent implements OnInit {
     this.documentService.uploadDocument(data).then((response: any) => {
       if (response) {
         this.uploading = false;
-        this.document.document = response.document.document;
-        this.document.submitted = true;
+        this.documentType.document = response.document.document;
+        this.documentType.submitted = true;
         this.onDocumentStatusChanged.next();
       }
     },async (error) => {
-      let alert = await this.util.createAlert(this.document.partner_document_type.document_name, true, "There was an error trying to"  + (data.answer ? 'save your answer' : "upload your document")  + ". Please try again.", {
+      let alert = await this.util.createAlert(this.documentType.document_name, true, "There was an error trying to"  + (data.answer ? 'save your answer' : "upload your document")  + ". Please try again.", {
         text: 'Ok',
         role: 'cancel',
         cssClass: 'secondary',
@@ -111,7 +111,7 @@ export class DocumentItemComponent implements OnInit {
 
   answerChanged(answer)
   {
-    this.uploadFile({ document_type_id:  this.document.partner_document_type_id, answer: answer, entity_id: this.document.entity_id, id: this.document.id});
+    this.uploadFile({ document_type_id:  this.documentType.id, answer: answer, entity_id: this.documentType.entity_id, id: this.documentType.document.id});
   }
 
 

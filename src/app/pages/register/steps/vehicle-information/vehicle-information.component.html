@@ -5,13 +5,13 @@
     <ion-list>
       <ion-item>
         <ion-label position="floating">Vehicle Class</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL" (ionChange)='changeVehicleType($event.detail.value, true)' formControlName="partner_vehicle_type_id">
-          <ion-select-option [value]="type.id"   *ngFor="let type of vehicleTypes">    {{type.name}}</ion-select-option>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" (ionChange)='changeVehicleType($event.detail.value)'>
+          <ion-select-option [value]="type.id"   *ngFor="let type of vehicleTypesGroup">    {{type.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Make/Model</ion-label>
-        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="make" >
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="make"  (ionChange)='changeModel($event.detail.value)'>
           <ion-select-option [value]="make.name" *ngFor="let make of filteredMakesByType">  {{make.name}}</ion-select-option>
 
         </ion-select>
@@ -53,7 +53,7 @@
     </ion-list>
     <div class="next-text">
       <p class="secondary-text">
-        Next, you will be required to upload documents for this vehicle
+        Next, you will be required to upload documents for this vehicle.
       </p>
     </div>
   </ion-card>
@@ -140,7 +140,7 @@
 
 
       </ion-button>
-      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" >
+      <ion-button fill="solid" class="next"  color="primary" (click)="nextStep()" [disabled]="vehicleForm.invalid" >
         <div class="d-flex a-center">
           <span>NEXT</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>

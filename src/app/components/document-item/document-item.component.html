@@ -1,16 +1,16 @@
-<div class='file-uploader' (click)="presentActionSheet()" [ngClass]="{'submitted': document.submitted}">
+<div class='file-uploader' (click)="presentActionSheet()" [ngClass]="{'submitted': documentType.submitted}">
   <div class="name">
-      {{document.partner_document_type.document_name}}
+      {{documentType.document_name}}
   </div>
-  <div class="status" *ngIf="document.partner_document_type.has_file" >
-    <ion-icon src="assets/custom-ion-icons/file_upload.svg" *ngIf="!uploading && !document.submitted"></ion-icon>
+  <div class="status" *ngIf="documentType.has_file" >
+    <ion-icon src="assets/custom-ion-icons/file_upload.svg" *ngIf="!uploading && !documentType.submitted"></ion-icon>
     <img src="assets/utils/loading.gif" class="loading-gif" *ngIf="uploading">
-    <ion-icon name="checkmark-circle-outline" class="submitted-icon" *ngIf="document.submitted"></ion-icon>
+    <ion-icon name="checkmark-circle-outline" class="submitted-icon" *ngIf="documentType.submitted"></ion-icon>
 
   </div>
 
-  <div class="status" *ngIf="!document.partner_document_type.has_file" >
-    <ion-segment (ionChange)="answerChanged($event.detail.value)" [(ngModel)]="document.document.answer" [disabled]="uploading">
+  <div class="status" *ngIf="!documentType.has_file" >
+    <ion-segment (ionChange)="answerChanged($event.detail.value)" [(ngModel)]="documentType.document.answer" [disabled]="uploading">
       <ion-segment-button value="0" color="dark">No</ion-segment-button>
       <ion-segment-button value="1" color="dark">Yes </ion-segment-button>
     </ion-segment>
