@@ -85,7 +85,6 @@ export class EmailValidationComponent implements OnInit {
   async verify() {
     if (this.codeSent == this.otpcode)
     {
-      this.validationSuccess = true;
       this.registrationService.partner_email = this.emailForm.get('email').value;
       setTimeout(() => {
         this.registrationService.next();

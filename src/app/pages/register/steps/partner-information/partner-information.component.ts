@@ -30,33 +30,33 @@ export class PartnerInformationComponent implements OnInit {
     private _fb: FormBuilder,
     private authService: DrvnAuthenticationService) {
     this.registrationService.setStep(2);
-
+    this.isUsa = this.registrationService.dialCode == '+1';
+    this.partnerForm = this._fb.group(
+      {
+        company_name: ['', Validators.required],
+        company_structure: ['', this.isUsa ? Validators.required : null],
+        address: ['', Validators.required],
+        address_details: '',
+        partner_email: this.registrationService.partner_email,
+        mobile_phone: this.registrationService.mobile_phone,
+        mobile_phone_area_code: this.registrationService.dialCode,
+        address_lat: ['', Validators.required],
+        address_lng: ['', Validators.required],
+        address_county: ['', Validators.required],
+        address_city: ['', Validators.required],
+        address_state: ['', Validators.required],
+        address_country: ['', Validators.required],
+        is_driver: ['true', Validators.required],
+        first_name: ['', Validators.required],
+        last_name: ['', Validators.required]
+      }
+    )
   }
 
   ngOnInit() {
 
     if (this.registrationService.mobile_phone) {
-      this.isUsa = this.registrationService.dialCode == '+1';
-      this.partnerForm = this._fb.group(
-        {
-          company_name: ['', Validators.required],
-          company_structure: ['', this.isUsa ? Validators.required : null],
-          address: ['', Validators.required],
-          address_details: '',
-          partner_email: this.registrationService.partner_email,
-          mobile_phone: this.registrationService.mobile_phone,
-          mobile_phone_area_code: this.registrationService.dialCode,
-          address_lat: ['', Validators.required],
-          address_lng: ['', Validators.required],
-          address_county: ['', Validators.required],
-          address_city: ['', Validators.required],
-          address_state: ['', Validators.required],
-          address_country: ['', Validators.required],
-          is_driver: ['true', Validators.required],
-          first_name: ['', Validators.required],
-          last_name: ['', Validators.required]
-        }
-      )
+
     }
     else {
       this.util.goForward('register/mobile-validation');

@@ -68,7 +68,6 @@ export class MobileValidationComponent implements OnInit {
 
   async verify() {
     if (this.codeSent == this.otpcode) {
-      this.validationSuccess = true;
       this.registrationService.dialCode = this.phoneNumber.dialCode;
       this.registrationService.mobile_phone = this.replaceSymbols();
       setTimeout(() => {

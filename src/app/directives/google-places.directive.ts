@@ -22,7 +22,7 @@ export class GooglePlacesDirective implements OnInit {
         //Emit the new address object for the updated place
         this.onSelect.emit(this.getFormattedAddress(autocomplete.getPlace()));
       });
-    }, 1000);
+    }, 500);
 
   }
 
