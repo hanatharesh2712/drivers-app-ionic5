@@ -1,6 +1,8 @@
 <ion-content>
-  <ion-card [formGroup]="partnerForm">
+  <ion-card >
     <h3>Let's set up your company profile...</h3>
+
+    <form [formGroup]="partnerForm">
 
 
     <ion-list>
@@ -13,7 +15,7 @@
       </ion-item>
       <ion-item *ngIf="isUsa">
         <ion-label position="floating">Company Structure</ion-label>
-        <ion-select value="null"   [interfaceOptions]="companySelectOptions" okText="SELECT" cancelText="CANCEL" class="select-full-width"
+        <ion-select   [interfaceOptions]="companySelectOptions" okText="SELECT" cancelText="CANCEL" class="select-full-width"
         formControlName="company_structure">
           <ion-select-option value="brown">Sole Proprietorship</ion-select-option>
           <ion-select-option value="blonde">LLC. (Limited Liability Company)</ion-select-option>
@@ -71,6 +73,7 @@
 
         </div>
       </div>
+    </form>
 
 
   </ion-card>

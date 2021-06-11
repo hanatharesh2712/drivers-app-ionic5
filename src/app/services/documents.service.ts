@@ -30,7 +30,7 @@ export class DocumentsService {
       let documentTypes = [...response.documentTypes.map(e=> e.partner_document_type), ...response.generalDocumentTypes ] ;
       documentTypes.forEach(element => {
         let col = element.type == 1 ? response.partnerDocuments : element.type == 2 ? response.driverDocuments : response.vehicleDocuments;
-        let existingDocument = col.find(e => e.document.document_type_id == element.id);
+        let existingDocument = col.find(e =>  e.document && e.document.document_type_id == element.id);
         if (existingDocument) {
           element.document = existingDocument.document;
           element.submitted = true;

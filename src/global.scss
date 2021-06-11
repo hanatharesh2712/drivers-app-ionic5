@@ -94,7 +94,11 @@ ion-content {
 {
   color: white !important
 }
-
+.secondary-text
+{
+  color: var(--ion-theme-info-color) !important;
+  font-size: 1.2rem;
+}
 ion-toolbar
 {
   ion-title

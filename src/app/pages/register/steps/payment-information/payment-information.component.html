@@ -1,107 +1,109 @@
 <ion-content>
-  <ion-card [formGroup]="bankInfoForm" *ngIf="!submitted">
-    <h3>Time to control the way you get paid...</h3>
-    <ion-list>
-      <ion-item>
-        <ion-label position="floating">Payment Preference</ion-label>
-        <ion-select okText="SELECT" cancelText="CANCEL" formControlName="payment_method_id">
-          <ion-select-option [value]="5">American Express</ion-select-option>
-          <ion-select-option [value]="7">Bank Transfer / ACH</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Payment Terms</ion-label>
-        <ion-input [disabled]="true"
-          [value]="is_driver || bankInfoForm.get('payment_method_id').value == '7' ? 'Bi-weekly' : 'Weekly' ">
-        </ion-input>
-      </ion-item>
-      <ion-item class="payment-info">
-        Rides completed and settled prior to 5:00PM EST Wednesday, will be processed on Friday.
-      </ion-item>
-    </ion-list>
-    <ion-list *ngIf="bankInfoForm.get('payment_method_id').value == '7'">
-      <ion-list-header>
-        <ion-label> Bank Information</ion-label>
-      </ion-list-header>
-      <ion-item>
-        <ion-label position="floating">Bank name</ion-label>
-        <ion-input placeholder="Enter your bank name..." formControlName="bank_name"></ion-input>
-      </ion-item>
-      <div *ngIf="bankInfoForm.get('bank_name').touched && bankInfoForm.get('bank_name').errors?.required"
-        class="error">
-        Bank name is required!
-      </div>
-      <ion-item>
-        <ion-label position="floating">Account holder's name</ion-label>
-        <ion-input placeholder="Enter account holder's name..." formControlName="account_holder_name"></ion-input>
-      </ion-item>
-      <div
-        *ngIf="bankInfoForm.get('account_holder_name').touched && bankInfoForm.get('account_holder_name').errors?.required"
-        class="error">
-        Holder´s name is required!
-      </div>
-
-      <ion-item>
-        <ion-label position="floating">Account Type</ion-label>
-        <ion-select okText="SELECT" cancelText="CANCEL" [(ngModel)]="bankAccountType"
-          [compareWith]="compareBankAccountType" [ngModelOptions]="{standalone: true}"
-          (ionChange)="changeBankAccountType($event.detail.value)">
-          <ion-select-option [value]="'business_checking'">
-            Business Checking
-          </ion-select-option>
-          <ion-select-option [value]="'business_saving'">
-            Business Saving
-          </ion-select-option>
-          <ion-select-option [value]="'personal_checking'">
-            Personal Checking
-          </ion-select-option>
-          <ion-select-option [value]="'personal_saving'">
-            Personal Saving
-          </ion-select-option>
-
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Routing Number (9 digits)</ion-label>
-        <ion-input placeholder="Enter your routing number..." formControlName="routing_number"></ion-input>
-
-
-      </ion-item>
-      <ng-container *ngIf="bankInfoForm.get('routing_number').touched">
-        <div *ngIf="bankInfoForm.get('routing_number').errors?.required" class="error">
-          Routing number is required!
-        </div>
-        <div
-          *ngIf="bankInfoForm.get('routing_number').errors?.minlength || bankInfoForm.get('routing_number').errors?.maxlength"
+  <ion-card *ngIf="!submitted">
+    <form [formGroup]="bankInfoForm">
+      <h3>Time to control the way you get paid...</h3>
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Payment Preference</ion-label>
+          <ion-select okText="SELECT" cancelText="CANCEL" formControlName="payment_method_id">
+            <ion-select-option [value]="5">American Express</ion-select-option>
+            <ion-select-option [value]="7">Bank Transfer / ACH</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Payment Terms</ion-label>
+          <ion-input [disabled]="true"
+            [value]="is_driver || bankInfoForm.get('payment_method_id').value == '7' ? 'Bi-weekly' : 'Weekly' ">
+          </ion-input>
+        </ion-item>
+        <ion-item class="payment-info">
+          Rides completed and settled prior to 5:00PM EST Wednesday, will be processed on Friday.
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="bankInfoForm.get('payment_method_id').value == '7'">
+        <ion-list-header>
+          <ion-label> Bank Information</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label position="floating">Bank name</ion-label>
+          <ion-input placeholder="Enter your bank name..." formControlName="bank_name"></ion-input>
+        </ion-item>
+        <div *ngIf="bankInfoForm.get('bank_name').touched && bankInfoForm.get('bank_name').errors?.required"
           class="error">
-          Number must be 9 digits!
+          Bank name is required!
         </div>
-      </ng-container>
-
-
-      <ion-item>
-        <ion-label position="floating">Acc. Number (6-17 digits)</ion-label>
-        <ion-input placeholder="Enter your account number..." formControlName="account_number"></ion-input>
-      </ion-item>
-      <ng-container *ngIf="bankInfoForm.get('account_number').touched">
-        <div *ngIf="bankInfoForm.get('account_number').errors?.required" class="error">
-          Account number is required!
-        </div>
+        <ion-item>
+          <ion-label position="floating">Account holder's name</ion-label>
+          <ion-input placeholder="Enter account holder's name..." formControlName="account_holder_name"></ion-input>
+        </ion-item>
         <div
-          *ngIf="bankInfoForm.get('account_number').errors?.minlength || bankInfoForm.get('account_number').errors?.maxlength"
+          *ngIf="bankInfoForm.get('account_holder_name').touched && bankInfoForm.get('account_holder_name').errors?.required"
           class="error">
-          Account number must be between 6 and 17 digits!
+          Holder´s name is required!
         </div>
-      </ng-container>
-      <ion-item>
-        <ion-label position="floating">Re-enter Acc. Number</ion-label>
-        <ion-input placeholder="Re-Enter your account number..." formControlName="re_account_number"></ion-input>
-      </ion-item>
-      <div *ngIf="bankInfoForm.get('re_account_number').invalid && bankInfoForm.get('re_account_number').touched"
-        class="error">
-        Account number must match!
-      </div>
-    </ion-list>
+
+        <ion-item>
+          <ion-label position="floating">Account Type</ion-label>
+          <ion-select okText="SELECT" cancelText="CANCEL" [(ngModel)]="bankAccountType"
+            [compareWith]="compareBankAccountType" [ngModelOptions]="{standalone: true}"
+            (ionChange)="changeBankAccountType($event.detail.value)">
+            <ion-select-option [value]="'business_checking'">
+              Business Checking
+            </ion-select-option>
+            <ion-select-option [value]="'business_saving'">
+              Business Saving
+            </ion-select-option>
+            <ion-select-option [value]="'personal_checking'">
+              Personal Checking
+            </ion-select-option>
+            <ion-select-option [value]="'personal_saving'">
+              Personal Saving
+            </ion-select-option>
+
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Routing Number (9 digits)</ion-label>
+          <ion-input placeholder="Enter your routing number..." formControlName="routing_number"></ion-input>
+
+
+        </ion-item>
+        <ng-container *ngIf="bankInfoForm.get('routing_number').touched">
+          <div *ngIf="bankInfoForm.get('routing_number').errors?.required" class="error">
+            Routing number is required!
+          </div>
+          <div
+            *ngIf="bankInfoForm.get('routing_number').errors?.minlength || bankInfoForm.get('routing_number').errors?.maxlength"
+            class="error">
+            Number must be 9 digits!
+          </div>
+        </ng-container>
+
+
+        <ion-item>
+          <ion-label position="floating">Acc. Number (6-17 digits)</ion-label>
+          <ion-input placeholder="Enter your account number..." formControlName="account_number"></ion-input>
+        </ion-item>
+        <ng-container *ngIf="bankInfoForm.get('account_number').touched">
+          <div *ngIf="bankInfoForm.get('account_number').errors?.required" class="error">
+            Account number is required!
+          </div>
+          <div
+            *ngIf="bankInfoForm.get('account_number').errors?.minlength || bankInfoForm.get('account_number').errors?.maxlength"
+            class="error">
+            Account number must be between 6 and 17 digits!
+          </div>
+        </ng-container>
+        <ion-item>
+          <ion-label position="floating">Re-enter Acc. Number</ion-label>
+          <ion-input placeholder="Re-Enter your account number..." formControlName="re_account_number"></ion-input>
+        </ion-item>
+        <div *ngIf="bankInfoForm.get('re_account_number').invalid && bankInfoForm.get('re_account_number').touched"
+          class="error">
+          Account number must match!
+        </div>
+      </ion-list>
+    </form>
   </ion-card>
   <ion-card *ngIf="submitted" class="finish-card">
     <div class="d-flex column a-center success-info">
@@ -139,15 +141,15 @@
 
 
       </ion-button>
-      <ion-button fill="solid" color="primary" class="next" (click)="save()" *ngIf="!submitted" [disabled]="bankInfoForm.get('payment_method_id').value == 7 && bankInfoForm.invalid">
-        <div class="d-flex a-center" >
+      <ion-button fill="solid" color="primary" class="next" (click)="save()" *ngIf="!submitted"
+        [disabled]="bankInfoForm.get('payment_method_id').value == 7 && bankInfoForm.invalid">
+        <div class="d-flex a-center">
           <span>FINISH</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
 
       </ion-button>
-      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()" *ngIf="submitted"
-        >
+      <ion-button fill="solid" color="primary" class="next" (click)="nextStep()" *ngIf="submitted">
         <div class="d-flex a-center">
           <span>CONTINUE TO HOME</span>
           <ion-icon name="chevron-forward-outline"></ion-icon>

@@ -77,7 +77,7 @@ export class AppComponent {
     this.authService.onLogin.subscribe(data => {
       if (data) {
         this.loggedInUser = data;
-        this.geolocationService.initTracking();
+
       }
     });
 

@@ -70,6 +70,7 @@ export class HomePage implements OnInit {
       () => console.log('success'),
       () => console.log('error')
     );
+    this.geolocationService.initTracking();
   }
 
   onClickGetCurrentPosition() {

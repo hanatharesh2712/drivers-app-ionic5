@@ -66,28 +66,20 @@ export class PartnerInformationComponent implements OnInit {
   }
 
   nextStep() {
-
-    if (!this.submitted)
-    {
-      this.registrationAPIService.submitPartnerInformation(this.partnerForm.getRawValue()).then(
-        (response: any) => {
-          if (response.status.toUpperCase() == 'SUCCESS') {
-            this.submitted = true;
-            this.authService.logout();
-            this.authService.login(this.registrationService.mobile_phone, response.randomPass)
-              .then(response => {
-                setTimeout(() => {
-                  this.submitted = true;
-                }, 500);
-              })
-          }
+    this.registrationAPIService.submitPartnerInformation(this.partnerForm.getRawValue()).then(
+      (response: any) => {
+        if (response.status.toUpperCase() == 'SUCCESS') {
+          this.submitted = true;
+          this.authService.logout();
+          this.authService.login(this.registrationService.mobile_phone, response.randomPass)
+            .then(response => {
+              setTimeout(() => {
+                this.submitted = true;
+              }, 500);
+            })
         }
-      )
-    }
-    else
-    {
-      this.registrationService.next();
-    }
+      }
+    )
   }
 
   back() {
