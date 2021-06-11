@@ -92,12 +92,11 @@ export class RegistrationService {
         this.registrationAPIService.getRegistrationData().then(response => {
           this.registrationData = response;
           this.registrationData.market.airports = this.registrationData.market.airports.map(e => e.airport);
-          this.sortAlphabetically(this.registrationData.market.airports);
+          this.sortAlphabetically(this.registrationData.market.airports, 'code');
           this.registrationData.market.seaports = this.registrationData.market.seaports.map(e => e.seaport);
-          this.sortAlphabetically(this.registrationData.market.seaports);
+          this.sortAlphabetically(this.registrationData.market.seaports, 'code');
           this.registrationData.partnerOptionTypes = this.registrationData.partnerOptionTypes.sort(function (a, b) { return a.order - b.order });
           this.sortAlphabetically(this.registrationData.partnerVehicleMakeModels);
-          this.sortAlphabetically(this.registrationData.partnerVehicleTypeGroups);
           resolve(this.registrationData);
         })
       }
@@ -123,10 +122,10 @@ export class RegistrationService {
 
   }
 
-  sortAlphabetically(objArray) {
+  sortAlphabetically(objArray,field = 'name') {
     objArray.sort(function (a, b) {
-      var textA = a.name.toUpperCase();
-      var textB = b.name.toUpperCase();
+      var textA = a[field].toUpperCase();
+      var textB = b[field].toUpperCase();
       return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
     });
   }
@@ -227,7 +226,9 @@ export class RegistrationService {
     return new Promise((resolve, reject) => {
       this.registrationAPIService.savePartnerBankInformation(data).then((response: any) => {
         if (response.status.toUpperCase() == 'SUCCESS') {
+          this.authService.getCurrentDriverInfo().then(response => {
           resolve(true);
+          })
         }
         else {
           this.showError("There was an error trying to save payment information. Please try again.");

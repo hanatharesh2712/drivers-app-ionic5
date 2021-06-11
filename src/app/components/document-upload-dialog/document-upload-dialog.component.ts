@@ -1,6 +1,7 @@
 import {  ModalController } from '@ionic/angular';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
+import { PartnerDocumentType } from '@app/models/document';
 
 @Component({
   selector: 'app-document-upload-dialog',
@@ -17,6 +18,7 @@ export class DocumentUploadDialogComponent implements OnInit {
   expirationDate;
   uploading: boolean;
   data;
+  documentType: PartnerDocumentType;
   constructor(private cdRef: ChangeDetectorRef,
     private elRef: ElementRef,
     private modalController: ModalController) { }

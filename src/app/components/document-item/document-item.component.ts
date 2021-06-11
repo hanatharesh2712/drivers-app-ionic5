@@ -38,7 +38,7 @@ export class DocumentItemComponent implements OnInit {
       return;
     }
     const actionSheet = await this.actionSheetController.create({
-      header: 'Florida Driver License',
+      header: this.documentType.document_name,
       cssClass: 'document-sheet',
       buttons: [
         {
@@ -78,7 +78,9 @@ export class DocumentItemComponent implements OnInit {
 
   async openFileUploadDialog() {
     const modal = await this.util.createModal(DocumentUploadDialogComponent,
-      {}, 'document-upload-dialog');
+      {
+        documentType: this.documentType
+      }, 'document-upload-dialog');
     modal.present();
     modal.onDidDismiss().then(response => {
       if (response.data) {

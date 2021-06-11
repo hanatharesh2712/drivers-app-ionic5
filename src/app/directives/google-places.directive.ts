@@ -1,9 +1,9 @@
-import { Directive, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
 declare var google;
 @Directive({
   selector: '[google-place]'
 })
-export class GooglePlacesDirective implements OnInit {
+export class GooglePlacesDirective implements OnInit, AfterViewInit {
   private element: HTMLInputElement;
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
 
@@ -14,15 +14,7 @@ export class GooglePlacesDirective implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      var nativeHomeInputBox = document.getElementById('txtHome').getElementsByTagName('input')[0];
-      const autocomplete = new google.maps.places.Autocomplete(nativeHomeInputBox);
-      //Event listener to monitor place changes in the input
-      google.maps.event.addListener(autocomplete, 'place_changed', () => {
-        //Emit the new address object for the updated place
-        this.onSelect.emit(this.getFormattedAddress(autocomplete.getPlace()));
-      });
-    }, 500);
+
 
   }
 
@@ -59,4 +51,17 @@ export class GooglePlacesDirective implements OnInit {
     return location_obj;
   }
 
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    setTimeout(() => {
+      var nativeHomeInputBox = document.getElementById('txtHome').getElementsByTagName('input')[0];
+      const autocomplete = new google.maps.places.Autocomplete(nativeHomeInputBox);
+      //Event listener to monitor place changes in the input
+      google.maps.event.addListener(autocomplete, 'place_changed', () => {
+        //Emit the new address object for the updated place
+        this.onSelect.emit(this.getFormattedAddress(autocomplete.getPlace()));
+      });
+    }, 100);
+  }
 }

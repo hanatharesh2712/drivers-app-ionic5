@@ -1,8 +1,8 @@
 <div class="ion-page">
   <ion-header>
-    <h2>Florida Driver License</h2>
+    <h2>     {{documentType.document_name}}</h2>
 
-    <div class="subtitle">Insert your document description here...</div>
+    <div class="subtitle"> {{documentType.description}}</div>
   </ion-header>
 
   <ion-content>
@@ -21,14 +21,14 @@
         </div>
         <input style="display: none" type="file" (change)="uploadFile($event)" #fileInput />
     </ion-item>
-    <ion-item lines='none' class="datetime-container">
+    <ion-item lines='none' class="datetime-container" *ngIf="documentType.has_exp_date" >
         <ion-label>Expiration Date:</ion-label>
         <ion-datetime  #myPicker (ionChange)="updateMyDate(myPicker.value)"></ion-datetime>
     </ion-item>
 
   </ion-content>
   <ion-footer>
-    <ion-button expand="full" fill="solid" size="large" color="primary" class="send-btn" [disabled]="!documentUrl || !expirationDate || uploading" (click)="confirmUpload()">
+    <ion-button expand="full" fill="solid" size="large" color="primary" class="send-btn" [disabled]="!documentUrl || (documentType.has_exp_date && !expirationDate) || uploading" (click)="confirmUpload()">
       <img src="assets/utils/loading.gif" class="loading-gif" *ngIf="uploading"> {{!uploading ? "UPLOAD FILE" : 'UPLOADING'}}
     </ion-button>
   </ion-footer>

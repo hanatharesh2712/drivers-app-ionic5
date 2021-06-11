@@ -6,13 +6,13 @@
       <ion-item>
         <ion-label position="floating">Vehicle Class</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL" (ionChange)='changeVehicleType($event.detail.value)'>
-          <ion-select-option [value]="type.id"   *ngFor="let type of vehicleTypesGroup">    {{type.name}}</ion-select-option>
+          <ion-select-option [value]="type.id"   *ngFor="let type of vehicleTypesGroup">{{type.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Make/Model</ion-label>
         <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="make"  (ionChange)='changeModel($event.detail.value)'>
-          <ion-select-option [value]="make.name" *ngFor="let make of filteredMakesByType">  {{make.name}}</ion-select-option>
+          <ion-select-option [value]="make.name" *ngFor="let make of filteredMakesByType">{{make.name}}</ion-select-option>
 
         </ion-select>
       </ion-item>
