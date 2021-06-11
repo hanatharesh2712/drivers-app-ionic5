@@ -66,6 +66,7 @@ export class PartnerInformationComponent implements OnInit {
   }
 
   nextStep() {
+
     this.registrationAPIService.submitPartnerInformation(this.partnerForm.getRawValue()).then(
       (response: any) => {
         if (response.status.toUpperCase() == 'SUCCESS') {
@@ -75,6 +76,7 @@ export class PartnerInformationComponent implements OnInit {
             .then(response => {
               setTimeout(() => {
                 this.submitted = true;
+                this.registrationService.next();
               }, 500);
             })
         }

@@ -1,71 +1,63 @@
 <ion-content>
   <ion-card *ngIf="is_driver" >
     <h3>Tell us more about the vehicle you own...</h3>
+
     <form [formGroup]="vehicleForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Vehicle Class</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" (ionChange)='changeVehicleType($event.detail.value)'>
+          <ion-select-option [value]="type.id"   *ngFor="let type of vehicleTypesGroup">{{type.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Make/Model</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="make"  (ionChange)='changeModel($event.detail.value)'>
+          <ion-select-option [value]="make.name" *ngFor="let make of filteredMakesByType">{{make.name}}</ion-select-option>
 
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Vehicle Class</ion-label>
-          <ion-select value="null" okText="SELECT" cancelText="CANCEL"
-            (ionChange)='changeVehicleType($event.detail.value)'>
-            <ion-select-option [value]="type.id" *ngFor="let type of vehicleTypesGroup"> {{type.name}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Make/Model</ion-label>
-          <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="make"
-            (ionChange)='changeModel($event.detail.value)'>
-            <ion-select-option [value]="make.name" *ngFor="let make of filteredMakesByType"> {{make.name}}
-            </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Vehicle Year</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL"  formControlName="year">
+          <ion-select-option   [value]="y" *ngFor="let y of years | reverse">{{y}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Exterior Color</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="exterior_color_id">
+          <ion-select-option *ngFor="let color of vehicleExteriorColors" [value]="color.id">{{color.name}}</ion-select-option>
 
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Vehicle Year</ion-label>
-          <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="year">
-            <ion-select-option [value]="y" *ngFor="let y of years | reverse">{{y}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Exterior Color</ion-label>
-          <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="exterior_color_id">
-            <ion-select-option *ngFor="let color of vehicleExteriorColors" [value]="color.id">{{color.name}}
-            </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Interior Color</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="interior_color_id">
+          <ion-select-option *ngFor="let color of vehicleInteriorColors" [value]="color.id">{{color.name}}</ion-select-option>
 
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Interior Color</ion-label>
-          <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="interior_color_id">
-            <ion-select-option *ngFor="let color of vehicleInteriorColors" [value]="color.id">{{color.name}}
-            </ion-select-option>
+        </ion-select>
+      </ion-item>
 
-          </ion-select>
-        </ion-item>
+      <ion-item>
+        <ion-label position="floating">Passenger Capacity</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="passenger_count">
+          <ion-select-option [value]="i + 1" *ngFor="let item of [].constructor(this.maxPax); let i = index" >{{i + 1}}  Passenger{{i > 0 ? 's' : ''}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Luggage Capacity</ion-label>
+        <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="luggage_count">
+          <ion-select-option [value]="i + 1" *ngFor="let item of [].constructor(this.maxLug); let i = index" >{{i + 1}}  Bag{{i > 0 ? 's' : ''}}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-        <ion-item>
-          <ion-label position="floating">Passenger Capacity</ion-label>
-          <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="passenger_count">
-            <ion-select-option [value]="i + 1" *ngFor="let item of [].constructor(this.maxPax); let i = index">{{i + 1}}
-              Passenger{{i > 0 ? 's' : ''}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Luggage Capacity</ion-label>
-          <ion-select value="null" okText="SELECT" cancelText="CANCEL" formControlName="luggage_count">
-            <ion-select-option [value]="i + 1" *ngFor="let item of [].constructor(this.maxLug); let i = index">{{i + 1}}
-              Bag{{i > 0 ? 's' : ''}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-      </ion-list>
-      <div class="next-text">
-        <p class="secondary-text">
-          Next, you will be required to upload documents for this vehicle.
-        </p>
-      </div>
-    </form>
+    </ion-list>
+    <div class="next-text">
+      <p class="secondary-text">
+        Next, you will be required to upload documents for this vehicle.
+      </p>
+    </div>
+  </form>
   </ion-card>
 
   <ion-card *ngIf="!is_driver" class="affiliate">
