@@ -38,7 +38,7 @@ import { GreetingSignPageModule } from './pages/greeting-sign/greeting-sign.modu
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { NgxMaskModule } from 'ngx-mask';
 import { GeolocationService } from './services/geolocation.service';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -72,6 +72,7 @@ import { GeolocationService } from './services/geolocation.service';
     CallNumber,
     ScreenOrientation,
     Clipboard,
+    InAppBrowser,
     SMS,
     RouteGuard,
     GoogleMapsAPIWrapper,
