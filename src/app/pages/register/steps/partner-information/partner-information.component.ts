@@ -96,4 +96,6 @@ export class PartnerInformationComponent implements OnInit {
     });
     console.log(this.partnerForm.getRawValue())
   }
+
+  openURL(url) { this.util.openWebpage(url) }
 }

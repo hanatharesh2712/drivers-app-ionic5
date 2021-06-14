@@ -24,6 +24,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { environment } from '@env/environment';
 import { SMS } from '@ionic-native/sms/ngx';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 declare let google;
 
 @Injectable({
@@ -40,7 +41,8 @@ export class UtilService {
     private route: Router,
     private callNumber: CallNumber,
     private navCtrl: NavController,
-    private sms: SMS
+    private sms: SMS,
+    private iab: InAppBrowser
   ) {}
 
   validateEmail(email) {
@@ -247,5 +249,14 @@ export class UtilService {
     this.statusBar.backgroundColorByHexString('#000');
   }
 
+  openWebpage(url: string) {
+    const options: InAppBrowserOptions = {
+      zoom: 'no'
+    }
 
+    // Opening a URL and returning an InAppBrowserObject
+    const browser = this.iab.create(url, '_system', options);
+
+   // Inject scripts, css and more with browser.X
+  }
 }
