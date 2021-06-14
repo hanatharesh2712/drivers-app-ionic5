@@ -31,7 +31,7 @@
 
     <ion-item lines='none' class="datetime-container" *ngIf="documentType.has_exp_date" >
         <ion-label>Expiration Date:</ion-label>
-        <ion-datetime  #myPicker (ionChange)="updateMyDate(myPicker.value)"></ion-datetime>
+        <ion-datetime  #myPicker (ionChange)="updateMyDate(myPicker.value)" [min]="now" [max]="2040"></ion-datetime>
     </ion-item>
 
   </ion-content>

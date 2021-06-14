@@ -27,6 +27,7 @@ export class VehicleInformationComponent implements OnInit {
   vehicleExteriorColors: any[] = [];
   filteredMakesByType: any[] = [];
   years = this.range((new Date().getFullYear() - 20), new Date().getFullYear());
+  minPax = 1;
   maxPax = 4;
   maxLug = 6;
   loggedInUser: any;
@@ -104,6 +105,7 @@ export class VehicleInformationComponent implements OnInit {
       if (vehicleType) {
         this.years = this.range(new Date().getFullYear() - vehicleType.years_old, new Date().getFullYear());
         this.maxPax = vehicleType.max_pax;
+        this.minPax = vehicleType.min_pax;
         this.maxLug = vehicleType.max_lug;
       }
 

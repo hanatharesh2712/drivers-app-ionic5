@@ -2,6 +2,7 @@ import {  ModalController } from '@ionic/angular';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { PartnerDocumentType } from '@app/models/document';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-document-upload-dialog',
@@ -20,8 +21,11 @@ export class DocumentUploadDialogComponent implements OnInit {
   documentType: PartnerDocumentType;
   invalidMessage: string;
   acceptedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'application/pdf', 'image/gif'];
+  now: any;
   constructor(
-    private modalController: ModalController) { }
+    private modalController: ModalController) {
+      this.now = moment().toISOString();
+    }
 
   ngOnInit() {
 
