@@ -16,6 +16,17 @@ app-document-upload-dialog {
     --background: white;
   }
 
+  .requirement-text
+  {
+    text-align: center;
+    font-size: 1.2rem;
+
+    .error
+    {
+      color: red;
+    }
+  }
+
   ion-header {
     text-align: center;
     /* padding-bottom: 24px; */
@@ -32,13 +43,22 @@ app-document-upload-dialog {
       padding: 0px 12px;
       color: var(--ion-theme-info-color)
     }
+
+    .close-icon
+    {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+    }
   }
 
   .file-upload-container {
     height: 180px;
     margin: 24px auto;
     width: 180px;
-    display: block;
+    display: flex;
     border: 1px dashed #a7a7a7;
     position: relative;
 

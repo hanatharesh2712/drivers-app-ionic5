@@ -14,27 +14,36 @@ export class DocumentUploadDialogComponent implements OnInit {
   @ViewChild('fileInput', { static: true }) fileInput;
   file = false;
   documentUrl = "";
-  fileChanged = new Subject();
   expirationDate;
   uploading: boolean;
   data;
   documentType: PartnerDocumentType;
-  constructor(private cdRef: ChangeDetectorRef,
-    private elRef: ElementRef,
+  invalidMessage: string;
+  acceptedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'application/pdf', 'image/gif'];
+  constructor(
     private modalController: ModalController) { }
 
   ngOnInit() {
-    this.fileChanged.subscribe(e => {
-      this.cdRef.detectChanges();
-    })
+
   }
+
   uploadFile(event): void {
     const reader = new FileReader();
+    this.invalidMessage = '';
     if (event.target.files && event.target.files.length) {
-      const extension = '.' + event.target.files[0].name.split('.').pop().toLowerCase();
       const [file] = event.target.files;
+      if ((file.size/1024/1024) > 10)
+      {
+        this.invalidMessage = 'File size exceeded. Max file size allowed: 10Mb.'
+        return;
+      }
+      if (!this.acceptedTypes.includes(file.type))
+      {
+        this.invalidMessage = 'File format invalid. Allowed formats: .PNG, .JPG, .JPEG, .PDF'
+        return;
+      }
+      const extension = '.' + file.name.split('.').pop().toLowerCase();
       reader.readAsDataURL(file);
-
       reader.onload = () => {
         this.data = {
           id: '',
@@ -42,7 +51,6 @@ export class DocumentUploadDialogComponent implements OnInit {
           file_ext: extension
         };
         this.documentUrl = reader.result.toString();
-        this.fileChanged.next();
       };
     }
   }
@@ -55,5 +63,10 @@ export class DocumentUploadDialogComponent implements OnInit {
 
   confirmUpload() {
     this.modalController.dismiss({...this.data, expiration_date: this.expirationDate});
+  }
+
+
+  dismiss() {
+    this.modalController.dismiss(false);
   }
 }

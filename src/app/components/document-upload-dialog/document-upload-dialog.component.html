@@ -3,6 +3,7 @@
     <h2>     {{documentType.document_name}}</h2>
 
     <div class="subtitle"> {{documentType.description}}</div>
+    <ion-icon name="close-outline" class="close-icon" (click)="dismiss()"></ion-icon>
   </ion-header>
 
   <ion-content>
@@ -14,13 +15,20 @@
 
               <span>
                 <ion-icon src="assets/custom-ion-icons/add_photo.svg"></ion-icon>
-                  <span>Upload image </span>
+                  <span>Upload file </span>
               </span>
 
           </div>
         </div>
-        <input style="display: none" type="file" (change)="uploadFile($event)" #fileInput />
+
+
+        <input style="display: none" type="file" (change)="uploadFile($event)" #fileInput accept="image/jpeg, image/png, image/jpg, image/webp, application/pdf, image/gif" />
     </ion-item>
+    <div class="requirement-text secondary-text">
+      <div *ngIf="!invalidMessage" > File size must be less than 10MB. <br> Allowed formats: .PNG, .JPG, .JPEG, .PDF, .GIF. </div>
+      <div *ngIf="invalidMessage" class="error">{{ invalidMessage}} </div>
+    </div>
+
     <ion-item lines='none' class="datetime-container" *ngIf="documentType.has_exp_date" >
         <ion-label>Expiration Date:</ion-label>
         <ion-datetime  #myPicker (ionChange)="updateMyDate(myPicker.value)"></ion-datetime>
