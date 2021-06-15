@@ -39,6 +39,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { NgxMaskModule } from 'ngx-mask';
 import { GeolocationService } from './services/geolocation.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { NotLoggedPagesGuard } from './services/util/not-logged-pages.guard';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -75,6 +76,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     InAppBrowser,
     SMS,
     RouteGuard,
+    NotLoggedPagesGuard,
     GoogleMapsAPIWrapper,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     NiceDateFormatPipe,

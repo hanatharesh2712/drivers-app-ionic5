@@ -40,7 +40,7 @@ import { RoutingDetailsModule } from '@app/components/routing-details/routing-de
       {
         path: '',
         component: HomePage,
-        canActivate: [RouteGuard]
+        canActivate: [RouteGuard],
       }
     ])
   ],

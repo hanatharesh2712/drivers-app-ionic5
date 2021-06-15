@@ -20,10 +20,12 @@ import { RegistrationAgreementComponent } from './steps/registration-agreement/r
 import { PaymentInformationComponent } from './steps/payment-information/payment-information.component';
 import { VehicleService } from '@app/services/vehicle.service';
 import { PipesModule } from '@app/pipes/pipes.module';
+import { NotLoggedPagesGuard } from '@app/services/util/not-logged-pages.guard';
 const routes: Routes = [
   {
     path: '',
     component: RegisterPageComponent,
+    canActivateChild: [NotLoggedPagesGuard],
     children: [
       {
         path: 'mobile-validation',

@@ -17,11 +17,13 @@ import { NgxMaskModule } from 'ngx-mask';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
+import { NotLoggedPagesGuard } from '@app/services/util/not-logged-pages.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginPage
+    component: LoginPage,
+    canActivateChild: [NotLoggedPagesGuard],
   }
 ];
 

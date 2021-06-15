@@ -429,7 +429,7 @@
 </ng-container>
 
 <ng-template #costsList let-ride="ride">
-  <ion-item *ngIf="ride.costs['rate']" class="detail">
+  <ion-item *ngIf="ride.costs['rate'] && ride.costs['rate'] > 0" class="detail">
     <ion-label class="detail-title">Base Rate</ion-label>
     <span class="value" slot="end">{{ride.costs['rate'] | currency}}</span>
   </ion-item>
