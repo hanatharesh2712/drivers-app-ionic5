@@ -13,8 +13,8 @@ export class RegistrationAPIService {
 
   }
 
-  sendRegistrationPhoneCode(phone) {
-    return this.http.get<any[]>(environment.noLoginUrl + 'da/sendRegistrationPhoneCode?phone='+ phone).pipe(map(response => {
+  sendRegistrationPhoneCode(phone, area_code) {
+    return this.http.get<any[]>(environment.noLoginUrl + 'da/sendRegistrationPhoneCode?phone='+ phone + '&area_code='+ area_code).pipe(map(response => {
       return response
     })).toPromise();
   }

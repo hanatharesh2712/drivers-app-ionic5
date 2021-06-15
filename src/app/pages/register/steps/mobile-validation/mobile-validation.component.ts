@@ -30,11 +30,10 @@ export class MobileValidationComponent implements OnInit {
 
 
   sendCode() {
-    this.registrationAPIService.sendRegistrationPhoneCode(this.replaceSymbols()).then(
+    this.registrationAPIService.sendRegistrationPhoneCode(this.replaceSymbols(), this.phoneNumber.dialCode).then(
       async (response: any) => {
         if (response.status.toUpperCase() == 'SUCCESS') {
           this.codeSent = response.code;
-          alert(this.codeSent);
           window.clearInterval(this.resendInterval);
           this.resendInterval = setInterval(() => {
             if (this.secondsRemainingResendCode > 0) {

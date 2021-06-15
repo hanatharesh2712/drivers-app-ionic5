@@ -42,7 +42,7 @@ export class RegistrationService {
       url: 'register/vehicle-information',
     },
     {
-      title: 'Required Documents',
+      title: 'Partner Validation',
       done: false,
       url: 'register/documents'
     },

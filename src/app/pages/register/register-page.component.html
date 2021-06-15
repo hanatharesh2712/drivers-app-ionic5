@@ -13,6 +13,9 @@
         <h3>Registration</h3>
         <h4 *ngIf="actualStep">{{actualStep.title}}</h4>
         <h5 *ngIf="nextStep">Next step: {{nextStep.title}}</h5>
+        <span class="secondary-text finish-text" *ngIf="!nextStep" >
+          You've arrived at the finish line
+        </span>
       </div>
     </div>
 

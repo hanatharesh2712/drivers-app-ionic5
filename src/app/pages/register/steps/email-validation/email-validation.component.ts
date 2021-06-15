@@ -43,7 +43,6 @@ export class EmailValidationComponent implements OnInit {
         if (response.status.toUpperCase() == 'SUCCESS')
         {
           this.codeSent = response.code;
-          alert(this.codeSent);
           window.clearInterval(this.resendInterval);
           this.resendInterval = setInterval(() => {
             if (this.secondsRemainingResendCode > 0) {
