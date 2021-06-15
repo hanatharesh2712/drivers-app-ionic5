@@ -24,6 +24,7 @@ import { Ride } from '@app/models/ride';
 import { GeolocationService } from '../geolocation.service';
 import { NiceDateFormatPipe } from '@app/pipes/ride-date.pipe';
 import * as moment from 'moment';
+import { resolve } from 'url';
 @Injectable({
   providedIn: 'root',
 })
@@ -99,11 +100,11 @@ export class RideService {
     let title = '';
     let text = '';
     if (ride.child_seats) {
-      title = 'You accept Ride for: ';
+      title = 'ACCEPT RIDE? ';
       text = ride.nice_spot_datetime + ' (Spot Time) <br>';
       if (ride.child_seats.length)
       {
-        text += '<br><b>This ride requires:</b> <br>';
+        text += '<br><b>SPECIAL REQUIREMENTS:</b> <br>';
         ride.child_seats.forEach((cseat) => {
           text += cseat.count + ' x ' + cseat.type + '<br>';
         });
@@ -112,6 +113,9 @@ export class RideService {
       {
         text += "Handicap"
       }
+
+      text += "<br><br><b>CONFIRM STATUS</b>"
+      text += "<br>drvn will be notified of your commitment to fulfilling this ride";
     }
     return new Promise(async (resolve, reject) => {
       let alert = await this.util.createAlert(
@@ -124,7 +128,7 @@ export class RideService {
           handler: () => {},
         },
         {
-          text: 'YES, I ACCEPT',
+          text: 'ACCEPT',
           handler: () => {
             this.sendChangeStatus(
               ride.next_status_code,
@@ -150,16 +154,16 @@ export class RideService {
   rejectRide(ride) {
     return new Promise(async (resolve, reject) => {
       let alert = await this.util.createAlert(
-        'Reject this Ride',
+        'REJECT RIDE?',
         false,
-        'Please confirm you want to reject this ride',
+        'drvn will be notified of your option to reject this ride',
         {
           text: 'CANCEL',
           role: 'cancel',
           handler: () => {},
         },
         {
-          text: 'Confirm',
+          text: 'REJECT',
           handler: () => {
             this.ridesService
               .sendChangeStatus('RJCT', ride.ride_id)
@@ -181,6 +185,58 @@ export class RideService {
     });
   }
 
+  confirmStop(ride_id)
+  {
+    return new Promise(async (resolve, reject) =>
+    {
+      const alert = await this.util.createAlert(
+        'ARRIVED AT THE STOP LOCATION?	',
+        false,
+        'Please confirm if you have arrived at the passenger requested stop location?',
+        {
+          text: 'NOT YET',
+          role: 'cancel',
+          handler: () => { },
+        },
+        {
+          text: 'CONFIRM',
+          handler: () => {
+            this.setStop(ride_id).then((response) => {
+              resolve(true);
+            },  error =>
+            {
+              reject(null);
+            });
+          },
+        }
+      );
+      alert.present();
+    });
+
+  }
+
+  requestStop(ride_id)
+  {
+    return new Promise(async (resolve, reject) =>
+    {
+      const alert = await this.util.createAlert(
+        'PAX REQUESTED A STOP?',
+        false,
+        'Please confirm if you have arrived at the passenger requested stop location',
+        {
+          text: 'NOT YET',
+          handler: () => {   resolve(true);},
+        },
+        {
+          text: 'ARRIVED',
+          handler: () => {
+            resolve(true);
+          },
+        }
+      );
+      alert.present();
+    })
+  }
   async setStop(ride_id) {
     return this.http
       .post(environment.appUrl + 'setStop', {
@@ -237,7 +293,7 @@ export class RideService {
   changeStatus(ride, waiting_seconds = null) {
     return new Promise(async (resolve, reject) => {
       let alert = await this.util.createAlert(
-        'Confirm',
+        null,
         false,
         ride.next_status_alert,
         {

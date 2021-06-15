@@ -276,8 +276,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
 
   initCheckingForPuTimeToInitWaitingTime() {
     let checkingPuTimeInterval = setInterval(() => {
-      if (moment().isSameOrAfter(moment(this.ride.pu_datetime)))
-      {
+      if (moment().isSameOrAfter(moment(this.ride.pu_datetime))) {
         this.initWaitingTime();
         clearInterval(checkingPuTimeInterval);
       }
@@ -292,8 +291,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
       let timeOnLocationSet = moment(
         this.ride.times.find((e) => e.type_id == 3).time
       );
-      if (moment(timeOnLocationSet).isBefore(moment(this.ride.pu_datetime)))
-      {
+      if (moment(timeOnLocationSet).isBefore(moment(this.ride.pu_datetime))) {
         this.showTimeCounter = true;
         this.wtInterval = setInterval(() => {
           this.calculateTimerValue();
@@ -331,10 +329,9 @@ export class RideDetailPage implements OnInit, OnDestroy {
     }
   }
 
-  calculateWaitTimeDuration()
-  {
+  calculateWaitTimeDuration() {
     if (this.storageInfo.waitStartedDate) {
-      let secondsSinceWaitTimeStarted = moment().diff(moment(this.storageInfo.waitStartedDate), 'seconds')
+      let secondsSinceWaitTimeStarted = moment().diff(moment(this.storageInfo.waitStartedDate), 'seconds');
       this.minutesCounter = this.pad(
         Math.trunc(secondsSinceWaitTimeStarted / 60),
         2
@@ -346,8 +343,7 @@ export class RideDetailPage implements OnInit, OnDestroy {
     }
   }
 
-  calculateGracePeriodDuration(secondsRemainingGracePeriod)
-  {
+  calculateGracePeriodDuration(secondsRemainingGracePeriod) {
     this.isOnGracePeriod = true;
     this.gracePeriodPercentage = (
       ((((this.gracePeriodMins - secondsRemainingGracePeriod / 60) * 100) /
@@ -373,39 +369,15 @@ export class RideDetailPage implements OnInit, OnDestroy {
 
   async requestConfirmStop() {
     if (this.storageInfo.requestedStop) {
-      const alert = await this.util.createAlert(
-        'CONFIRM STOP LOCATION',
-        false,
-        'Are you on the stop location?',
-        {
-          text: 'Not yet',
-          handler: () => { },
-        },
-        {
-          text: 'Yes, confirm',
-          handler: () => {
-            this.rideService.setStop(this.ride_id).then((response) => {
-              this.storageInfo.confirmedStop = true;
-              this.updateStorage();
-            });
-          },
-        }
-      );
-      alert.present();
+      this.rideService.confirmStop(this.ride_id).then(response => {
+        this.storageInfo.confirmedStop = true;
+        this.updateStorage();
+      })
     } else {
-      const alert = await this.util.createAlert(
-        'STOP REQUESTED',
-        false,
-        'Now, please confirm when you arrive to the stop location',
-        {
-          text: 'Confirm',
-          handler: () => {
-            this.storageInfo.requestedStop = true;
-            this.updateStorage();
-          },
-        }
-      );
-      alert.present();
+      this.rideService.requestStop(this.ride_id).then(response => {
+        this.storageInfo.requestedStop = true;
+        this.updateStorage();
+      })
     }
   }
 
@@ -416,10 +388,9 @@ export class RideDetailPage implements OnInit, OnDestroy {
       'ride-rating-modal'
     );
     dialog.present();
-    dialog.onDidDismiss().then(() =>
-    {
-      this.util.goToNew('/rides/completed')
-    })
+    dialog.onDidDismiss().then(() => {
+      this.util.goToNew('/rides/completed');
+    });
   }
 
   async goToGreetingSign() {

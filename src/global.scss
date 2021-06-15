@@ -246,6 +246,10 @@ ion-skeleton-text {
   --max-width: 320px !important;
 }
 
+.alert-message.sc-ion-alert-md, .alert-head.sc-ion-alert-md
+{
+  text-align: center;
+}
 .ionic-tel-input-modal
 {
   margin-top: 0px;

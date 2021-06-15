@@ -5,6 +5,7 @@ import { Injectable, NgModule } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, RouterModule } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { User } from '@app/models/user';
+import { zip } from 'rxjs';
 
 
 @NgModule({
@@ -28,17 +29,14 @@ export class NotLoggedPagesGuard implements CanActivate {
         this.loggedInUser = this.authService.currentUser;
         if (!this.loggedInUser.partner.vehicles || this.loggedInUser.partner.vehicles.length == 0 )
         {
-          this.router.navigate(['/register/service-information']);
           return true;
         }
         if (this.documentsService.needDocuments)
         {
-          this.router.navigate(['/register/documents']);
           return true;
         }
         if (!this.loggedInUser.partner.payment_method_id)
         {
-          this.router.navigate(['/register/agreement']);
           return true;
         }
         this.router.navigate(['/home']);
@@ -49,6 +47,9 @@ export class NotLoggedPagesGuard implements CanActivate {
         return true;
       }
 
+    }, error =>
+    {
+      return true;
     });
 
 
