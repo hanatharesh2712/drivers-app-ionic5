@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: '',
     component: LoginPage,
-    canActivateChild: [NotLoggedPagesGuard],
+    canActivate: [NotLoggedPagesGuard],
   }
 ];
 
