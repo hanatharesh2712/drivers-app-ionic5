@@ -46,6 +46,7 @@ export class PartnerInformationComponent implements OnInit {
         address_city: ['', Validators.required],
         address_state: ['', Validators.required],
         address_country: ['', Validators.required],
+        postal_code: '',
         is_driver: ['true', Validators.required],
         first_name: ['', Validators.required],
         last_name: ['', Validators.required]
