@@ -1,10 +1,12 @@
 import { DocumentsService } from '@app/services/documents.service';
 import { PartnerDocumentType } from './../../models/document';
 import { UtilService } from './../../services/util/util.service';
-import { Component, Input, OnInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { DocumentUploadDialogComponent } from '../document-upload-dialog/document-upload-dialog.component';
 import { environment } from '@env/environment';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 @Component({
   selector: 'document-item',
   templateUrl: './document-item.component.html',
@@ -15,6 +17,8 @@ export class DocumentItemComponent implements OnInit {
   uploading: boolean;
   @Input() documentType: PartnerDocumentType;
   environment = environment;
+  @ViewChild('searchInput', { static: false })
+  searchInput: ElementRef;
   @Output() onDocumentStatusChanged = new EventEmitter();
   constructor(
     public actionSheetController: ActionSheetController,
@@ -22,15 +26,26 @@ export class DocumentItemComponent implements OnInit {
     private documentService: DocumentsService) { }
 
   ngOnInit() {
-    if (!this.documentType.document)
-    {
+    if (!this.documentType.document) {
       this.documentType.document = {};
     }
+    setTimeout(() => {
+      if (this.searchInput) {
+        fromEvent(this.searchInput.nativeElement, 'keyup')
+          .pipe(
+            debounceTime(500),
+            distinctUntilChanged(),
+            tap(() => this.answerChanged(this.searchInput.nativeElement.value))
+          )
+          .subscribe();
+      }
+    }
+      , 350);
   }
 
 
   async presentActionSheet() {
-    if (!this.documentType.has_file) {
+    if (this.documentType.input_type != 1) {
       return;
     }
     if (!this.documentType.submitted) {
@@ -53,8 +68,7 @@ export class DocumentItemComponent implements OnInit {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            this.documentService.removeDocument(this.documentType.document.id).then(response =>
-            {
+            this.documentService.removeDocument(this.documentType.document.id).then(response => {
               this.documentType.document = null;
               this.documentType.submitted = false;
               this.onDocumentStatusChanged.next(this.documentType);
@@ -84,7 +98,7 @@ export class DocumentItemComponent implements OnInit {
     modal.present();
     modal.onDidDismiss().then(response => {
       if (response.data) {
-        this.uploadFile({...response.data, document_type_id:  this.documentType.id, entity_id: this.documentType.entity_id});
+        this.uploadFile({ ...response.data, document_type_id: this.documentType.id, entity_id: this.documentType.entity_id });
       }
     })
   }
@@ -94,12 +108,18 @@ export class DocumentItemComponent implements OnInit {
     this.documentService.uploadDocument(data).then((response: any) => {
       if (response) {
         this.uploading = false;
-        this.documentType.document = response.document.document;
-        this.documentType.submitted = true;
+        if (this.documentType.input_type == 3) {
+          this.documentType.submitted = data.answer != '';
+          this.searchInput.nativeElement.focus();
+        }
+        else {
+          this.documentType.document = response.document.document;
+          this.documentType.submitted = true;
+        }
         this.onDocumentStatusChanged.next();
       }
-    },async (error) => {
-      let alert = await this.util.createAlert(this.documentType.document_name, true, "There was an error trying to"  + (data.answer ? 'save your answer' : "upload your document")  + ". Please try again.", {
+    }, async (error) => {
+      let alert = await this.util.createAlert(this.documentType.document_name, true, "There was an error trying to" + (data.answer ? 'save your answer' : "upload your document") + ". Please try again.", {
         text: 'Ok',
         role: 'cancel',
         cssClass: 'secondary',
@@ -111,9 +131,8 @@ export class DocumentItemComponent implements OnInit {
     });
   }
 
-  answerChanged(answer)
-  {
-    this.uploadFile({ document_type_id:  this.documentType.id, answer: answer, entity_id: this.documentType.entity_id, id: this.documentType.document.id});
+  answerChanged(answer) {
+    this.uploadFile({ document_type_id: this.documentType.id, answer: answer, entity_id: this.documentType.entity_id, id: this.documentType.document.id });
   }
 
 

@@ -21,6 +21,7 @@ export class DrvnAuthenticationService implements OnInit {
   hashCode: any;
   smsBody: any;
   authToken: any;
+  device_info;
 
   constructor(
     private http: HttpClient,
@@ -85,6 +86,7 @@ export class DrvnAuthenticationService implements OnInit {
       username: phone,
       password,
       provider: 'drivers',
+      _platform: this.device_info,
       scope: '',
       redirect: false
     };

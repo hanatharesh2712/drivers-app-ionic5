@@ -2,18 +2,22 @@
   <div class="name">
       {{documentType.document_name}}
   </div>
-  <div class="status" *ngIf="documentType.has_file" >
+  <div class="status" *ngIf="documentType.input_type == 1" >
     <ion-icon src="assets/custom-ion-icons/file_upload.svg" *ngIf="!uploading && !documentType.submitted"></ion-icon>
     <img src="assets/utils/loading.gif" class="loading-gif" *ngIf="uploading">
     <ion-icon name="checkmark-circle-outline" class="submitted-icon" *ngIf="documentType.submitted"></ion-icon>
 
   </div>
 
-  <div class="status" *ngIf="!documentType.has_file" >
+  <div class="status" *ngIf="documentType.input_type == 2" >
     <ion-segment (ionChange)="answerChanged($event.detail.value)" [(ngModel)]="documentType.document.answer" [disabled]="uploading">
       <ion-segment-button value="0" color="dark">No</ion-segment-button>
       <ion-segment-button value="1" color="dark">Yes </ion-segment-button>
     </ion-segment>
+
+  </div>
+  <div class="status" *ngIf="documentType.input_type == 3" >
+    <input placeholder="Enter..." #searchInput  [(ngModel)]="documentType.document.answer">
 
   </div>
 

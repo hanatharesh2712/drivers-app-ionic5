@@ -25,7 +25,6 @@ const routes: Routes = [
   {
     path: '',
     component: RegisterPageComponent,
-    canActivate: [NotLoggedPagesGuard],
     children: [
       {
         path: 'mobile-validation',

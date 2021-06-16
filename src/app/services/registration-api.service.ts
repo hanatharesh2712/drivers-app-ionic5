@@ -1,3 +1,4 @@
+import { DrvnAuthenticationService } from './auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
@@ -9,7 +10,8 @@ import { map } from 'rxjs/internal/operators/map';
 export class RegistrationAPIService {
 
   constructor(
-    private http: HttpClient) {
+    private http: HttpClient,
+    private authService: DrvnAuthenticationService) {
 
   }
 
@@ -29,7 +31,7 @@ export class RegistrationAPIService {
 
   submitPartnerInformation(data)
   {
-    return this.http.post<any[]>(environment.noLoginUrl + 'da/registerPartner', data).pipe(map(response => {
+    return this.http.post<any[]>(environment.noLoginUrl + 'da/registerPartner', {...data, _platform:  this.authService.device_info}).pipe(map(response => {
       return response
     })).toPromise();
   }

@@ -85,8 +85,22 @@ export class AppComponent {
       this.geolocationService.initTracking();
     }
 
+    this.detectDevice();
   }
 
+  detectDevice()
+  {
+    let device = '';
+    if (this.platform.is('ios')) {
+      device = 'IOS ';
+    }
+    else if (this.platform.is('ios'))
+    {
+      device = 'DROID ';
+    }
+    device += this.version;
+    this.authService.device_info = device;
+  }
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.overlaysWebView(false);

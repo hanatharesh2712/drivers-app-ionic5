@@ -22,7 +22,8 @@ export interface PartnerDocumentType {
   seaport: any;
   seaport_id: number;
   show_to_partner: boolean;
-  type: number; //1 FOR PARTNER, 2 FOR DRIVER, 3 FOR VEHICLE
+  type:  1 | 2 | 3; //1 FOR PARTNER, 2 FOR DRIVER, 3 FOR VEHICLE
+  input_type: 1 | 2 | 3;
   updated_at: Date;
   created_at: Date;
   deleted_at: Date;

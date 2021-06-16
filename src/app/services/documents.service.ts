@@ -44,7 +44,7 @@ export class DocumentsService {
 
   cheeckNeededDocument(doc)
   {
-    return doc.some(e => e.required == 1 && ((e.has_file && !e.submitted) || (!e.has_file && (!e.document! || !e.document.answer))))
+    return doc.some(e => e.required == 1 && ((e.input_type == 1 && !e.submitted) || (e.input_type != 1 && (!e.document! || !e.document.answer))))
   }
 
 
