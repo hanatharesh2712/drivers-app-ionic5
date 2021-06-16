@@ -236,7 +236,7 @@
 
 
 <ng-container *ngIf="ride">
-  <ion-fab class="options-menu active" *ngIf="isRideAccepted"  vertical="bottom" horizontal="start" slot="fixed" edge>
+  <ion-fab class="options-menu active" *ngIf="isRideAccepted"  vertical="bottom" horizontal="start" slot="fixed" edge >
     <ion-fab-button (click)="goToContact()">
       <div class="text-container">
         <ion-icon src="assets/custom-ion-icons/drvn2.svg" class="icon drvn-icon" color="primary"></ion-icon>
@@ -252,7 +252,7 @@
 
     </ion-fab-button>-->
   </ion-fab>
-  <ion-fab class="options-menu" *ngIf="isRideActive" #fabMenu vertical="bottom" horizontal="start" slot="fixed" edge>
+  <ion-fab class="options-menu" *ngIf="isRideActive" #fabMenu vertical="bottom" horizontal="start" slot="fixed" edge [ngClass]="{'map-expanded': showingMap}">
     <ion-fab-button>
       <ion-icon name="ellipsis-vertical"></ion-icon>
     </ion-fab-button>
