@@ -40,7 +40,7 @@ export class RidesListComponent {
     this.util.goForward('ride/' + ride_id);
   }
 
-  async doRefresh(refresher) {
+  async doRefresh(refresher = null) {
     this.loading = true;
     this.ridesService.getRides().subscribe(() => {
       this.loading = false;

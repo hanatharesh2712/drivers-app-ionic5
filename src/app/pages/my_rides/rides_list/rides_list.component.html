@@ -1,5 +1,7 @@
 <ion-content>
-
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ng-container *ngIf="type == 'accepted'">
     <ng-container *ngIf="activeRide">
       <h4 class="tab-title active">

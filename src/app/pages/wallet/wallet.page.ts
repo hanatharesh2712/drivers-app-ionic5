@@ -38,14 +38,16 @@ export class WalletPage implements OnInit, OnChanges {
     console.log('Segment changed button clicked', ev);
   }
 
-  async getPayments() {
+  async getPayments(refresher = null) {
     this.loading = true;
 
     this.paymentsService.getPayments().subscribe((payments) => {
-      console.log(payments);
       this.payments = payments;
       this.total = this.paymentsService.total;
       this.loading = false;
+      if (refresher) {
+        refresher.target.complete();
+      }
     });
   }
 
