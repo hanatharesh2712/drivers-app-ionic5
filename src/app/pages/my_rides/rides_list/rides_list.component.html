@@ -17,7 +17,7 @@
       Accepted Rides <span class="rides-count" *ngIf="rides">({{rides && rides.length}})</span>
     </h4>
     <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
-    <p class="empty-text" *ngIf="!activeRide && !rides && !loading">No ride offer available.</p>
+    <p class="empty-text" *ngIf="!activeRide && !rides && !loading">No active or accepted rides.</p>
   </ng-container>
   <ng-container *ngIf="type == 'offers'">
     <h4 class="tab-title ">
@@ -27,7 +27,7 @@
       Note, this offer is in a timed queue and may not be available when you return
     </div>
     <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides}"></ng-container>
-    <p class="empty-text" *ngIf="!rides.length && !loading">You don't have any ride accepted yet.</p>
+    <p class="empty-text" *ngIf="!rides.length && !loading">No ride offers at the moment.</p>
   </ng-container>
 
   <ng-container *ngIf="type == 'done' && rides">
@@ -44,7 +44,7 @@
       <ng-container *ngTemplateOutlet="ridesList; context: {rides: rides['closed'], hideDetails: true}"></ng-container>
     </ng-container>
 
-    <p class="empty-text" *ngIf="!rides['closed'].length && !rides['open'].length && !loading">You don't have any ride completed yet.
+    <p class="empty-text" *ngIf="!rides['closed'].length && !rides['open'].length && !loading">No completed rides.
     </p>
 
   </ng-container>

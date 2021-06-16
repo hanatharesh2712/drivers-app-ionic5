@@ -12,14 +12,14 @@
         <ion-input [disabled]="true" value="{{loggedInUser.partner.address}}"></ion-input>
       </ion-item>
 
-      <ion-item (click)="openSelector(airportSelector)">
+      <ion-item (click)="openSelector(airportSelector)"  *ngIf="data.market && data.market.airports.length">
         <ion-label position="floating">Airports</ion-label>
         <ion-select value="null" #airportSelector style="pointer-events: none" okText="SELECT" formControlName="airports" [interfaceOptions]="airportsSelectOptions"  cancelText="CANCEL" multiple  class="select-full-width" >
           <ion-select-option [value]="-1"  >None</ion-select-option>
           <ion-select-option [value]="airport.id" *ngFor="let airport of data.market.airports" >{{airport.code}} - {{airport.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item  (click)="openSelector(seaportSelector)">
+      <ion-item  (click)="openSelector(seaportSelector)" *ngIf="data.market && data.market.seaports.length" >
         <ion-label position="floating">Cruise Ports</ion-label>
         <ion-select value="null"  #seaportSelector style="pointer-events: none" okText="SELECT" formControlName="seaports" [interfaceOptions]="cruisePortsSelectOptions"  cancelText="CANCEL" multiple class="select-full-width" >
           <ion-select-option [value]="-1"  >None</ion-select-option>

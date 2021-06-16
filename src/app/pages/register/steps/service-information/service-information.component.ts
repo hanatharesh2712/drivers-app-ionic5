@@ -42,7 +42,7 @@ export class ServiceInformationComponent implements OnInit {
     message: 'Select all that apply',
     translucent: true
   };
-  data: unknown;
+  data: any;
   loggedInUser: any;
   servicesForm: FormGroup;
   listener;
@@ -55,19 +55,20 @@ export class ServiceInformationComponent implements OnInit {
     private _fb: FormBuilder,
     @Inject(DOCUMENT) private document: Document, private renderer: Renderer2) {
     this.registrationService.setStep(3);
-    this.servicesForm = this._fb.group(
-      {
-        airports: this._fb.control([], atLeastOneValidator),
-        seaports: this._fb.control([], atLeastOneValidator),
-        options: this._fb.control([]),
-      }
-    )
+
   }
 
   ngOnInit() {
     this.loggedInUser = this.authService.currentUser;
-    this.registrationService.getRegistrationData().then(response => {
+    this.registrationService.getRegistrationData().then((response: any) => {
       this.data = response;
+      this.servicesForm = this._fb.group(
+        {
+          airports: this._fb.control(this.data.market && this.data.market.airports.length ? [] : [-1], atLeastOneValidator),
+          seaports: this._fb.control(this.data.market && this.data.market.seaports.length ? [] : [-1], atLeastOneValidator),
+          options: this._fb.control([]),
+        }
+      )
     })
   }
 

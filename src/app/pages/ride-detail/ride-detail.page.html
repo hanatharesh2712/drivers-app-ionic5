@@ -49,7 +49,7 @@
           <div class="pax-info d-flex">
             <div class="sub-content" *ngIf="(!ride.is_offer && !ride.is_done)">
               <ion-icon name="person" class="icon drvn-icon"></ion-icon>
-              {{ride.passenger_name}} <ng-container *ngIf="ride.passenger_count > 1"> (+ {{ride.passenger_count - 1}})
+              {{ride.passenger_name}} <ng-container *ngIf="ride.passenger_count > 1"> (+{{ride.passenger_count - 1}})
               </ng-container>
             </div>
             <div class="sub-content" *ngIf="ride.is_offer || ride.is_done">

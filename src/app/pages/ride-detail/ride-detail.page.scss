@@ -212,6 +212,10 @@ ride-detail {
       padding: 12px;
       transition: all 0.7s ease;
 
+      ion-item
+      {
+        height: 0px;
+      }
 
 
 
@@ -227,6 +231,11 @@ ride-detail {
           max-height: 350px;
           height: 100%;
           margin-bottom: 12px;
+
+          ion-item
+          {
+            height: auto;
+          }
         }
 
         input {
@@ -283,6 +292,7 @@ ride-detail {
         align-items: center;
         margin-top: 12px;
 
+
         ion-icon {
           font-size: 2.5rem;
           margin-left: 4px;
@@ -293,6 +303,8 @@ ride-detail {
       .expand-icon {
         transition: all .5s ease;
       }
+
+
 
       &.active {
         max-height: 500px;
@@ -584,8 +596,16 @@ ride-detail {
     }
   }
 
+  ion-fab-list
+  {
+    margin-bottom: 32px;
+  }
+
   .fab-vertical-bottom {
-    bottom: 32px !important;
+    position: relative;
+    /* bottom: -72px; */
+    height: 0px;
+    bottom: -32px;
 }
 
 

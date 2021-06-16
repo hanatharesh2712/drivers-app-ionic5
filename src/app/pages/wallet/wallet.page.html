@@ -81,7 +81,7 @@
                         <div class="ride-info d-flex column">
                           <span class="ride-id">
                             Ride #{{ride.ride_id}} -
-                            <span class="ride-date">{{ride.ride.pickup_datetime | date: 'MM/dd/yy hh:mmaaaa'}}</span>
+                            <span class="ride-date">{{ride.ride.pickup_datetime | dateTime: 'MM/dd/yy hh:mmaaaa':'yyyy/MM/dd hh:mm:ss'}}</span>
                           </span>
                           <span class="uppercase letter-spacing type">
                             {{ride.ride.service_type.name}} - {{ride.ride.vehicle_type.name}}
