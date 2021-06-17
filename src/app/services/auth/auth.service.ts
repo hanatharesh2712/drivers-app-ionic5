@@ -127,8 +127,7 @@ export class DrvnAuthenticationService implements OnInit {
         this.smsBody = response.smsBody;
       }
       return response;
-    }))
-      .toPromise();
+    })).toPromise();
   }
 
 

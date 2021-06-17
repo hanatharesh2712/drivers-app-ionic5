@@ -19,7 +19,7 @@ import { UtilService } from '@app/services/util/util.service';
   styleUrls: ['./vehicle-management.page.scss'],
 })
 export class VehicleManagementPage implements OnInit {
-  public vehicleList = environment.VEHICLE_LIST;
+  public vehicleList = [];
 
   constructor(
     public util: UtilService

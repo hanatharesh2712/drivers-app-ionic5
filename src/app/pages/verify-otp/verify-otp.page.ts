@@ -30,6 +30,7 @@ export class VerifyOTPPage implements OnInit {
   recivedCode: any;
   secondsRemainingResendCode = 60;
   @ViewChild('ngOtpInput', { static: false }) ngOtpInput: any;
+  spinner = false;
 
   constructor(
     private util: UtilService,
@@ -86,23 +87,21 @@ export class VerifyOTPPage implements OnInit {
     if (this.platform.is('cordova')) {
 
     }
+    this.spinner = true;
     this.authService.login(this.phone, this.code)
       .then(response => {
         setTimeout(() => {
+          this.spinner = false;
           this.util.goToNew('/home');
         }, 1000);
 
       }).catch(async (err) => {
-        let error_msg = 'An error ocurred, try again later.';
-        if (err.status == 401) {
-          error_msg = 'Invalid code';
-        }
-        let alert = await this.util.createAlert('Sign in', true, error_msg, {
+        this.spinner = false;
+        let alert = await this.util.createAlert('Sign in', true, err.status == 401 ? 'An error ocurred, try again later.' : 'Invalid code. Try again.', {
           text: 'Ok',
           role: 'cancel',
           cssClass: 'secondary',
           handler: async () => {
-
           }
         });
         await alert.present();

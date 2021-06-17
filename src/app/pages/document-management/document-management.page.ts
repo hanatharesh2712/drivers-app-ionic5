@@ -19,7 +19,7 @@ import { UtilService } from '@app/services/util/util.service';
   styleUrls: ['./document-management.page.scss'],
 })
 export class DocumentManagementPage implements OnInit {
-  public documents = environment.DRIVER_DOC_LIST;
+  public documents = [];
   constructor(public util: UtilService) { }
 
   ngOnInit() {

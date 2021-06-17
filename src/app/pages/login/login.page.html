@@ -14,7 +14,7 @@
           </ion-item>
 
           <div class="ion-padding-vertical ion-padding-horizontal" >
-            <ion-button color="primary" expand="block" [disabled]="disabled" class="btnSubmit" (click)="login()">SIGN IN
+            <ion-button color="primary" expand="block" [disabled]="spinner" class="btnSubmit" (click)="login()">SIGN IN
               <span *ngIf="spinner">
                 <ion-spinner name="lines"></ion-spinner>
               </span>

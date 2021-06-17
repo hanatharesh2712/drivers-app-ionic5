@@ -31,8 +31,6 @@ export class SettingPage implements OnInit {
 
   ngOnInit() {
     this.loggedInUser = this.authService.currentUser;
-    this.driverDocuments = environment.DRIVER_DOCUMENT_SETTINGS;
-    this.otherDetails = environment.OTHER_SETTINGS;
   }
 
   goToProfile() {

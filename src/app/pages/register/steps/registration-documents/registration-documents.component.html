@@ -4,47 +4,13 @@
     <div class="secondary-text">
       Here is a list of preliminary uploads and questions we need at the moment to verify you as a partner.
     </div>
-    <ion-list lines='none' *ngIf="is_driver">
-      <ion-list-header>
-        <ion-label>Driver</ion-label>
-      </ion-list-header>
-      <ng-container *ngFor="let doc of docsTypes" >
-        <ion-item *ngIf="doc.type == 2" >
-          <document-item  [documentType]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
-        </ion-item>
-      </ng-container>
+    <ng-container *ngIf="is_driver">
+      <ng-container *ngTemplateOutlet="docsList; context: {docs: driverDocs, header:'Driver'}"></ng-container>
+      <ng-container *ngTemplateOutlet="docsList; context: {docs: vehicleDocs, header:'Vehicle'}"></ng-container>
+    </ng-container>
+    <ng-container *ngTemplateOutlet="docsList; context: {docs: partnerDocs, header:'Company'}"></ng-container>
 
 
-    </ion-list>
-
-
-    <ion-list lines='none' *ngIf="is_driver">
-      <ion-list-header>
-        Vehicle
-      </ion-list-header>
-      <ng-container *ngFor="let doc of docsTypes" >
-        <ion-item  *ngIf="doc.type == 3" >
-          <document-item [documentType]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
-        </ion-item>
-      </ng-container>
-
-
-
-    </ion-list>
-    <ion-list lines='none'>
-      <ion-list-header>
-        <ion-label>Company</ion-label>
-
-      </ion-list-header>
-      <ng-container *ngFor="let doc of docsTypes" >
-        <ion-item *ngIf="doc.type == 1" >
-          <document-item  [documentType]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
-        </ion-item>
-      </ng-container>
-
-
-
-    </ion-list>
     <div class="secondary-text end-text">
       Need more time? <br>
       No worries, you can always log in with your mobile number at a later time to finalize your registration.
@@ -76,3 +42,16 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
+
+
+<ng-template #docsList let-docs="docs" let-header="header">
+  <ion-list lines='none' *ngIf="docs.length">
+    <ion-list-header>
+      <ion-label>{{header}}</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let doc of docs">
+      <document-item [documentType]="doc" (onDocumentStatusChanged)="documentStatusChanged($event)"></document-item>
+    </ion-item>
+  </ion-list>
+
+</ng-template>

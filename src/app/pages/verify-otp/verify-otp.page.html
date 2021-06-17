@@ -24,7 +24,12 @@
     </div>
 
     <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical" >
-      <ion-button color="primary" expand="block" class="btnSubmit textBold" (click)="verification()">Verify Now</ion-button>
+      <ion-button color="primary" expand="block" class="btnSubmit textBold" (click)="verification()" [disabled]="spinner">Verify Now
+
+        <span *ngIf="spinner">
+          <ion-spinner name="lines"></ion-spinner>
+        </span>
+      </ion-button>
     </div>
     <div class="ion-padding-vertical ion-padding-horizontal ion-margin-horizontal ion-margin-vertical resend-link" [ngClass]="{'active': secondsRemainingResendCode <= 0}" >
        <span (click)="resendCode()">Resend Code <ng-container *ngIf="secondsRemainingResendCode > 0">({{secondsRemainingResendCode}})</ng-container></span>

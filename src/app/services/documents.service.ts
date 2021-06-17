@@ -35,9 +35,8 @@ export class DocumentsService {
           element.document = existingDocument.document;
           element.submitted = true;
         }
-
       });
-      this.needDocuments =this.cheeckNeededDocument(documentTypes);
+      this.needDocuments = this.cheeckNeededDocument(documentTypes);
       return documentTypes
     })).toPromise();
   }

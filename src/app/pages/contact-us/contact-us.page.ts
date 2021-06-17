@@ -18,7 +18,6 @@ import { environment } from '@env/environment';
   styleUrls: ['./contact-us.page.scss'],
 })
 export class ContactUsPage implements OnInit {
-  public contactUs = environment.CONTACT_US_LIST;
   drvnNumber = environment.drvnSupportNumber;
   type = '';
   constructor(private util: UtilService) {}

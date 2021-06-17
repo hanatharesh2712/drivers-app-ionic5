@@ -21,7 +21,7 @@ export class PaymentMethodPage implements OnInit {
   public paymentMethods;
 
   constructor() {
-    this.paymentMethods = environment.PAYMENT_METHODS;
+    this.paymentMethods = [];
   }
 
   ngOnInit() {

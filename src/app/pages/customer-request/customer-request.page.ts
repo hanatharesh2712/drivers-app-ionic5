@@ -28,7 +28,7 @@ export class CustomerRequestPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userRequests = environment.USER_REQUESTS;
+    this.userRequests = [];
   }
 
   userRiderDetails(index) {

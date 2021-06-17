@@ -24,7 +24,6 @@ const routes: Routes = [
   { path: 'paymentmethod', loadChildren: () => import('@app/pages/payment-method/payment-method.module').then(m => m.PaymentmethodPageModule) },
   { path: 'profile', loadChildren: () => import('@app/pages/profile/profile.module').then(m => m.ProfilePageModule) },
   { path: 'paymentmethod', loadChildren: () => import('@app/pages/payment-method/payment-method.module').then(m => m.PaymentmethodPageModule) },
-  { path: 'carddetail', loadChildren: () => import('@app/pages/card-detail/card-detail.module').then(m => m.CarddetailPageModule) },
   { path: 'invite', loadChildren: () => import('@app/pages/invite/invite.module').then(m => m.InvitePageModule) },
   { path: 'vehiclemanagement', loadChildren: () => import('@app/pages/vehicle-management/vehicle-management.module').then(m => m.VehiclemanagementPageModule) },
   { path: 'addnewvehicle', loadChildren: () => import('@app/pages/add-new-vehicle/add-new-vehicle.module').then(m => m.AddnewvehiclePageModule) },

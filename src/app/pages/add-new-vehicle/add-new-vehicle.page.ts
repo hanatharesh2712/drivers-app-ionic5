@@ -18,7 +18,7 @@ import { environment } from '@env/environment';
   styleUrls: ['./add-new-vehicle.page.scss'],
 })
 export class AddNewVehiclePage implements OnInit {
-  public allVehicleData = environment.VEHICLE_DATA;
+  public allVehicleData;
   public newVechicle = { license: '' };
 
   constructor(private navCtrl: NavController) { }

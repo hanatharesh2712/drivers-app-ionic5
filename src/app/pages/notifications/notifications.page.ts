@@ -19,7 +19,7 @@ import { environment } from '@env/environment';
 })
 export class NotificationsPage implements OnInit {
 
-  public notifications = environment.SAMPLE_NOTIFICATIONS;
+  public notifications = [];
   constructor(public alertController: AlertController) { }
 
   ngOnInit() {

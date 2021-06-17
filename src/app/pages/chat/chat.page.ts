@@ -20,7 +20,7 @@ export class ChatPage implements OnInit {
   inputText: any;
   msgList;
   constructor() {
-    this.msgList = environment.SAMPLE_CHAT;
+    this.msgList = [];
   }
 
   ngOnInit() {

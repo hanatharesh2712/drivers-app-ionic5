@@ -46,18 +46,9 @@ export class LoginPage implements OnInit {
     }
   }
 
-  setSpinner() {
-    this.spinner = true;
-    this.disabled = true;
-  }
-
-  clearSpinner() {
-    this.spinner = false;
-    this.disabled = false;
-  }
 
   login() {
-    this.setSpinner();
+    this.spinner = true;
 
     this.authService
       .sendCode(this.phone,this.hashCode)
@@ -66,7 +57,7 @@ export class LoginPage implements OnInit {
             if (res.status.toUpperCase() == 'SUCCESS')
             {
               this.util.goForward('verify-otp', {phone: this.phone, hashCode: this.hashCode})
-              this.clearSpinner();
+              this.spinner = false;
             }
             else
             {
