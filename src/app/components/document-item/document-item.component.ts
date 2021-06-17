@@ -108,14 +108,8 @@ export class DocumentItemComponent implements OnInit {
     this.documentService.uploadDocument(data).then((response: any) => {
       if (response) {
         this.uploading = false;
-        if (this.documentType.input_type == 3) {
-          this.documentType.submitted = data.answer != '';
-          this.searchInput.nativeElement.focus();
-        }
-        else {
-          this.documentType.document = response.document.document;
-          this.documentType.submitted = true;
-        }
+        this.documentType.submitted = this.documentType.input_type == 3 ? data.answer != '' : true;
+        this.documentType.document = {...response.document.document, answer: data.answer};
         this.onDocumentStatusChanged.next();
       }
     }, async (error) => {
