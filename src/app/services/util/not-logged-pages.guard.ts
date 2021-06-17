@@ -27,18 +27,22 @@ export class NotLoggedPagesGuard implements CanActivate {
       if (response) {
         // logged in so return true
         this.loggedInUser = this.authService.currentUser;
-        if (!this.loggedInUser.partner.vehicles || this.loggedInUser.partner.vehicles.length == 0 )
+        if (!this.loggedInUser.partner.skip_registration)
         {
-          return true;
+          if (!this.loggedInUser.partner.vehicles || this.loggedInUser.partner.vehicles.length == 0 )
+          {
+            return true;
+          }
+          if (this.documentsService.needDocuments)
+          {
+            return true;
+          }
+          if (!this.loggedInUser.partner.payment_method_id)
+          {
+            return true;
+          }
         }
-        if (this.documentsService.needDocuments)
-        {
-          return true;
-        }
-        if (!this.loggedInUser.partner.payment_method_id)
-        {
-          return true;
-        }
+
         this.router.navigate(['/home']);
         return false;
       }
