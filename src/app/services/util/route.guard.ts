@@ -26,21 +26,25 @@ export class RouteGuard implements CanActivate {
       if (response) {
         // logged in so return true
         this.loggedInUser = this.authService.currentUser;
-        if (!this.loggedInUser.partner.vehicles || this.loggedInUser.partner.vehicles.length == 0 )
+        if (!this.loggedInUser.partner.skip_registration)
         {
-          this.router.navigate(['/register/service-information']);
-          return false;
+          if (!this.loggedInUser.partner.vehicles || this.loggedInUser.partner.vehicles.length == 0 )
+          {
+            this.router.navigate(['/register/service-information']);
+            return false;
+          }
+          if (this.documentsService.needDocuments)
+          {
+            this.router.navigate(['/register/documents']);
+            return false;
+          }
+          if (!this.loggedInUser.partner.payment_method_id)
+          {
+            this.router.navigate(['/register/agreement']);
+            return false;
+          }
         }
-        if (this.documentsService.needDocuments)
-        {
-          this.router.navigate(['/register/documents']);
-          return false;
-        }
-        if (!this.loggedInUser.partner.payment_method_id)
-        {
-          this.router.navigate(['/register/agreement']);
-          return false;
-        }
+
 
         return true;
       }

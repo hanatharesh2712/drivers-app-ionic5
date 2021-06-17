@@ -7,6 +7,7 @@ export interface User {
   partner;
   id: number;
   partner_type;
+  skip_registration: boolean;
 }
 
 
