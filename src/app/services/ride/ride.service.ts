@@ -363,15 +363,7 @@ export class RideService {
     );
     ride.pu_datetime = ride.pu_date + ' ' + ride.pu_time;
     ride.nice_pu_datetime = this.niceDateFormatPipe.transform(ride.pu_datetime);
-    if (parseInt(ride.pu_time.replace(/:/g, '')) > parseInt(ride.spot_time.replace(/:/g, '')))
-    {
-      ride.spot_datetime = ride.pu_date + ' ' + ride.spot_time;
-    }
-    else
-    {
-      let date = moment(ride.pu_datetime).add('1', 'days');
-      ride.spot_datetime = (date.month()) + '/' + date.day() + '/' + date.year() + ' ' + ride.spot_time;
-    }
+    ride.spot_datetime = ride.pu_date + ' ' + ride.spot_time;
     ride.nice_spot_datetime = this.niceDateFormatPipe.transform(ride.spot_datetime);
     this.checkIfCanSettle(ride);
 
